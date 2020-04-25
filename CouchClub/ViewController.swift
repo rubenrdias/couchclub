@@ -8,11 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class WatchlistsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
 }
-

@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		538D29D52454978600CDB99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D42454978600CDB99F /* AppDelegate.swift */; };
-		538D29D92454978600CDB99F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D82454978600CDB99F /* ViewController.swift */; };
+		538D29D92454978600CDB99F /* WatchlistsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D82454978600CDB99F /* WatchlistsVC.swift */; };
 		538D29DC2454978600CDB99F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29DA2454978600CDB99F /* Main.storyboard */; };
 		538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 538D29DD2454978600CDB99F /* CouchClub.xcdatamodeld */; };
 		538D29E12454978800CDB99F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E02454978800CDB99F /* Assets.xcassets */; };
 		538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E22454978800CDB99F /* LaunchScreen.storyboard */; };
 		538D29EF2454978800CDB99F /* CouchClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29EE2454978800CDB99F /* CouchClubTests.swift */; };
+		53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B7CDE32454A52A007395EE /* ChatroomsVC.swift */; };
+		53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F42454A8810019640D /* SettingsVC.swift */; };
+		53C0B1F72454AF2B0019640D /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F62454AF2B0019640D /* WatchlistCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +32,7 @@
 /* Begin PBXFileReference section */
 		538D29D12454978600CDB99F /* CouchClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CouchClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538D29D42454978600CDB99F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		538D29D82454978600CDB99F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		538D29D82454978600CDB99F /* WatchlistsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistsVC.swift; sourceTree = "<group>"; };
 		538D29DB2454978600CDB99F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		538D29DE2454978600CDB99F /* CouchClub.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CouchClub.xcdatamodel; sourceTree = "<group>"; };
 		538D29E02454978800CDB99F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +41,9 @@
 		538D29EA2454978800CDB99F /* CouchClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CouchClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		538D29EE2454978800CDB99F /* CouchClubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouchClubTests.swift; sourceTree = "<group>"; };
 		538D29F02454978800CDB99F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53B7CDE32454A52A007395EE /* ChatroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomsVC.swift; sourceTree = "<group>"; };
+		53C0B1F42454A8810019640D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		53C0B1F62454AF2B0019640D /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +85,10 @@
 		538D29D32454978600CDB99F /* CouchClub */ = {
 			isa = PBXGroup;
 			children = (
+				53B7CDDF2454A21F007395EE /* Model */,
+				53B7CDDE2454A216007395EE /* View */,
+				53B7CDE02454A223007395EE /* Controller */,
 				538D29D42454978600CDB99F /* AppDelegate.swift */,
-				538D29D82454978600CDB99F /* ViewController.swift */,
 				538D29DA2454978600CDB99F /* Main.storyboard */,
 				538D29E02454978800CDB99F /* Assets.xcassets */,
 				538D29E22454978800CDB99F /* LaunchScreen.storyboard */,
@@ -97,6 +105,31 @@
 				538D29F02454978800CDB99F /* Info.plist */,
 			);
 			path = CouchClubTests;
+			sourceTree = "<group>";
+		};
+		53B7CDDE2454A216007395EE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				53C0B1F62454AF2B0019640D /* WatchlistCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		53B7CDDF2454A21F007395EE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		53B7CDE02454A223007395EE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				538D29D82454978600CDB99F /* WatchlistsVC.swift */,
+				53B7CDE32454A52A007395EE /* ChatroomsVC.swift */,
+				53C0B1F42454A8810019640D /* SettingsVC.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,9 +233,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				538D29D92454978600CDB99F /* ViewController.swift in Sources */,
+				538D29D92454978600CDB99F /* WatchlistsVC.swift in Sources */,
+				53C0B1F72454AF2B0019640D /* WatchlistCell.swift in Sources */,
+				53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */,
 				538D29D52454978600CDB99F /* AppDelegate.swift in Sources */,
 				538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */,
+				53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

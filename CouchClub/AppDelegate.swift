@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        performDefaultObjectsCustomization()
         return true
     }
 
@@ -28,6 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {}
 
+    func performDefaultObjectsCustomization() {
+        UITabBar.appearance().tintColor = UIColor.systemOrange
+        UINavigationBar.appearance().tintColor = UIColor.systemOrange
+    }
+    
+    // MARK: - Core Data stack
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CouchClub")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -53,4 +61,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
