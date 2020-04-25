@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rr5-w1-Nde">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Chatrooms-->
+        <scene sceneID="JMY-96-vjF">
+            <objects>
+                <collectionViewController id="XLI-c7-b6R" customClass="ChatroomsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="6DB-YX-tJA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Idx-7P-rgQ">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="XLI-c7-b6R" id="VVJ-s9-wZY"/>
+                            <outlet property="delegate" destination="XLI-c7-b6R" id="9oR-N2-fqI"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Chatrooms" id="sdW-nc-KPG"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mWl-sf-kEF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5039.1999999999998" y="204.67980295566502"/>
+        </scene>
+        <!--Chatrooms-->
+        <scene sceneID="Ngu-ky-lBl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rr5-w1-Nde" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Chatrooms" image="chatrooms" id="Gxn-Jq-18P"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="2CG-lk-RIQ">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="XLI-c7-b6R" kind="relationship" relationship="rootViewController" id="bxV-DT-1DM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VjI-s8-fM8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4096.8000000000002" y="204.67980295566502"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="chatrooms" width="24" height="24"/>
+    </resources>
+</document>

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		534BFB9D2454DDB500F9F772 /* Watchlists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */; };
+		534BFBA02454DE8800F9F772 /* Chatrooms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */; };
+		534BFBA22454DED600F9F772 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFBA12454DED600F9F772 /* Settings.storyboard */; };
+		534BFBA62454E49800F9F772 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534BFBA52454E49800F9F772 /* UIView.swift */; };
 		538D29D52454978600CDB99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D42454978600CDB99F /* AppDelegate.swift */; };
 		538D29D92454978600CDB99F /* WatchlistsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D82454978600CDB99F /* WatchlistsVC.swift */; };
 		538D29DC2454978600CDB99F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29DA2454978600CDB99F /* Main.storyboard */; };
@@ -30,6 +34,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Watchlists.storyboard; sourceTree = "<group>"; };
+		534BFB9F2454DE8800F9F772 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = CouchClub/View/Storyboards/Base.lproj/Chatrooms.storyboard; sourceTree = "<group>"; };
+		534BFBA12454DED600F9F772 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		534BFBA52454E49800F9F772 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		538D29D12454978600CDB99F /* CouchClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CouchClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538D29D42454978600CDB99F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		538D29D82454978600CDB99F /* WatchlistsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistsVC.swift; sourceTree = "<group>"; };
@@ -64,6 +72,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		534BFBA32454E48900F9F772 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				534BFBA42454E48D00F9F772 /* Extensions */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		534BFBA42454E48D00F9F772 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				534BFBA52454E49800F9F772 /* UIView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		538D29C82454978600CDB99F = {
 			isa = PBXGroup;
 			children = (
@@ -85,11 +109,11 @@
 		538D29D32454978600CDB99F /* CouchClub */ = {
 			isa = PBXGroup;
 			children = (
+				534BFBA32454E48900F9F772 /* Utils */,
 				53B7CDDF2454A21F007395EE /* Model */,
 				53B7CDDE2454A216007395EE /* View */,
 				53B7CDE02454A223007395EE /* Controller */,
 				538D29D42454978600CDB99F /* AppDelegate.swift */,
-				538D29DA2454978600CDB99F /* Main.storyboard */,
 				538D29E02454978800CDB99F /* Assets.xcassets */,
 				538D29E22454978800CDB99F /* LaunchScreen.storyboard */,
 				538D29E52454978800CDB99F /* Info.plist */,
@@ -110,6 +134,7 @@
 		53B7CDDE2454A216007395EE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				53C0B1FB2454D7EB0019640D /* Storyboards */,
 				53C0B1F62454AF2B0019640D /* WatchlistCell.swift */,
 			);
 			path = View;
@@ -130,6 +155,17 @@
 				53C0B1F42454A8810019640D /* SettingsVC.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		53C0B1FB2454D7EB0019640D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */,
+				534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */,
+				534BFBA12454DED600F9F772 /* Settings.storyboard */,
+				538D29DA2454978600CDB99F /* Main.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +251,9 @@
 			files = (
 				538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */,
 				538D29E12454978800CDB99F /* Assets.xcassets in Resources */,
+				534BFB9D2454DDB500F9F772 /* Watchlists.storyboard in Resources */,
+				534BFBA22454DED600F9F772 /* Settings.storyboard in Resources */,
+				534BFBA02454DE8800F9F772 /* Chatrooms.storyboard in Resources */,
 				538D29DC2454978600CDB99F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,6 +275,7 @@
 				538D29D92454978600CDB99F /* WatchlistsVC.swift in Sources */,
 				53C0B1F72454AF2B0019640D /* WatchlistCell.swift in Sources */,
 				53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */,
+				534BFBA62454E49800F9F772 /* UIView.swift in Sources */,
 				538D29D52454978600CDB99F /* AppDelegate.swift in Sources */,
 				538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */,
 				53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */,
@@ -261,6 +301,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				534BFB9F2454DE8800F9F772 /* Base */,
+			);
+			name = Chatrooms.storyboard;
+			sourceTree = "<group>";
+		};
 		538D29DA2454978600CDB99F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
