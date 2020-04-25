@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		538D29D52454978600CDB99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D42454978600CDB99F /* AppDelegate.swift */; };
-		538D29D72454978600CDB99F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D62454978600CDB99F /* SceneDelegate.swift */; };
 		538D29D92454978600CDB99F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D82454978600CDB99F /* ViewController.swift */; };
 		538D29DC2454978600CDB99F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29DA2454978600CDB99F /* Main.storyboard */; };
 		538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 538D29DD2454978600CDB99F /* CouchClub.xcdatamodeld */; };
@@ -30,7 +29,6 @@
 /* Begin PBXFileReference section */
 		538D29D12454978600CDB99F /* CouchClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CouchClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538D29D42454978600CDB99F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		538D29D62454978600CDB99F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		538D29D82454978600CDB99F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		538D29DB2454978600CDB99F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		538D29DE2454978600CDB99F /* CouchClub.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CouchClub.xcdatamodel; sourceTree = "<group>"; };
@@ -82,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				538D29D42454978600CDB99F /* AppDelegate.swift */,
-				538D29D62454978600CDB99F /* SceneDelegate.swift */,
 				538D29D82454978600CDB99F /* ViewController.swift */,
 				538D29DA2454978600CDB99F /* Main.storyboard */,
 				538D29E02454978800CDB99F /* Assets.xcassets */,
@@ -206,7 +203,6 @@
 				538D29D92454978600CDB99F /* ViewController.swift in Sources */,
 				538D29D52454978600CDB99F /* AppDelegate.swift in Sources */,
 				538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */,
-				538D29D72454978600CDB99F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +365,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C62GU5R7P6;
 				INFOPLIST_FILE = CouchClub/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,6 +384,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C62GU5R7P6;
 				INFOPLIST_FILE = CouchClub/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
