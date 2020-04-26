@@ -21,6 +21,8 @@
 		538D29E12454978800CDB99F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E02454978800CDB99F /* Assets.xcassets */; };
 		538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E22454978800CDB99F /* LaunchScreen.storyboard */; };
 		538D29EF2454978800CDB99F /* CouchClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29EE2454978800CDB99F /* CouchClubTests.swift */; };
+		53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
+		53AE644D24560CFF00D7F817 /* MovieResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644C24560CFF00D7F817 /* MovieResult.swift */; };
 		53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B7CDE32454A52A007395EE /* ChatroomsVC.swift */; };
 		53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F42454A8810019640D /* SettingsVC.swift */; };
 		53C0B1F72454AF2B0019640D /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F62454AF2B0019640D /* WatchlistCell.swift */; };
@@ -60,6 +62,8 @@
 		538D29EA2454978800CDB99F /* CouchClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CouchClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		538D29EE2454978800CDB99F /* CouchClubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouchClubTests.swift; sourceTree = "<group>"; };
 		538D29F02454978800CDB99F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53AE644A2455DE4E00D7F817 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		53AE644C24560CFF00D7F817 /* MovieResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResult.swift; sourceTree = "<group>"; };
 		53B7CDE32454A52A007395EE /* ChatroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomsVC.swift; sourceTree = "<group>"; };
 		53C0B1F42454A8810019640D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		53C0B1F62454AF2B0019640D /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				534BFBA32454E48900F9F772 /* Utils */,
+				53AE64472455DE2700D7F817 /* Managers */,
 				53B7CDDF2454A21F007395EE /* Model */,
 				53B7CDDE2454A216007395EE /* View */,
 				53B7CDE02454A223007395EE /* Controller */,
@@ -158,6 +163,14 @@
 			path = CouchClubTests;
 			sourceTree = "<group>";
 		};
+		53AE64472455DE2700D7F817 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				53AE644A2455DE4E00D7F817 /* NetworkService.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		53B7CDDE2454A216007395EE /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +185,7 @@
 			children = (
 				537C142F2455C8DA005FC745 /* Watchlist.swift */,
 				537C14312455CDE7005FC745 /* Movie.swift */,
+				53AE644C24560CFF00D7F817 /* MovieResult.swift */,
 				537C14332455CDF9005FC745 /* Show.swift */,
 			);
 			path = Model;
@@ -334,11 +348,13 @@
 				537C14322455CDE7005FC745 /* Movie.swift in Sources */,
 				53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */,
 				534BFBA62454E49800F9F772 /* UIView.swift in Sources */,
+				53AE644D24560CFF00D7F817 /* MovieResult.swift in Sources */,
 				53CD8B9B24558A0E00E7FEB0 /* UIColor.swift in Sources */,
 				53C5ADBB2455D24800873F90 /* SearchVC.swift in Sources */,
 				538D29D52454978600CDB99F /* AppDelegate.swift in Sources */,
 				538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */,
 				53CD8B99245586C700E7FEB0 /* UILabel.swift in Sources */,
+				53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */,
 				53CD8B9D245593FD00E7FEB0 /* UIFont.swift in Sources */,
 				537C14342455CDF9005FC745 /* Show.swift in Sources */,
 				537C14302455C8DA005FC745 /* Watchlist.swift in Sources */,

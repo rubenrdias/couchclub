@@ -6,9 +6,22 @@
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
-import UIKit
-
-struct Movie: Codable {
+struct Movie: Decodable {
+    
+    let uuid: String
+    let title: String
+    let released: String
+    let runtime: String
+    let genre: String
+    let imdbRating: String
+    let plot: String
+    let actors: String
+    let director: String
+    let writer: String
+    let producer: String
+    let awards: String
+    let poster: String
+    let boxOffice: String
     
     enum CodingKeys: String, CodingKey {
         case uuid = "imdbID"
@@ -26,19 +39,4 @@ struct Movie: Codable {
         case poster = "Poster"
         case boxOffice = "BoxOffice"
     }
-    
-    let uuid: String
-    let title: String
-    let released: String
-    let runtime: String
-    let genre: String
-    let imdbRating: String
-    let plot: String
-    let actors: String
-    let director: String
-    let writer: String
-    let producer: String
-    let awards: String
-    let poster: String
-    let boxOffice: String
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Watchlist: NSObject {
+class Watchlist {
     
     let uuid: String
     let title: String
