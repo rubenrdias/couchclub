@@ -10,17 +10,22 @@ import UIKit
 
 extension UIView {
     
-    func setGradientBackground(colors: [UIColor], locations: [NSNumber]) {
+    func setGradientBackground(colors: [UIColor], locations: [NSNumber], inFrame: CGRect? = nil) {
         let cgColors = colors.map { $0.cgColor }
         
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = bounds
+        gradientLayer.frame = inFrame ?? bounds
         gradientLayer.colors = cgColors
         gradientLayer.locations = locations
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0, y: 1)
         
-        layer.insertSublayer(gradientLayer, at: 0)
+        if let sublayers = layer.sublayers, let currentGradientLayer = sublayers[0] as? CAGradientLayer {
+            layer.replaceSublayer(currentGradientLayer, with: gradientLayer)
+        }
+        else {
+            layer.insertSublayer(gradientLayer, at: 0)
+        }
     }
     
 }

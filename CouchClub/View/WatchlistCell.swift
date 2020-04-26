@@ -33,11 +33,12 @@ class WatchlistCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        textContainer.setGradientBackground(colors: [
+        
+        imageView.setGradientBackground(colors: [
             UIColor.clear,
-            UIColor.black.withAlphaComponent(0.2),
-            UIColor.black.withAlphaComponent(0.7)
-        ], locations: [0, 0.5, 1])
+            UIColor.black.withAlphaComponent(0.3),
+            UIColor.black.withAlphaComponent(0.8)
+        ], locations: [0, 0.5, 1], inFrame: contentView.bounds)
     }
     
     override func prepareForReuse() {
@@ -48,7 +49,6 @@ class WatchlistCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
-        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 8
         iv.clipsToBounds = true
@@ -56,6 +56,7 @@ class WatchlistCell: UICollectionViewCell {
     }()
     
     private func setupImage() {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -65,43 +66,22 @@ class WatchlistCell: UICollectionViewCell {
         ])
     }
     
-    private lazy var textContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var titleTextLabel: UILabel = UILabel.standardLabel(.title2, .bold, UIColor.white)
+    private lazy var subtitleTextLabel: UILabel = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.staticGray2))
     
     private lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [titleTextLabel, subtitleTextLabel])
-        sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis = .vertical
         return sv
     }()
     
-    private lazy var titleTextLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.title2, .bold, UIColor.white)
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    
-    private lazy var subtitleTextLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.staticGray2))
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    
     private func setupText() {
-        textContainer.addSubview(stackView)
-        imageView.addSubview(textContainer)
-        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.bottomAnchor.constraint(equalTo: textContainer.bottomAnchor, constant: -16),
-            stackView.leadingAnchor.constraint(equalTo: textContainer.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: textContainer.trailingAnchor, constant: -16),
-            
-            textContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            textContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            textContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         ])
     }
     
