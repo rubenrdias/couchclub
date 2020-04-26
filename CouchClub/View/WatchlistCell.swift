@@ -31,6 +31,15 @@ class WatchlistCell: UICollectionViewCell {
         setupText()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        textContainer.setGradientBackground(colors: [
+            UIColor.clear,
+            UIColor.black.withAlphaComponent(0.2),
+            UIColor.black.withAlphaComponent(0.7)
+        ], locations: [0, 0.5, 1])
+    }
+    
     override func prepareForReuse() {
         imageView.image = nil
         titleTextLabel.text = nil
@@ -57,15 +66,8 @@ class WatchlistCell: UICollectionViewCell {
     }
     
     private lazy var textContainer: UIView = {
-        let width = contentView.bounds.width
-        let height = contentView.bounds.height
-        
-        let view = UIView(frame: .init(x: 0, y: 0, width: width, height: height))
-        view.setGradientBackground(colors: [
-            UIColor.clear,
-            UIColor.black.withAlphaComponent(0.2),
-            UIColor.black.withAlphaComponent(0.7)
-        ], locations: [0, 0.5, 1])
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -94,8 +96,12 @@ class WatchlistCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             stackView.bottomAnchor.constraint(equalTo: textContainer.bottomAnchor, constant: -16),
-            stackView.leftAnchor.constraint(equalTo: textContainer.leftAnchor, constant: 16),
-            stackView.rightAnchor.constraint(equalTo: textContainer.rightAnchor, constant: -16)
+            stackView.leadingAnchor.constraint(equalTo: textContainer.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: textContainer.trailingAnchor, constant: -16),
+            
+            textContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            textContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            textContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
     
