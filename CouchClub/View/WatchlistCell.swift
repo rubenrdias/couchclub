@@ -66,13 +66,21 @@ class WatchlistCell: UICollectionViewCell {
         ])
     }
     
-    private lazy var titleTextLabel: UILabel = UILabel.standardLabel(.title2, .bold, UIColor.white)
-    private lazy var subtitleTextLabel: UILabel = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.staticGray2))
-    
     private lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [titleTextLabel, subtitleTextLabel])
         sv.axis = .vertical
         return sv
+    }()
+    
+    private lazy var titleTextLabel: UILabel = {
+        let lbl = UILabel.standardLabel(.title2, .bold, UIColor.white)
+        lbl.numberOfLines = 0
+        return lbl
+    }()
+    
+    private lazy var subtitleTextLabel: UILabel = {
+        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.staticGray2))
+        return lbl
     }()
     
     private func setupText() {
