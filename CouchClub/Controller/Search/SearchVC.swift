@@ -9,11 +9,15 @@
 import UIKit
 
 class SearchVC: UICollectionViewController {
+    
+    var searchType: String = "movie"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.scopeButtonTitles = ["Movies", "Shows"]
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
     }
 
@@ -23,10 +27,14 @@ class SearchVC: UICollectionViewController {
     
 }
 
-extension SearchVC: UISearchResultsUpdating {
+extension SearchVC: UISearchBarDelegate {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        // TODO: update search results
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        searchType = selectedScope == 0 ? "movie" : "series"
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("Begin search...")
     }
     
 }
