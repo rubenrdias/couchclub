@@ -10,7 +10,7 @@ import UIKit
 
 class WatchlistCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "watchlistCell"
+    static let reuseIdentifier = "WatchlistCell"
     
     var image: UIImage? {
         didSet { updateImage() }
@@ -26,6 +26,7 @@ class WatchlistCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 8
         
         setupImage()
         setupText()
@@ -50,8 +51,8 @@ class WatchlistCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 8
-        iv.clipsToBounds = true
+//        iv.layer.cornerRadius = 8
+//        iv.clipsToBounds = true
         return iv
     }()
     

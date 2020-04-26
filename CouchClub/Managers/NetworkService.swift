@@ -10,7 +10,7 @@ import Foundation
 
 fileprivate struct SearchResult: Decodable {
     
-    let results: [SearchItemResult]
+    let results: [SearchItem]
     let totalResults: String
     
     enum CodingKeys: String, CodingKey {
@@ -20,7 +20,7 @@ fileprivate struct SearchResult: Decodable {
     
 }
 
-struct SearchItemResult: Decodable {
+struct SearchItem: Decodable {
     
     let uuid: String
     let title: String
