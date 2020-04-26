@@ -32,6 +32,9 @@ extension WatchlistsVC {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchlistCell.reuseIdentifier, for: indexPath) as! WatchlistCell
+        cell.image = UIImage(named: "avengers_1")
+        cell.title = "Marvel Cinematic Universe"
+        cell.subtitle = "1 of 24 watched"
         return cell
     }
     
@@ -40,7 +43,7 @@ extension WatchlistsVC {
 extension WatchlistsVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = UIScreen.main.bounds.width
+        let width = UIScreen.main.bounds.width - 16 * 2
         let height = (width * 230) / 343
         return CGSize(width: width, height: height)
     }
@@ -52,4 +55,5 @@ extension WatchlistsVC: UICollectionViewDelegateFlowLayout {
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
 //        return 0
 //    }
+    
 }

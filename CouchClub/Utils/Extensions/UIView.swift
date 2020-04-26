@@ -20,12 +20,7 @@ extension UIView {
         gradientLayer.startPoint = CGPoint(x: 0, y: 0)
         gradientLayer.endPoint = CGPoint(x: 0, y: 1)
         
-        if let sublayers = layer.sublayers, let currentGradientLayer = sublayers[0] as? CAGradientLayer {
-            layer.replaceSublayer(currentGradientLayer, with: gradientLayer)
-        }
-        else {
-            layer.insertSublayer(gradientLayer, at: 0)
-        }
+        layer.insertSublayer(gradientLayer, at: 0)
     }
     
 }
