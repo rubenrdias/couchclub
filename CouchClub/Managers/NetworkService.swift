@@ -6,7 +6,7 @@
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 fileprivate struct SearchResult: Decodable {
     
@@ -45,6 +45,8 @@ class NetworkService {
     let baseURL = "http://www.omdbapi.com/"
     let apiKey = "d4d6a41c"
     
+    // MARK: - Search
+    
     func searchResults(resultType: ResultType, searchText: String, completion: @escaping (_ results: [Any]?, _ totalResults: Int)->()) {
         var url = URLComponents(string: baseURL)!
         
@@ -61,6 +63,7 @@ class NetworkService {
                 if let error = error {
                     print("Failed to fetch search results: \(error.localizedDescription)")
                 }
+                print("TODO: process response")
                 completion(nil, 0)
                 return
             }
@@ -72,6 +75,28 @@ class NetworkService {
             } else {
                 print("No movies found")
                 completion(nil, 0)
+            }
+        }.resume()
+    }
+    
+    // MARK: - Download
+    
+    func downloadImage(_ url: URL, completion: @escaping (_ image: UIImage?)->()) {
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                if let error = error {
+                    print("Failed to fetch search results: \(error.localizedDescription)\n\(url)")
+                }
+                print("TODO: process response")
+                completion(nil)
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(image)
+            } else {
+                print("TODO: handle failure to convert data into image")
+                completion(nil)
             }
         }.resume()
     }

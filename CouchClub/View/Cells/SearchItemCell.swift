@@ -12,9 +12,7 @@ class SearchItemCell: UICollectionViewCell {
     
     static let reuseIdentifier = "SearchItemCell"
     
-    var searchItem: SearchItem! {
-        didSet { updateImage() }
-    }
+    var searchItem: SearchItem!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,6 +26,8 @@ class SearchItemCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         imageView.image = nil
+        imageView.contentMode = .scaleAspectFill
+        imageView.tintColor = nil
     }
     
     private lazy var imageView: UIImageView = {
@@ -49,9 +49,16 @@ class SearchItemCell: UICollectionViewCell {
         ])
     }
     
-    private func updateImage() {
-        // TODO: fetch poster image
-//        self.imageView.image = searchItem.poster
+    func updateImage(_ image: UIImage, for uuid: String) {
+        if searchItem.uuid == uuid {
+            self.imageView.image = image
+        }
+    }
+    
+    func setImageUnavailable() {
+        imageView.contentMode = .center
+        imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
+        imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     
     required init?(coder: NSCoder) {

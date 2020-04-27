@@ -11,20 +11,7 @@ import UIKit
 class SearchVC: UICollectionViewController {
     
     var searchType: String = "movie"
-    
-//    var searchResults = [SearchItem]()
-    var searchResults = [
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas"),
-        SearchItem(uuid: "AAAA", title: "Hello", poster: "sdas")
-    ]
+    var searchResults = [SearchItem]()
     
     private var itemsPerRow: Int = 3
     private var usableWidth: CGFloat = 0
@@ -42,9 +29,6 @@ class SearchVC: UICollectionViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for a \(searchType) title"
         navigationItem.searchController = searchController
-        
-        print("TODO: remove next statement")
-        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     override func viewDidLayoutSubviews() {
@@ -60,7 +44,7 @@ class SearchVC: UICollectionViewController {
         coordinator.animate(alongsideTransition: { [weak self] _ in
             self?.setupCollectionViewLayout()
         }, completion: nil)
-        
+
         super.viewWillTransition(to: size, with: coordinator)
     }
     
@@ -114,6 +98,10 @@ class SearchVC: UICollectionViewController {
 
 extension SearchVC {
     
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return searchResults.isEmpty ? 0 : 1
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCVCell.reuseIdentifier, for: indexPath) as! HeaderCVCell
         headerView.delegate = self
@@ -128,7 +116,23 @@ extension SearchVC {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchItemCell.reuseIdentifier, for: indexPath) as! SearchItemCell
-        cell.searchItem = searchResults[indexPath.item]
+        let item = searchResults[indexPath.item]
+        cell.searchItem = item
+        
+        if item.poster != "N/A", let url = URL(string: item.poster) {
+            NetworkService.shared.downloadImage(url) { [weak cell] image in
+                DispatchQueue.main.async {
+                    if let image = image {
+                        cell?.updateImage(image, for: item.uuid)
+                    } else {
+                        cell?.setImageUnavailable()
+                    }
+                }
+            }
+        } else {
+            cell.setImageUnavailable()
+        }
+        
         return cell
     }
     
