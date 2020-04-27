@@ -12,7 +12,10 @@ extension UIImage {
     
     enum Icon: String {
         case chatrooms
+        case checkmark
+        case heart
         case imageUnavailable
+        case imdb
         case list
         case settings
         case thumbnails

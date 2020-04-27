@@ -10,7 +10,10 @@ import UIKit
 
 class SearchVC: UICollectionViewController {
     
-    var searchResults = [SearchItem]()
+//    var searchResults = [SearchItem]()
+    var searchResults = [
+        SearchItem(uuid: "tt0848228", title: "The Avengers", poster: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg")
+    ]
     
     private var itemsPerRow: Int = 3
     private var usableWidth: CGFloat = 0
@@ -19,6 +22,8 @@ class SearchVC: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 13.0, *) { isModalInPresentation = true }
         
         collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
         collectionView.register(HeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCVCell.reuseIdentifier)
@@ -92,6 +97,15 @@ class SearchVC: UICollectionViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchItemDetail" {
+            guard let movie = sender as? Movie else { return }
+            guard let detailVC = segue.destination as? SearchItemDetailVC else { return }
+            
+            detailVC.movie = movie
+        }
+    }
+    
 }
 
 extension SearchVC {
@@ -134,6 +148,28 @@ extension SearchVC {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = Movie(uuid: "tt0848228", title: "The Avengers", released: "04 May 2012", runtime: "143 min", genre: "Action, Adventure, Sci-Fi", imdbRating: "8.0", plot: "Nick Fury is the director of S.H.I.E.L.D., an international peace-keeping agency. The agency is a who's who of Marvel Super Heroes, with Iron Man, The Incredible Hulk, Thor, Captain America, Hawkeye and Black Widow. When global security is threatened by Loki and his cohorts, Nick Fury and his team will need all their powers to save the world from disaster.", actors: "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth", director: "Joss Whedon", writer: "Joss Whedon (screenplay), Zak Penn (story), Joss Whedon (story)", producer: "Walt Disney Pictures", awards: "Nominated for 1 Oscar. Another 38 wins & 79 nominations.", poster: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg", boxOffice: "$623,279,547")
+        
+        performSegue(withIdentifier: "SearchItemDetail", sender: movie)
+//        let item = searchResults[indexPath.item]
+//
+//        collectionView.isUserInteractionEnabled = false
+//        let activityIndicator = UIActivityIndicatorView(style: .gray)
+//        activityIndicator.startAnimating()
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
+//
+//        NetworkService.shared.searchResult(forID: item.uuid, ofType: .movie) { [weak self] movie in
+//            DispatchQueue.main.async {
+//                if let movie = movie {
+//                    self?.performSegue(withIdentifier: "SearchItemDetail", sender: movie)
+//                }
+//
+//                self?.navigationItem.rightBarButtonItem = nil
+//                self?.collectionView.isUserInteractionEnabled = true
+//            }
+//        }
+    }
 }
 
 extension SearchVC: UISearchBarDelegate {
@@ -142,9 +178,10 @@ extension SearchVC: UISearchBarDelegate {
         guard let userInput = searchBar.text else { return }
         navigationItem.searchController?.isActive = false
         
-        NetworkService.shared.searchResults(resultType: .movie, searchText: userInput) { [weak self] results, totalResults in
+        NetworkService.shared.searchResults(forType: .movie, searchText: userInput) { [weak self] results, totalResults in
             if let results = results as? [SearchItem] {
                 self?.searchResults = results
+                
                 DispatchQueue.main.async {
                     self?.collectionView.reloadData()
                 }

@@ -47,13 +47,13 @@ class NetworkService {
     
     // MARK: - Search
     
-    func searchResults(resultType: ResultType, searchText: String, completion: @escaping (_ results: [Any]?, _ totalResults: Int)->()) {
+    func searchResults(forType type: ResultType, searchText: String, completion: @escaping (_ results: [Any]?, _ totalResults: Int)->()) {
         var url = URLComponents(string: baseURL)!
         
         let params = [
             "apikey": apiKey,
             "s": searchText,
-            "type": resultType.rawValue
+            "type": type.rawValue
         ]
         
         url.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
@@ -69,13 +69,40 @@ class NetworkService {
             }
             
             let searchResult = try? JSONDecoder().decode(SearchResult.self, from: data)
-            if let results = searchResult?.results, let totalResults = Int(searchResult?.totalResults ?? "") {
-                print("\(results.count) \(resultType == .movie ? "movie" : "show")(s) found")
+            if let results = searchResult?.results, let totalResults = Int(searchResult?.totalResults ?? "0") {
+                print("\(results.count) \(type == .movie ? "movie" : "show")(s) found")
                 completion(results, totalResults)
             } else {
                 print("No movies found")
                 completion(nil, 0)
             }
+        }.resume()
+    }
+    
+    func searchResult(forID id: String, ofType type: ResultType, completion: @escaping (_ result: Any?)->()) {
+        var url = URLComponents(string: baseURL)!
+        
+        let params = [
+            "apikey": apiKey,
+            "i": id,
+            "plot": "full"
+        ]
+        
+        url.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
+        
+        URLSession.shared.dataTask(with: url.url!) { (data, response, error) in
+            guard let data = data else {
+                if let error = error {
+                    print("Failed to fetch search result: \(error.localizedDescription)")
+                }
+                print("TODO: process response")
+                completion(nil)
+                return
+            }
+            
+            let result = try? JSONDecoder().decode(Movie.self, from: data)
+            print("\(type) \(result != nil ? "" : "not ")found")
+            completion(result)
         }.resume()
     }
     
