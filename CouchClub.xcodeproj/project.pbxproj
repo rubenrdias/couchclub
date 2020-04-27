@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		53153CC02456253F0089AEA7 /* HeaderCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CBF2456253F0089AEA7 /* HeaderCVCell.swift */; };
 		53153CC2245625950089AEA7 /* SearchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CC1245625950089AEA7 /* SearchItemCell.swift */; };
+		531FD5562456C087003BB776 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531FD5552456C087003BB776 /* UIImage.swift */; };
 		534BFB9D2454DDB500F9F772 /* Watchlists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */; };
 		534BFBA02454DE8800F9F772 /* Chatrooms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */; };
 		534BFBA22454DED600F9F772 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFBA12454DED600F9F772 /* Settings.storyboard */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		53153CBF2456253F0089AEA7 /* HeaderCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCVCell.swift; sourceTree = "<group>"; };
 		53153CC1245625950089AEA7 /* SearchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCell.swift; sourceTree = "<group>"; };
+		531FD5552456C087003BB776 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Watchlists.storyboard; sourceTree = "<group>"; };
 		534BFB9F2454DE8800F9F772 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = CouchClub/View/Storyboards/Base.lproj/Chatrooms.storyboard; sourceTree = "<group>"; };
 		534BFBA12454DED600F9F772 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				534BFBA52454E49800F9F772 /* UIView.swift */,
+				531FD5552456C087003BB776 /* UIImage.swift */,
 				53CD8B9C245593FD00E7FEB0 /* UIFont.swift */,
 				53CD8B98245586C700E7FEB0 /* UILabel.swift */,
 				53CD8B9A24558A0E00E7FEB0 /* UIColor.swift */,
@@ -195,9 +198,9 @@
 		53B7CDDE2454A216007395EE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				53C0B1FB2454D7EB0019640D /* Storyboards */,
 				53153CBE245624D20089AEA7 /* Headers and Footers */,
 				53153CBB245624A50089AEA7 /* Cells */,
-				53C0B1FB2454D7EB0019640D /* Storyboards */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */,
 				53CD8B9D245593FD00E7FEB0 /* UIFont.swift in Sources */,
 				537C14342455CDF9005FC745 /* Show.swift in Sources */,
+				531FD5562456C087003BB776 /* UIImage.swift in Sources */,
 				537C14302455C8DA005FC745 /* Watchlist.swift in Sources */,
 				53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */,
 			);

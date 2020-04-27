@@ -50,14 +50,12 @@ class WatchlistCell: UICollectionViewCell {
     
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
+        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
-//        iv.layer.cornerRadius = 8
-//        iv.clipsToBounds = true
         return iv
     }()
     
     private func setupImage() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -69,6 +67,7 @@ class WatchlistCell: UICollectionViewCell {
     
     private lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [titleTextLabel, subtitleTextLabel])
+        sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis = .vertical
         return sv
     }()
@@ -85,7 +84,6 @@ class WatchlistCell: UICollectionViewCell {
     }()
     
     private func setupText() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),

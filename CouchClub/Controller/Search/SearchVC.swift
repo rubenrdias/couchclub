@@ -35,12 +35,16 @@ class SearchVC: UICollectionViewController {
         super.viewDidLoad()
         
         collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
+        collectionView.register(HeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCVCell.reuseIdentifier)
         
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.scopeButtonTitles = ["Movies", "Shows"]
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for a \(searchType) title"
         navigationItem.searchController = searchController
+        
+        print("TODO: remove next statement")
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     override func viewDidLayoutSubviews() {
@@ -73,19 +77,19 @@ class SearchVC: UICollectionViewController {
             } else {
                 usableWidth = collectionView.bounds.width - 2 * 16
             }
-            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
+            collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
         } else {
             if UIDevice.current.orientation == .portrait {
                 itemsPerRow = 3
                 usableWidth = collectionView.bounds.width - 2 * 16
-                collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
+                collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
             } else {
                 itemsPerRow = 7
                 usableWidth = collectionView.bounds.width - 16 - 44
                 if UIDevice.current.orientation == .landscapeRight {
-                    collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 44)
+                    collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 44)
                 } else {
-                    collectionView.contentInset = .init(top: 16, left: 44, bottom: 16, right: 16)
+                    collectionView.contentInset = .init(top: 8, left: 44, bottom: 8, right: 16)
                 }
             }
         }
@@ -99,6 +103,7 @@ class SearchVC: UICollectionViewController {
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = .init(width: width, height: height)
+        layout.headerReferenceSize = .init(width: usableWidth, height: 44)
     }
 
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
@@ -108,6 +113,14 @@ class SearchVC: UICollectionViewController {
 }
 
 extension SearchVC {
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCVCell.reuseIdentifier, for: indexPath) as! HeaderCVCell
+        headerView.delegate = self
+        headerView.text = "results"
+        headerView.showButtons = true
+        return headerView
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchResults.count
@@ -138,6 +151,18 @@ extension SearchVC: UISearchBarDelegate {
                 }
             }
         }
+    }
+    
+}
+
+extension SearchVC: HeaderButtonsDelegate {
+    
+    func didTapThumbnailsButton() {
+        print("TODO: change to thumbnails mode")
+    }
+    
+    func didTapListButton() {
+        print("TODO: change to list mode")
     }
     
 }

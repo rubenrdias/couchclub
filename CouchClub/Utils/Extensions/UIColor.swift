@@ -11,6 +11,7 @@ import UIKit
 extension UIColor {
     
     enum AssetColorName: String {
+        case dynamicLabel = "Dynamic.Label"
         case staticGray2 = "Static.Gray2"
     }
     
