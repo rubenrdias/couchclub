@@ -44,8 +44,8 @@ class WatchlistCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         imageView.image = nil
-        titleTextLabel.text = nil
-        subtitleTextLabel.text = nil
+        titleLabel.text = nil
+        subtitleLabel.text = nil
     }
     
     private lazy var imageView: UIImageView = {
@@ -66,20 +66,20 @@ class WatchlistCell: UICollectionViewCell {
     }
     
     private lazy var stackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [titleTextLabel, subtitleTextLabel])
+        let sv = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis = .vertical
         return sv
     }()
     
-    private lazy var titleTextLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.title2, .bold, UIColor.white)
+    private lazy var titleLabel: UILabel = {
+        let lbl = UILabel.accessibleLabel(.title2, .bold, UIColor.white)
         lbl.numberOfLines = 0
         return lbl
     }()
     
-    private lazy var subtitleTextLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.staticGray2))
+    private lazy var subtitleLabel: UILabel = {
+        let lbl = UILabel.accessibleLabel(.footnote, .regular, UIColor.colorAsset(.staticGray2))
         return lbl
     }()
     
@@ -97,11 +97,11 @@ class WatchlistCell: UICollectionViewCell {
     }
     
     private func updateTitle() {
-        self.titleTextLabel.text = title
+        self.titleLabel.text = title
     }
     
     private func updateSubtitle() {
-        self.subtitleTextLabel.text = subtitle
+        self.subtitleLabel.text = subtitle
     }
     
     required init?(coder: NSCoder) {

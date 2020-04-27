@@ -65,19 +65,9 @@ class SearchVC: UICollectionViewController {
             }
             collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
         } else {
-            if UIDevice.current.orientation == .portrait {
-                itemsPerRow = 3
-                usableWidth = collectionView.bounds.width - 2 * 16
-                collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
-            } else {
-                itemsPerRow = 7
-                usableWidth = collectionView.bounds.width - 16 - 44
-                if UIDevice.current.orientation == .landscapeRight {
-                    collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 44)
-                } else {
-                    collectionView.contentInset = .init(top: 8, left: 44, bottom: 8, right: 16)
-                }
-            }
+            itemsPerRow = 3
+            usableWidth = collectionView.bounds.width - 2 * 16
+            collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
         }
         
         updateItemSize()
@@ -130,19 +120,21 @@ extension SearchVC {
         let item = searchResults[indexPath.item]
         cell.searchItem = item
         
-        if item.poster != "N/A", let url = URL(string: item.poster) {
-            NetworkService.shared.downloadImage(url) { [weak cell] image in
-                DispatchQueue.main.async {
-                    if let image = image {
-                        cell?.updateImage(image, for: item.uuid)
-                    } else {
-                        cell?.setImageUnavailable()
-                    }
-                }
-            }
-        } else {
-            cell.setImageUnavailable()
-        }
+        cell.updateImage(UIImage(named: "avengers_1")!, for: item.uuid)
+        
+//        if item.poster != "N/A", let url = URL(string: item.poster) {
+//            NetworkService.shared.downloadImage(url) { [weak cell] image in
+//                DispatchQueue.main.async {
+//                    if let image = image {
+//                        cell?.updateImage(image, for: item.uuid)
+//                    } else {
+//                        cell?.setImageUnavailable()
+//                    }
+//                }
+//            }
+//        } else {
+//            cell.setImageUnavailable()
+//        }
         
         return cell
     }

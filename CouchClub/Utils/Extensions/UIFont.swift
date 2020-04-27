@@ -16,7 +16,7 @@ extension UIFont {
         return metrics.scaledFont(for: customFont)
     }
     
-    static private func translatedFontSize(for style: UIFont.TextStyle) -> CGFloat {
+    static func translatedFontSize(for style: UIFont.TextStyle) -> CGFloat {
         switch style {
         case .body:
             return 17

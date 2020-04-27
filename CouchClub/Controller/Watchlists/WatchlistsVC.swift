@@ -40,19 +40,9 @@ class WatchlistsVC: UICollectionViewController {
             usableWidth = collectionView.bounds.width - 2 * 16
             collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         } else {
-            if UIDevice.current.orientation == .portrait {
-                itemsPerRow = 1
-                usableWidth = collectionView.bounds.width - 2 * 16
-                collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
-            } else {
-                itemsPerRow = 2
-                usableWidth = collectionView.bounds.width - 16 - 44
-                if UIDevice.current.orientation == .landscapeRight {
-                    collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 44)
-                } else {
-                    collectionView.contentInset = .init(top: 16, left: 44, bottom: 16, right: 16)
-                }
-            }
+            itemsPerRow = 1
+            usableWidth = collectionView.bounds.width - 2 * 16
+            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         }
         
         updateItemSize()
