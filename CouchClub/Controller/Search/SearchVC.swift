@@ -10,7 +10,6 @@ import UIKit
 
 class SearchVC: UICollectionViewController {
     
-    var searchType: String = "movie"
     var searchResults = [SearchItem]()
     
     private var itemsPerRow: Int = 3
@@ -25,9 +24,8 @@ class SearchVC: UICollectionViewController {
         collectionView.register(HeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCVCell.reuseIdentifier)
         
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.scopeButtonTitles = ["Movies", "Shows"]
         searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search for a \(searchType) title"
+        searchController.searchBar.placeholder = "Search for a movie title"
         navigationItem.searchController = searchController
     }
     
@@ -140,13 +138,10 @@ extension SearchVC {
 
 extension SearchVC: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        searchType = selectedScope == 0 ? "movie" : "series"
-        navigationItem.searchController?.searchBar.placeholder = "Search for a \(searchType) title"
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let userInput = searchBar.text else { return }
+        navigationItem.searchController?.isActive = false
+        
         NetworkService.shared.searchResults(resultType: .movie, searchText: userInput) { [weak self] results, totalResults in
             if let results = results as? [SearchItem] {
                 self?.searchResults = results
