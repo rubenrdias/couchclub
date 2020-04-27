@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func performDefaultObjectsCustomization() {
         UITabBar.appearance().tintColor = UIColor.systemOrange
+        UIToolbar.appearance().tintColor = UIColor.systemOrange
         UINavigationBar.appearance().tintColor = UIColor.systemOrange
     }
     

@@ -23,8 +23,6 @@ class SearchVC: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 13.0, *) { isModalInPresentation = true }
-        
         collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
         collectionView.register(HeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCVCell.reuseIdentifier)
         
@@ -32,6 +30,7 @@ class SearchVC: UICollectionViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for a movie title"
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     override func viewDidLayoutSubviews() {
