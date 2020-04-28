@@ -14,9 +14,9 @@ extension UIColor {
         case dynamicBackground = "Dynamic.Background"
         case dynamicLabel = "Dynamic.Label"
         case dynamicLabelSecondary = "Dynamic.LabelSecondary"
+        case dynamicMutedHighlight = "Dynamic.MutedHighlight"
         case dynamicSeparator = "Dynamic.Separator"
         case staticGray2 = "Static.Gray2"
-        case staticMutedHighlight = "Static.MutedHighlight"
     }
     
     static func colorAsset(_ name: AssetColorName) -> UIColor {
