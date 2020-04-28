@@ -26,7 +26,7 @@ class WatchlistCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = 4
         
         setupImage()
         setupText()

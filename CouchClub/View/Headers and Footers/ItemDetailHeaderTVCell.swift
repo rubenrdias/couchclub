@@ -26,7 +26,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
         iv.backgroundColor = .lightGray
-        iv.layer.cornerRadius = 8
+        iv.layer.cornerRadius = 4
         iv.clipsToBounds = true
         return iv
     }()
@@ -35,8 +35,9 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
             NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .width, multiplier: 3/2, constant: 0),
-            imageView.heightAnchor.constraint(equalToConstant: 150),
+            
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         ])
     }
@@ -51,7 +52,8 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     
     private lazy var titleLabel: UILabel = {
         let lbl = UILabel.standardLabel(.title2, .bold, UIColor.colorAsset(.dynamicLabel))
-        lbl.numberOfLines = 0
+        lbl.numberOfLines = 2
+        lbl.adjustsFontSizeToFitWidth = true
         return lbl
     }()
     
@@ -144,7 +146,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
             spacer2.heightAnchor.constraint(equalToConstant: 16),
             
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8),
+            stackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }

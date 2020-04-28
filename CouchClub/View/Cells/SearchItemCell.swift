@@ -33,7 +33,7 @@ class SearchItemCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 8
+        iv.layer.cornerRadius = 4
         iv.clipsToBounds = true
         return iv
     }()

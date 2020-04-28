@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,7 +36,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="bkj-OG-pgV" kind="show" identifier="SearchItemDetail" id="vua-MO-euQ"/>
+                        <segue destination="TXa-rT-E80" kind="show" identifier="SearchItemDetail" id="VEp-jI-IWg"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CvN-Vl-bLj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -43,29 +44,22 @@
             <point key="canvasLocation" x="1139.1304347826087" y="102.45535714285714"/>
         </scene>
         <!--Search Item DetailVC-->
-        <scene sceneID="OtJ-Sw-Gvm">
+        <scene sceneID="RwF-AT-Dby">
             <objects>
-                <tableViewController id="bkj-OG-pgV" customClass="SearchItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tyW-jm-Vch">
+                <viewController id="TXa-rT-E80" customClass="SearchItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cjV-YB-HNA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="bkj-OG-pgV" id="B97-ml-US9"/>
-                            <outlet property="delegate" destination="bkj-OG-pgV" id="ff6-P1-d3b"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="EW0-dO-G0h">
-                        <barButtonItem key="rightBarButtonItem" title="Start Chatroom" id="YbW-zz-fmh">
-                            <connections>
-                                <action selector="startChatroomTapped:" destination="bkj-OG-pgV" id="s3B-gv-uov"/>
-                            </connections>
-                        </barButtonItem>
+                        <viewLayoutGuide key="safeArea" id="ruV-We-S7d"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="KbF-sL-aDw">
+                        <barButtonItem key="rightBarButtonItem" title="Start Chatroom" id="xLF-yD-xjo"/>
                     </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3UM-xE-OPo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7my-0W-Xck" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2058" y="102"/>
+            <point key="canvasLocation" x="2000" y="102"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Twz-u4-40F">

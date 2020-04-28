@@ -27,6 +27,7 @@
 		538D29EF2454978800CDB99F /* CouchClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29EE2454978800CDB99F /* CouchClubTests.swift */; };
 		53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
 		53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */; };
+		53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2F24580D160076B148 /* HighlightTVCell.swift */; };
 		53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B7CDE32454A52A007395EE /* ChatroomsVC.swift */; };
 		53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F42454A8810019640D /* SettingsVC.swift */; };
 		53C0B1F72454AF2B0019640D /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F62454AF2B0019640D /* WatchlistCell.swift */; };
@@ -72,6 +73,7 @@
 		538D29F02454978800CDB99F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53AE644A2455DE4E00D7F817 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailHeaderTVCell.swift; sourceTree = "<group>"; };
+		53B34E2F24580D160076B148 /* HighlightTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTVCell.swift; sourceTree = "<group>"; };
 		53B7CDE32454A52A007395EE /* ChatroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomsVC.swift; sourceTree = "<group>"; };
 		53C0B1F42454A8810019640D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		53C0B1F62454AF2B0019640D /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			children = (
 				53C0B1F62454AF2B0019640D /* WatchlistCell.swift */,
 				53153CC1245625950089AEA7 /* SearchItemCell.swift */,
+				53B34E2F24580D160076B148 /* HighlightTVCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				53CD8B9D245593FD00E7FEB0 /* UIFont.swift in Sources */,
 				537C14342455CDF9005FC745 /* Show.swift in Sources */,
 				53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */,
+				53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */,
 				531FD5562456C087003BB776 /* UIImage.swift in Sources */,
 				537C14302455C8DA005FC745 /* Watchlist.swift in Sources */,
 				53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */,
