@@ -65,10 +65,8 @@ final class NetworkService {
             
             let searchResult = try? JSONDecoder().decode(SearchResult.self, from: data)
             if let results = searchResult?.results, let totalResults = Int(searchResult?.totalResults ?? "0") {
-                print("\(results.count) \(type == .movie ? "movie" : "show")(s) found")
                 completion(results, totalResults)
             } else {
-                print("No movies found")
                 completion(nil, 0)
             }
         }.resume()
@@ -96,15 +94,12 @@ final class NetworkService {
                 return
             }
             
-            switch type {
-            case .movie:
-                let movie = try? JSONDecoder().decode(SearchItemMovie.self, from: data)
-                print("Movie \(movie != nil ? "" : "not ")found")
+            if type == .movie, let movie = try? JSONDecoder().decode(SearchItemMovie.self, from: data) {
                 completion(movie)
-            case .series:
-                let show = try? JSONDecoder().decode(SearchItemShow.self, from: data)
-                print("Show \(show != nil ? "" : "not ")found")
+            } else if type == .series, let show = try? JSONDecoder().decode(SearchItemShow.self, from: data) {
                 completion(show)
+            } else {
+                completion (nil)
             }
         }.resume()
     }
