@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchItemDetailVC: UIViewController {
+class ItemDetailVC: UIViewController {
     
     private enum Attribute: String {
         case actors = "actors"
@@ -17,12 +17,17 @@ class SearchItemDetailVC: UIViewController {
         case plot = "plot"
         case producer = "producer"
         case writers = "writers"
+        case year = "year"
+        case totalSeasons = "seasons"
+        case releasedOn = "released on"
+        case runtime = "runtime"
     }
     
     var tableView: UITableView!
     
-    var movie: Movie!
-    private let attributes: [Attribute] = [.plot, .actors, .boxOffice, .director, .writers, .producer]
+    var item: Item!
+    private var attributes = [Attribute]()
+    private var highlightAttributes = [Attribute]()
     
     let headerCellID = "headerCellID"
     
@@ -30,6 +35,14 @@ class SearchItemDetailVC: UIViewController {
         super.viewDidLoad()
         
         if #available(iOS 13.0, *) { isModalInPresentation = true }
+        
+        if item.isKind(of: Movie.self) {
+            attributes = [.plot, .actors, .boxOffice, .director, .writers, .producer]
+            highlightAttributes = [.releasedOn, .runtime]
+        } else {
+            attributes = [.plot, .actors, .writers, .year]
+            highlightAttributes = [.releasedOn, .runtime]
+        }
         
         setupToolbar()
         setupTableView()
@@ -43,6 +56,10 @@ class SearchItemDetailVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setToolbarHidden(true, animated: true)
+    }
+    
+    deinit {
+        print("-- DEINIT -- Item Detail VC")
     }
     
     @IBAction func startChatroomTapped(_ sender: UIBarButtonItem) {
@@ -99,24 +116,39 @@ class SearchItemDetailVC: UIViewController {
     
     private func text(_ attribute: Attribute) -> String {
         switch attribute {
-        case .actors:
-            return movie.actors
-        case .boxOffice:
-            return movie.boxOffice
-        case .director:
-            return movie.director
-        case .plot:
-            return movie.plot
-        case .producer:
-            return movie.producer
-        case .writers:
-            return movie.writer
+            case .actors:
+                return item.actors
+            case .boxOffice:
+                if let movie = item as? Movie {
+                    return movie.boxOffice
+                }
+            case .director:
+                return item.director
+            case .plot:
+                return item.plot
+            case .producer:
+                if let movie = item as? Movie {
+                    return movie.production
+                }
+            case .writers:
+                return item.writer
+            case .year:
+                return item.year
+            case .totalSeasons:
+                if let show = item as? Show, let seasons = Int(show.totalSeasons) {
+                    return "\(seasons) season\(seasons == 1 ? "" : "s")"
+                }
+        case .releasedOn:
+            return item.released
+        case .runtime:
+            return item.runtime
         }
+        return ""
     }
     
 }
 
-extension SearchItemDetailVC: UITableViewDataSource, UITableViewDelegate {
+extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -125,7 +157,7 @@ extension SearchItemDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ItemDetailHeaderTVCell.reuseIdentifier) as! ItemDetailHeaderTVCell
-            headerView.updateText(movie)
+            headerView.fillDetails(item)
             return headerView
         } else {
             return nil
@@ -169,8 +201,10 @@ extension SearchItemDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: HighlightTVCell.reuseIdentifier, for: indexPath) as! HighlightTVCell
-            cell.highlightLeft = (movie.released, "Released on")
-            cell.highlightRight = (movie.runtime, "Runtime")
+            let leftAttribute = highlightAttributes[0]
+            let rightAttribute = highlightAttributes[1]
+            cell.highlightLeft = (text(leftAttribute), leftAttribute.rawValue)
+            cell.highlightRight = (text(rightAttribute), rightAttribute.rawValue)
             return cell
         } else {
             let cell = UITableViewCell()

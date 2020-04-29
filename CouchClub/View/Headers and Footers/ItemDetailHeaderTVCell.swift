@@ -35,7 +35,6 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
             NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .width, multiplier: 3/2, constant: 0),
-            
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
@@ -151,12 +150,23 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         ])
     }
     
-    func updateText(_ movie: Movie) {
-        titleLabel.text = movie.title
-        genreLabel.text = movie.genre
-        awardsLabel.text = movie.awards
-        ratingsLabel.text = "\(movie.imdbRating)/10"
-        imageView.image = UIImage(named: "avengers_1")
+    func fillDetails(_ item: Item) {
+        titleLabel.text = item.title
+        genreLabel.text = item.genre
+        awardsLabel.text = item.awards
+        ratingsLabel.text = "\(item.imdbRating)/10"
+        
+        if let image = LocalStorage.shared.retrieve(item.id) {
+            imageView.image = image
+        } else {
+            setImageUnavailable()
+        }
+    }
+    
+    private func setImageUnavailable() {
+        imageView.contentMode = .center
+        imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
+        imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     
     @objc private func seenButtonTapped() {

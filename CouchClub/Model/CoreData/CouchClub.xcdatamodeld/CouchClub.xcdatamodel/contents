@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Item" representedClassName="Item" isAbstract="YES" syncable="YES">
+        <attribute name="actors" attributeType="String"/>
+        <attribute name="awards" attributeType="String"/>
+        <attribute name="director" attributeType="String"/>
+        <attribute name="genre" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="imdbRating" attributeType="String"/>
+        <attribute name="plot" attributeType="String"/>
+        <attribute name="poster" attributeType="String"/>
+        <attribute name="rated" attributeType="String"/>
+        <attribute name="released" attributeType="String"/>
+        <attribute name="runtime" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="writer" attributeType="String"/>
+        <attribute name="year" attributeType="String"/>
+    </entity>
+    <entity name="Movie" representedClassName="Movie" parentEntity="Item" syncable="YES">
+        <attribute name="boxOffice" attributeType="String"/>
+        <attribute name="production" attributeType="String"/>
+    </entity>
+    <entity name="Show" representedClassName="Show" parentEntity="Item" syncable="YES">
+        <attribute name="totalSeasons" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Item" positionX="-36" positionY="9" width="128" height="253"/>
+        <element name="Movie" positionX="-54" positionY="-9" width="128" height="73"/>
+        <element name="Show" positionX="-18" positionY="27" width="128" height="58"/>
+    </elements>
 </model>

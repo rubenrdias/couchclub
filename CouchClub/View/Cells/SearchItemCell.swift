@@ -50,7 +50,7 @@ class SearchItemCell: UICollectionViewCell {
     }
     
     func updateImage(_ image: UIImage, for uuid: String) {
-        if searchItem.uuid == uuid {
+        if searchItem.id == uuid {
             self.imageView.image = image
         }
     }

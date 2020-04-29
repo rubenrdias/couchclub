@@ -3,18 +3,26 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "SearchItemDetailVC.viewDidLoad():SearchItemDetailVC.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "navigationController">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "UIView.setGradientBackground(colors:locations:):UIView.swift">
          <PersistentStrings>
             <PersistentString
                value = "bounds">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in NetworkService.downloadImage(_:completion:):NetworkService.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "url.absoluteString">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SearchItemDetailVC.viewDidLoad():SearchItemDetailVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "navigationController">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
