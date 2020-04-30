@@ -137,12 +137,19 @@ extension UIColor {
         case dynamicLabelSecondary = "Dynamic.LabelSecondary"
         case dynamicSeparator = "Dynamic.Separator"
         case staticGray2 = "Static.Gray2"
-        case staticHighlightSecondary = "Static.HighlightSecondary"
     }
     
     static func colorAsset(_ name: AssetColorName) -> UIColor {
         return UIColor(named: name.rawValue) ?? UIColor.black
     }
+    
+}
+
+// MARK: - Notification.Name
+
+extension Notification.Name {
+    
+    static let watchlistsChanged = Notification.Name("watchlistsChanged")
     
 }
 

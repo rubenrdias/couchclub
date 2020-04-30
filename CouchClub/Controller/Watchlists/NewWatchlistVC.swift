@@ -23,7 +23,7 @@ class NewWatchlistVC: UIViewController {
     let placeholderText = "Watchlist title..."
     let titleRegex = NSRegularExpression(".*")
     
-    var itemType: ItemType!
+    var itemType: ItemType! = .movie
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +38,10 @@ class NewWatchlistVC: UIViewController {
         createWatchlistButton.alpha = 0
         createWatchlistButton.isEnabled = false
         
-        buttonTapped(radioButtons[0])
+        radioButtons[0].titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
         
         setupTitleToolbar()
-        resetTextView()
+        resetTextView(setPlaceholder: false)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             self?.textView.becomeFirstResponder()
@@ -59,7 +59,7 @@ class NewWatchlistVC: UIViewController {
     @IBAction func createButtonTapped(_ sender: UIButton) {
         let title = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         DataCoordinator.shared.createWatchlist(title, itemType) { [weak self] (id, _) in
-            print("TODO: handle possible errors")
+            // TODO: handle errors
             if let id = id {
                 self?.dismiss(animated: true, completion: {
                     self?.delegate?.didCreateWatchlist(id)
@@ -74,13 +74,9 @@ class NewWatchlistVC: UIViewController {
     @IBAction func buttonTapped(_ sender: UIButton) {
         radioButtons.forEach {
             if $0.tag == sender.tag {
-                $0.backgroundColor = UIColor.systemOrange
-                $0.setTitleColor(UIColor.white, for: .normal)
-                $0.titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
+                highlightButton($0)
             } else {
-                $0.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
-                $0.setTitleColor(UIColor.colorAsset(.dynamicLabel), for: .normal)
-                $0.titleLabel?.font = UIFont.translatedFont(for: .body, .regular)
+                restoreButton($0)
             }
         }
         
@@ -91,6 +87,18 @@ class NewWatchlistVC: UIViewController {
         }
         
         validateInputs()
+    }
+    
+    private func highlightButton(_ button: UIButton) {
+        button.backgroundColor = UIColor.systemOrange
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
+    }
+    
+    private func restoreButton(_ button: UIButton) {
+        button.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        button.setTitleColor(UIColor.colorAsset(.dynamicLabel), for: .normal)
+        button.titleLabel?.font = UIFont.translatedFont(for: .body, .regular)
     }
     
     private func setupTitleToolbar() {
@@ -110,8 +118,8 @@ class NewWatchlistVC: UIViewController {
         validateInputs()
     }
     
-    func resetTextView() {
-        textView.text = placeholderText
+    func resetTextView(setPlaceholder: Bool = true) {
+        textView.text = setPlaceholder ? placeholderText : nil
         textView.font = UIFont.translatedFont(for: .body, .regular)
         textView.textColor = UIColor.colorAsset(.dynamicLabelSecondary)
     }
@@ -144,7 +152,7 @@ class NewWatchlistVC: UIViewController {
 extension NewWatchlistVC: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == placeholderText {
+        if textView.text.isEmpty || textView.text == placeholderText  {
             textView.text = ""
             textView.font = UIFont.translatedFont(for: .title2, .semibold)
             textView.textColor = UIColor.colorAsset(.dynamicLabel)

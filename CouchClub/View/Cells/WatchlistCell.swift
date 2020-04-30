@@ -92,6 +92,13 @@ class WatchlistCell: UICollectionViewCell {
         ])
     }
     
+    func setImageUnavailable() {
+        contentView.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        imageView.contentMode = .center
+        imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
+        imageView.image = UIImage.iconAsset(.imageUnavailable)
+    }
+    
     private func updateImage() {
         self.imageView.image = image
     }

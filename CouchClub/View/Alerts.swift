@@ -19,4 +19,15 @@ class Alerts {
         return ac
     }
     
+    static func deletionAlert(title: String?, message: String?, action: ((UIAlertAction) -> Void)?) -> UIAlertController {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        ac.addAction(UIAlertAction(title: "Confirm", style: .destructive, handler: action))
+        
+        return ac
+    }
+    
 }

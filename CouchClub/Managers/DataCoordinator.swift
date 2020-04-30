@@ -18,9 +18,21 @@ final class DataCoordinator {
             .ofType(type)
             .build()
         
+        // TODO: add to firebase
+        // TODO: handle errors
+        
+        NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
         completion(watchlist.id, nil)
-        print("TODO: save to firebase")
-        print("TODO: handle error catching")
+    }
+    
+    func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
+        // TODO: delete from firebase
+        // TODO: handle errors
+        
+        LocalDatabase.shared.deleteWatchlist(watchlist)
+        
+        NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
+        completion(nil)
     }
     
     func getMovie(_ id: String, completion: @escaping (Movie?)->() ) {

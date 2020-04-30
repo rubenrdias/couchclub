@@ -63,7 +63,7 @@ final class NetworkService {
                 if let error = error {
                     print("Failed to fetch search results: \(error.localizedDescription)")
                 }
-                print("TODO: process response")
+                // TODO: process response
                 completion(nil, 0)
                 return
             }
@@ -94,7 +94,7 @@ final class NetworkService {
                 if let error = error {
                     print("Failed to fetch search result: \(error.localizedDescription)")
                 }
-                print("TODO: process response")
+                // TODO: process response
                 completion(nil)
                 return
             }
@@ -117,7 +117,7 @@ final class NetworkService {
                 if let error = error {
                     print("Failed to fetch search results: \(error.localizedDescription)\n\(url)")
                 }
-                print("TODO: process response")
+                // TODO: process response
                 completion(nil)
                 return
             }

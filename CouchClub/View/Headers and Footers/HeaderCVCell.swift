@@ -27,6 +27,8 @@ class HeaderCVCell: UICollectionReusableView {
         didSet { toggleButtonVisibility() }
     }
     
+    var activeButton: Int = 1
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -105,14 +107,15 @@ class HeaderCVCell: UICollectionReusableView {
     }
     
     @objc private func buttonTapped(sender: UIButton) {
-        if sender.tintColor == UIColor.systemOrange { return }
+        if activeButton == sender.tag { return }
         
+        activeButton = sender.tag
         if sender.tag == 0 {
-            sender.tintColor = UIColor.systemOrange
+            listButton.tintColor = UIColor.systemOrange
             thumbnailsButton.tintColor = UIColor.colorAsset(.dynamicLabel)
             delegate?.didTapListButton()
         } else {
-            sender.tintColor = UIColor.systemOrange
+            thumbnailsButton.tintColor = UIColor.systemOrange
             listButton.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
             delegate?.didTapThumbnailsButton()
         }

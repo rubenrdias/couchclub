@@ -14,6 +14,8 @@ final class LocalDatabase {
     
     let coreDataQueue = DispatchQueue(label: "com.couchclub.coreDataQueue")
     
+    // MARK: - Watchlists
+    
     func fetchWatchlist(_ id: UUID) -> Watchlist? {
         coreDataQueue.sync {
             let fetchRequest = Watchlist.createFetchRequest()
@@ -30,6 +32,32 @@ final class LocalDatabase {
             }
         }
     }
+    
+    func deleteWatchlist(_ watchlist: Watchlist) {
+        coreDataQueue.sync {
+            context.delete(watchlist)
+            ad.saveContext()
+        }
+    }
+    
+    func fetchWatchlists() -> [Watchlist]? {
+        coreDataQueue.sync {
+            let fetchRequest = Watchlist.createFetchRequest()
+            // sorting
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+            
+            do {
+                let watchlists = try context.fetch(fetchRequest)
+                return watchlists
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching Watchlists: \(error)")
+                return nil
+            }
+        }
+    }
+    
+    // MARK: - Items
     
     func fetchItem(_ id: String) -> Item? {
         coreDataQueue.sync {
@@ -48,20 +76,42 @@ final class LocalDatabase {
         }
     }
     
+    // MARK: - Database Reset (debugging)
+    
     func clearDatabase() {
         coreDataQueue.sync {
-            let fetchRequest = Item.createFetchRequest()
-            
-            do {
-                let items = try context.fetch(fetchRequest)
-                for item in items {
-                    context.delete(item)
-                }
-                ad.saveContext()
-            } catch {
-                let error = error as NSError
-                print("Core Data: Error fetching Items: \(error)")
+            deleteWatchlists()
+            deleteItems()
+        }
+    }
+    
+    private func deleteItems() {
+        let fetchRequest = Item.createFetchRequest()
+        
+        do {
+            let items = try context.fetch(fetchRequest)
+            for item in items {
+                context.delete(item)
             }
+            ad.saveContext()
+        } catch {
+            let error = error as NSError
+            print("Core Data: Error deleting Items: \(error)")
+        }
+    }
+    
+    private func deleteWatchlists() {
+        let fetchRequest = Watchlist.createFetchRequest()
+        
+        do {
+            let watchlists = try context.fetch(fetchRequest)
+            for watchlist in watchlists {
+                context.delete(watchlist)
+            }
+            ad.saveContext()
+        } catch {
+            let error = error as NSError
+            print("Core Data: Error deleting Watchlists: \(error)")
         }
     }
     

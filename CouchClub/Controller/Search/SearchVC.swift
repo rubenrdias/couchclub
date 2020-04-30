@@ -223,11 +223,11 @@ extension SearchVC: UISearchBarDelegate {
 extension SearchVC: HeaderButtonsDelegate {
     
     func didTapThumbnailsButton() {
-        print("TODO: change to thumbnails mode")
+        // TODO: change to thumbnails
     }
     
     func didTapListButton() {
-        print("TODO: change to list mode")
+        // TODO: change to list
     }
     
 }

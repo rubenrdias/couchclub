@@ -30,11 +30,6 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Watchlists" id="dVq-Xu-1ck">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="daT-1z-Ece">
-                            <connections>
-                                <segue destination="Bq0-EL-HVo" kind="presentation" id="43i-yu-OTL"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="gYl-Ho-ti5">
                             <connections>
                                 <segue destination="C7c-yU-jlx" kind="presentation" identifier="NewWatchlistVC" id="j9J-J5-STB"/>
@@ -92,13 +87,15 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk1-bv-lxf">
                                         <rect key="frame" x="0.0" y="0.0" width="163.66666666666666" height="44"/>
-                                        <color key="backgroundColor" name="Dynamic.MutedHighlight"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="VGr-e2-DAJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="tintColor" name="Dynamic.Label"/>
-                                        <state key="normal" title="Movies"/>
+                                        <state key="normal" title="Movies">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <action selector="buttonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="AnF-ZC-dVA"/>
                                         </connections>
@@ -168,7 +165,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ax7-rh-2Ha" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5535.1999999999998" y="841.62561576354688"/>
+            <point key="canvasLocation" x="6225" y="842"/>
         </scene>
         <!--Search-->
         <scene sceneID="Uv1-5t-pVG">
@@ -176,7 +173,7 @@
                 <viewControllerPlaceholder storyboardName="Search" id="Bq0-EL-HVo" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UvZ-Xe-9Oh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5639" y="100"/>
+            <point key="canvasLocation" x="6594" y="100"/>
         </scene>
         <!--WatchlistVC-->
         <scene sceneID="WMe-iV-k2l">
@@ -198,17 +195,32 @@
                             <outlet property="delegate" destination="bjv-dN-JRy" id="Zxd-6m-cP9"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KHE-fh-pxx"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KHE-fh-pxx">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="LQr-e4-4Ay">
+                                <connections>
+                                    <segue destination="Bq0-EL-HVo" kind="presentation" identifier="SearchVC" id="ccm-eX-viH"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="more" id="ZHC-Ko-efX">
+                                <connections>
+                                    <action selector="moreButtonTapped:" destination="bjv-dN-JRy" id="uG0-Bt-uI4"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j7c-2K-M1Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6340" y="841.62561576354688"/>
+            <point key="canvasLocation" x="5948" y="100"/>
         </scene>
         <!--Watchlists-->
         <scene sceneID="oaD-Hv-u0B">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="E8A-VK-QZ9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Watchlists" image="watchlists" id="Y2Y-Nd-Kwt"/>
+                    <tabBarItem key="tabBarItem" title="Watchlists" image="watchlists" id="Y2Y-Nd-Kwt">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="vzx-PF-Phc">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
@@ -239,10 +251,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sc1-ln-x8u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4592.8000000000002" y="841.62561576354688"/>
+            <point key="canvasLocation" x="5281" y="843"/>
         </scene>
     </scenes>
     <resources>
+        <image name="more" width="24" height="24"/>
         <image name="watchlists" width="24" height="24"/>
         <namedColor name="Dynamic.Label">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

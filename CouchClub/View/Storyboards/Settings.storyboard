@@ -30,7 +30,9 @@
         <scene sceneID="FiQ-lD-JN6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M2s-kz-omD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="LwJ-Gc-Mph"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="LwJ-Gc-Mph">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="GvP-yb-6qV">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>

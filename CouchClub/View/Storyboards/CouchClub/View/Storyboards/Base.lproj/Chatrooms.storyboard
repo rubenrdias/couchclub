@@ -37,7 +37,9 @@
         <scene sceneID="Ngu-ky-lBl">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rr5-w1-Nde" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chatrooms" image="chatrooms" id="Gxn-Jq-18P"/>
+                    <tabBarItem key="tabBarItem" title="Chatrooms" image="chatrooms" id="Gxn-Jq-18P">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="2CG-lk-RIQ">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
