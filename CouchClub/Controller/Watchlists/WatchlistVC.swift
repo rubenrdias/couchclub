@@ -9,28 +9,27 @@
 import UIKit
 
 class WatchlistVC: UICollectionViewController {
+    
+    var watchlist: Watchlist!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "aaa")
+        
+        let xPosition = Double(view.bounds.width / 2) - 100
+        let yPosition = Double(view.bounds.height / 2) - 25
+        let lbl = UILabel(frame: .init(x: xPosition, y: yPosition, width: 200, height: 50))
+        lbl.text = watchlist.title
+        lbl.numberOfLines = 0
+        lbl.textAlignment = .center
+        view.addSubview(lbl)
+    }
+    
+    deinit {
+        print("-- DEINIT -- Watchlist VC")
     }
 
 }
 
 extension WatchlistVC {
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "aaa", for: indexPath)
-    
-        return cell
-    }
     
 }

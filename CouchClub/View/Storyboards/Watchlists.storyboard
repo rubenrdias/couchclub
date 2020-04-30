@@ -37,7 +37,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="gYl-Ho-ti5">
                             <connections>
-                                <segue destination="C7c-yU-jlx" kind="presentation" id="j9J-J5-STB"/>
+                                <segue destination="C7c-yU-jlx" kind="presentation" identifier="NewWatchlistVC" id="j9J-J5-STB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -58,7 +58,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8W-0A-1F2">
-                                <rect key="frame" x="16" y="120" width="343" height="44"/>
+                                <rect key="frame" x="16" y="64" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="XIb-Zb-xFI"/>
                                 </constraints>
@@ -67,7 +67,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Watchlist title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fTT-8j-JuF">
-                                <rect key="frame" x="12" y="164" width="351" height="44"/>
+                                <rect key="frame" x="12" y="108" width="351" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="DeG-VI-OjC"/>
                                 </constraints>
@@ -79,7 +79,7 @@
                                 </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR TRACKING" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qrw-CD-BvX">
-                                <rect key="frame" x="16" y="240" width="343" height="44"/>
+                                <rect key="frame" x="16" y="184" width="343" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="bCa-R1-To6"/>
                                 </constraints>
@@ -88,7 +88,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2Ae-rh-zfU">
-                                <rect key="frame" x="16" y="284" width="343" height="44"/>
+                                <rect key="frame" x="16" y="228" width="343" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk1-bv-lxf">
                                         <rect key="frame" x="0.0" y="0.0" width="163.66666666666666" height="44"/>
@@ -142,7 +142,7 @@
                             <constraint firstItem="2Ae-rh-zfU" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="IId-hn-xUy"/>
                             <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="C8W-0A-1F2" secondAttribute="trailing" constant="16" id="JF4-1N-WFj"/>
                             <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="2Ae-rh-zfU" secondAttribute="trailing" constant="16" id="NNs-aG-asT"/>
-                            <constraint firstItem="C8W-0A-1F2" firstAttribute="top" secondItem="Gdd-Zd-Oms" secondAttribute="top" constant="64" id="Pnf-H7-IOY"/>
+                            <constraint firstItem="C8W-0A-1F2" firstAttribute="top" secondItem="Gdd-Zd-Oms" secondAttribute="top" constant="8" id="Pnf-H7-IOY"/>
                             <constraint firstItem="2Ae-rh-zfU" firstAttribute="top" secondItem="Qrw-CD-BvX" secondAttribute="bottom" id="Stq-mT-rfC"/>
                             <constraint firstItem="fTT-8j-JuF" firstAttribute="top" secondItem="C8W-0A-1F2" secondAttribute="bottom" id="TcC-cw-4Z6"/>
                             <constraint firstItem="C8W-0A-1F2" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="ZS7-Lu-fEJ"/>

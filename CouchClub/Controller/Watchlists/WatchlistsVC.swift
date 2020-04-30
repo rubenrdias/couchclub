@@ -56,6 +56,19 @@ class WatchlistsVC: UICollectionViewController {
         layout.itemSize = .init(width: width, height: height)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewWatchlistVC" {
+            guard let navController = segue.destination as? UINavigationController else { return }
+            guard let newWatchlistVC = navController.viewControllers.first as? NewWatchlistVC else { return }
+            newWatchlistVC.delegate = self
+        }
+        else if segue.identifier == "WatchlistVC" {
+            guard let watchlist = sender as? Watchlist else { return }
+            guard let watchlistVC = segue.destination as? WatchlistVC else { return }
+            watchlistVC.watchlist = watchlist
+        }
+    }
+    
 }
 
 extension WatchlistsVC {
@@ -73,3 +86,15 @@ extension WatchlistsVC {
     }
     
 }
+
+extension WatchlistsVC: WatchlistOperationDelegate {
+    
+    func didCreateWatchlist(_ id: UUID) {
+        DispatchQueue.main.async { [weak self] in
+            guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
+            self?.performSegue(withIdentifier: "WatchlistVC", sender: watchlist)
+        }
+    }
+    
+}
+

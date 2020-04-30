@@ -12,6 +12,17 @@ final class DataCoordinator {
     
     static let shared = DataCoordinator()
     
+    func createWatchlist(_ title: String, _ type: ItemType, completion: @escaping (_ id: UUID?, _ error: Error?)->() ) {
+        let wb = WatchlistBuilder()
+        let watchlist = wb.named(title)
+            .ofType(type)
+            .build()
+        
+        completion(watchlist.id, nil)
+        print("TODO: save to firebase")
+        print("TODO: handle error catching")
+    }
+    
     func getMovie(_ id: String, completion: @escaping (Movie?)->() ) {
         NetworkService.shared.searchResult(forID: id, ofType: .movie) { searchItem in
             DispatchQueue.main.async {

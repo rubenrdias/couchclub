@@ -14,6 +14,23 @@ final class LocalDatabase {
     
     let coreDataQueue = DispatchQueue(label: "com.couchclub.coreDataQueue")
     
+    func fetchWatchlist(_ id: UUID) -> Watchlist? {
+        coreDataQueue.sync {
+            let fetchRequest = Watchlist.createFetchRequest()
+            // filtering
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            
+            do {
+                let watchlists = try context.fetch(fetchRequest)
+                return watchlists.isEmpty ? nil : watchlists[0]
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching Watchlist by id (\(id.uuidString)): \(error)")
+                return nil
+            }
+        }
+    }
+    
     func fetchItem(_ id: String) -> Item? {
         coreDataQueue.sync {
             let fetchRequest = Item.createFetchRequest()
@@ -25,7 +42,7 @@ final class LocalDatabase {
                 return items.isEmpty ? nil : items[0]
             } catch {
                 let error = error as NSError
-                print("Core Data: Error fetching item by id (id): \(error)")
+                print("Core Data: Error fetching Item by id (\(id)): \(error)")
                 return nil
             }
         }
@@ -43,7 +60,7 @@ final class LocalDatabase {
                 ad.saveContext()
             } catch {
                 let error = error as NSError
-                print("Core Data: Error fetching items: \(error)")
+                print("Core Data: Error fetching Items: \(error)")
             }
         }
     }

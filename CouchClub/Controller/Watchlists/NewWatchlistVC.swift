@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol WatchlistOperationDelegate: AnyObject {
+    func didCreateWatchlist(_ id: UUID)
+}
+
 class NewWatchlistVC: UIViewController {
+    
+    weak var delegate: WatchlistOperationDelegate?
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var radioButtons: [UIButton]!
@@ -37,9 +43,13 @@ class NewWatchlistVC: UIViewController {
         setupTitleToolbar()
         resetTextView()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             self?.textView.becomeFirstResponder()
         }
+    }
+    
+    deinit {
+        print("-- DEINIT -- New Watchlist VC")
     }
     
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
@@ -47,7 +57,18 @@ class NewWatchlistVC: UIViewController {
     }
     
     @IBAction func createButtonTapped(_ sender: UIButton) {
-        
+        let title = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        DataCoordinator.shared.createWatchlist(title, itemType) { [weak self] (id, _) in
+            print("TODO: handle possible errors")
+            if let id = id {
+                self?.dismiss(animated: true, completion: {
+                    self?.delegate?.didCreateWatchlist(id)
+                })
+            } else {
+                let ac = Alerts.simpleAlert(title: "Error", message: "Something went wrong when creating the watchlist.")
+                self?.present(ac, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
