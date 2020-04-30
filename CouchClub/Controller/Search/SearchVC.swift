@@ -11,11 +11,9 @@ import UIKit
 class SearchVC: UICollectionViewController {
     
     var searchResults = [SearchItem]()
-//    var searchResults = [
-//        SearchItem(id: "tt0848228", title: "The Avengers", poster: "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg")
-//    ]
-    
     var searchType: ItemType = .movie
+    
+    var watchlist: Watchlist?
     
     private var itemsPerRow: Int = 3
     private var usableWidth: CGFloat = 0
@@ -113,6 +111,7 @@ class SearchVC: UICollectionViewController {
             guard let item = sender as? Item else { return }
             guard let detailVC = segue.destination as? ItemDetailVC else { return }
             detailVC.item = item
+            detailVC.watchlist = watchlist
         }
     }
     

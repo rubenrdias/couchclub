@@ -21,8 +21,19 @@ final class DataCoordinator {
         // TODO: add to firebase
         // TODO: handle errors
         
-        NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
+        NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
         completion(watchlist.id, nil)
+    }
+    
+    func addToWatchlist(_ items: [Item], _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
+        // TODO: sync to firebase
+        // TODO: handle errors
+        
+        LocalDatabase.shared.addToWatchlist(items, watchlist)
+        
+        let info = ["watchlistID": watchlist.id]
+        NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+        completion(nil)
     }
     
     func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
@@ -31,7 +42,7 @@ final class DataCoordinator {
         
         LocalDatabase.shared.deleteWatchlist(watchlist)
         
-        NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
+        NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
         completion(nil)
     }
     

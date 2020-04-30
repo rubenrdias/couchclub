@@ -149,7 +149,8 @@ extension UIColor {
 
 extension Notification.Name {
     
-    static let watchlistsChanged = Notification.Name("watchlistsChanged")
+    static let watchlistsDidChange = Notification.Name("watchlistsDidChange")
+    static let watchlistDidChange = Notification.Name("watchlistDidChange")
     
 }
 

@@ -33,13 +33,6 @@ final class LocalDatabase {
         }
     }
     
-    func deleteWatchlist(_ watchlist: Watchlist) {
-        coreDataQueue.sync {
-            context.delete(watchlist)
-            ad.saveContext()
-        }
-    }
-    
     func fetchWatchlists() -> [Watchlist]? {
         coreDataQueue.sync {
             let fetchRequest = Watchlist.createFetchRequest()
@@ -54,6 +47,21 @@ final class LocalDatabase {
                 print("Core Data: Error fetching Watchlists: \(error)")
                 return nil
             }
+        }
+    }
+    
+    func addToWatchlist(_ items: [Item], _ watchlist: Watchlist) {
+        coreDataQueue.sync {
+            let itemsSet = NSSet(array: items)
+            watchlist.addToItems(itemsSet)
+            ad.saveContext()
+        }
+    }
+    
+    func deleteWatchlist(_ watchlist: Watchlist) {
+        coreDataQueue.sync {
+            context.delete(watchlist)
+            ad.saveContext()
         }
     }
     

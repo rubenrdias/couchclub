@@ -11,20 +11,37 @@ import UIKit
 class WatchlistVC: UICollectionViewController {
     
     var watchlist: Watchlist!
+    
+    lazy var stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.axis = .vertical
+        return sv
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let xPosition = Double(view.bounds.width / 2) - 100
-        let yPosition = Double(view.bounds.height / 2) - 25
-        let lbl = UILabel(frame: .init(x: xPosition, y: yPosition, width: 200, height: 50))
-        lbl.text = watchlist.title
-        lbl.numberOfLines = 0
-        lbl.textAlignment = .center
-        view.addSubview(lbl)
+        NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistDidChange, object: nil)
+        
+        navigationItem.title = watchlist.title
+        
+        setupStackView()
+        updateWatchlistItems()
+    }
+    
+    private func setupStackView() {
+        view.addSubview(stackView)
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
     
     deinit {
+        NotificationCenter.default.removeObserver(self)
         print("-- DEINIT -- Watchlist VC")
     }
     
@@ -54,13 +71,34 @@ class WatchlistVC: UICollectionViewController {
         present(ac, animated: true, completion: nil)
     }
     
+    @objc private func watchlistItemsUpdated(_ notification: Notification) {
+        guard let info = notification.userInfo else { return }
+        
+        if let watchlistID = info["watchlistID"] as? UUID, watchlistID == watchlist.id {
+            // TODO: properly refresh items
+            updateWatchlistItems()
+        }
+    }
+    
+    private func updateWatchlistItems() {
+        if let items = watchlist.items?.allObjects as? [Item] {
+            items.forEach {
+                let lbl = UILabel()
+                lbl.numberOfLines = 0
+                lbl.text = $0.title
+                lbl.textAlignment = .center
+                stackView.addArrangedSubview(lbl)
+            }
+            stackView.sizeToFit()
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "SearchVC" {
-//            guard let navController = segue.destination as? UINavigationController else { return }
-//            guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
-//            // TODO: set watchlist
-//            // TODO: set delegate
-//        }
+        if segue.identifier == "SearchVC" {
+            guard let navController = segue.destination as? UINavigationController else { return }
+            guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
+            searchVC.watchlist = watchlist
+        }
     }
 
 }

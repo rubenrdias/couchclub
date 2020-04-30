@@ -19,7 +19,7 @@ class WatchlistsVC: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .watchlistsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .watchlistsDidChange, object: nil)
         
         collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
         

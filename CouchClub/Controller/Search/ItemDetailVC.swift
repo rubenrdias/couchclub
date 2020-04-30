@@ -26,6 +26,7 @@ class ItemDetailVC: UIViewController {
     var tableView: UITableView!
     
     var item: Item!
+    var watchlist: Watchlist?
     private var attributes = [Attribute]()
     private var highlightAttributes = [Attribute]()
     
@@ -67,7 +68,16 @@ class ItemDetailVC: UIViewController {
     }
     
     @objc private func addToWatchlist() {
-        // TODO: add to watchlist
+        if let watchlist = watchlist {
+            DataCoordinator.shared.addToWatchlist([item], watchlist) { [weak self] error in
+                if let error = error {
+                    print("Failed to add \(self?.item.title ?? "item") to watchlist: \(error.localizedDescription)")
+                }
+                
+                let ac = Alerts.simpleAlert(title: "Success!", message: "The watchlist was updated.")
+                self?.present(ac, animated: true, completion: nil)
+            }
+        }
     }
     
     private func setupTableView() {

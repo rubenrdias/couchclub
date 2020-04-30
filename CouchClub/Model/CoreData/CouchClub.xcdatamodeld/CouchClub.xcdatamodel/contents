@@ -15,6 +15,7 @@
         <attribute name="title" attributeType="String"/>
         <attribute name="writer" attributeType="String"/>
         <attribute name="year" attributeType="String"/>
+        <relationship name="watchlists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Watchlist" inverseName="items" inverseEntity="Watchlist"/>
     </entity>
     <entity name="Movie" representedClassName="Movie" parentEntity="Item" syncable="YES">
         <attribute name="boxOffice" attributeType="String"/>
@@ -27,11 +28,12 @@
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="watchlists" inverseEntity="Item"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-36" positionY="9" width="128" height="253"/>
+        <element name="Item" positionX="-36" positionY="9" width="128" height="268"/>
         <element name="Movie" positionX="-54" positionY="-9" width="128" height="73"/>
         <element name="Show" positionX="-18" positionY="27" width="128" height="58"/>
-        <element name="Watchlist" positionX="-36" positionY="108" width="128" height="88"/>
+        <element name="Watchlist" positionX="-36" positionY="108" width="128" height="103"/>
     </elements>
 </model>
