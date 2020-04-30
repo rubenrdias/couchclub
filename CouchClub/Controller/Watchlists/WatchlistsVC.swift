@@ -161,7 +161,7 @@ extension WatchlistsVC {
 extension WatchlistsVC: WatchlistOperationDelegate {
     
     func didCreateWatchlist(_ id: UUID) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
             self?.performSegue(withIdentifier: "WatchlistVC", sender: watchlist)
         }

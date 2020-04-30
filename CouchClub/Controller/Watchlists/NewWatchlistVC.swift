@@ -32,13 +32,7 @@ class NewWatchlistVC: UIViewController {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
 
-        formatButton(createWatchlistButton)
-        radioButtons.forEach { formatButton($0) }
-        
-        createWatchlistButton.alpha = 0
-        createWatchlistButton.isEnabled = false
-        
-        radioButtons[0].titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
+        setupButtons()
         
         setupTitleToolbar()
         resetTextView(setPlaceholder: false)
@@ -89,6 +83,16 @@ class NewWatchlistVC: UIViewController {
         validateInputs()
     }
     
+    private func setupButtons() {
+        formatButtonCorners(createWatchlistButton)
+        radioButtons.forEach { formatButtonCorners($0) }
+        
+        createWatchlistButton.alpha = 0
+        createWatchlistButton.isEnabled = false
+        
+        radioButtons[0].titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
+    }
+    
     private func highlightButton(_ button: UIButton) {
         button.backgroundColor = UIColor.systemOrange
         button.setTitleColor(UIColor.white, for: .normal)
@@ -124,7 +128,7 @@ class NewWatchlistVC: UIViewController {
         textView.textColor = UIColor.colorAsset(.dynamicLabelSecondary)
     }
     
-    func formatButton(_ button: UIButton) {
+    func formatButtonCorners(_ button: UIButton) {
         button.clipsToBounds = true
         button.layer.cornerRadius = 4
     }

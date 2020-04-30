@@ -28,7 +28,7 @@ class WatchlistVC: UICollectionViewController {
         print("-- DEINIT -- Watchlist VC")
     }
     
-    @IBAction func moreButtonTapped(_ sender: Any) {
+    @IBAction func moreButtonTapped(_ sender: UIBarButtonItem) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
         
@@ -49,7 +49,8 @@ class WatchlistVC: UICollectionViewController {
             
             self?.present(deletionAlert, animated: true, completion: nil)
         })
-        
+                
+        ac.popoverPresentationController?.barButtonItem = sender
         present(ac, animated: true, completion: nil)
     }
     

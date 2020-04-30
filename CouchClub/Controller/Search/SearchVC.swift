@@ -25,6 +25,8 @@ class SearchVC: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 13.0, *) { isModalInPresentation = true }
+        
         collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
         collectionView.register(HeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCVCell.reuseIdentifier)
         
@@ -206,6 +208,7 @@ extension SearchVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let userInput = searchBar.text else { return }
         navigationItem.searchController?.isActive = false
+        navigationItem.searchController?.searchBar.text = userInput
         
         NetworkService.shared.searchResults(forType: searchType, searchText: userInput) { [weak self] results, totalResults in
             if let results = results as? [SearchItem] {
