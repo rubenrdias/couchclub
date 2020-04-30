@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum ItemType: String {
-    case movie
-    case series
-}
-
 class SearchVC: UICollectionViewController {
     
     var searchResults = [SearchItem]()

@@ -10,12 +10,14 @@ import UIKit
 
 class Watchlist {
     
-    let uuid: String
+    let id: String
     let title: String
+    let type: ItemType
     
-    init(title: String) {
-        self.uuid = UUID().uuidString
+    init(title: String, type: ItemType) {
+        self.id = UUID().uuidString
         self.title = title
+        self.type = type
     }
     
 }

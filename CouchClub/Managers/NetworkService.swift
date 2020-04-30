@@ -33,6 +33,11 @@ struct SearchItem: Decodable {
     }
 }
 
+enum ItemType: String {
+    case movie
+    case series
+}
+
 final class NetworkService {
     
     static let shared = NetworkService()
@@ -99,7 +104,7 @@ final class NetworkService {
             } else if type == .series, let show = try? JSONDecoder().decode(SearchItemShow.self, from: data) {
                 completion(show)
             } else {
-                completion (nil)
+                completion(nil)
             }
         }.resume()
     }
@@ -120,7 +125,6 @@ final class NetworkService {
             if let image = UIImage(data: data) {
                 completion(image)
             } else {
-                print("TODO: handle failure to convert data into image")
                 completion(nil)
             }
         }.resume()

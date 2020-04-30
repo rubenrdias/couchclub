@@ -32,7 +32,7 @@ class HighlightTVCell: UITableViewCell {
     private lazy var highlightLeftContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.colorAsset(.dynamicMutedHighlight)
+        view.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
         view.clipsToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -41,7 +41,7 @@ class HighlightTVCell: UITableViewCell {
     private lazy var highlightRightContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.colorAsset(.dynamicMutedHighlight)
+        view.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
         view.clipsToBounds = true
         view.layer.cornerRadius = 4
         return view

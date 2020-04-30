@@ -19,8 +19,8 @@ class ItemDetailVC: UIViewController {
         case writers = "writers"
         case year = "year"
         case totalSeasons = "seasons"
-        case releasedOn = "released on"
-        case runtime = "runtime"
+        case releasedOn = "Released on"
+        case runtime = "Runtime"
     }
     
     var tableView: UITableView!

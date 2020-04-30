@@ -4,6 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,16 +30,145 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Watchlists" id="dVq-Xu-1ck">
+                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="daT-1z-Ece">
+                            <connections>
+                                <segue destination="Bq0-EL-HVo" kind="presentation" id="43i-yu-OTL"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="gYl-Ho-ti5">
                             <connections>
-                                <segue destination="Bq0-EL-HVo" kind="presentation" id="Nzp-SP-VgI"/>
+                                <segue destination="C7c-yU-jlx" kind="presentation" id="j9J-J5-STB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="bjv-dN-JRy" kind="show" identifier="WatchlistVC" id="bxh-KB-sxb"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y7S-MR-mdF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4994.202898550725" y="99.107142857142847"/>
+        </scene>
+        <!--New Watchlist-->
+        <scene sceneID="YxY-92-Dy7">
+            <objects>
+                <viewController id="eCY-jQ-ImS" customClass="NewWatchlistVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ajx-k4-R8s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C8W-0A-1F2">
+                                <rect key="frame" x="16" y="120" width="343" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="XIb-Zb-xFI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <color key="textColor" name="Dynamic.LabelSecondary"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Watchlist title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fTT-8j-JuF">
+                                <rect key="frame" x="12" y="164" width="351" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="DeG-VI-OjC"/>
+                                </constraints>
+                                <color key="textColor" name="Dynamic.LabelSecondary"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="eCY-jQ-ImS" id="yRf-AZ-b47"/>
+                                </connections>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR TRACKING" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qrw-CD-BvX">
+                                <rect key="frame" x="16" y="240" width="343" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="bCa-R1-To6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <color key="textColor" name="Dynamic.LabelSecondary"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2Ae-rh-zfU">
+                                <rect key="frame" x="16" y="284" width="343" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk1-bv-lxf">
+                                        <rect key="frame" x="0.0" y="0.0" width="163.66666666666666" height="44"/>
+                                        <color key="backgroundColor" name="Dynamic.MutedHighlight"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="VGr-e2-DAJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="tintColor" name="Dynamic.Label"/>
+                                        <state key="normal" title="Movies"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="AnF-ZC-dVA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBS-jy-FzT">
+                                        <rect key="frame" x="179.66666666666663" y="0.0" width="163.33333333333337" height="44"/>
+                                        <color key="backgroundColor" name="Dynamic.MutedHighlight"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="fPp-n0-5zI"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="tintColor" name="Dynamic.Label"/>
+                                        <state key="normal" title="Shows"/>
+                                        <connections>
+                                            <action selector="buttonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="O66-E3-Y68"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBM-6O-MW3">
+                                <rect key="frame" x="16" y="636" width="343" height="56"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="fbz-PP-93l"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Create Watchlist"/>
+                                <connections>
+                                    <action selector="createButtonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="L1B-qo-lZo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Qrw-CD-BvX" firstAttribute="top" secondItem="fTT-8j-JuF" secondAttribute="bottom" constant="32" id="3RT-NZ-9Oi"/>
+                            <constraint firstItem="Qrw-CD-BvX" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="86J-tc-5is"/>
+                            <constraint firstItem="fTT-8j-JuF" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="12" id="CEB-PG-Dgu"/>
+                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="bottom" secondItem="xBM-6O-MW3" secondAttribute="bottom" constant="32" id="CPk-ss-Qtt"/>
+                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="fTT-8j-JuF" secondAttribute="trailing" constant="12" id="HWl-gw-Jgd"/>
+                            <constraint firstItem="2Ae-rh-zfU" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="IId-hn-xUy"/>
+                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="C8W-0A-1F2" secondAttribute="trailing" constant="16" id="JF4-1N-WFj"/>
+                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="2Ae-rh-zfU" secondAttribute="trailing" constant="16" id="NNs-aG-asT"/>
+                            <constraint firstItem="C8W-0A-1F2" firstAttribute="top" secondItem="Gdd-Zd-Oms" secondAttribute="top" constant="64" id="Pnf-H7-IOY"/>
+                            <constraint firstItem="2Ae-rh-zfU" firstAttribute="top" secondItem="Qrw-CD-BvX" secondAttribute="bottom" id="Stq-mT-rfC"/>
+                            <constraint firstItem="fTT-8j-JuF" firstAttribute="top" secondItem="C8W-0A-1F2" secondAttribute="bottom" id="TcC-cw-4Z6"/>
+                            <constraint firstItem="C8W-0A-1F2" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="ZS7-Lu-fEJ"/>
+                            <constraint firstItem="xBM-6O-MW3" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="b75-1E-okL"/>
+                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="xBM-6O-MW3" secondAttribute="trailing" constant="16" id="c6L-eJ-ZmE"/>
+                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="Qrw-CD-BvX" secondAttribute="trailing" constant="16" id="y74-BG-b4V"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gdd-Zd-Oms"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Watchlist" id="6VB-k2-rYg">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Mwa-0s-lp6">
+                            <connections>
+                                <action selector="cancelTapped:" destination="eCY-jQ-ImS" id="60O-ei-9ra"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="createWatchlistButton" destination="xBM-6O-MW3" id="kv8-IW-zkE"/>
+                        <outlet property="textView" destination="fTT-8j-JuF" id="IVw-D2-t4m"/>
+                        <outletCollection property="radioButtons" destination="kk1-bv-lxf" collectionClass="NSMutableArray" id="951-oy-a5G"/>
+                        <outletCollection property="radioButtons" destination="aBS-jy-FzT" collectionClass="NSMutableArray" id="8iv-ap-fq8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ax7-rh-2Ha" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5535.1999999999998" y="841.62561576354688"/>
         </scene>
         <!--Search-->
         <scene sceneID="Uv1-5t-pVG">
@@ -45,7 +176,33 @@
                 <viewControllerPlaceholder storyboardName="Search" id="Bq0-EL-HVo" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UvZ-Xe-9Oh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5638" y="99"/>
+            <point key="canvasLocation" x="5639" y="100"/>
+        </scene>
+        <!--WatchlistVC-->
+        <scene sceneID="WMe-iV-k2l">
+            <objects>
+                <collectionViewController id="bjv-dN-JRy" customClass="WatchlistVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="3xB-Gf-h7M">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yE7-gQ-02D">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="bjv-dN-JRy" id="4Vz-B6-SAH"/>
+                            <outlet property="delegate" destination="bjv-dN-JRy" id="Zxd-6m-cP9"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KHE-fh-pxx"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j7c-2K-M1Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6340" y="841.62561576354688"/>
         </scene>
         <!--Watchlists-->
         <scene sceneID="oaD-Hv-u0B">
@@ -66,8 +223,35 @@
             </objects>
             <point key="canvasLocation" x="4052" y="99.753694581280797"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="CNn-Og-2O9">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="C7c-yU-jlx" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GyB-YO-Cgb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="eCY-jQ-ImS" kind="relationship" relationship="rootViewController" id="c5a-d9-hiG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sc1-ln-x8u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4592.8000000000002" y="841.62561576354688"/>
+        </scene>
     </scenes>
     <resources>
         <image name="watchlists" width="24" height="24"/>
+        <namedColor name="Dynamic.Label">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Dynamic.LabelSecondary">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Dynamic.MutedHighlight">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
