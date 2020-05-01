@@ -16,7 +16,7 @@ public class Watchlist: NSManagedObject {
 
     func getThumbnail() -> UIImage? {
         guard var items = items?.allObjects as? [Item] else { return nil }
-        items.sort { $0.title > $1.title }
+        items.sort { $0.title < $1.title }
         var thumbnail: UIImage? = nil
         
         items.forEach {

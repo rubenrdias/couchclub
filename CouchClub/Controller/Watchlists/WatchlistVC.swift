@@ -84,7 +84,7 @@ class WatchlistVC: UICollectionViewController {
         stackView.arrangedSubviews.forEach{ $0.removeFromSuperview() }
         
         if let items = watchlist.items?.allObjects as? [Item] {
-            items.forEach {
+            items.sorted{ $0.title < $1.title }.forEach {
                 let lbl = UILabel()
                 lbl.numberOfLines = 0
                 lbl.text = $0.title

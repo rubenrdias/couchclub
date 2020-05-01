@@ -13,7 +13,13 @@ class SearchVC: UICollectionViewController {
     var searchResults = [SearchItem]()
     var searchType: ItemType = .movie
     
-    var watchlist: Watchlist?
+    var watchlist: Watchlist? {
+        didSet {
+            guard let watchlist = watchlist else { return }
+            guard let type = ItemType(rawValue: watchlist.type) else { return }
+            searchType = type
+        }
+    }
     
     private var itemsPerRow: Int = 3
     private var usableWidth: CGFloat = 0
@@ -31,7 +37,11 @@ class SearchVC: UICollectionViewController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for a movie title"
-        searchController.searchBar.scopeButtonTitles = ["Movie", "Show"]
+        
+        if watchlist == nil {
+            searchController.searchBar.scopeButtonTitles = ["Movie", "Show"]
+        }
+        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
