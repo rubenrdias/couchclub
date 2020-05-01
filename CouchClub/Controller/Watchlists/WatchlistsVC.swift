@@ -36,6 +36,19 @@ class WatchlistsVC: UICollectionViewController {
         super.viewWillTransition(to: size, with: coordinator)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewWatchlistVC" {
+            guard let navController = segue.destination as? UINavigationController else { return }
+            guard let newWatchlistVC = navController.viewControllers.first as? NewWatchlistVC else { return }
+            newWatchlistVC.delegate = self
+        }
+        else if segue.identifier == "WatchlistVC" {
+            guard let watchlist = sender as? Watchlist else { return }
+            guard let watchlistVC = segue.destination as? WatchlistVC else { return }
+            watchlistVC.watchlist = watchlist
+        }
+    }
+    
     private func setupCollectionViewLayout() {
         if UIDevice.current.userInterfaceIdiom == .pad {
             switch UIDevice.current.orientation {
@@ -55,17 +68,12 @@ class WatchlistsVC: UICollectionViewController {
         updateItemSize()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NewWatchlistVC" {
-            guard let navController = segue.destination as? UINavigationController else { return }
-            guard let newWatchlistVC = navController.viewControllers.first as? NewWatchlistVC else { return }
-            newWatchlistVC.delegate = self
-        }
-        else if segue.identifier == "WatchlistVC" {
-            guard let watchlist = sender as? Watchlist else { return }
-            guard let watchlistVC = segue.destination as? WatchlistVC else { return }
-            watchlistVC.watchlist = watchlist
-        }
+    private func updateItemSize() {
+        let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
+        let height: CGFloat = width * 230/343
+        
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = .init(width: width, height: height)
     }
     
     @objc private func fetchData() {
@@ -86,14 +94,6 @@ class WatchlistsVC: UICollectionViewController {
                 collectionView.reloadItems(at: [.init(item: index, section: 0)])
             }
         }
-    }
-    
-    private func updateItemSize() {
-        let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
-        let height: CGFloat = width * 230/343
-        
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = .init(width: width, height: height)
     }
     
     private lazy var noDataLabel: UILabel = {

@@ -13,9 +13,9 @@ protocol HeaderButtonsDelegate: AnyObject {
     func didTapListButton()
 }
 
-class HeaderCVCell: UICollectionReusableView {
+class SmallHeaderCVCell: UICollectionReusableView {
     
-    static let reuseIdentifier = "HeaderCVCell"
+    static let reuseIdentifier = "SmallHeaderCVCell"
     
     weak var delegate: HeaderButtonsDelegate?
     
