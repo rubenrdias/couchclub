@@ -12,14 +12,8 @@ class WatchlistCell: UICollectionViewCell {
     
     static let reuseIdentifier = "WatchlistCell"
     
-    var image: UIImage? {
-        didSet { updateImage() }
-    }
-    var title: String = "" {
-        didSet { updateTitle() }
-    }
-    var subtitle: String = "" {
-        didSet { updateSubtitle() }
+    var watchlist: Watchlist! {
+        didSet { updateInfo() }
     }
     
     override init(frame: CGRect) {
@@ -92,23 +86,22 @@ class WatchlistCell: UICollectionViewCell {
         ])
     }
     
+    private func updateInfo() {
+        if let thumbnail = watchlist.getThumbnail() {
+            imageView.image = thumbnail
+        } else {
+            setImageUnavailable()
+        }
+        
+        titleLabel.text = watchlist.title
+        subtitleLabel.text = "X of XX \(watchlist.type)s watched"
+    }
+    
     func setImageUnavailable() {
         contentView.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
         imageView.contentMode = .center
         imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
         imageView.image = UIImage.iconAsset(.imageUnavailable)
-    }
-    
-    private func updateImage() {
-        self.imageView.image = image
-    }
-    
-    private func updateTitle() {
-        self.titleLabel.text = title
-    }
-    
-    private func updateSubtitle() {
-        self.subtitleLabel.text = subtitle
     }
     
     required init?(coder: NSCoder) {

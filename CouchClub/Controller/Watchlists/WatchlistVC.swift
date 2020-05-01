@@ -81,6 +81,8 @@ class WatchlistVC: UICollectionViewController {
     }
     
     private func updateWatchlistItems() {
+        stackView.arrangedSubviews.forEach{ $0.removeFromSuperview() }
+        
         if let items = watchlist.items?.allObjects as? [Item] {
             items.forEach {
                 let lbl = UILabel()

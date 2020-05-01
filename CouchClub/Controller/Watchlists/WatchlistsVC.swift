@@ -20,6 +20,7 @@ class WatchlistsVC: UICollectionViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .watchlistsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateWatchlist), name: .watchlistDidChange, object: nil)
         
         collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
         
@@ -74,6 +75,16 @@ class WatchlistsVC: UICollectionViewController {
             
             self?.collectionView.reloadData()
             self?.evaluateDataAvailable()
+        }
+    }
+    
+    @objc private func updateWatchlist(_ notification: Notification) {
+        guard let info = notification.userInfo else { return }
+        
+        if let watchlistID = info["watchlistID"] as? UUID {
+            if let index = watchlists.firstIndex(where: { $0.id == watchlistID }) {
+                collectionView.reloadItems(at: [.init(item: index, section: 0)])
+            }
         }
     }
     
@@ -143,11 +154,7 @@ extension WatchlistsVC {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchlistCell.reuseIdentifier, for: indexPath) as! WatchlistCell
-        let watchlist = watchlists[indexPath.item]
-        cell.setImageUnavailable()
-//        cell.image = UIImage(named: "avengers_1")
-        cell.title = watchlist.title
-        cell.subtitle = "X of XX watched"
+        cell.watchlist = watchlists[indexPath.item]
         return cell
     }
     

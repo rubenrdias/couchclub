@@ -9,10 +9,25 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 @objc(Watchlist)
 public class Watchlist: NSManagedObject {
 
+    func getThumbnail() -> UIImage? {
+        guard var items = items?.allObjects as? [Item] else { return nil }
+        items.sort { $0.title > $1.title }
+        var thumbnail: UIImage? = nil
+        
+        items.forEach {
+            if thumbnail == nil, let image = LocalStorage.shared.retrieve($0.id) {
+                thumbnail = image
+            }
+        }
+        
+        return thumbnail
+    }
+    
 }
 
 class WatchlistBuilder {
