@@ -120,12 +120,18 @@ class WatchlistVC: UICollectionViewController {
         if let watchlistID = info["watchlistID"] as? UUID, watchlistID == watchlist.id {
             if let items = watchlist.items?.allObjects as? [Item] {
                 watchlistItems = items.sorted { $0.title < $1.title }
-                collectionView.reloadData()
-//                DispatchQueue.main.async { [weak self] in
-//                    self?.collectionView.reloadSections([2])
-//                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.collectionView.reloadData()
+                }
             }
         }
+    }
+    
+    private func calculateItemsWatched() -> String {
+        guard !watchlistItems.isEmpty else { return "N/A" }
+        
+        // TODO: calculate number of items watched
+        return "X of \(watchlistItems.count)"
     }
     
     private func calculateScreenTime() -> String {
@@ -208,8 +214,7 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
             return cell
         } else if indexPath.section == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HighlightCVCell.reuseIdentifier, for: indexPath) as! HighlightCVCell
-            // TODO: calculate number of movies watched
-            cell.highlightLeft = ("X of \(watchlistItems.count)", "Watched")
+            cell.highlightLeft = (calculateItemsWatched(), "Watched")
             cell.highlightRight = (calculateScreenTime(), "Total screen time")
             return cell
         } else {

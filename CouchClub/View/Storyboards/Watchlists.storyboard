@@ -102,7 +102,7 @@
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBS-jy-FzT">
                                         <rect key="frame" x="179.66666666666663" y="0.0" width="163.33333333333337" height="44"/>
-                                        <color key="backgroundColor" name="Dynamic.MutedHighlight"/>
+                                        <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="fPp-n0-5zI"/>
                                         </constraints>
@@ -306,14 +306,14 @@
     <resources>
         <image name="more" width="24" height="24"/>
         <image name="watchlists" width="24" height="24"/>
+        <namedColor name="Dynamic.BackgroundHighlight">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Dynamic.Label">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Dynamic.LabelSecondary">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Dynamic.MutedHighlight">
-            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
