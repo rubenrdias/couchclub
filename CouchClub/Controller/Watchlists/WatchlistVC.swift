@@ -10,8 +10,15 @@ import UIKit
 
 class WatchlistVC: UICollectionViewController {
     
+    private enum Section: String {
+        case statistics = "statistics"
+        case movies = "movies"
+    }
+    
     private var itemsPerRow: Int = 1
     private var usableWidth: CGFloat = 0
+    
+    private var sectionHeaders: [Section] = [.statistics, .movies]
     
     var watchlist: Watchlist! {
         didSet {
@@ -20,17 +27,30 @@ class WatchlistVC: UICollectionViewController {
             }
         }
     }
-    var watchlistItems = [Item]()
+    private var watchlistItems = [Item]()
+    
+    private var footerCellID = "footerCellID"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistDidChange, object: nil)
         
+        collectionView.register(SmallHeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier)
+        collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerCellID)
         collectionView.register(TextCVCell.self, forCellWithReuseIdentifier: TextCVCell.reuseIdentifier)
+        collectionView.register(HighlightCVCell.self, forCellWithReuseIdentifier: HighlightCVCell.reuseIdentifier)
+        collectionView.register(ItemCell.self, forCellWithReuseIdentifier: ItemCell.reuseIdentifier)
         
-        
-        setupCollectionViewLayout()
+        let size = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        setupCollectionViewLayout(size)
+    }
+    
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        setupCollectionViewLayout(size)
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     deinit {
@@ -64,21 +84,20 @@ class WatchlistVC: UICollectionViewController {
         present(ac, animated: true, completion: nil)
     }
     
-    private func setupCollectionViewLayout() {
+    private func setupCollectionViewLayout(_ size: CGSize) {
         if UIDevice.current.userInterfaceIdiom == .pad {
             switch UIDevice.current.orientation {
             case .portrait, .portraitUpsideDown:
-                itemsPerRow = 2
-            default:
                 itemsPerRow = 3
+            default:
+                itemsPerRow = 5
             }
-            usableWidth = collectionView.bounds.width - 2 * 16
-            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         } else {
-            itemsPerRow = 1
-            usableWidth = collectionView.bounds.width - 2 * 16
-            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
+            itemsPerRow = 2
         }
+
+        collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
+        usableWidth = size.width - 2 * 16
     }
     
     @objc private func watchlistItemsUpdated(_ notification: Notification) {
@@ -87,7 +106,7 @@ class WatchlistVC: UICollectionViewController {
         if let watchlistID = info["watchlistID"] as? UUID, watchlistID == watchlist.id {
             if let items = watchlist.items?.allObjects as? [Item] {
                 watchlistItems = items.sorted { $0.title < $1.title }
-                
+                collectionView.reloadData()
 //                DispatchQueue.main.async { [weak self] in
 //                    self?.collectionView.reloadSections([2])
 //                }
@@ -100,6 +119,12 @@ class WatchlistVC: UICollectionViewController {
             guard let navController = segue.destination as? UINavigationController else { return }
             guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
             searchVC.watchlist = watchlist
+        } else if segue.identifier == "ItemDetailVC" {
+            guard let item = sender as? Item else { return }
+            guard let detailVC = segue.destination as? ItemDetailVC else { return }
+            detailVC.hidesBottomBarWhenPushed = true
+            detailVC.item = item
+            detailVC.watchlist = watchlist
         }
     }
 
@@ -108,17 +133,70 @@ class WatchlistVC: UICollectionViewController {
 extension WatchlistVC: UICollectionViewDelegateFlowLayout {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
+        3
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            if indexPath.section > 0 {
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier, for: indexPath) as! SmallHeaderCVCell
+                headerView.text = sectionHeaders[indexPath.section - 1].rawValue
+                return headerView
+            }
+        } else {
+            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerCellID, for: indexPath)
+            return footerView
+        }
+        return UICollectionReusableView()
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCVCell.reuseIdentifier, for: indexPath) as! TextCVCell
-        cell.text = watchlist.title
-        return cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            return .zero
+        } else {
+            return .init(width: usableWidth, height: 44)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if section == 0 {
+            return .init(width: usableWidth, height: 16)
+        }
+        return .zero
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        if section <= 1 {
+            return 1
+        } else {
+            return watchlistItems.count
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TextCVCell.reuseIdentifier, for: indexPath) as! TextCVCell
+            cell.text = watchlist.title
+            return cell
+        } else if indexPath.section == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HighlightCVCell.reuseIdentifier, for: indexPath) as! HighlightCVCell
+            // TODO: calculate number of movies watched
+            cell.highlightLeft = ("X of XX", "Watched")
+            // TODO: calculate total runtime
+            cell.highlightRight = ("24h 56min", "Total screen time")
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
+            cell.item = watchlistItems[indexPath.item]
+            return cell
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section > 1 {
+            let item = watchlistItems[indexPath.item]
+            performSegue(withIdentifier: "ItemDetailVC", sender: item)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -126,12 +204,13 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
             let size = CGSize(width: usableWidth, height: 80)
             let attributes = [NSAttributedString.Key.font: UIFont.translatedFont(for: .title2, .semibold)]
             let estimatedFrame = NSString(string: watchlist.title).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            
             return .init(width: usableWidth, height: estimatedFrame.height)
+        }
+        else if indexPath.section == 1 {
+            return .init(width: usableWidth, height: 70)
         } else {
             let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
-            let height: CGFloat = width * 230/343
-            
+            let height: CGFloat = width * 3/2
             return .init(width: width, height: height)
         }
     }

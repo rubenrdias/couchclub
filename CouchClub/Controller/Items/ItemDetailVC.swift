@@ -23,17 +23,22 @@ class ItemDetailVC: UIViewController {
         case runtime = "Runtime"
     }
     
-    var tableView: UITableView!
+    private var tableView: UITableView!
+    @IBOutlet weak var watchlistButton: UIButton!
     
     var item: Item!
     var watchlist: Watchlist?
+    private var shouldAddToList = true
+    
     private var attributes = [Attribute]()
     private var highlightAttributes = [Attribute]()
     
-    let headerCellID = "headerCellID"
+    private let headerCellID = "headerCellID"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.colorAsset(.dynamicBackground)
         
         if #available(iOS 13.0, *) { isModalInPresentation = true }
         
@@ -45,18 +50,8 @@ class ItemDetailVC: UIViewController {
             highlightAttributes = [.releasedOn, .runtime]
         }
         
-        setupToolbar()
         setupTableView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setToolbarHidden(false, animated: true)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setToolbarHidden(true, animated: true)
+        setupWatchlistButton()
     }
     
     deinit {
@@ -67,14 +62,31 @@ class ItemDetailVC: UIViewController {
         // TODO: start chatroom...
     }
     
-    @objc private func addToWatchlist() {
-        if let watchlist = watchlist {
+    @IBAction func watchlistButtonTapped(_ sender: UIButton) {
+        guard let watchlist = watchlist else { return }
+        
+        if shouldAddToList {
             DataCoordinator.shared.addToWatchlist([item], watchlist) { [weak self] error in
                 if let error = error {
                     print("Failed to add \(self?.item.title ?? "item") to watchlist: \(error.localizedDescription)")
                 }
                 
-                let ac = Alerts.simpleAlert(title: "Success!", message: "The watchlist was updated.")
+                let ac = Alerts.simpleAlert(title: "Added!", message: "The watchlist has been updated.") { [weak self] _ in
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                
+                self?.present(ac, animated: true, completion: nil)
+            }
+        } else {
+            DataCoordinator.shared.removeFromWatchlist([item], watchlist) { [weak self] error in
+                if let error = error {
+                    print("Failed to remove \(self?.item.title ?? "item") from watchlist: \(error.localizedDescription)")
+                }
+                
+                let ac = Alerts.simpleAlert(title: "Removed!", message: "The watchlist has been updated.") { [weak self] _ in
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                
                 self?.present(ac, animated: true, completion: nil)
             }
         }
@@ -82,6 +94,7 @@ class ItemDetailVC: UIViewController {
     
     private func setupTableView() {
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), style: .grouped)
+        tableView.contentInset = .init(top: 0, left: 0, bottom: 2 * 32 + 56, right: 0)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         tableView.dataSource = self
@@ -91,6 +104,7 @@ class ItemDetailVC: UIViewController {
         tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerCellID)
         tableView.register(HighlightTVCell.self, forCellReuseIdentifier: HighlightTVCell.reuseIdentifier)
         
+        tableView.backgroundColor = UIColor.colorAsset(.dynamicBackground)
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         
@@ -103,13 +117,18 @@ class ItemDetailVC: UIViewController {
         ])
     }
     
-    private func setupToolbar() {
-        let spaceButton1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let spaceButton2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let addButton = UIBarButtonItem(title: "Add to Watchlist", style: .plain, target: self, action: #selector(addToWatchlist))
+    private func setupWatchlistButton() {
+        if let watchlist = watchlist, let items = watchlist.items?.allObjects as? [Item] {
+            if items.contains(item) {
+                shouldAddToList = false
+                watchlistButton.setTitle("Remove from Watchlist", for: .normal)
+                watchlistButton.backgroundColor = UIColor.init(white: 0.4, alpha: 1)
+            }
+        }
         
-        toolbarItems = [spaceButton1, addButton, spaceButton2]
-        navigationController?.toolbar.layoutIfNeeded()
+        watchlistButton.layer.cornerRadius = 4
+        watchlistButton.clipsToBounds = true
+        view.bringSubviewToFront(watchlistButton)
     }
     
     private func attributedText(_ attribute: Attribute) -> NSMutableAttributedString {

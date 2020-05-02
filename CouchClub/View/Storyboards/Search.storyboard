@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Pj1-VR-OoD">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +13,7 @@
             <objects>
                 <collectionViewController id="POG-WX-xj1" customClass="SearchVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="VoY-1h-fSd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="mO5-v0-OBs">
@@ -34,30 +36,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="TXa-rT-E80" kind="show" identifier="SearchItemDetail" id="VEp-jI-IWg"/>
+                        <segue destination="sW7-S4-FwS" kind="show" identifier="SearchItemDetail" id="rhj-Me-V5f"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CvN-Vl-bLj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1139.1304347826087" y="102.45535714285714"/>
-        </scene>
-        <!--Item DetailVC-->
-        <scene sceneID="RwF-AT-Dby">
-            <objects>
-                <viewController id="TXa-rT-E80" customClass="ItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="cjV-YB-HNA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="ruV-We-S7d"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="KbF-sL-aDw">
-                        <barButtonItem key="rightBarButtonItem" title="Start Chatroom" id="xLF-yD-xjo"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7my-0W-Xck" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2000" y="102"/>
+            <point key="canvasLocation" x="1062" y="102"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Twz-u4-40F">
@@ -70,7 +54,6 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pbB-RC-UEK">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -80,6 +63,51 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHJ-YQ-HAC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="228.98550724637684" y="102.45535714285714"/>
+        </scene>
+        <!--Item DetailVC-->
+        <scene sceneID="PPz-Iu-5Tq">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="sW7-S4-FwS" customClass="ItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ntj-Hd-PFf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCY-no-JiW">
+                                <rect key="frame" x="16" y="774" width="382" height="56"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="zSu-t0-8cR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Add to Watchlist"/>
+                                <connections>
+                                    <action selector="watchlistButtonTapped:" destination="sW7-S4-FwS" eventType="touchUpInside" id="t0B-9c-kKI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Pvv-W4-jem" firstAttribute="trailing" secondItem="gCY-no-JiW" secondAttribute="trailing" constant="16" id="S2q-tF-E3L"/>
+                            <constraint firstItem="gCY-no-JiW" firstAttribute="leading" secondItem="Pvv-W4-jem" secondAttribute="leading" constant="16" id="S6N-iM-Ise"/>
+                            <constraint firstItem="Pvv-W4-jem" firstAttribute="bottom" secondItem="gCY-no-JiW" secondAttribute="bottom" constant="32" id="gIQ-BS-oLd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Pvv-W4-jem"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qwi-KT-oRx">
+                        <barButtonItem key="rightBarButtonItem" title="Start Chatroom" id="JVV-Eo-TS5">
+                            <connections>
+                                <action selector="startChatroomTapped:" destination="sW7-S4-FwS" id="7fP-RY-AEb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="watchlistButton" destination="gCY-no-JiW" id="kUh-9f-PlC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hvO-T4-prB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1899" y="102"/>
         </scene>
     </scenes>
 </document>

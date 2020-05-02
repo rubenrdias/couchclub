@@ -58,6 +58,14 @@ final class LocalDatabase {
         }
     }
     
+    func removeFromWatchlist(_ items: [Item], _ watchlist: Watchlist) {
+        coreDataQueue.sync {
+            let itemsSet = NSSet(array: items)
+            watchlist.removeFromItems(itemsSet)
+            ad.saveContext()
+        }
+    }
+    
     func deleteWatchlist(_ watchlist: Watchlist) {
         coreDataQueue.sync {
             context.delete(watchlist)

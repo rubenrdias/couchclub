@@ -36,6 +36,17 @@ final class DataCoordinator {
         completion(nil)
     }
     
+    func removeFromWatchlist(_ items: [Item], _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
+        // TODO: sync to firebase
+        // TODO: handle errors
+        
+        LocalDatabase.shared.removeFromWatchlist(items, watchlist)
+        
+        let info = ["watchlistID": watchlist.id]
+        NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+        completion(nil)
+    }
+    
     func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
         // TODO: delete from firebase
         // TODO: handle errors

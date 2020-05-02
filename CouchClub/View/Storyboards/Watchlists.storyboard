@@ -173,7 +173,7 @@
                 <viewControllerPlaceholder storyboardName="Search" id="Bq0-EL-HVo" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UvZ-Xe-9Oh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6594" y="100"/>
+            <point key="canvasLocation" x="6617" y="528"/>
         </scene>
         <!--WatchlistVC-->
         <scene sceneID="WMe-iV-k2l">
@@ -209,6 +209,9 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="NXx-Ng-5bk" kind="show" identifier="ItemDetailVC" id="Sc0-jT-xOJ"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j7c-2K-M1Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -252,6 +255,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sc1-ln-x8u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5124" y="842"/>
+        </scene>
+        <!--Item DetailVC-->
+        <scene sceneID="VZD-bh-DTS">
+            <objects>
+                <viewController id="NXx-Ng-5bk" customClass="ItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yNI-qB-BTH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbs-Ia-tc0">
+                                <rect key="frame" x="16" y="690" width="343" height="56"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="YKM-QQ-TYz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Add to Watchlist"/>
+                                <connections>
+                                    <action selector="createButtonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="wcP-UR-qmN"/>
+                                    <action selector="watchlistButtonTapped:" destination="NXx-Ng-5bk" eventType="touchUpInside" id="huF-HD-k6t"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="myA-7x-mSK" firstAttribute="trailing" secondItem="Jbs-Ia-tc0" secondAttribute="trailing" constant="16" id="4Zn-V4-Tmp"/>
+                            <constraint firstItem="myA-7x-mSK" firstAttribute="bottom" secondItem="Jbs-Ia-tc0" secondAttribute="bottom" constant="32" id="C2C-x8-DkL"/>
+                            <constraint firstItem="Jbs-Ia-tc0" firstAttribute="leading" secondItem="myA-7x-mSK" secondAttribute="leading" constant="16" id="goy-fN-mdz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="myA-7x-mSK"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4kT-73-T7k">
+                        <barButtonItem key="rightBarButtonItem" title="Start Chatroom" id="9pO-sh-6qt">
+                            <connections>
+                                <action selector="startChatroomTapped:" destination="NXx-Ng-5bk" id="CW1-DP-nxa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="watchlistButton" destination="Jbs-Ia-tc0" id="HTT-23-mh1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fIV-Y8-LNl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6858" y="100"/>
         </scene>
     </scenes>
     <resources>

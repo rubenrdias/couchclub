@@ -24,7 +24,7 @@ class SearchVC: UICollectionViewController {
     private var itemsPerRow: Int = 3
     private var usableWidth: CGFloat = 0
     
-    private var didLayoutSubviews = false
+    private var shouldCalculateSize = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,25 +49,26 @@ class SearchVC: UICollectionViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if !didLayoutSubviews {
-            setupCollectionViewLayout()
-            didLayoutSubviews = true
+        if shouldCalculateSize {
+            shouldCalculateSize = false
+            let size = CGSize(width: view.bounds.width, height: view.bounds.height)
+            setupCollectionViewLayout(size)
         }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.setupCollectionViewLayout()
-        }, completion: nil)
-
         super.viewWillTransition(to: size, with: coordinator)
+        
+        let newSize = CGSize(width: size.width + 2 * 16, height: size.height)
+        setupCollectionViewLayout(newSize)
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     deinit {
         print("-- DEINIT -- Search VC")
     }
     
-    private func setupCollectionViewLayout() {
+    private func setupCollectionViewLayout(_ size: CGSize) {
         if UIDevice.current.userInterfaceIdiom == .pad {
             switch UIDevice.current.orientation {
             case .portrait, .portraitUpsideDown:
@@ -75,18 +76,12 @@ class SearchVC: UICollectionViewController {
             default:
                 itemsPerRow = 5
             }
-            if usableWidth == 0 {
-                usableWidth = view.bounds.width - 2 * 16
-            } else {
-                usableWidth = collectionView.bounds.width - 2 * 16
-            }
-            collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
         } else {
             itemsPerRow = 3
-            usableWidth = collectionView.bounds.width - 2 * 16
-            collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
         }
-        
+
+        collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
+        usableWidth = size.width - 2 * 16
         updateItemSize()
     }
     

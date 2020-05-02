@@ -135,6 +135,7 @@ extension UIColor {
         case dynamicBackgroundHighlight = "Dynamic.BackgroundHighlight"
         case dynamicLabel = "Dynamic.Label"
         case dynamicLabelSecondary = "Dynamic.LabelSecondary"
+        case dynamicSecondary = "Dynamic.Secondary"
         case dynamicSeparator = "Dynamic.Separator"
         case staticGray2 = "Static.Gray2"
     }

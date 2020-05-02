@@ -16,6 +16,8 @@
 		534BFBA02454DE8800F9F772 /* Chatrooms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */; };
 		534BFBA22454DED600F9F772 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFBA12454DED600F9F772 /* Settings.storyboard */; };
 		53645A64245CA382009A4AE6 /* TextCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A63245CA382009A4AE6 /* TextCVCell.swift */; };
+		53645A66245DBEB0009A4AE6 /* HighlightCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */; };
+		53645A68245DD8A0009A4AE6 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A67245DD8A0009A4AE6 /* ItemCell.swift */; };
 		5376F2B024595EE7007FB93C /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376F2AF24595EE7007FB93C /* LocalDatabase.swift */; };
 		537C14322455CDE7005FC745 /* SearchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537C14312455CDE7005FC745 /* SearchItems.swift */; };
 		538D29D52454978600CDB99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D42454978600CDB99F /* AppDelegate.swift */; };
@@ -69,6 +71,8 @@
 		534BFB9F2454DE8800F9F772 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = CouchClub/View/Storyboards/Base.lproj/Chatrooms.storyboard; sourceTree = "<group>"; };
 		534BFBA12454DED600F9F772 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		53645A63245CA382009A4AE6 /* TextCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCVCell.swift; sourceTree = "<group>"; };
+		53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCVCell.swift; sourceTree = "<group>"; };
+		53645A67245DD8A0009A4AE6 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		5376F2AF24595EE7007FB93C /* LocalDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
 		537C14312455CDE7005FC745 /* SearchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItems.swift; sourceTree = "<group>"; };
 		538D29D12454978600CDB99F /* CouchClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CouchClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,8 +133,10 @@
 			children = (
 				53645A63245CA382009A4AE6 /* TextCVCell.swift */,
 				53C0B1F62454AF2B0019640D /* WatchlistCell.swift */,
+				53645A67245DD8A0009A4AE6 /* ItemCell.swift */,
 				53153CC1245625950089AEA7 /* SearchItemCell.swift */,
 				53B34E2F24580D160076B148 /* HighlightTVCell.swift */,
+				53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -153,6 +159,14 @@
 				53D16F4D2458D790001DD4FA /* Constants.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		53645A69245DDB21009A4AE6 /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				532A2F32245730D000AE14B6 /* ItemDetailVC.swift */,
+			);
+			path = Items;
 			sourceTree = "<group>";
 		};
 		537C14352455CE5A005FC745 /* Watchlists */ = {
@@ -256,6 +270,7 @@
 		53B7CDE02454A223007395EE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				53645A69245DDB21009A4AE6 /* Items */,
 				537C14352455CE5A005FC745 /* Watchlists */,
 				53C5ADB72455D0F800873F90 /* Chatrooms */,
 				53C5ADB82455D10100873F90 /* Settings */,
@@ -297,7 +312,6 @@
 			isa = PBXGroup;
 			children = (
 				53C5ADBA2455D24800873F90 /* SearchVC.swift */,
-				532A2F32245730D000AE14B6 /* ItemDetailVC.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -420,6 +434,7 @@
 				53D91F07245AEF5A00BC9F82 /* Alerts.swift in Sources */,
 				532A2F33245730D000AE14B6 /* ItemDetailVC.swift in Sources */,
 				53B7144C245B524D00915FF8 /* Item+CoreDataProperties.swift in Sources */,
+				53645A66245DBEB0009A4AE6 /* HighlightCVCell.swift in Sources */,
 				53C5ADBB2455D24800873F90 /* SearchVC.swift in Sources */,
 				53D16F4E2458D790001DD4FA /* Constants.swift in Sources */,
 				53B71449245B524D00915FF8 /* Watchlist+CoreDataClass.swift in Sources */,
@@ -428,6 +443,7 @@
 				53BEA6962459820100F7D770 /* DataCoordinator.swift in Sources */,
 				53153CC2245625950089AEA7 /* SearchItemCell.swift in Sources */,
 				53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */,
+				53645A68245DD8A0009A4AE6 /* ItemCell.swift in Sources */,
 				53F688102458D4AC00230CE9 /* Converter.swift in Sources */,
 				53F6880D2458CFE500230CE9 /* Movie+CoreDataClass.swift in Sources */,
 				53BEA6942459722500F7D770 /* LocalStorage.swift in Sources */,

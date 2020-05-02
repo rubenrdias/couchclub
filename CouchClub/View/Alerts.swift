@@ -10,11 +10,11 @@ import UIKit
 
 class Alerts {
     
-    static func simpleAlert(title: String?, message: String?) -> UIAlertController {
+    static func simpleAlert(title: String?, message: String?, action: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
         
-        ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: action))
         
         return ac
     }

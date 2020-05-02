@@ -24,16 +24,15 @@ class WatchlistsVC: UICollectionViewController {
         
         collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
         
-        setupCollectionViewLayout()
+        let size = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+        setupCollectionViewLayout(size)
         fetchData()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.setupCollectionViewLayout()
-        }, completion: nil)
-        
         super.viewWillTransition(to: size, with: coordinator)
+        setupCollectionViewLayout(size)
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -49,7 +48,7 @@ class WatchlistsVC: UICollectionViewController {
         }
     }
     
-    private func setupCollectionViewLayout() {
+    private func setupCollectionViewLayout(_ size: CGSize) {
         if UIDevice.current.userInterfaceIdiom == .pad {
             switch UIDevice.current.orientation {
             case .portrait, .portraitUpsideDown:
@@ -57,14 +56,13 @@ class WatchlistsVC: UICollectionViewController {
             default:
                 itemsPerRow = 3
             }
-            usableWidth = collectionView.bounds.width - 2 * 16
             collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         } else {
             itemsPerRow = 1
-            usableWidth = collectionView.bounds.width - 2 * 16
             collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         }
         
+        usableWidth = size.width - 2 * 16
         updateItemSize()
     }
     
