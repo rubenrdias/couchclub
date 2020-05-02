@@ -53,6 +53,20 @@ class WatchlistVC: UICollectionViewController {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchVC" {
+            guard let navController = segue.destination as? UINavigationController else { return }
+            guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
+            searchVC.watchlist = watchlist
+        } else if segue.identifier == "ItemDetailVC" {
+            guard let item = sender as? Item else { return }
+            guard let detailVC = segue.destination as? ItemDetailVC else { return }
+            detailVC.hidesBottomBarWhenPushed = true
+            detailVC.item = item
+            detailVC.watchlist = watchlist
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
         print("-- DEINIT -- Watchlist VC")
@@ -114,17 +128,31 @@ class WatchlistVC: UICollectionViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SearchVC" {
-            guard let navController = segue.destination as? UINavigationController else { return }
-            guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
-            searchVC.watchlist = watchlist
-        } else if segue.identifier == "ItemDetailVC" {
-            guard let item = sender as? Item else { return }
-            guard let detailVC = segue.destination as? ItemDetailVC else { return }
-            detailVC.hidesBottomBarWhenPushed = true
-            detailVC.item = item
-            detailVC.watchlist = watchlist
+    private func calculateScreenTime() -> String {
+        guard !watchlistItems.isEmpty else { return "N/A" }
+        
+        var timeInMinutes = 0
+        watchlistItems.forEach {
+            if $0.runtime == "N/A" { return }
+            let minutesString = $0.runtime.split(separator: " ")[0]
+            if let minutes = Int(minutesString) {
+                timeInMinutes += minutes
+            }
+        }
+        
+        let hours = Int(floor(Double(timeInMinutes / 60)))
+        let minutes = timeInMinutes - 60 * hours
+        
+        if timeInMinutes == 0 {
+            return "N/A"
+        } else if hours == 0 {
+            return "\(minutes) min"
+        } else {
+            var string = "\(hours) h"
+            if minutes > 0 {
+                string.append(" \(minutes) min")
+            }
+            return string
         }
     }
 
@@ -181,9 +209,8 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
         } else if indexPath.section == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HighlightCVCell.reuseIdentifier, for: indexPath) as! HighlightCVCell
             // TODO: calculate number of movies watched
-            cell.highlightLeft = ("X of XX", "Watched")
-            // TODO: calculate total runtime
-            cell.highlightRight = ("24h 56min", "Total screen time")
+            cell.highlightLeft = ("X of \(watchlistItems.count)", "Watched")
+            cell.highlightRight = (calculateScreenTime(), "Total screen time")
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell

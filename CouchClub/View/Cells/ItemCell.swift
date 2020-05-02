@@ -32,8 +32,8 @@ class ItemCell: UICollectionViewCell {
         imageView.setGradientBackground(colors: [
             UIColor.clear,
             UIColor.black.withAlphaComponent(0.3),
-            UIColor.black.withAlphaComponent(0.8)
-        ], locations: [0, 0.5, 1], inFrame: contentView.bounds)
+            UIColor.black.withAlphaComponent(0.9)
+        ], locations: [0, 0.4, 1], inFrame: contentView.bounds)
     }
     
     override func prepareForReuse() {

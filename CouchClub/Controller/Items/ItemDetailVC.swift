@@ -106,6 +106,7 @@ class ItemDetailVC: UIViewController {
         
         tableView.backgroundColor = UIColor.colorAsset(.dynamicBackground)
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
         
         view.addSubview(tableView)
