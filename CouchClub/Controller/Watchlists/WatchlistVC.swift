@@ -76,7 +76,7 @@ class WatchlistVC: UICollectionViewController {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
         
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         
         ac.addAction(UIAlertAction(title: "Delete Watchlist", style: .destructive) { [weak self] _ in
             let deletionAlert = Alerts.deletionAlert(title: "Delete Watchlist?", message: "This action is irreversible.") { _ in

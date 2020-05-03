@@ -87,15 +87,13 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk1-bv-lxf">
                                         <rect key="frame" x="0.0" y="0.0" width="163.66666666666666" height="44"/>
-                                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="VGr-e2-DAJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="tintColor" name="Dynamic.Label"/>
-                                        <state key="normal" title="Movies">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
+                                        <state key="normal" title="Movies"/>
                                         <connections>
                                             <action selector="buttonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="AnF-ZC-dVA"/>
                                         </connections>
@@ -134,7 +132,6 @@
                             <constraint firstItem="Qrw-CD-BvX" firstAttribute="top" secondItem="fTT-8j-JuF" secondAttribute="bottom" constant="32" id="3RT-NZ-9Oi"/>
                             <constraint firstItem="Qrw-CD-BvX" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="86J-tc-5is"/>
                             <constraint firstItem="fTT-8j-JuF" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="12" id="CEB-PG-Dgu"/>
-                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="bottom" secondItem="xBM-6O-MW3" secondAttribute="bottom" constant="32" id="CPk-ss-Qtt"/>
                             <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="fTT-8j-JuF" secondAttribute="trailing" constant="12" id="HWl-gw-Jgd"/>
                             <constraint firstItem="2Ae-rh-zfU" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="IId-hn-xUy"/>
                             <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="C8W-0A-1F2" secondAttribute="trailing" constant="16" id="JF4-1N-WFj"/>
@@ -145,6 +142,7 @@
                             <constraint firstItem="C8W-0A-1F2" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="ZS7-Lu-fEJ"/>
                             <constraint firstItem="xBM-6O-MW3" firstAttribute="leading" secondItem="Gdd-Zd-Oms" secondAttribute="leading" constant="16" id="b75-1E-okL"/>
                             <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="xBM-6O-MW3" secondAttribute="trailing" constant="16" id="c6L-eJ-ZmE"/>
+                            <constraint firstItem="Gdd-Zd-Oms" firstAttribute="bottom" secondItem="xBM-6O-MW3" secondAttribute="bottom" constant="32" id="eza-fn-zVD"/>
                             <constraint firstItem="Gdd-Zd-Oms" firstAttribute="trailing" secondItem="Qrw-CD-BvX" secondAttribute="trailing" constant="16" id="y74-BG-b4V"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Gdd-Zd-Oms"/>

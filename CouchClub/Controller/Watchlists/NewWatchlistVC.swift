@@ -84,9 +84,11 @@ class NewWatchlistVC: UIViewController {
     }
     
     private func setupButtons() {
-        formatButtonCorners(createWatchlistButton)
         radioButtons.forEach { formatButtonCorners($0) }
+        highlightButton(radioButtons[0])
+        restoreButton(radioButtons[1])
         
+        formatButtonCorners(createWatchlistButton)
         createWatchlistButton.alpha = 0
         createWatchlistButton.isEnabled = false
         
@@ -94,7 +96,7 @@ class NewWatchlistVC: UIViewController {
     }
     
     private func highlightButton(_ button: UIButton) {
-        button.backgroundColor = UIColor.systemOrange
+        button.backgroundColor = UIColor.colorAsset(.dynamicSecondary)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
     }
