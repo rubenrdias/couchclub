@@ -82,7 +82,7 @@ class SmallHeaderCVCell: UICollectionReusableView {
     }
     
     private lazy var textLabel: UILabel = {
-        let lbl = UILabel.accessibleLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()

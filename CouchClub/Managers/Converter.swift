@@ -30,6 +30,7 @@ class Converter {
             .withRating(item.imdbRating)
             .withBoxOffice(item.boxOffice)
             .producedBy(item.producer)
+            .wasWatched(false)
             .build()
         
         return movie
@@ -52,6 +53,7 @@ class Converter {
             .withPoster(item.poster)
             .withRating(item.imdbRating)
             .withTotalSeasons(item.totalSeasons)
+            .wasWatched(false)
             .build()
         
         return show

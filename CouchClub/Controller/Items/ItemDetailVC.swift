@@ -23,6 +23,8 @@ class ItemDetailVC: UIViewController {
         case runtime = "Runtime"
     }
     
+    weak var delegate: ItemOperationDelegate?
+    
     private var tableView: UITableView!
     @IBOutlet weak var watchlistButton: UIButton!
     
@@ -187,7 +189,8 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ItemDetailHeaderTVCell.reuseIdentifier) as! ItemDetailHeaderTVCell
-            headerView.fillDetails(item)
+            headerView.delegate = self
+            headerView.item = item
             return headerView
         } else {
             return nil
@@ -251,6 +254,14 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             return UITableView.automaticDimension
         }
+    }
+    
+}
+
+extension ItemDetailVC: ItemOperationDelegate {
+    
+    func didTapSeen(_ item: Item) {
+        delegate?.didTapSeen(item)
     }
     
 }

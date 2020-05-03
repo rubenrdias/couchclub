@@ -93,6 +93,11 @@ class ShowBuilder {
         return self
     }
     
+    func wasWatched(_ watched: Bool) -> ShowBuilder {
+        self.show.watched = watched
+        return self
+    }
+    
     func withTotalSeasons(_ seasons: String) -> ShowBuilder {
         self.show.totalSeasons = seasons
         return self

@@ -12,6 +12,8 @@ final class DataCoordinator {
     
     static let shared = DataCoordinator()
     
+    // MARK: Watchlists
+    
     func createWatchlist(_ title: String, _ type: ItemType, completion: @escaping (_ id: UUID?, _ error: Error?)->() ) {
         let wb = WatchlistBuilder()
         let watchlist = wb.named(title)
@@ -57,6 +59,8 @@ final class DataCoordinator {
         completion(nil)
     }
     
+    // MARK: Items
+    
     func getMovie(_ id: String, completion: @escaping (Movie?)->() ) {
         NetworkService.shared.searchResult(forID: id, ofType: .movie) { searchItem in
             DispatchQueue.main.async {
@@ -82,6 +86,22 @@ final class DataCoordinator {
             }
         }
     }
+    
+    func toggleWatched(_ item: Item) {
+        // TODO: update in firebase
+        // TODO: handle errors
+        
+        LocalDatabase.shared.toggleWatched(item)
+        
+        if let watchlists = item.watchlists?.allObjects as? [Watchlist] {
+            watchlists.forEach {
+                let info = ["watchlistID": $0.id]
+                NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+            }
+        }
+    }
+    
+    // MARK: Data Download
     
     func getImage(_ itemID: String, _ url: String, completion: @escaping (UIImage?)->()) {
         if let image = LocalStorage.shared.retrieve(itemID) {

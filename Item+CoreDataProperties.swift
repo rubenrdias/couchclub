@@ -29,6 +29,7 @@ extension Item {
     @NSManaged public var released: String
     @NSManaged public var runtime: String
     @NSManaged public var title: String
+    @NSManaged public var watched: Bool
     @NSManaged public var writer: String
     @NSManaged public var year: String
     @NSManaged public var watchlists: NSSet?

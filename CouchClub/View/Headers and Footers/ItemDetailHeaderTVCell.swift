@@ -10,7 +10,13 @@ import UIKit
 
 class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     
+    weak var delegate: ItemOperationDelegate?
+    
     static let reuseIdentifier = "ItemDetailHeaderTVCell"
+    
+    var item: Item! {
+        didSet { updateInfo() }
+    }
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -150,7 +156,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         ])
     }
     
-    func fillDetails(_ item: Item) {
+    func updateInfo() {
         titleLabel.text = item.title
         genreLabel.text = item.genre
         awardsLabel.text = item.awards
@@ -161,6 +167,8 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         } else {
             setImageUnavailable()
         }
+        
+        updateWatchedButtonIcon(inverted: true)
     }
     
     private func setImageUnavailable() {
@@ -170,10 +178,17 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     }
     
     @objc private func seenButtonTapped() {
-        if seenButton.tintColor == UIColor.systemOrange {
-            seenButton.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
-        } else {
+        updateWatchedButtonIcon()
+        delegate?.didTapSeen(item)
+    }
+    
+    private func updateWatchedButtonIcon(inverted: Bool = false) {
+        let markAsWatched = inverted ? item.watched : !item.watched
+        
+        if markAsWatched {
             seenButton.tintColor = UIColor.systemOrange
+        } else {
+            seenButton.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
         }
     }
     

@@ -16,6 +16,10 @@ class WatchlistCell: UICollectionViewCell {
         didSet { updateInfo() }
     }
     
+    var subtitle: String = "" {
+        didSet { updateSubtitle() }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -31,9 +35,9 @@ class WatchlistCell: UICollectionViewCell {
         
         imageView.setGradientBackground(colors: [
             UIColor.clear,
-            UIColor.black.withAlphaComponent(0.3),
-            UIColor.black.withAlphaComponent(0.8)
-        ], locations: [0, 0.5, 1], inFrame: contentView.bounds)
+            UIColor.init(white: 0.05, alpha: 0.3),
+            UIColor.init(white: 0.05, alpha: 0.9)
+        ], locations: [0, 0.6, 1], inFrame: contentView.bounds)
     }
     
     override func prepareForReuse() {
@@ -45,7 +49,6 @@ class WatchlistCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.contentMode = .scaleAspectFill
         return iv
     }()
     
@@ -88,13 +91,17 @@ class WatchlistCell: UICollectionViewCell {
     
     private func updateInfo() {
         if let thumbnail = watchlist.getThumbnail() {
+            imageView.contentMode = .scaleAspectFill
             imageView.image = thumbnail
         } else {
             setImageUnavailable()
         }
         
         titleLabel.text = watchlist.title
-        subtitleLabel.text = "X of XX \(watchlist.type)s watched"
+    }
+    
+    private func updateSubtitle() {
+        subtitleLabel.text = subtitle
     }
     
     func setImageUnavailable() {

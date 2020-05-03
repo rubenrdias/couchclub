@@ -142,6 +142,12 @@ class WatchlistsVC: UICollectionViewController {
         }
     }
     
+    private func calculateItemsWatched(_ watchlist: Watchlist) -> String {
+        guard let items = watchlist.items?.allObjects as? [Item] else { return "0 of 0 \(watchlist.type)s watched" }
+        let watched = items.reduce(0) { $0 + ($1.watched ? 1 : 0) }
+        return "\(watched) of \(items.count) \(watchlist.type)\(items.count == 1 ? "" : "s") watched"
+    }
+    
 }
 
 extension WatchlistsVC {
@@ -152,7 +158,9 @@ extension WatchlistsVC {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchlistCell.reuseIdentifier, for: indexPath) as! WatchlistCell
-        cell.watchlist = watchlists[indexPath.item]
+        let watchlist = watchlists[indexPath.item]
+        cell.watchlist = watchlist
+        cell.subtitle = calculateItemsWatched(watchlist)
         return cell
     }
     

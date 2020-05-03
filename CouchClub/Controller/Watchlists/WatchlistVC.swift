@@ -62,6 +62,7 @@ class WatchlistVC: UICollectionViewController {
             guard let item = sender as? Item else { return }
             guard let detailVC = segue.destination as? ItemDetailVC else { return }
             detailVC.hidesBottomBarWhenPushed = true
+            detailVC.delegate = self
             detailVC.item = item
             detailVC.watchlist = watchlist
         }
@@ -76,7 +77,7 @@ class WatchlistVC: UICollectionViewController {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
         
-        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         ac.addAction(UIAlertAction(title: "Delete Watchlist", style: .destructive) { [weak self] _ in
             let deletionAlert = Alerts.deletionAlert(title: "Delete Watchlist?", message: "This action is irreversible.") { _ in
@@ -129,9 +130,8 @@ class WatchlistVC: UICollectionViewController {
     
     private func calculateItemsWatched() -> String {
         guard !watchlistItems.isEmpty else { return "N/A" }
-        
-        // TODO: calculate number of items watched
-        return "X of \(watchlistItems.count)"
+        let watched = watchlistItems.reduce(0) { $0 + ($1.watched ? 1 : 0) }
+        return "\(watched) of \(watchlistItems.count)"
     }
     
     private func calculateScreenTime() -> String {
@@ -219,6 +219,7 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
+            cell.delegate = self
             cell.item = watchlistItems[indexPath.item]
             return cell
         }
@@ -244,6 +245,18 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
             let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
             let height: CGFloat = width * 3/2
             return .init(width: width, height: height)
+        }
+    }
+    
+}
+
+extension WatchlistVC: ItemOperationDelegate {
+    
+    func didTapSeen(_ item: Item) {
+        DataCoordinator.shared.toggleWatched(item)
+        
+        if let highlightCell = collectionView.cellForItem(at: .init(item: 0, section: 1)) as? HighlightCVCell {
+            highlightCell.highlightLeft = (calculateItemsWatched(), "Watched")
         }
     }
     

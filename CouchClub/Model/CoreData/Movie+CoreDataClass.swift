@@ -93,6 +93,11 @@ class MovieBuilder {
         return self
     }
     
+    func wasWatched(_ watched: Bool) -> MovieBuilder {
+        self.movie.watched = watched
+        return self
+    }
+    
     func producedBy(_ producer: String) -> MovieBuilder {
         self.movie.production = producer
         return self

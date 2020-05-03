@@ -92,6 +92,14 @@ final class LocalDatabase {
         }
     }
     
+    func toggleWatched(_ item: Item) {
+        coreDataQueue.sync { [weak item] in
+            guard let item = item else { return }
+            item.watched = !item.watched
+            ad.saveContext()
+        }
+    }
+    
     // MARK: - Database Reset (debugging)
     
     func clearDatabase() {

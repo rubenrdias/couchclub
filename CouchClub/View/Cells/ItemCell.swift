@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ItemOperationDelegate: AnyObject {
+    func didTapSeen(_ item: Item)
+}
+
 class ItemCell: UICollectionViewCell {
+    
+    weak var delegate: ItemOperationDelegate?
     
     static let reuseIdentifier = "ItemCell"
     
@@ -24,16 +30,17 @@ class ItemCell: UICollectionViewCell {
         
         setupImage()
         setupText()
+        setupSeenButton()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         imageView.setGradientBackground(colors: [
             UIColor.clear,
-            UIColor.black.withAlphaComponent(0.3),
-            UIColor.black.withAlphaComponent(0.9)
-        ], locations: [0, 0.4, 1], inFrame: contentView.bounds)
+            UIColor.init(white: 0.05, alpha: 0.3),
+            UIColor.init(white: 0.05, alpha: 0.9)
+        ], locations: [0, 0.6, 1], inFrame: contentView.bounds)
     }
     
     override func prepareForReuse() {
@@ -46,6 +53,7 @@ class ItemCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFill
+        iv.isUserInteractionEnabled = true
         return iv
     }()
     
@@ -63,17 +71,18 @@ class ItemCell: UICollectionViewCell {
         let sv = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis = .vertical
+        sv.spacing = 4
         return sv
     }()
     
     private lazy var titleLabel: UILabel = {
-        let lbl = UILabel.accessibleLabel(.subheadline, .bold, UIColor.white)
+        let lbl = UILabel.standardLabel(.subheadline, .bold, UIColor.white)
         lbl.numberOfLines = 0
         return lbl
     }()
     
     private lazy var subtitleLabel: UILabel = {
-        let lbl = UILabel.accessibleLabel(.caption1, .regular, UIColor.colorAsset(.staticGray2))
+        let lbl = UILabel.standardLabel(.caption1, .regular, UIColor.colorAsset(.staticGray2))
         return lbl
     }()
     
@@ -86,12 +95,69 @@ class ItemCell: UICollectionViewCell {
         ])
     }
     
+    private lazy var buttonBackground: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(seenButtonTapped))
+        view.addGestureRecognizer(tapGesture)
+        
+        return view
+    }()
+    
+    @objc private func tapSeenButton() {
+        seenButton.sendActions(for: .touchUpInside)
+    }
+    
+    private lazy var seenButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage.iconAsset(.checkmark), for: .normal)
+        btn.addTarget(self, action: #selector(seenButtonTapped), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc private func seenButtonTapped() {
+        updateWatchedButtonIcon()
+        delegate?.didTapSeen(item)
+    }
+    
+    private func updateWatchedButtonIcon(inverted: Bool = false) {
+        let markAsWatched = inverted ? item.watched : !item.watched
+        
+        if markAsWatched {
+            buttonBackground.backgroundColor = UIColor.systemOrange
+            seenButton.tintColor = UIColor.white
+        } else {
+            buttonBackground.backgroundColor = UIColor.init(white: 0.2, alpha: 0.8)
+            seenButton.tintColor = UIColor.init(white: 1, alpha: 0.4)
+        }
+    }
+    
+    private func setupSeenButton() {
+        imageView.addSubview(buttonBackground)
+        imageView.addSubview(seenButton)
+        NSLayoutConstraint.activate([
+            buttonBackground.heightAnchor.constraint(equalToConstant: 120),
+            buttonBackground.widthAnchor.constraint(equalToConstant: 50),
+            buttonBackground.centerYAnchor.constraint(equalTo: imageView.topAnchor),
+            buttonBackground.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            
+            seenButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 6),
+            seenButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -6)
+        ])
+        
+        buttonBackground.transform = buttonBackground.transform.rotated(by: -.pi/4)
+    }
+    
     private func updateInfo() {
         if item.poster != "N/A", let image = LocalStorage.shared.retrieve(item.id) {
             imageView.image = image
         } else {
             setImageUnavailable()
         }
+        
+        updateWatchedButtonIcon(inverted: true)
         
         titleLabel.text = item.title
         subtitleLabel.text = "\(item.year)  \(item.runtime)"
