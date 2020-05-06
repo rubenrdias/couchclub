@@ -96,7 +96,7 @@ class NewWatchlistVC: UIViewController {
     }
     
     private func highlightButton(_ button: UIButton) {
-        button.backgroundColor = UIColor.colorAsset(.dynamicSecondary)
+        button.backgroundColor = UIColor.systemOrange
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
     }

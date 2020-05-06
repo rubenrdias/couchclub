@@ -36,7 +36,8 @@ class SearchVC: UICollectionViewController {
         
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search for a movie title"
+        let typeString = searchType == .series ? "show" : searchType.rawValue
+        searchController.searchBar.placeholder = "Search for a \(typeString) title"
         
         if watchlist == nil {
             searchController.searchBar.scopeButtonTitles = ["Movie", "Show"]
@@ -95,14 +96,14 @@ class SearchVC: UICollectionViewController {
     }
     
     func toggleActivityIndicator() {
-        if navigationItem.rightBarButtonItem == nil {
+        if navigationItem.leftBarButtonItem == nil {
             collectionView.isUserInteractionEnabled = false
             
             let activityIndicator = UIActivityIndicatorView(style: .gray)
             activityIndicator.startAnimating()
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
+            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: activityIndicator)
         } else {
-            navigationItem.rightBarButtonItem = nil
+            navigationItem.leftBarButtonItem = nil
             collectionView.isUserInteractionEnabled = true
         }
     }
@@ -173,12 +174,12 @@ extension SearchVC {
                 toggleActivityIndicator()
                 DataCoordinator.shared.getMovie(item.id) { [weak self] movie in
                     DispatchQueue.main.async {
+                        self?.toggleActivityIndicator()
                         if let movie = movie {
                             self?.performSegue(withIdentifier: "SearchItemDetail", sender: movie)
                         } else {
                             // TODO: display alert with error message
                         }
-                        self?.toggleActivityIndicator()
                     }
                 }
             }
@@ -189,12 +190,12 @@ extension SearchVC {
                 toggleActivityIndicator()
                 DataCoordinator.shared.getShow(item.id) { [weak self] show in
                     DispatchQueue.main.async {
+                        self?.toggleActivityIndicator()
                         if let show = show {
                             self?.performSegue(withIdentifier: "SearchItemDetail", sender: show)
                         } else {
                             // TODO: display alert with error message
                         }
-                        self?.toggleActivityIndicator()
                     }
                 }
             }

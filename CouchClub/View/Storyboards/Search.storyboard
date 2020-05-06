@@ -29,7 +29,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="SCP-Uu-hya">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="xzl-sL-QKm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="xzl-sL-QKm">
                             <connections>
                                 <action selector="cancelTapped:" destination="POG-WX-xj1" id="oqx-84-A4a"/>
                             </connections>

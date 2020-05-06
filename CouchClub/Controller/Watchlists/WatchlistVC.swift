@@ -13,17 +13,25 @@ class WatchlistVC: UICollectionViewController {
     private enum Section: String {
         case statistics = "statistics"
         case movies = "movies"
+        case shows = "shows"
     }
     
     private var itemsPerRow: Int = 1
     private var usableWidth: CGFloat = 0
     
-    private var sectionHeaders: [Section] = [.statistics, .movies]
+    private var sectionHeaders: [Section] = [.statistics]
     
     var watchlist: Watchlist! {
         didSet {
             if let items = watchlist.items?.allObjects as? [Item] {
                 watchlistItems = items.sorted { $0.title < $1.title }
+            }
+            
+            switch watchlist.type {
+            case ItemType.series.rawValue:
+                    sectionHeaders.append(.shows)
+                default:
+                    sectionHeaders.append(.movies)
             }
         }
     }
@@ -161,6 +169,25 @@ class WatchlistVC: UICollectionViewController {
             return string
         }
     }
+    
+    private func calculateAverageRating() -> String {
+        guard !watchlistItems.isEmpty else { return "N/A" }
+        
+        var globalRating: Double = 0
+        watchlistItems.forEach {
+            if let rating = Double($0.imdbRating) {
+                globalRating += rating
+            }
+        }
+        
+        globalRating = globalRating / Double(watchlistItems.count)
+        
+        if globalRating == 0 {
+            return "N/A"
+        } else {
+            return "\(String(format: "%.1f", globalRating))/10"
+        }
+    }
 
 }
 
@@ -215,7 +242,11 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
         } else if indexPath.section == 1 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HighlightCVCell.reuseIdentifier, for: indexPath) as! HighlightCVCell
             cell.highlightLeft = (calculateItemsWatched(), "Watched")
-            cell.highlightRight = (calculateScreenTime(), "Total screen time")
+            if watchlist.type == ItemType.movie.rawValue {
+                cell.highlightRight = (calculateScreenTime(), "Total screen time")
+            } else {
+                cell.highlightRight = (calculateAverageRating(), "Average rating")
+            }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell

@@ -68,7 +68,7 @@ class WatchlistsVC: UICollectionViewController {
     
     private func updateItemSize() {
         let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
-        let height: CGFloat = width * 230/343
+        let height: CGFloat = width * 11/16
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.itemSize = .init(width: width, height: height)
@@ -118,17 +118,17 @@ class WatchlistsVC: UICollectionViewController {
         
         let titleAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.colorAsset(.dynamicLabel),
-            .font: UIFont.translatedFont(for: .headline, .semibold),
+            .font: UIFont.translatedFont(for: .title2, .semibold),
             .paragraphStyle: paragraphStyle
         ]
         let attributtedString = NSMutableAttributedString(string: "No watchlists found...\n", attributes: titleAttributes)
         
         let subtitleAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.colorAsset(.dynamicLabelSecondary),
-            .font: UIFont.translatedFont(for: .footnote, .regular),
+            .font: UIFont.translatedFont(for: .subheadline, .regular),
             .paragraphStyle: paragraphStyle
         ]
-        attributtedString.append(NSAttributedString(string: "Watchlists can be used to track movies you want to watch or have seen. Create one to start tracking!", attributes: subtitleAttributes))
+        attributtedString.append(NSAttributedString(string: "Use Watchlists to track movies or shows you want to watch. Create one to start tracking!", attributes: subtitleAttributes))
         
         return attributtedString
     }()
@@ -145,7 +145,10 @@ class WatchlistsVC: UICollectionViewController {
     private func calculateItemsWatched(_ watchlist: Watchlist) -> String {
         guard let items = watchlist.items?.allObjects as? [Item] else { return "0 of 0 \(watchlist.type)s watched" }
         let watched = items.reduce(0) { $0 + ($1.watched ? 1 : 0) }
-        return "\(watched) of \(items.count) \(watchlist.type)\(items.count == 1 ? "" : "s") watched"
+        
+        let typeString = watchlist.type == ItemType.movie.rawValue ? ItemType.movie.rawValue : "show"
+        
+        return "\(watched) of \(items.count) \(typeString)\(items.count == 1 ? "" : "s") watched"
     }
     
 }
