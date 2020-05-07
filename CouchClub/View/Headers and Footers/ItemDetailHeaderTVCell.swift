@@ -124,7 +124,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         ratingsContainerView.addSubview(imdbIconView)
         ratingsContainerView.addSubview(ratingsLabel)
         ratingsContainerView.addSubview(seenButton)
-        ratingsContainerView.addSubview(favoriteButton)
+//        ratingsContainerView.addSubview(favoriteButton)
         
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
@@ -138,14 +138,15 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
             ratingsLabel.centerYAnchor.constraint(equalTo: ratingsContainerView.centerYAnchor),
             
             NSLayoutConstraint(item: seenButton, attribute: .height, relatedBy: .equal, toItem: seenButton, attribute: .width, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: favoriteButton, attribute: .height, relatedBy: .equal, toItem: favoriteButton, attribute: .width, multiplier: 1, constant: 0),
+//            NSLayoutConstraint(item: favoriteButton, attribute: .height, relatedBy: .equal, toItem: favoriteButton, attribute: .width, multiplier: 1, constant: 0),
 
             seenButton.heightAnchor.constraint(equalTo: ratingsContainerView.heightAnchor),
             seenButton.centerYAnchor.constraint(equalTo: ratingsContainerView.centerYAnchor),
-            seenButton.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor),
-            favoriteButton.heightAnchor.constraint(equalTo: ratingsContainerView.heightAnchor),
-            favoriteButton.centerYAnchor.constraint(equalTo: ratingsContainerView.centerYAnchor),
-            favoriteButton.trailingAnchor.constraint(equalTo: ratingsContainerView.trailingAnchor),
+            seenButton.trailingAnchor.constraint(equalTo: ratingsContainerView.trailingAnchor),
+//            seenButton.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor),
+//            favoriteButton.heightAnchor.constraint(equalTo: ratingsContainerView.heightAnchor),
+//            favoriteButton.centerYAnchor.constraint(equalTo: ratingsContainerView.centerYAnchor),
+//            favoriteButton.trailingAnchor.constraint(equalTo: ratingsContainerView.trailingAnchor),
             
             spacer1.heightAnchor.constraint(equalToConstant: 16),
             spacer2.heightAnchor.constraint(equalToConstant: 16),
