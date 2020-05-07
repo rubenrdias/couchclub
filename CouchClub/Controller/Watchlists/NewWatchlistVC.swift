@@ -91,20 +91,18 @@ class NewWatchlistVC: UIViewController {
         formatButtonCorners(createWatchlistButton)
         createWatchlistButton.alpha = 0
         createWatchlistButton.isEnabled = false
-        
-        radioButtons[0].titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
     }
     
     private func highlightButton(_ button: UIButton) {
         button.backgroundColor = UIColor.systemOrange
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.translatedFont(for: .body, .bold)
+        button.titleLabel?.font = UIFont.translatedFont(for: .headline, .semibold)
     }
     
     private func restoreButton(_ button: UIButton) {
         button.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
         button.setTitleColor(UIColor.colorAsset(.dynamicLabel), for: .normal)
-        button.titleLabel?.font = UIFont.translatedFont(for: .body, .regular)
+        button.titleLabel?.font = UIFont.translatedFont(for: .headline, .regular)
     }
     
     private func setupTitleToolbar() {

@@ -30,6 +30,8 @@ class NewChatroomVC: UIViewController {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
+        setupButtons()
+        
         setupTitleToolbar()
         resetTextView(setPlaceholder: false)
         
@@ -59,6 +61,47 @@ class NewChatroomVC: UIViewController {
 //                self?.present(ac, animated: true, completion: nil)
 //            }
 //        }
+    }
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        radioButtons.forEach {
+            if $0.tag == sender.tag {
+                highlightButton($0)
+            } else {
+                restoreButton($0)
+            }
+        }
+        
+//        if sender.tag == 0 {
+//            itemType = .movie
+//        } else {
+//            itemType = .series
+//        }
+        
+        validateInputs()
+    }
+    
+    private func setupButtons() {
+        radioButtons.forEach {
+            formatButtonCorners($0)
+            restoreButton($0)
+        }
+        
+        formatButtonCorners(createChatroomButton)
+        createChatroomButton.alpha = 0
+        createChatroomButton.isEnabled = false
+    }
+    
+    private func highlightButton(_ button: UIButton) {
+        button.backgroundColor = UIColor.systemOrange
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.translatedFont(for: .subheadline, .semibold)
+    }
+    
+    private func restoreButton(_ button: UIButton) {
+        button.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        button.setTitleColor(UIColor.colorAsset(.dynamicLabel), for: .normal)
+        button.titleLabel?.font = UIFont.translatedFont(for: .subheadline, .regular)
     }
     
     private func setupTitleToolbar() {

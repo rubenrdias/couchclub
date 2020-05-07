@@ -59,10 +59,10 @@
             </objects>
             <point key="canvasLocation" x="4096.8000000000002" y="204.67980295566502"/>
         </scene>
-        <!--New Watchlist-->
+        <!--New Chatroom-->
         <scene sceneID="UUd-91-T6P">
             <objects>
-                <viewController id="69O-JY-xoc" customClass="NewWatchlistVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="69O-JY-xoc" customClass="NewChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ogu-8p-6M2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -76,7 +76,7 @@
                                 <color key="textColor" name="Dynamic.LabelSecondary"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Watchlist title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62f-Ul-WsD">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Chatroom title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62f-Ul-WsD">
                                 <rect key="frame" x="12" y="108" width="390" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Sh6-Wy-p4H"/>
@@ -88,7 +88,7 @@
                                     <outlet property="delegate" destination="69O-JY-xoc" id="RtX-eC-psZ"/>
                                 </connections>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR TRACKING" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hb-yG-Mu4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR CHATTING ABOUT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hb-yG-Mu4">
                                 <rect key="frame" x="16" y="184" width="382" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="S8X-y2-cEY"/>
@@ -97,35 +97,59 @@
                                 <color key="textColor" name="Dynamic.LabelSecondary"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="oAX-Ne-2x2">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4Mu-dI-hvc">
                                 <rect key="frame" x="16" y="228" width="382" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWF-8i-bXf">
-                                        <rect key="frame" x="0.0" y="0.0" width="183" height="44"/>
-                                        <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="biY-FA-chf"/>
-                                        </constraints>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSF-5M-HsL">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="tintColor" name="Dynamic.Label"/>
-                                        <state key="normal" title="Movies"/>
-                                        <connections>
-                                            <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="bbk-nf-RHv"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apT-mC-2YN">
-                                        <rect key="frame" x="199" y="0.0" width="183" height="44"/>
-                                        <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="izx-Td-ouW"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="tintColor" name="Dynamic.Label"/>
-                                        <state key="normal" title="Shows"/>
-                                        <connections>
-                                            <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="fDS-VE-rbA"/>
-                                        </connections>
-                                    </button>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="oAX-Ne-2x2">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJH-Nx-W6q">
+                                                <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
+                                                <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Hh3-5b-gVt"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="tintColor" name="Dynamic.Label"/>
+                                                <state key="normal" title="Watchlist"/>
+                                                <connections>
+                                                    <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="t2f-eR-ohw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWF-8i-bXf">
+                                                <rect key="frame" x="132.5" y="0.0" width="117" height="44"/>
+                                                <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="biY-FA-chf"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="tintColor" name="Dynamic.Label"/>
+                                                <state key="normal" title="Movie"/>
+                                                <connections>
+                                                    <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="YIs-xp-WNV"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apT-mC-2YN">
+                                                <rect key="frame" x="265.5" y="0.0" width="116.5" height="44"/>
+                                                <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="izx-Td-ouW"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="tintColor" name="Dynamic.Label"/>
+                                                <state key="normal" title="Show"/>
+                                                <connections>
+                                                    <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="2Bj-vG-Lon"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="087-zn-hul">
@@ -136,44 +160,45 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Create Watchlist"/>
+                                <state key="normal" title="Create Chatroom"/>
                                 <connections>
-                                    <action selector="createButtonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="eEX-sB-h0a"/>
+                                    <action selector="createButtonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="b1D-0w-r35"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="087-zn-hul" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="9kC-SJ-sDg"/>
-                            <constraint firstItem="oAX-Ne-2x2" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="Bml-QA-coK"/>
+                            <constraint firstItem="4Mu-dI-hvc" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="BwE-4B-F27"/>
                             <constraint firstItem="6ZA-5s-DAL" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="FNE-s6-cOg"/>
                             <constraint firstItem="6ZA-5s-DAL" firstAttribute="top" secondItem="kN3-mW-rod" secondAttribute="top" constant="8" id="JZv-Gu-g25"/>
+                            <constraint firstItem="kN3-mW-rod" firstAttribute="trailing" secondItem="4Mu-dI-hvc" secondAttribute="trailing" constant="16" id="JdY-OO-DdI"/>
                             <constraint firstItem="kN3-mW-rod" firstAttribute="trailing" secondItem="6ZA-5s-DAL" secondAttribute="trailing" constant="16" id="T3R-r4-ndK"/>
                             <constraint firstItem="62f-Ul-WsD" firstAttribute="top" secondItem="6ZA-5s-DAL" secondAttribute="bottom" id="T5F-wC-ywB"/>
                             <constraint firstItem="kN3-mW-rod" firstAttribute="trailing" secondItem="087-zn-hul" secondAttribute="trailing" constant="16" id="WnV-b0-alo"/>
-                            <constraint firstItem="oAX-Ne-2x2" firstAttribute="top" secondItem="8hb-yG-Mu4" secondAttribute="bottom" id="ZYd-kc-9GI"/>
                             <constraint firstItem="kN3-mW-rod" firstAttribute="trailing" secondItem="8hb-yG-Mu4" secondAttribute="trailing" constant="16" id="aaf-8Q-img"/>
                             <constraint firstItem="kN3-mW-rod" firstAttribute="trailing" secondItem="62f-Ul-WsD" secondAttribute="trailing" constant="12" id="myT-E0-cOV"/>
                             <constraint firstItem="kN3-mW-rod" firstAttribute="bottom" secondItem="087-zn-hul" secondAttribute="bottom" constant="32" id="tHh-Rg-UPb"/>
                             <constraint firstItem="62f-Ul-WsD" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="12" id="tTG-mO-9ef"/>
+                            <constraint firstItem="4Mu-dI-hvc" firstAttribute="top" secondItem="8hb-yG-Mu4" secondAttribute="bottom" id="tmu-h6-xXT"/>
                             <constraint firstItem="8hb-yG-Mu4" firstAttribute="top" secondItem="62f-Ul-WsD" secondAttribute="bottom" constant="32" id="vQM-YN-5iS"/>
                             <constraint firstItem="8hb-yG-Mu4" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="xxX-Et-oIk"/>
-                            <constraint firstItem="kN3-mW-rod" firstAttribute="trailing" secondItem="oAX-Ne-2x2" secondAttribute="trailing" constant="16" id="yVR-a3-uMo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kN3-mW-rod"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New Watchlist" id="rk5-jb-zeK">
+                    <navigationItem key="navigationItem" title="New Chatroom" id="rk5-jb-zeK">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="iJl-h7-2A4">
                             <connections>
-                                <action selector="cancelTapped:" destination="69O-JY-xoc" id="5FZ-Qx-Jyz"/>
+                                <action selector="cancelTapped:" destination="69O-JY-xoc" id="0vB-os-f06"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createWatchlistButton" destination="087-zn-hul" id="qxL-07-6VC"/>
-                        <outlet property="textView" destination="62f-Ul-WsD" id="fLP-2D-unv"/>
-                        <outletCollection property="radioButtons" destination="pWF-8i-bXf" collectionClass="NSMutableArray" id="wbQ-xS-wws"/>
-                        <outletCollection property="radioButtons" destination="apT-mC-2YN" collectionClass="NSMutableArray" id="S0l-Jc-rbz"/>
+                        <outlet property="createChatroomButton" destination="087-zn-hul" id="Jx0-q5-42b"/>
+                        <outlet property="textView" destination="62f-Ul-WsD" id="EIX-8g-qwh"/>
+                        <outletCollection property="radioButtons" destination="KJH-Nx-W6q" collectionClass="NSMutableArray" id="Dlg-zn-BeD"/>
+                        <outletCollection property="radioButtons" destination="pWF-8i-bXf" collectionClass="NSMutableArray" id="JZK-cD-FkI"/>
+                        <outletCollection property="radioButtons" destination="apT-mC-2YN" collectionClass="NSMutableArray" id="ECq-lG-DKY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8gl-as-pBa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
