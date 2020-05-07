@@ -29,15 +29,10 @@
                             <outlet property="delegate" destination="VBi-i0-u3i" id="uR5-mO-YzJ"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Watchlists" id="dVq-Xu-1ck">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gYl-Ho-ti5">
-                            <connections>
-                                <segue destination="C7c-yU-jlx" kind="presentation" identifier="NewWatchlistVC" id="j9J-J5-STB"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Watchlists" id="dVq-Xu-1ck"/>
                     <connections>
                         <segue destination="bjv-dN-JRy" kind="show" identifier="WatchlistVC" id="bxh-KB-sxb"/>
+                        <segue destination="C7c-yU-jlx" kind="presentation" identifier="NewWatchlistVC" id="FKe-zq-wiE"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y7S-MR-mdF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

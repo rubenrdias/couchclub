@@ -106,7 +106,7 @@ class WatchlistsVC: UICollectionViewController {
         return [
             noDataLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             noDataLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            noDataLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0)
+            noDataLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ]
     }()
     
@@ -133,12 +133,43 @@ class WatchlistsVC: UICollectionViewController {
         return attributtedString
     }()
     
+    private lazy var createWatchlistButton: UIButton = {
+        let btn = UIButton()
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setTitle("Create Watchlist", for: .normal)
+        btn.titleLabel?.font = UIFont.translatedFont(for: .headline, .semibold)
+        btn.setTitleColor(UIColor.white, for: .normal)
+        btn.backgroundColor = UIColor.systemOrange
+        btn.layer.cornerRadius = 4
+        btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(createWatchlist), for: .touchUpInside)
+        return btn
+    }()
+    
+    @objc private func createWatchlist() {
+        performSegue(withIdentifier: "NewWatchlistVC", sender: nil)
+    }
+    
+    private lazy var createWatchlistButtonConstraints: [NSLayoutConstraint] = {
+        return [
+            createWatchlistButton.heightAnchor.constraint(equalToConstant: 56),
+            createWatchlistButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            createWatchlistButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            createWatchlistButton.bottomAnchor.constraint(equalTo: self.tabBarController!.tabBar.topAnchor, constant: -32)
+        ]
+    }()
+    
     private func evaluateDataAvailable() {
         if watchlists.isEmpty {
+            navigationItem.rightBarButtonItem = nil
             view.addSubview(noDataLabel)
+            view.addSubview(createWatchlistButton)
             NSLayoutConstraint.activate(noDataLabelConstraints)
+            NSLayoutConstraint.activate(createWatchlistButtonConstraints)
         } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createWatchlist))
             noDataLabel.removeFromSuperview()
+            createWatchlistButton.removeFromSuperview()
         }
     }
     
