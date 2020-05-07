@@ -28,6 +28,7 @@
 		538D29E12454978800CDB99F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E02454978800CDB99F /* Assets.xcassets */; };
 		538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E22454978800CDB99F /* LaunchScreen.storyboard */; };
 		538D29EF2454978800CDB99F /* CouchClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29EE2454978800CDB99F /* CouchClubTests.swift */; };
+		539448BB24640366002A9544 /* NewChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539448BA24640366002A9544 /* NewChatroomVC.swift */; };
 		53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
 		53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */; };
 		53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2F24580D160076B148 /* HighlightTVCell.swift */; };
@@ -87,6 +88,7 @@
 		538D29EA2454978800CDB99F /* CouchClubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CouchClubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		538D29EE2454978800CDB99F /* CouchClubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouchClubTests.swift; sourceTree = "<group>"; };
 		538D29F02454978800CDB99F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		539448BA24640366002A9544 /* NewChatroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatroomVC.swift; sourceTree = "<group>"; };
 		53AE644A2455DE4E00D7F817 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailHeaderTVCell.swift; sourceTree = "<group>"; };
 		53B34E2F24580D160076B148 /* HighlightTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTVCell.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				53B7CDE32454A52A007395EE /* ChatroomsVC.swift */,
+				539448BA24640366002A9544 /* NewChatroomVC.swift */,
 			);
 			path = Chatrooms;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				53D16F4E2458D790001DD4FA /* Constants.swift in Sources */,
 				53B71449245B524D00915FF8 /* Watchlist+CoreDataClass.swift in Sources */,
 				538D29D52454978600CDB99F /* AppDelegate.swift in Sources */,
+				539448BB24640366002A9544 /* NewChatroomVC.swift in Sources */,
 				538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */,
 				53BEA6962459820100F7D770 /* DataCoordinator.swift in Sources */,
 				53153CC2245625950089AEA7 /* SearchItemCell.swift in Sources */,

@@ -128,7 +128,7 @@ class WatchlistsVC: UICollectionViewController {
             .font: UIFont.translatedFont(for: .subheadline, .regular),
             .paragraphStyle: paragraphStyle
         ]
-        attributtedString.append(NSAttributedString(string: "Use Watchlists to track movies or shows you want to watch. Create one to start tracking!", attributes: subtitleAttributes))
+        attributtedString.append(NSAttributedString(string: "You can use Watchlists to track movies or shows you want to watch.", attributes: subtitleAttributes))
         
         return attributtedString
     }()
@@ -155,7 +155,7 @@ class WatchlistsVC: UICollectionViewController {
             createWatchlistButton.heightAnchor.constraint(equalToConstant: 56),
             createWatchlistButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             createWatchlistButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            createWatchlistButton.bottomAnchor.constraint(equalTo: self.tabBarController!.tabBar.topAnchor, constant: -32)
+            createWatchlistButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32)
         ]
     }()
     
