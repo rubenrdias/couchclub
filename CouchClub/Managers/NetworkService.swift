@@ -33,11 +33,6 @@ struct SearchItem: Decodable {
     }
 }
 
-enum ItemType: String {
-    case movie
-    case series
-}
-
 final class NetworkService {
     
     static let shared = NetworkService()

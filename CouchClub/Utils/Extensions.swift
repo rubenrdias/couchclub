@@ -150,8 +150,13 @@ extension UIColor {
 
 extension Notification.Name {
     
+    // watchlists
     static let watchlistsDidChange = Notification.Name("watchlistsDidChange")
     static let watchlistDidChange = Notification.Name("watchlistDidChange")
+    
+    // chatrooms
+    static let chatroomsDidChange = Notification.Name("chatroomsDidChange")
+    static let chatroomDidChange = Notification.Name("chatroomDidChange")
     
 }
 

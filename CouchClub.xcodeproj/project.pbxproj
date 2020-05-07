@@ -15,6 +15,10 @@
 		534BFB9D2454DDB500F9F772 /* Watchlists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */; };
 		534BFBA02454DE8800F9F772 /* Chatrooms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */; };
 		534BFBA22454DED600F9F772 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFBA12454DED600F9F772 /* Settings.storyboard */; };
+		536012FD246497CC00E00C6F /* ChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536012FC246497CC00E00C6F /* ChatroomVC.swift */; };
+		536012FF2464A33000E00C6F /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536012FE2464A33000E00C6F /* Protocols.swift */; };
+		536013062464A64700E00C6F /* Chatroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536013022464A64700E00C6F /* Chatroom+CoreDataClass.swift */; };
+		536013072464A64700E00C6F /* Chatroom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536013032464A64700E00C6F /* Chatroom+CoreDataProperties.swift */; };
 		53645A64245CA382009A4AE6 /* TextCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A63245CA382009A4AE6 /* TextCVCell.swift */; };
 		53645A66245DBEB0009A4AE6 /* HighlightCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */; };
 		53645A68245DD8A0009A4AE6 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A67245DD8A0009A4AE6 /* ItemCell.swift */; };
@@ -29,6 +33,8 @@
 		538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E22454978800CDB99F /* LaunchScreen.storyboard */; };
 		538D29EF2454978800CDB99F /* CouchClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29EE2454978800CDB99F /* CouchClubTests.swift */; };
 		539448BB24640366002A9544 /* NewChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539448BA24640366002A9544 /* NewChatroomVC.swift */; };
+		53ABCAA22464AB7300193C5E /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ABCAA02464AB7300193C5E /* Message+CoreDataClass.swift */; };
+		53ABCAA32464AB7300193C5E /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53ABCAA12464AB7300193C5E /* Message+CoreDataProperties.swift */; };
 		53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
 		53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */; };
 		53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2F24580D160076B148 /* HighlightTVCell.swift */; };
@@ -71,10 +77,14 @@
 		534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Watchlists.storyboard; sourceTree = "<group>"; };
 		534BFB9F2454DE8800F9F772 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = CouchClub/View/Storyboards/Base.lproj/Chatrooms.storyboard; sourceTree = "<group>"; };
 		534BFBA12454DED600F9F772 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		536012FC246497CC00E00C6F /* ChatroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomVC.swift; sourceTree = "<group>"; };
+		536012FE2464A33000E00C6F /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		536013022464A64700E00C6F /* Chatroom+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Chatroom+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Chatroom+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		536013032464A64700E00C6F /* Chatroom+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Chatroom+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Chatroom+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53645A63245CA382009A4AE6 /* TextCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCVCell.swift; sourceTree = "<group>"; };
 		53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCVCell.swift; sourceTree = "<group>"; };
 		53645A67245DD8A0009A4AE6 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
-		536A3921245F717E00E1FAA0 /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		536A3921245F717E00E1FAA0 /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlists/Item+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5376F2AF24595EE7007FB93C /* LocalDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
 		537C14312455CDE7005FC745 /* SearchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItems.swift; sourceTree = "<group>"; };
 		538D29D12454978600CDB99F /* CouchClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CouchClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,12 +99,14 @@
 		538D29EE2454978800CDB99F /* CouchClubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouchClubTests.swift; sourceTree = "<group>"; };
 		538D29F02454978800CDB99F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		539448BA24640366002A9544 /* NewChatroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatroomVC.swift; sourceTree = "<group>"; };
+		53ABCAA02464AB7300193C5E /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		53ABCAA12464AB7300193C5E /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53AE644A2455DE4E00D7F817 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailHeaderTVCell.swift; sourceTree = "<group>"; };
 		53B34E2F24580D160076B148 /* HighlightTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTVCell.swift; sourceTree = "<group>"; };
-		53B71445245B524D00915FF8 /* Watchlist+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Watchlist+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlist+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		53B71446245B524D00915FF8 /* Watchlist+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Watchlist+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlist+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		53B71447245B524D00915FF8 /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		53B71445245B524D00915FF8 /* Watchlist+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Watchlist+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Watchlist+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		53B71446245B524D00915FF8 /* Watchlist+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Watchlist+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlists/Watchlist+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		53B71447245B524D00915FF8 /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Item+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		53B7CDE32454A52A007395EE /* ChatroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomsVC.swift; sourceTree = "<group>"; };
 		53BEA6932459722500F7D770 /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		53BEA6952459820100F7D770 /* DataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
@@ -105,10 +117,10 @@
 		53CC6A3F245ADB2500744012 /* WatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistVC.swift; sourceTree = "<group>"; };
 		53D16F4D2458D790001DD4FA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		53D91F06245AEF5A00BC9F82 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		53F688052458CFE500230CE9 /* Show+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Show+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		53F688062458CFE500230CE9 /* Show+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Show+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		53F688082458CFE500230CE9 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		53F688052458CFE500230CE9 /* Show+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Show+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		53F688062458CFE500230CE9 /* Show+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlists/Show+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		53F688082458CFE500230CE9 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlists/Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53F6880F2458D4AC00230CE9 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,8 +171,24 @@
 				538D29E02454978800CDB99F /* Assets.xcassets */,
 				5325106E245AD9FE00DBBA04 /* Extensions.swift */,
 				53D16F4D2458D790001DD4FA /* Constants.swift */,
+				536012FE2464A33000E00C6F /* Protocols.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		536013012464A4BD00E00C6F /* Watchlists */ = {
+			isa = PBXGroup;
+			children = (
+				53B71445245B524D00915FF8 /* Watchlist+CoreDataClass.swift */,
+				53B71446245B524D00915FF8 /* Watchlist+CoreDataProperties.swift */,
+				53B71447245B524D00915FF8 /* Item+CoreDataClass.swift */,
+				536A3921245F717E00E1FAA0 /* Item+CoreDataProperties.swift */,
+				53F688052458CFE500230CE9 /* Show+CoreDataClass.swift */,
+				53F688062458CFE500230CE9 /* Show+CoreDataProperties.swift */,
+				53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */,
+				53F688082458CFE500230CE9 /* Movie+CoreDataProperties.swift */,
+			);
+			path = Watchlists;
 			sourceTree = "<group>";
 		};
 		53645A69245DDB21009A4AE6 /* Items */ = {
@@ -179,6 +207,17 @@
 				53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */,
 			);
 			path = Watchlists;
+			sourceTree = "<group>";
+		};
+		538014402464A96000C9ED6E /* Chatrooms */ = {
+			isa = PBXGroup;
+			children = (
+				536013022464A64700E00C6F /* Chatroom+CoreDataClass.swift */,
+				536013032464A64700E00C6F /* Chatroom+CoreDataProperties.swift */,
+				53ABCAA02464AB7300193C5E /* Message+CoreDataClass.swift */,
+				53ABCAA12464AB7300193C5E /* Message+CoreDataProperties.swift */,
+			);
+			path = Chatrooms;
 			sourceTree = "<group>";
 		};
 		538D29C82454978600CDB99F = {
@@ -224,14 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				538D29DD2454978600CDB99F /* CouchClub.xcdatamodeld */,
-				53B71445245B524D00915FF8 /* Watchlist+CoreDataClass.swift */,
-				53B71446245B524D00915FF8 /* Watchlist+CoreDataProperties.swift */,
-				53B71447245B524D00915FF8 /* Item+CoreDataClass.swift */,
-				536A3921245F717E00E1FAA0 /* Item+CoreDataProperties.swift */,
-				53F688052458CFE500230CE9 /* Show+CoreDataClass.swift */,
-				53F688062458CFE500230CE9 /* Show+CoreDataProperties.swift */,
-				53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */,
-				53F688082458CFE500230CE9 /* Movie+CoreDataProperties.swift */,
+				536013012464A4BD00E00C6F /* Watchlists */,
+				538014402464A96000C9ED6E /* Chatrooms */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -298,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				53B7CDE32454A52A007395EE /* ChatroomsVC.swift */,
+				536012FC246497CC00E00C6F /* ChatroomVC.swift */,
 				539448BA24640366002A9544 /* NewChatroomVC.swift */,
 			);
 			path = Chatrooms;
@@ -432,6 +466,7 @@
 				53251069245ABF4200DBBA04 /* NewWatchlistVC.swift in Sources */,
 				537C14322455CDE7005FC745 /* SearchItems.swift in Sources */,
 				53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */,
+				536013062464A64700E00C6F /* Chatroom+CoreDataClass.swift in Sources */,
 				53153CC02456253F0089AEA7 /* SmallHeaderCVCell.swift in Sources */,
 				53645A64245CA382009A4AE6 /* TextCVCell.swift in Sources */,
 				53D91F07245AEF5A00BC9F82 /* Alerts.swift in Sources */,
@@ -449,15 +484,20 @@
 				53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */,
 				53645A68245DD8A0009A4AE6 /* ItemCell.swift in Sources */,
 				53F688102458D4AC00230CE9 /* Converter.swift in Sources */,
+				53ABCAA22464AB7300193C5E /* Message+CoreDataClass.swift in Sources */,
+				536013072464A64700E00C6F /* Chatroom+CoreDataProperties.swift in Sources */,
+				536012FD246497CC00E00C6F /* ChatroomVC.swift in Sources */,
 				53F6880D2458CFE500230CE9 /* Movie+CoreDataClass.swift in Sources */,
 				53BEA6942459722500F7D770 /* LocalStorage.swift in Sources */,
 				53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */,
 				53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */,
 				53F6880E2458CFE500230CE9 /* Movie+CoreDataProperties.swift in Sources */,
 				53CC6A40245ADB2500744012 /* WatchlistVC.swift in Sources */,
+				53ABCAA32464AB7300193C5E /* Message+CoreDataProperties.swift in Sources */,
 				53F6880C2458CFE500230CE9 /* Show+CoreDataProperties.swift in Sources */,
 				5325106F245AD9FE00DBBA04 /* Extensions.swift in Sources */,
 				53B7144A245B524D00915FF8 /* Watchlist+CoreDataProperties.swift in Sources */,
+				536012FF2464A33000E00C6F /* Protocols.swift in Sources */,
 				53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

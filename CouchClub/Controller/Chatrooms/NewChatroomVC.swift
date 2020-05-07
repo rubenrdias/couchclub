@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol ChatroomOperationDelegate: AnyObject {
-    func didCreateChatroom(_ id: UUID)
-}
-
 class NewChatroomVC: UIViewController {
     
     weak var delegate: ChatroomOperationDelegate?
@@ -22,6 +18,8 @@ class NewChatroomVC: UIViewController {
         
     let placeholderText = "Chatroom title..."
     let titleRegex = NSRegularExpression(".*")
+    
+    var chatroomType: ChatroomType!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +47,12 @@ class NewChatroomVC: UIViewController {
     }
     
     @IBAction func createButtonTapped(_ sender: UIButton) {
-//        let title = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-//        DataCoordinator.shared.createWatchlist(title, itemType) { [weak self] (id, _) in
+        // temporary
+        guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
+        guard let watchlist = watchlists.randomElement() else { return }
+        
+        let title = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        DataCoordinator.shared.createChatroom(title, .watchlist, watchlist.id) { [weak self] (id, _) in
 //            // TODO: handle errors
 //            if let id = id {
 //                self?.dismiss(animated: true, completion: {
@@ -60,7 +62,7 @@ class NewChatroomVC: UIViewController {
 //                let ac = Alerts.simpleAlert(title: "Error", message: "Something went wrong when creating the watchlist.")
 //                self?.present(ac, animated: true, completion: nil)
 //            }
-//        }
+        }
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {

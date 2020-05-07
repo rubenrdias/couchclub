@@ -12,7 +12,7 @@ final class DataCoordinator {
     
     static let shared = DataCoordinator()
     
-    // MARK: Watchlists
+    // MARK: - Watchlists
     
     func createWatchlist(_ title: String, _ type: ItemType, completion: @escaping (_ id: UUID?, _ error: Error?)->() ) {
         let wb = WatchlistBuilder()
@@ -59,7 +59,7 @@ final class DataCoordinator {
         completion(nil)
     }
     
-    // MARK: Items
+    // MARK: - Items
     
     func getMovie(_ id: String, completion: @escaping (Movie?)->() ) {
         NetworkService.shared.searchResult(forID: id, ofType: .movie) { searchItem in
@@ -101,7 +101,24 @@ final class DataCoordinator {
         }
     }
     
-    // MARK: Data Download
+    // MARK: - Chatrooms
+    
+    func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: UUID, completion: @escaping (_ id: UUID?, _ error: Error?)->() ) {
+        let cb = ChatroomBuilder()
+        let chatroom = cb.named(title)
+            .ofType(type)
+            .relatedTo(relatedTo)
+            .build()
+        
+//         TODO: add to firebase
+//         TODO: handle errors
+        
+        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+        completion(chatroom.id, nil)
+    }
+    
+    
+    // MARK: - Data Download
     
     func getImage(_ itemID: String, _ url: String, completion: @escaping (UIImage?)->()) {
         if let image = LocalStorage.shared.retrieve(itemID) {

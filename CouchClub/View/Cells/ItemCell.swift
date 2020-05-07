@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol ItemOperationDelegate: AnyObject {
-    func didTapSeen(_ item: Item)
-}
-
 class ItemCell: UICollectionViewCell {
     
     weak var delegate: ItemOperationDelegate?

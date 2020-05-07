@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol WatchlistOperationDelegate: AnyObject {
-    func didCreateWatchlist(_ id: UUID)
-}
-
 class NewWatchlistVC: UIViewController {
     
     weak var delegate: WatchlistOperationDelegate?
@@ -23,7 +19,7 @@ class NewWatchlistVC: UIViewController {
     let placeholderText = "Watchlist title..."
     let titleRegex = NSRegularExpression(".*")
     
-    var itemType: ItemType! = .movie
+    var itemType: ItemType!
     
     override func viewDidLoad() {
         super.viewDidLoad()

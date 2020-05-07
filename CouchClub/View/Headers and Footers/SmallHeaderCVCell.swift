@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol HeaderButtonsDelegate: AnyObject {
-    func didTapThumbnailsButton()
-    func didTapListButton()
-}
-
 class SmallHeaderCVCell: UICollectionReusableView {
     
     static let reuseIdentifier = "SmallHeaderCVCell"

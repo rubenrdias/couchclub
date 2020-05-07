@@ -12,3 +12,16 @@ import UIKit
 
 let ad = UIApplication.shared.delegate as! AppDelegate
 let context = ad.persistentContainer.viewContext
+
+// MARK: - Enums
+
+enum ItemType: String {
+    case movie
+    case series
+}
+
+enum ChatroomType: String {
+    case watchlist
+    case movie
+    case show
+}

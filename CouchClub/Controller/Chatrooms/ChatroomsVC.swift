@@ -8,12 +8,14 @@
 
 import UIKit
 
-class ChatroomsVC: UICollectionViewController {
+class ChatroomsVC: UITableViewController {
     
     var chatrooms = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .chatroomsDidChange, object: nil)
         
         fetchData()
     }
@@ -36,7 +38,7 @@ class ChatroomsVC: UICollectionViewController {
 //            guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
 //            self?.watchlists = watchlists
 //
-//            self?.collectionView.reloadData()
+//            self?.tableView.reloadData()
             self?.evaluateDataAvailable()
         }
     }
