@@ -13,6 +13,7 @@ class MessageInputAccessoryView: UIView {
     private let messageTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
         tv.placeholderText = "Enter message..."
+        tv.reset()
         return tv
     }()
     
@@ -60,10 +61,16 @@ class MessageInputAccessoryView: UIView {
         return .zero
     }
     
+    func dismissKeyboard() {
+        messageTextView.resignFirstResponder()
+    }
+    
     @objc func handleSend() {
         guard let commentText = messageTextView.text else { return }
         // TODO: use a delegate to send message
         print("Should send: \(commentText)")
+        messageTextView.reset()
+        messageTextView.resignFirstResponder()
     }
     
     required init?(coder aDecoder: NSCoder) {

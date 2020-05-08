@@ -49,7 +49,7 @@ class ChatroomVC: UITableViewController {
     }
     
     @objc private func editingFinished() {
-        // TODO: clear the keyboard
+        inputAccessoryViewContainer.dismissKeyboard()
     }
     
     lazy var inputAccessoryViewContainer: MessageInputAccessoryView = {

@@ -45,7 +45,10 @@ class CommentInputTextView: UITextView {
 extension CommentInputTextView: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        textColor = .colorAsset(.dynamicLabel)
+        if text == placeholderText {
+            text = nil
+            textColor = .colorAsset(.dynamicLabel)
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
