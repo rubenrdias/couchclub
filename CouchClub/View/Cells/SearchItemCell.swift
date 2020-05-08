@@ -57,7 +57,7 @@ class SearchItemCell: UICollectionViewCell {
     
     func setImageUnavailable() {
         imageView.contentMode = .center
-        imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
+        imageView.tintColor = .colorAsset(.dynamicLabel)
         imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     

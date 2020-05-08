@@ -76,7 +76,7 @@ class WatchlistCell: UICollectionViewCell {
     }()
     
     private lazy var subtitleLabel: UILabel = {
-        let lbl = UILabel.accessibleLabel(.subheadline, .regular, UIColor.colorAsset(.staticGray2))
+        let lbl = UILabel.accessibleLabel(.subheadline, .regular, .colorAsset(.staticGray2))
         return lbl
     }()
     
@@ -105,9 +105,9 @@ class WatchlistCell: UICollectionViewCell {
     }
     
     func setImageUnavailable() {
-        contentView.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        contentView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         imageView.contentMode = .center
-        imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
+        imageView.tintColor = .colorAsset(.dynamicLabel)
         imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     

@@ -83,7 +83,7 @@ class WatchlistVC: UICollectionViewController {
     
     @IBAction func moreButtonTapped(_ sender: UIBarButtonItem) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         

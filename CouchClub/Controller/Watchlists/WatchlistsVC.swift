@@ -137,7 +137,7 @@ class WatchlistsVC: UICollectionViewController {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("Create Watchlist", for: .normal)
-        btn.titleLabel?.font = UIFont.translatedFont(for: .headline, .semibold)
+        btn.titleLabel?.font = .translatedFont(for: .headline, .semibold)
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.backgroundColor = UIColor.systemOrange
         btn.layer.cornerRadius = 4

@@ -23,7 +23,7 @@ class TextCVCell: UICollectionViewCell {
     }
     
     private lazy var titleLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.title2, .bold, UIColor.colorAsset(.dynamicLabel))
+        let lbl = UILabel.standardLabel(.title2, .bold, .colorAsset(.dynamicLabel))
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.numberOfLines = 0
         return lbl

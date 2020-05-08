@@ -78,7 +78,7 @@ class ItemCell: UICollectionViewCell {
     }()
     
     private lazy var subtitleLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.caption1, .regular, UIColor.colorAsset(.staticGray2))
+        let lbl = UILabel.standardLabel(.caption1, .regular, .colorAsset(.staticGray2))
         return lbl
     }()
     
@@ -160,9 +160,9 @@ class ItemCell: UICollectionViewCell {
     }
     
     func setImageUnavailable() {
-        contentView.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        contentView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         imageView.contentMode = .center
-        imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
+        imageView.tintColor = .colorAsset(.dynamicLabel)
         imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     

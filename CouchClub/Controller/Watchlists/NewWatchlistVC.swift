@@ -92,13 +92,13 @@ class NewWatchlistVC: UIViewController {
     private func highlightButton(_ button: UIButton) {
         button.backgroundColor = UIColor.systemOrange
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.translatedFont(for: .headline, .semibold)
+        button.titleLabel?.font = .translatedFont(for: .headline, .semibold)
     }
     
     private func restoreButton(_ button: UIButton) {
-        button.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
-        button.setTitleColor(UIColor.colorAsset(.dynamicLabel), for: .normal)
-        button.titleLabel?.font = UIFont.translatedFont(for: .headline, .regular)
+        button.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
+        button.setTitleColor(.colorAsset(.dynamicLabel), for: .normal)
+        button.titleLabel?.font = .translatedFont(for: .headline, .regular)
     }
     
     private func setupTitleToolbar() {
@@ -120,8 +120,8 @@ class NewWatchlistVC: UIViewController {
     
     func resetTextView(setPlaceholder: Bool = true) {
         textView.text = setPlaceholder ? placeholderText : nil
-        textView.font = UIFont.translatedFont(for: .body, .regular)
-        textView.textColor = UIColor.colorAsset(.dynamicLabelSecondary)
+        textView.font = .translatedFont(for: .body, .regular)
+        textView.textColor = .colorAsset(.dynamicLabelSecondary)
     }
     
     func formatButtonCorners(_ button: UIButton) {
@@ -154,8 +154,8 @@ extension NewWatchlistVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text.isEmpty || textView.text == placeholderText  {
             textView.text = ""
-            textView.font = UIFont.translatedFont(for: .title2, .semibold)
-            textView.textColor = UIColor.colorAsset(.dynamicLabel)
+            textView.font = .translatedFont(for: .title2, .semibold)
+            textView.textColor = .colorAsset(.dynamicLabel)
         }
     }
     

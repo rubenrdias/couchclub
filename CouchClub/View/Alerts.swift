@@ -12,7 +12,7 @@ class Alerts {
     
     static func simpleAlert(title: String?, message: String?, action: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
         
         ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: action))
         
@@ -21,7 +21,7 @@ class Alerts {
     
     static func deletionAlert(title: String?, message: String?, action: ((UIAlertAction) -> Void)?) -> UIAlertController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        ac.view.tintColor = UIColor.colorAsset(.dynamicLabel)
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         

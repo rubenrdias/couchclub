@@ -23,7 +23,7 @@ class HighlightTVCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = UIColor.colorAsset(.dynamicBackground)
+        contentView.backgroundColor = .colorAsset(.dynamicBackground)
         
         setupContainers()
         setupText()
@@ -32,7 +32,7 @@ class HighlightTVCell: UITableViewCell {
     private lazy var highlightLeftContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        view.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         view.clipsToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -41,7 +41,7 @@ class HighlightTVCell: UITableViewCell {
     private lazy var highlightRightContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        view.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         view.clipsToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -77,7 +77,7 @@ class HighlightTVCell: UITableViewCell {
     }()
     
     private lazy var leftSubtitleLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         return lbl
     }()
     
@@ -95,7 +95,7 @@ class HighlightTVCell: UITableViewCell {
     }()
     
     private lazy var rightSubtitleLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         return lbl
     }()
     

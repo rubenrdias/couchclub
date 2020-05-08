@@ -88,7 +88,7 @@ class ChatroomsVC: UIViewController {
         let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("Create Chatroom", for: .normal)
-        btn.titleLabel?.font = UIFont.translatedFont(for: .headline, .semibold)
+        btn.titleLabel?.font = .translatedFont(for: .headline, .semibold)
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.backgroundColor = UIColor.systemOrange
         btn.layer.cornerRadius = 4
@@ -129,11 +129,20 @@ class ChatroomsVC: UIViewController {
 extension ChatroomsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return chatrooms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.text = chatrooms[indexPath.row].title
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chatroom = chatrooms[indexPath.row]
+        performSegue(withIdentifier: "ChatroomVC", sender: chatroom)
     }
     
 }

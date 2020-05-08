@@ -44,7 +44,7 @@ class SmallHeaderCVCell: UICollectionReusableView {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.imageEdgeInsets = .init(top: 5.5, left: 5.5, bottom: 5.5, right: 5.5)
         btn.setImage(UIImage.iconAsset(.list), for: .normal)
-        btn.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
+        btn.tintColor = .colorAsset(.dynamicLabelSecondary)
         btn.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
         btn.tag = 0
         return btn
@@ -77,7 +77,7 @@ class SmallHeaderCVCell: UICollectionReusableView {
     }
     
     private lazy var textLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -107,11 +107,11 @@ class SmallHeaderCVCell: UICollectionReusableView {
         activeButton = sender.tag
         if sender.tag == 0 {
             listButton.tintColor = UIColor.systemOrange
-            thumbnailsButton.tintColor = UIColor.colorAsset(.dynamicLabel)
+            thumbnailsButton.tintColor = .colorAsset(.dynamicLabel)
             delegate?.didTapListButton()
         } else {
             thumbnailsButton.tintColor = UIColor.systemOrange
-            listButton.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
+            listButton.tintColor = .colorAsset(.dynamicLabelSecondary)
             delegate?.didTapThumbnailsButton()
         }
     }

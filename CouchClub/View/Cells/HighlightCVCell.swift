@@ -30,7 +30,7 @@ class HighlightCVCell: UICollectionViewCell {
     private lazy var highlightLeftContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        view.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         view.clipsToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -39,7 +39,7 @@ class HighlightCVCell: UICollectionViewCell {
     private lazy var highlightRightContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.colorAsset(.dynamicBackgroundHighlight)
+        view.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         view.clipsToBounds = true
         view.layer.cornerRadius = 4
         return view
@@ -75,7 +75,7 @@ class HighlightCVCell: UICollectionViewCell {
     }()
     
     private lazy var leftSubtitleLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         return lbl
     }()
     
@@ -93,7 +93,7 @@ class HighlightCVCell: UICollectionViewCell {
     }()
     
     private lazy var rightSubtitleLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         return lbl
     }()
     

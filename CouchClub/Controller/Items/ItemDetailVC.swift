@@ -40,7 +40,7 @@ class ItemDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.colorAsset(.dynamicBackground)
+        view.backgroundColor = .colorAsset(.dynamicBackground)
         
         if #available(iOS 13.0, *) { isModalInPresentation = true }
         
@@ -106,7 +106,7 @@ class ItemDetailVC: UIViewController {
         tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: headerCellID)
         tableView.register(HighlightTVCell.self, forCellReuseIdentifier: HighlightTVCell.reuseIdentifier)
         
-        tableView.backgroundColor = UIColor.colorAsset(.dynamicBackground)
+        tableView.backgroundColor = .colorAsset(.dynamicBackground)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.tableFooterView = UIView()
@@ -200,7 +200,7 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
             let view = UIView()
-            view.backgroundColor = UIColor.colorAsset(.dynamicBackground)
+            view.backgroundColor = .colorAsset(.dynamicBackground)
             return view
         }
         return nil
@@ -241,7 +241,7 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else {
             let cell = UITableViewCell()
-            cell.contentView.backgroundColor = UIColor.colorAsset(.dynamicBackground)
+            cell.contentView.backgroundColor = .colorAsset(.dynamicBackground)
             cell.textLabel?.numberOfLines = 0
             cell.textLabel?.attributedText = attributedText(attributes[indexPath.row])
             return cell

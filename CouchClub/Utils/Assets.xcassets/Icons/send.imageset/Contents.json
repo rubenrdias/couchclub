@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icons8-imdb-1.png",
+      "filename" : "icons8-email_send-2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-imdb-2.png",
+      "filename" : "icons8-email_send-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icons8-imdb.png",
+      "filename" : "icons8-email_send.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -21,6 +21,6 @@
     "version" : 1
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "template"
   }
 }

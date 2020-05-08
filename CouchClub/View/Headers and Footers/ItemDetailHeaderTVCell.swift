@@ -21,7 +21,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = UIColor.colorAsset(.dynamicBackground)
+        contentView.backgroundColor = .colorAsset(.dynamicBackground)
         
         setupImage()
         setupText()
@@ -56,20 +56,20 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     }()
     
     private lazy var titleLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.title2, .bold, UIColor.colorAsset(.dynamicLabel))
+        let lbl = UILabel.standardLabel(.title2, .bold, .colorAsset(.dynamicLabel))
         lbl.numberOfLines = 2
         lbl.adjustsFontSizeToFitWidth = true
         return lbl
     }()
     
     private lazy var genreLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         lbl.numberOfLines = 0
         return lbl
     }()
     
     private lazy var awardsLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         lbl.numberOfLines = 0
         return lbl
     }()
@@ -95,7 +95,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     }()
     
     private lazy var ratingsLabel: UILabel = {
-        let lbl = UILabel.standardLabel(.footnote, .regular, UIColor.colorAsset(.dynamicLabelSecondary))
+        let lbl = UILabel.standardLabel(.footnote, .regular, .colorAsset(.dynamicLabelSecondary))
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -106,7 +106,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         btn.addTarget(self, action: #selector(seenButtonTapped), for: .touchUpInside)
         btn.imageEdgeInsets = .init(top: 2, left: 2, bottom: 2, right: 2)
         btn.setImage(UIImage.iconAsset(.checkmark), for: .normal)
-        btn.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
+        btn.tintColor = .colorAsset(.dynamicLabelSecondary)
         return btn
     }()
     
@@ -116,7 +116,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         btn.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
         btn.imageEdgeInsets = .init(top: 2, left: 2, bottom: 2, right: 2)
         btn.setImage(UIImage.iconAsset(.heart), for: .normal)
-        btn.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
+        btn.tintColor = .colorAsset(.dynamicLabelSecondary)
         return btn
     }()
     
@@ -174,7 +174,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     
     private func setImageUnavailable() {
         imageView.contentMode = .center
-        imageView.tintColor = UIColor.colorAsset(.dynamicLabel)
+        imageView.tintColor = .colorAsset(.dynamicLabel)
         imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     
@@ -189,13 +189,13 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         if markAsWatched {
             seenButton.tintColor = UIColor.systemOrange
         } else {
-            seenButton.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
+            seenButton.tintColor = .colorAsset(.dynamicLabelSecondary)
         }
     }
     
     @objc private func favoriteButtonTapped() {
         if favoriteButton.tintColor == UIColor.systemOrange {
-            favoriteButton.tintColor = UIColor.colorAsset(.dynamicLabelSecondary)
+            favoriteButton.tintColor = .colorAsset(.dynamicLabelSecondary)
         } else {
             favoriteButton.tintColor = UIColor.systemOrange
         }
