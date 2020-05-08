@@ -19,7 +19,7 @@ class NewWatchlistVC: UIViewController {
     let placeholderText = "Watchlist title..."
     let titleRegex = NSRegularExpression(".*")
     
-    var itemType: ItemType!
+    var itemType: ItemType! = .movie
     
     override func viewDidLoad() {
         super.viewDidLoad()

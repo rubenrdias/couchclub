@@ -49,19 +49,19 @@ class NewChatroomVC: UIViewController {
     @IBAction func createButtonTapped(_ sender: UIButton) {
         // temporary
         guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
-        guard let watchlist = watchlists.randomElement() else { return }
+        guard let watchlist = watchlists.randomElement() else { return }
         
         let title = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         DataCoordinator.shared.createChatroom(title, .watchlist, watchlist.id) { [weak self] (id, _) in
-//            // TODO: handle errors
-//            if let id = id {
-//                self?.dismiss(animated: true, completion: {
-//                    self?.delegate?.didCreateWatchlist(id)
-//                })
-//            } else {
-//                let ac = Alerts.simpleAlert(title: "Error", message: "Something went wrong when creating the watchlist.")
-//                self?.present(ac, animated: true, completion: nil)
-//            }
+            // TODO: handle errors
+            if let id = id {
+                self?.dismiss(animated: true, completion: {
+                    self?.delegate?.didCreateChatroom(id)
+                })
+            } else {
+                let ac = Alerts.simpleAlert(title: "Error", message: "Something went wrong when creating the chatroom.")
+                self?.present(ac, animated: true, completion: nil)
+            }
         }
     }
     
@@ -74,13 +74,9 @@ class NewChatroomVC: UIViewController {
             }
         }
         
-//        if sender.tag == 0 {
-//            itemType = .movie
-//        } else {
-//            itemType = .series
-//        }
+        // TODO: Allow the user to select a watchlist, movie or show
         
-        validateInputs()
+//        validateInputs()
     }
     
     private func setupButtons() {

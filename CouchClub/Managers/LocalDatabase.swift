@@ -100,6 +100,42 @@ final class LocalDatabase {
         }
     }
     
+    // MARK: - Chatrooms
+    
+    func fetchChatroom(_ id: UUID) -> Chatroom? {
+        coreDataQueue.sync {
+            let fetchRequest = Chatroom.createFetchRequest()
+            // filtering
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            
+            do {
+                let chatrooms = try context.fetch(fetchRequest)
+                return chatrooms.isEmpty ? nil : chatrooms[0]
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching Chatroom by id (\(id.uuidString)): \(error)")
+                return nil
+            }
+        }
+    }
+    
+    func fetchChatrooms() -> [Chatroom]? {
+        coreDataQueue.sync {
+            let fetchRequest = Chatroom.createFetchRequest()
+            // sorting
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+            
+            do {
+                let chatrooms = try context.fetch(fetchRequest)
+                return chatrooms
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching Chatrooms: \(error)")
+                return nil
+            }
+        }
+    }
+    
     // MARK: - Database Reset (debugging)
     
     func clearDatabase() {

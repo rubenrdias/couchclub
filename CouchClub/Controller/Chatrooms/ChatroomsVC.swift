@@ -8,9 +8,11 @@
 
 import UIKit
 
-class ChatroomsVC: UITableViewController {
+class ChatroomsVC: UIViewController {
     
-    var chatrooms = [String]()
+    @IBOutlet weak var tableView: UITableView!
+    
+    var chatrooms = [Chatroom]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,19 +28,19 @@ class ChatroomsVC: UITableViewController {
             guard let newChatroomVC = navController.viewControllers.first as? NewChatroomVC else { return }
             newChatroomVC.delegate = self
         }
-//        else if segue.identifier == "WatchlistVC" {
-//            guard let watchlist = sender as? Watchlist else { return }
-//            guard let watchlistVC = segue.destination as? WatchlistVC else { return }
-//            watchlistVC.watchlist = watchlist
-//        }
+        else if segue.identifier == "ChatroomVC" {
+            guard let chatroom = sender as? Chatroom else { return }
+            guard let chatroomVC = segue.destination as? ChatroomVC else { return }
+            chatroomVC.chatroom = chatroom
+        }
     }
     
     @objc private func fetchData() {
         DispatchQueue.main.async { [weak self] in
-//            guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
-//            self?.watchlists = watchlists
-//
-//            self?.tableView.reloadData()
+            guard let chatrooms = LocalDatabase.shared.fetchChatrooms() else { return }
+            self?.chatrooms = chatrooms
+
+            self?.tableView.reloadData()
             self?.evaluateDataAvailable()
         }
     }
@@ -124,13 +126,25 @@ class ChatroomsVC: UITableViewController {
 
 }
 
+extension ChatroomsVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+}
+
 extension ChatroomsVC: ChatroomOperationDelegate {
     
     func didCreateChatroom(_ id: UUID) {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-//            guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
-//            self?.performSegue(withIdentifier: "WatchlistVC", sender: watchlist)
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let watchlist = LocalDatabase.shared.fetchChatroom(id) else { return }
+            self?.performSegue(withIdentifier: "ChatroomVC", sender: watchlist)
+        }
     }
     
 }

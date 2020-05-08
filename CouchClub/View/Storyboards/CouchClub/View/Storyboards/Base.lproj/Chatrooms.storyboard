@@ -48,7 +48,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="s9r-K2-WQa" kind="relationship" relationship="rootViewController" id="fIW-nZ-mwM"/>
+                        <segue destination="yx5-s9-GBX" kind="relationship" relationship="rootViewController" id="2vP-5A-DzA"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VjI-s8-fM8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -56,25 +56,39 @@
             <point key="canvasLocation" x="4180" y="204"/>
         </scene>
         <!--Chatrooms-->
-        <scene sceneID="Nf7-NT-h1i">
+        <scene sceneID="K7Z-4u-QWz">
             <objects>
-                <tableViewController id="s9r-K2-WQa" customClass="ChatroomsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="eAn-w4-2JN">
+                <viewController id="yx5-s9-GBX" customClass="ChatroomsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TU7-QW-Ugb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="CiN-nk-gTw">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="yx5-s9-GBX" id="wm0-Iz-B8P"/>
+                                    <outlet property="delegate" destination="yx5-s9-GBX" id="Ly1-Zj-nR5"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="s9r-K2-WQa" id="qUJ-oy-mMr"/>
-                            <outlet property="delegate" destination="s9r-K2-WQa" id="uEx-mK-6sl"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Chatrooms" id="t3c-MC-ijW"/>
+                        <constraints>
+                            <constraint firstItem="9V3-uX-5sG" firstAttribute="trailing" secondItem="CiN-nk-gTw" secondAttribute="trailing" id="6mt-1U-Pt0"/>
+                            <constraint firstItem="CiN-nk-gTw" firstAttribute="leading" secondItem="9V3-uX-5sG" secondAttribute="leading" id="Tk6-pa-0kZ"/>
+                            <constraint firstItem="CiN-nk-gTw" firstAttribute="top" secondItem="9V3-uX-5sG" secondAttribute="top" id="pKS-oW-IQ3"/>
+                            <constraint firstItem="9V3-uX-5sG" firstAttribute="bottom" secondItem="CiN-nk-gTw" secondAttribute="bottom" id="udI-f7-e7a"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9V3-uX-5sG"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Chatrooms" id="m3F-1v-pjc"/>
                     <connections>
-                        <segue destination="11b-q4-XNZ" kind="show" identifier="ChatroomVC" id="ubX-NG-g0q"/>
-                        <segue destination="8eW-MU-P8Z" kind="presentation" identifier="NewChatroomVC" id="5gb-0U-gtY"/>
+                        <outlet property="tableView" destination="CiN-nk-gTw" id="km5-bF-WFL"/>
+                        <segue destination="8eW-MU-P8Z" kind="presentation" identifier="NewChatroomVC" id="tHH-gS-oyk"/>
+                        <segue destination="11b-q4-XNZ" kind="show" identifier="ChatroomVC" id="nOm-99-ta5"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7D7-v5-Vjm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="98i-ce-TAd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5038" y="204"/>
         </scene>
