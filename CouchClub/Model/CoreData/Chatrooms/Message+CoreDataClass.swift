@@ -24,11 +24,6 @@ class MessageBuilder {
         self.message.id = id == nil ? UUID() : id!
     }
     
-    func within(_ chatroom: Chatroom) -> MessageBuilder {
-        self.message.chatroom = chatroom
-        return self
-    }
-    
     func withText(_ text: String) -> MessageBuilder {
         self.message.text = text
         return self
@@ -44,7 +39,12 @@ class MessageBuilder {
         return self
     }
     
-    func markedAs(_ seen: Bool) -> MessageBuilder {
+    func within(_ chatroom: Chatroom) -> MessageBuilder {
+        self.message.chatroom = chatroom
+        return self
+    }
+    
+    func seen(_ seen: Bool) -> MessageBuilder {
         self.message.seen = seen
         return self
     }

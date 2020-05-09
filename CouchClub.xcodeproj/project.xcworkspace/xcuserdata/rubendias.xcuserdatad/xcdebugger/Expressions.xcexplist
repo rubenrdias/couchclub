@@ -3,18 +3,26 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "closure #1 in TextFieldTVCell.textField.getter:TextFieldTVCell.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "placeholder">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "SearchVC.updateItemSize():SearchVC.swift">
          <PersistentStrings>
             <PersistentString
                value = "usableWidth">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "WatchlistsVC.updateItemSize():WatchlistsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "usableWidth">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ChatroomVC.scrollToBottom():ChatroomVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sections.underestimatedCount">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -59,10 +67,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "WatchlistsVC.updateItemSize():WatchlistsVC.swift">
+         contextName = "closure #1 in TextFieldTVCell.textField.getter:TextFieldTVCell.swift">
          <PersistentStrings>
             <PersistentString
-               value = "usableWidth">
+               value = "placeholder">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

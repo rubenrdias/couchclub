@@ -24,3 +24,7 @@ protocol WatchlistOperationDelegate: AnyObject {
 protocol ChatroomOperationDelegate: AnyObject {
     func didCreateChatroom(_ id: UUID)
 }
+
+protocol MessageDelegate: AnyObject {
+    func didSendMessage(_ text: String)
+}

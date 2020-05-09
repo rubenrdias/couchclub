@@ -103,18 +103,33 @@ final class DataCoordinator {
     
     // MARK: - Chatrooms
     
-    func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: UUID, completion: @escaping (_ id: UUID?, _ error: Error?)->() ) {
+    func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: UUID, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
         let cb = ChatroomBuilder()
         let chatroom = cb.named(title)
             .ofType(type)
             .relatedTo(relatedTo)
             .build()
         
-//         TODO: add to firebase
-//         TODO: handle errors
+        // TODO: add to firebase
+        // TODO: handle errors
         
         NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
         completion(chatroom.id, nil)
+    }
+    
+    func createMessage(text: String, sender: String, chatroom: Chatroom, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
+        let mb = MessageBuilder()
+        let message = mb.withText(text)
+            .sentBy(sender)
+            .at(Date())
+            .within(chatroom)
+            .seen(true)
+            .build()
+
+        // TODO: add to firebase
+        // TODO: handle errors
+        
+        completion(message.id, nil)
     }
     
     

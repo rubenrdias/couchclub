@@ -9,6 +9,8 @@
 import UIKit
 
 class MessageInputAccessoryView: UIView {
+    
+    weak var delegate: MessageDelegate?
 
     private let messageTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
@@ -25,6 +27,10 @@ class MessageInputAccessoryView: UIView {
         button.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
         return button
     }()
+    
+    override var intrinsicContentSize: CGSize {
+        return .zero
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,18 +63,13 @@ class MessageInputAccessoryView: UIView {
         ])
     }
     
-    override var intrinsicContentSize: CGSize {
-        return .zero
-    }
-    
     func dismissKeyboard() {
         messageTextView.resignFirstResponder()
     }
     
     @objc func handleSend() {
-        guard let commentText = messageTextView.text else { return }
-        // TODO: use a delegate to send message
-        print("Should send: \(commentText)")
+        guard let messageText = messageTextView.text else { return }
+        delegate?.didSendMessage(messageText)
         messageTextView.reset()
         messageTextView.resignFirstResponder()
     }

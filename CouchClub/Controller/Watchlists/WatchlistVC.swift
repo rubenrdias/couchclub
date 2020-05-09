@@ -285,6 +285,7 @@ extension WatchlistVC: ItemOperationDelegate {
     
     func didTapSeen(_ item: Item) {
         DataCoordinator.shared.toggleWatched(item)
+        // TODO: handle errors
         
         if let highlightCell = collectionView.cellForItem(at: .init(item: 0, section: 1)) as? HighlightCVCell {
             highlightCell.highlightLeft = (calculateItemsWatched(), "Watched")

@@ -12,16 +12,14 @@ class MessageTVCell: UITableViewCell {
     
     static let reuseIdentifier = "MessageTVCell"
     
-    var message: String! {
+    var message: Message! {
         didSet {
-            messageLabel.text = message
-        }
-    }
-    var sender: Bool! {
-        didSet {
-            bubbleBackgroundView.backgroundColor = .colorAsset(sender ? .dynamicBackgroundHighlight : .dynamicSecondary)
-            leadingConstraint.isActive = !sender
-            trailingConstraint.isActive = sender
+            messageLabel.text = message.text
+            
+            let sentByMe = message.sender == "Me"
+            bubbleBackgroundView.backgroundColor = .colorAsset(sentByMe ? .dynamicBackgroundHighlight : .dynamicSecondary)
+            leadingConstraint.isActive = !sentByMe
+            trailingConstraint.isActive = sentByMe
         }
     }
     
