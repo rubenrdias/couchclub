@@ -24,9 +24,7 @@ class ChatroomVC: UITableViewController {
         
         tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
         tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
-        
-        tableView.backgroundColor = .colorAsset(.dynamicBackground)
-        
+            
         title = chatroom.title
         
         setupFetchedResultsController()
@@ -50,7 +48,7 @@ class ChatroomVC: UITableViewController {
     
     lazy var inputAccessoryViewContainer: MessageInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
-        let messageInputAccessoryView = MessageInputAccessoryView(frame: frame)
+        let messageInputAccessoryView = MessageInputAccessoryView(frame: frame)        
         messageInputAccessoryView.delegate = self
         return messageInputAccessoryView
     }()
@@ -77,7 +75,7 @@ class ChatroomVC: UITableViewController {
         // filtering
         request.predicate = NSPredicate(format: "chatroom == %@", chatroom)
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: "date", cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: "dateSection", cacheName: nil)
         fetchedResultsController.delegate = self
         
         do {
@@ -103,7 +101,7 @@ extension ChatroomVC: MessageDelegate {
             // TODO: handle errors
         }
         
-        let delay: Double = Double.random(in: 1...3)
+        let delay: Double = Double.random(in: 3...5)
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak chatroom] in
             guard let chatroom = chatroom else { return
                 
@@ -137,22 +135,19 @@ extension ChatroomVC {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sections = fetchedResultsController.sections else { return UIView() }
+        guard let firstItem = sections[section].objects?.first as? Message else { return UIView() }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SmallHeaderTVCell.reuseIdentifier) as! SmallHeaderTVCell
-        headerView.text = sections[section].name
+        headerView.text = messageSectionFormatter.string(from: firstItem.date)
         headerView.useCenteredText = true
         return headerView
     }
-    
-//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 38
-//    }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 8
+        return 16
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -162,7 +157,28 @@ extension ChatroomVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MessageTVCell.reuseIdentifier, for: indexPath) as! MessageTVCell
-        cell.message = fetchedResultsController.object(at: indexPath)
+        let message = fetchedResultsController.object(at: indexPath)
+        
+        var shouldReduceTopMargin = false
+        var shouldReduceBottomMargin = false
+        
+        if indexPath.row > 0 {
+            let previousMessage = fetchedResultsController.object(at: .init(row: indexPath.row - 1, section: indexPath.section))
+            if previousMessage.sender == message.sender {
+                shouldReduceTopMargin = true
+            }
+        }
+        
+        if indexPath.row < tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            let nextMessage = fetchedResultsController.object(at: .init(row: indexPath.row + 1, section: indexPath.section))
+            if nextMessage.sender == message.sender {
+                shouldReduceBottomMargin = true
+            }
+        }
+        
+        cell.shouldReduceTopMargin = shouldReduceTopMargin
+        cell.shouldReduceBottomMargin = shouldReduceBottomMargin
+        cell.message = message
         return cell
     }
     

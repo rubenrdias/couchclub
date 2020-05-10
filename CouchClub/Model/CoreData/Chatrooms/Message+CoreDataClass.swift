@@ -2,7 +2,7 @@
 //  Message+CoreDataClass.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 07/05/2020.
+//  Created by Ruben Dias on 09/05/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -12,7 +12,7 @@ import CoreData
 
 @objc(Message)
 public class Message: NSManagedObject {
-
+    
 }
 
 class MessageBuilder {
@@ -36,6 +36,8 @@ class MessageBuilder {
     
     func at(_ date: Date) -> MessageBuilder {
         self.message.date = date
+        let auxDateString = messageSectionFormatter.string(from: date)
+        self.message.dateSection = messageSectionFormatter.date(from: auxDateString)!
         return self
     }
     

@@ -3,26 +3,34 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "SearchVC.updateItemSize():SearchVC.swift">
+         contextName = "WatchlistsVC.prepare(for:sender:):WatchlistsVC.swift">
          <PersistentStrings>
             <PersistentString
-               value = "usableWidth">
+               value = "(sender as? Watchlist).title">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "WatchlistsVC.updateItemSize():WatchlistsVC.swift">
+         contextName = "closure #1 in NetworkService.downloadImage(_:completion:):NetworkService.swift">
          <PersistentStrings>
             <PersistentString
-               value = "usableWidth">
+               value = "url.absoluteString">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ChatroomVC.scrollToBottom():ChatroomVC.swift">
+         contextName = "closure #1 in TextFieldTVCell.textField.getter:TextFieldTVCell.swift">
          <PersistentStrings>
             <PersistentString
-               value = "sections.underestimatedCount">
+               value = "placeholder">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ChatroomVC.tableView(_:viewForHeaderInSection:):ChatroomVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "headerView.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -51,26 +59,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "WatchlistsVC.prepare(for:sender:):WatchlistsVC.swift">
+         contextName = "ChatroomVC.scrollToBottom():ChatroomVC.swift">
          <PersistentStrings>
             <PersistentString
-               value = "(sender as? Watchlist).title">
+               value = "sections.underestimatedCount">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in NetworkService.downloadImage(_:completion:):NetworkService.swift">
+         contextName = "SearchVC.updateItemSize():SearchVC.swift">
          <PersistentStrings>
             <PersistentString
-               value = "url.absoluteString">
+               value = "usableWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in TextFieldTVCell.textField.getter:TextFieldTVCell.swift">
+         contextName = "WatchlistsVC.updateItemSize():WatchlistsVC.swift">
          <PersistentStrings>
             <PersistentString
-               value = "placeholder">
+               value = "usableWidth">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

@@ -15,7 +15,7 @@ class MessageInputAccessoryView: UIView {
     private let messageTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
         tv.placeholderText = "Enter message..."
-        tv.reset()
+        tv.showPlaceholderText()
         return tv
     }()
     

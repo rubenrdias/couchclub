@@ -25,3 +25,10 @@ enum ChatroomType: String {
     case movie
     case show
 }
+
+// MARK: - Date Formatters
+let messageSectionFormatter: DateFormatter = {
+    let f = DateFormatter()
+    f.dateFormat = "EEEE, dd/MMM/yy HH:mm"
+    return f
+}()

@@ -14,15 +14,37 @@ class MessageTVCell: UITableViewCell {
     
     var message: Message! {
         didSet {
-            messageLabel.text = message.text
+            messageLabel.attributedText = attributtedMessageText()
             
             let sentByMe = message.sender == "Me"
-            bubbleBackgroundView.backgroundColor = .colorAsset(sentByMe ? .dynamicBackgroundHighlight : .dynamicSecondary)
+            if sentByMe {
+                bubbleBackgroundView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
+            } else {
+                bubbleBackgroundView.backgroundColor = UIColor.colorAsset(.dynamicSecondary).withAlphaComponent(0.5)
+            }
+            
             leadingConstraint.isActive = !sentByMe
             trailingConstraint.isActive = sentByMe
         }
     }
     
+    var shouldReduceTopMargin: Bool = false {
+        didSet {
+            topConstraintSpaced.isActive = !shouldReduceTopMargin
+            topConstraintTight.isActive = shouldReduceTopMargin
+        }
+    }
+    var shouldReduceBottomMargin: Bool = false {
+        didSet {
+            bottomConstraintSpaced.isActive = !shouldReduceBottomMargin
+            bottomConstraintTight.isActive = shouldReduceBottomMargin
+        }
+    }
+    
+    var topConstraintSpaced: NSLayoutConstraint!
+    var topConstraintTight: NSLayoutConstraint!
+    var bottomConstraintSpaced: NSLayoutConstraint!
+    var bottomConstraintTight: NSLayoutConstraint!
     var leadingConstraint: NSLayoutConstraint!
     var trailingConstraint: NSLayoutConstraint!
     
@@ -48,17 +70,38 @@ class MessageTVCell: UITableViewCell {
         contentView.addSubview(messageLabel)
         NSLayoutConstraint.activate([
             messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth),
-            messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
-            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24),
             
-            bubbleBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16),
-            bubbleBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
-            bubbleBackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16),
-            bubbleBackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 16)
+            bubbleBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -12),
+            bubbleBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 12),
+            bubbleBackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -12),
+            bubbleBackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 12)
         ])
         
-        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32)
-        trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32)
+        topConstraintSpaced = messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20)
+        topConstraintTight = messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12)
+        bottomConstraintSpaced = messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+        bottomConstraintTight = messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 28)
+        trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -28)
+    }
+    
+    private func attributtedMessageText() -> NSAttributedString {
+        let messageString = NSMutableAttributedString()
+        
+        if message.sender != "Me" {
+            let senderAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.translatedFont(for: .footnote, .bold)
+            ]
+            messageString.append(NSAttributedString(string: "\(message.sender)\n", attributes: senderAttributes))
+        }
+        
+        let bodyAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.translatedFont(for: .subheadline, .regular)
+        ]
+        
+        messageString.append(NSAttributedString(string: "\(message.text)", attributes: bodyAttributes))
+        
+        return messageString
     }
     
     required init?(coder: NSCoder) {

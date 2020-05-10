@@ -14,6 +14,11 @@ class CommentInputTextView: UITextView {
         didSet { textColor = .colorAsset(.dynamicLabelSecondary) }
     }
     
+    let maxNumberOfLines: Int = 5
+    
+    var heightConstraint: NSLayoutConstraint?
+    var singleLineHeightConstraint: NSLayoutConstraint!
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         
@@ -22,18 +27,38 @@ class CommentInputTextView: UITextView {
         translatesAutoresizingMaskIntoConstraints = false
         isScrollEnabled = false
         
+        contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
         textContainerInset = .init(top: 8, left: 8, bottom: 8, right: 8)
+        
+        scrollIndicatorInsets = .init(top: 8, left: 0, bottom: 8, right: 0)
         
         backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         layer.cornerRadius = 14
         clipsToBounds = true
         
-        font = UIFont.systemFont(ofSize: 16)
+        font = UIFont.translatedFont(for: .body, .regular)
     }
     
     func reset() {
-        text = nil
+//        if heightConstraint != nil {
+//            heightConstraint?.isActive = false
+//            heightConstraint = nil
+//        }
+//        singleLineHeightConstraint.isActive = false
+//        isScrollEnabled = false
+        
+        showPlaceholderText()
         textViewDidEndEditing(self)
+    }
+    
+    func showPlaceholderText() {
+        text = placeholderText
+        textColor = .colorAsset(.dynamicLabelSecondary)
+    }
+    
+    func hidePlaceholderText() {
+        text = nil
+        textColor = .colorAsset(.dynamicLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,16 +70,35 @@ extension CommentInputTextView: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if text == placeholderText {
-            text = nil
-            textColor = .colorAsset(.dynamicLabel)
+            hidePlaceholderText()
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if text == placeholderText || text.isEmpty {
-            text = placeholderText
-            textColor = .colorAsset(.dynamicLabelSecondary)
+            showPlaceholderText()
         }
     }
+    
+//    func textViewDidChange(_ textView: UITextView) {
+//        let numberOfLines = Int(textView.contentSize.height / textView.font!.lineHeight)
+//
+//        if numberOfLines >= maxNumberOfLines && !isScrollEnabled {
+//            isScrollEnabled = true
+//
+//            heightConstraint = heightAnchor.constraint(equalToConstant: textView.contentSize.height)
+//
+//            heightConstraint!.isActive = true
+//            singleLineHeightConstraint.isActive = false
+//        } else if numberOfLines < maxNumberOfLines && isScrollEnabled {
+//            isScrollEnabled = false
+//
+//            heightConstraint?.isActive = false
+//            singleLineHeightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: textView.contentSize.height)
+//            singleLineHeightConstraint.isActive = true
+//            singleLineHeightConstraint.isActive = true
+//            textView.sizeToFit()
+//        }
+//    }
     
 }
