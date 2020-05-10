@@ -107,7 +107,7 @@ class SmallHeaderCVCell: UICollectionReusableView {
         activeButton = sender.tag
         if sender.tag == 0 {
             listButton.tintColor = UIColor.systemOrange
-            thumbnailsButton.tintColor = .colorAsset(.dynamicLabel)
+            thumbnailsButton.tintColor = .colorAsset(.dynamicLabelSecondary)
             delegate?.didTapListButton()
         } else {
             thumbnailsButton.tintColor = UIColor.systemOrange

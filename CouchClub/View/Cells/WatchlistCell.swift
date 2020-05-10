@@ -23,6 +23,7 @@ class WatchlistCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        contentView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 4
         
@@ -41,6 +42,8 @@ class WatchlistCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        
         imageView.image = nil
         titleLabel.text = nil
         subtitleLabel.text = nil
@@ -49,6 +52,7 @@ class WatchlistCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.tintColor = .colorAsset(.dynamicLabel)
         return iv
     }()
     
@@ -105,9 +109,7 @@ class WatchlistCell: UICollectionViewCell {
     }
     
     func setImageUnavailable() {
-        contentView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
         imageView.contentMode = .center
-        imageView.tintColor = .colorAsset(.dynamicLabel)
         imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     

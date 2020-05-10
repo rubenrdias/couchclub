@@ -40,7 +40,10 @@ class ItemCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        
         imageView.image = nil
+        imageView.contentMode = .scaleAspectFill
         titleLabel.text = nil
         subtitleLabel.text = nil
     }

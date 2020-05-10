@@ -23,7 +23,8 @@ class HighlightTVCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .colorAsset(.dynamicBackground)
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
         
         setupContainers()
         setupText()

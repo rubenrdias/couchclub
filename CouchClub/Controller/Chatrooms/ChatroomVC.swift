@@ -22,10 +22,12 @@ class ChatroomVC: UITableViewController {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
+        title = chatroom.title
+        
+        tableView.backgroundColor = .colorAsset(.dynamicBackground)
+        
         tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
         tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
-            
-        title = chatroom.title
         
         setupFetchedResultsController()
     }

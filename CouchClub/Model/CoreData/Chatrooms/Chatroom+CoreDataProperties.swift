@@ -19,7 +19,7 @@ extension Chatroom {
 
     @NSManaged public var id: UUID
     @NSManaged public var title: String
-    @NSManaged public var subjectID: UUID
+    @NSManaged public var subjectID: String
     @NSManaged public var type: String
     @NSManaged public var messages: NSSet?
 

@@ -128,7 +128,9 @@ final class DataCoordinator {
 
         // TODO: add to firebase
         // TODO: handle errors
-        
+
+        let info = ["chatroomID": chatroom.id]
+        NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
         completion(message.id, nil)
     }
     

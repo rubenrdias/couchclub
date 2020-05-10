@@ -13,6 +13,13 @@ import UIKit
 
 extension UIView {
     
+    static func spacerView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    }
+    
     func setGradientBackground(colors: [UIColor], locations: [NSNumber], inFrame: CGRect? = nil) {
         let cgColors = colors.map { $0.cgColor }
         
@@ -158,6 +165,9 @@ extension Notification.Name {
     // chatrooms
     static let chatroomsDidChange = Notification.Name("chatroomsDidChange")
     static let chatroomDidChange = Notification.Name("chatroomDidChange")
+    
+    // messages
+    static let newMessage = Notification.Name("newMessage")
     
 }
 

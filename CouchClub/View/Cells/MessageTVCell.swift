@@ -64,6 +64,10 @@ class MessageTVCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        
         let maxWidth = contentView.bounds.width * 0.8
         
         contentView.addSubview(bubbleBackgroundView)

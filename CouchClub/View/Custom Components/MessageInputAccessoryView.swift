@@ -36,7 +36,7 @@ class MessageInputAccessoryView: UIView {
         super.init(frame: frame)
         
         autoresizingMask = .flexibleHeight
-        backgroundColor = .white
+        backgroundColor = .colorAsset(.dynamicBackground)
         
         let lineSeparatorView = UIView()
         lineSeparatorView.translatesAutoresizingMaskIntoConstraints = false

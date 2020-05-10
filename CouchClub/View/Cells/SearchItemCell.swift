@@ -25,14 +25,16 @@ class SearchItemCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
+        
         imageView.image = nil
         imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = nil
     }
     
     private lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
+        iv.tintColor = .colorAsset(.dynamicLabel)
         iv.layer.cornerRadius = 4
         iv.clipsToBounds = true
         return iv
@@ -57,7 +59,6 @@ class SearchItemCell: UICollectionViewCell {
     
     func setImageUnavailable() {
         imageView.contentMode = .center
-        imageView.tintColor = .colorAsset(.dynamicLabel)
         imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     

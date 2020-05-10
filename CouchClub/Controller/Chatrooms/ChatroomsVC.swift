@@ -18,8 +18,19 @@ class ChatroomsVC: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .chatroomsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchChatroomMessages), name: .newMessage, object: nil)
+        
+        tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
         
         fetchData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedIndexPath, animated: animated)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -42,6 +53,16 @@ class ChatroomsVC: UIViewController {
 
             self?.tableView.reloadData()
             self?.evaluateDataAvailable()
+        }
+    }
+    
+    @objc private func fetchChatroomMessages(_ notification: Notification) {
+        guard let info = notification.userInfo else { return }
+        
+        if let chatroomID = info["chatroomID"] as? UUID {
+            if let index = chatrooms.firstIndex(where: { $0.id == chatroomID }) {
+                tableView.reloadRows(at: [.init(row: index, section: 0)], with: .automatic)
+            }
         }
     }
     
@@ -133,16 +154,13 @@ extension ChatroomsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.text = chatrooms[indexPath.row].title
-        cell.accessoryType = .disclosureIndicator
+        let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTVCell.reuseIdentifier, for: indexPath) as! ChatroomTVCell
+        cell.chatroom = chatrooms[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatroom = chatrooms[indexPath.row]
-        performSegue(withIdentifier: "ChatroomVC", sender: chatroom)
+        performSegue(withIdentifier: "ChatroomVC", sender: chatrooms[indexPath.row])
     }
     
 }

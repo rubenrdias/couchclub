@@ -74,18 +74,6 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         return lbl
     }()
     
-    private lazy var spacer1: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var spacer2: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var ratingsContainerView = UIView()
     
     private lazy var imdbIconView: UIImageView = {
@@ -119,6 +107,9 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         btn.tintColor = .colorAsset(.dynamicLabelSecondary)
         return btn
     }()
+    
+    private lazy var spacer1 = UIView.spacerView()
+    private lazy var spacer2 = UIView.spacerView()
     
     private func setupText() {
         ratingsContainerView.addSubview(imdbIconView)
