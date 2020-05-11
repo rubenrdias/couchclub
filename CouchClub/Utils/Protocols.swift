@@ -25,6 +25,11 @@ protocol ChatroomOperationDelegate: AnyObject {
     func didCreateChatroom(_ id: UUID)
 }
 
+protocol SelectionDelegate: AnyObject {
+    func didSelectSubject(_ id: String)
+    func didCancelSelection()
+}
+
 protocol MessageDelegate: AnyObject {
     func didSendMessage(_ text: String)
 }

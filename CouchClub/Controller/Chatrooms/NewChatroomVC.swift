@@ -13,13 +13,15 @@ class NewChatroomVC: UIViewController {
     weak var delegate: ChatroomOperationDelegate?
 
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var subjectTitleLabel: UILabel!
     @IBOutlet var radioButtons: [UIButton]!
     @IBOutlet weak var createChatroomButton: UIButton!
         
     let placeholderText = "Chatroom title..."
     let titleRegex = NSRegularExpression(".*")
     
-    var chatroomType: ChatroomType!
+    var chatroomType: ChatroomType?
+    var selectedSubjectID: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,15 @@ class NewChatroomVC: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             self?.textView.becomeFirstResponder()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchVC", let sender = sender as? UIButton {
+            guard let navController = segue.destination as? UINavigationController else { return }
+            guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
+            searchVC.delegate = self
+            searchVC.searchType = sender.tag == 1 ? .movie : .series
         }
     }
     
@@ -74,9 +85,13 @@ class NewChatroomVC: UIViewController {
             }
         }
         
-        // TODO: Allow the user to select a watchlist, movie or show
-        
-//        validateInputs()
+        if sender.tag == 0 {
+            chatroomType = .watchlist
+            // select watchlist
+        } else {
+            chatroomType = sender.tag == 0 ? .movie : .show
+            performSegue(withIdentifier: "SearchVC", sender: sender)
+        }
     }
     
     private func setupButtons() {
@@ -177,6 +192,37 @@ extension NewChatroomVC: UITextViewDelegate {
             return textView.text.count + (text.count - range.length) <= 60
         } else {
             return false
+        }
+    }
+    
+}
+
+extension NewChatroomVC: SelectionDelegate {
+    
+    func didSelectSubject(_ id: String) {
+        guard let chatroomType = chatroomType else { return }
+        
+        selectedSubjectID = id
+        
+        if chatroomType == .watchlist, let uuid = UUID(uuidString: id) {
+            guard let watchlist = LocalDatabase.shared.fetchWatchlist(uuid) else { return }
+            subjectTitleLabel.text = watchlist.title
+        } else {
+            guard let item = LocalDatabase.shared.fetchItem(id) else { return }
+            subjectTitleLabel.text = item.title
+        }
+        
+        // TODO: fix subject title label not showing
+    }
+    
+    func didCancelSelection() {
+        if selectedSubjectID == nil {
+            chatroomType = nil
+            subjectTitleLabel.text = nil
+            
+            radioButtons.forEach {
+                restoreButton($0)
+            }
         }
     }
     

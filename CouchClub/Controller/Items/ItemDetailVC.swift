@@ -24,9 +24,10 @@ class ItemDetailVC: UIViewController {
     }
     
     weak var delegate: ItemOperationDelegate?
+    weak var selectionDelegate: SelectionDelegate?
     
     private var tableView: UITableView!
-    @IBOutlet weak var watchlistButton: UIButton!
+    @IBOutlet weak var actionButton: UIButton!
     
     var item: Item!
     var watchlist: Watchlist?
@@ -53,7 +54,7 @@ class ItemDetailVC: UIViewController {
         }
         
         setupTableView()
-        setupWatchlistButton()
+        setupActionButton()
     }
     
     deinit {
@@ -65,32 +66,34 @@ class ItemDetailVC: UIViewController {
     }
     
     @IBAction func watchlistButtonTapped(_ sender: UIButton) {
-        guard let watchlist = watchlist else { return }
-        
-        if shouldAddToList {
-            DataCoordinator.shared.addToWatchlist([item], watchlist) { [weak self] error in
-                if let error = error {
-                    print("Failed to add \(self?.item.title ?? "item") to watchlist: \(error.localizedDescription)")
+        if let watchlist = watchlist {
+            if shouldAddToList {
+                DataCoordinator.shared.addToWatchlist([item], watchlist) { [weak self] error in
+                    if let error = error {
+                        print("Failed to add \(self?.item.title ?? "item") to watchlist: \(error.localizedDescription)")
+                    }
+                    
+                    let ac = Alerts.simpleAlert(title: "Added!", message: "The watchlist has been updated.") { [weak self] _ in
+                        self?.navigationController?.popViewController(animated: true)
+                    }
+                    
+                    self?.present(ac, animated: true, completion: nil)
                 }
-                
-                let ac = Alerts.simpleAlert(title: "Added!", message: "The watchlist has been updated.") { [weak self] _ in
-                    self?.navigationController?.popViewController(animated: true)
+            } else {
+                DataCoordinator.shared.removeFromWatchlist([item], watchlist) { [weak self] error in
+                    if let error = error {
+                        print("Failed to remove \(self?.item.title ?? "item") from watchlist: \(error.localizedDescription)")
+                    }
+                    
+                    let ac = Alerts.simpleAlert(title: "Removed!", message: "The watchlist has been updated.") { [weak self] _ in
+                        self?.navigationController?.popViewController(animated: true)
+                    }
+                    
+                    self?.present(ac, animated: true, completion: nil)
                 }
-                
-                self?.present(ac, animated: true, completion: nil)
             }
         } else {
-            DataCoordinator.shared.removeFromWatchlist([item], watchlist) { [weak self] error in
-                if let error = error {
-                    print("Failed to remove \(self?.item.title ?? "item") from watchlist: \(error.localizedDescription)")
-                }
-                
-                let ac = Alerts.simpleAlert(title: "Removed!", message: "The watchlist has been updated.") { [weak self] _ in
-                    self?.navigationController?.popViewController(animated: true)
-                }
-                
-                self?.present(ac, animated: true, completion: nil)
-            }
+            selectionDelegate?.didSelectSubject(item.id)
         }
     }
     
@@ -120,18 +123,25 @@ class ItemDetailVC: UIViewController {
         ])
     }
     
-    private func setupWatchlistButton() {
-        if let watchlist = watchlist, let items = watchlist.items?.allObjects as? [Item] {
-            if items.contains(item) {
-                shouldAddToList = false
-                watchlistButton.setTitle("Remove from Watchlist", for: .normal)
-                watchlistButton.backgroundColor = UIColor.init(white: 0.4, alpha: 1)
+    private func setupActionButton() {
+        if let watchlist = watchlist {
+            if let items = watchlist.items?.allObjects as? [Item] {
+                if items.contains(item) {
+                    shouldAddToList = false
+                    actionButton.setTitle("Remove from Watchlist", for: .normal)
+                    actionButton.backgroundColor = UIColor.init(white: 0.4, alpha: 1)
+                }
+            } else {
+                actionButton.setTitle("Add to Watchlist", for: .normal)
             }
+        } else {
+            let type = item.isKind(of: Movie.self) ? ItemType.movie.rawValue : "Show"
+            actionButton.setTitle("Select this \(type)", for: .normal)
         }
         
-        watchlistButton.layer.cornerRadius = 4
-        watchlistButton.clipsToBounds = true
-        view.bringSubviewToFront(watchlistButton)
+        actionButton.layer.cornerRadius = 4
+        actionButton.clipsToBounds = true
+        view.bringSubviewToFront(actionButton)
     }
     
     private func attributedText(_ attribute: Attribute) -> NSMutableAttributedString {

@@ -228,15 +228,27 @@
                     </navigationItem>
                     <connections>
                         <outlet property="createChatroomButton" destination="087-zn-hul" id="Jx0-q5-42b"/>
+                        <outlet property="subjectTitleLabel" destination="NSF-5M-HsL" id="PaP-sF-Jd7"/>
                         <outlet property="textView" destination="62f-Ul-WsD" id="EIX-8g-qwh"/>
                         <outletCollection property="radioButtons" destination="KJH-Nx-W6q" collectionClass="NSMutableArray" id="Dlg-zn-BeD"/>
                         <outletCollection property="radioButtons" destination="pWF-8i-bXf" collectionClass="NSMutableArray" id="JZK-cD-FkI"/>
                         <outletCollection property="radioButtons" destination="apT-mC-2YN" collectionClass="NSMutableArray" id="ECq-lG-DKY"/>
+                        <segue destination="ca9-Xe-T0r" kind="show" identifier="SearchVC" id="Rss-n3-HHw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8gl-as-pBa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5864" y="939"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="HWs-U7-Pa4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" id="ca9-Xe-T0r" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="o5o-sn-ZRL"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aDB-MY-rWa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6593" y="939"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="V9j-Ub-S7h">

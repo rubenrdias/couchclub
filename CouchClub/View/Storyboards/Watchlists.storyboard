@@ -288,7 +288,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="watchlistButton" destination="Jbs-Ia-tc0" id="HTT-23-mh1"/>
+                        <outlet property="actionButton" destination="Jbs-Ia-tc0" id="HTT-23-mh1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fIV-Y8-LNl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -13,6 +13,8 @@ class SearchVC: UICollectionViewController {
     var searchResults = [SearchItem]()
     var searchType: ItemType = .movie
     
+    weak var delegate: SelectionDelegate?
+    
     var watchlist: Watchlist? {
         didSet {
             guard let watchlist = watchlist else { return }
@@ -38,10 +40,6 @@ class SearchVC: UICollectionViewController {
         searchController.searchBar.delegate = self
         let typeString = searchType == .series ? "show" : searchType.rawValue
         searchController.searchBar.placeholder = "Search for a \(typeString) title"
-        
-        if watchlist == nil {
-            searchController.searchBar.scopeButtonTitles = ["Movie", "Show"]
-        }
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -109,6 +107,7 @@ class SearchVC: UICollectionViewController {
     }
 
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+        delegate?.didCancelSelection()
         dismiss(animated: true, completion: nil)
     }
     
@@ -116,6 +115,7 @@ class SearchVC: UICollectionViewController {
         if segue.identifier == "SearchItemDetail" {
             guard let item = sender as? Item else { return }
             guard let detailVC = segue.destination as? ItemDetailVC else { return }
+            detailVC.selectionDelegate = self
             detailVC.item = item
             detailVC.watchlist = watchlist
         }
@@ -206,10 +206,6 @@ extension SearchVC {
 
 extension SearchVC: UISearchBarDelegate {
     
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        searchType = selectedScope == 0 ? .movie : .series
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let userInput = searchBar.text else { return }
         navigationItem.searchController?.isActive = false
@@ -237,5 +233,16 @@ extension SearchVC: HeaderButtonsDelegate {
     func didTapListButton() {
         // TODO: change to list
     }
+    
+}
+
+extension SearchVC: SelectionDelegate {
+    
+    func didSelectSubject(_ id: String) {
+        delegate?.didSelectSubject(id)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didCancelSelection() {}
     
 }

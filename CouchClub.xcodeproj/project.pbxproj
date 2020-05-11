@@ -307,8 +307,8 @@
 		53B7CDDE2454A216007395EE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				53286A142465D12700934B4D /* Custom Components */,
 				53C0B1FB2454D7EB0019640D /* Storyboards */,
+				53286A142465D12700934B4D /* Custom Components */,
 				53153CBE245624D20089AEA7 /* Headers and Footers */,
 				53153CBB245624A50089AEA7 /* Cells */,
 				53D91F06245AEF5A00BC9F82 /* Alerts.swift */,
