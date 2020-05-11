@@ -35,6 +35,8 @@ final class DataCoordinator {
         
         let info = ["watchlistID": watchlist.id]
         NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+        notifyOfChatroomChanges(watchlist)
+    
         completion(nil)
     }
     
@@ -46,11 +48,24 @@ final class DataCoordinator {
         
         let info = ["watchlistID": watchlist.id]
         NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+        notifyOfChatroomChanges(watchlist)
+        
         completion(nil)
+    }
+    
+    private func notifyOfChatroomChanges(_ watchlist: Watchlist) {
+        if let chatrooms = LocalDatabase.shared.fetchChatrooms() {
+            let chatroomsForWatchlist = chatrooms.filter { $0.subjectID == watchlist.id.uuidString }
+            chatroomsForWatchlist.forEach {
+                let info = ["chatroomID": $0.id]
+                NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
+            }
+        }
     }
     
     func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
         // TODO: delete from firebase
+        // TODO: delete chatroom messages firebase
         // TODO: handle errors
         
         LocalDatabase.shared.deleteWatchlist(watchlist)
@@ -115,6 +130,16 @@ final class DataCoordinator {
         
         NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
         completion(chatroom.id, nil)
+    }
+    
+    func deleteChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
+        // TODO: delete from firebase
+        // TODO: handle errors
+        
+        LocalDatabase.shared.deleteChatroom(chatroom)
+        
+        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+        completion(nil)
     }
     
     func createMessage(text: String, sender: String, chatroom: Chatroom, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {

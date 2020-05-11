@@ -136,6 +136,13 @@ final class LocalDatabase {
         }
     }
     
+    func deleteChatroom(_ chatroom: Chatroom) {
+        coreDataQueue.sync {
+            context.delete(chatroom)
+            ad.saveContext()
+        }
+    }
+    
     // MARK: - Database Reset (debugging)
     
     func clearDatabase() {

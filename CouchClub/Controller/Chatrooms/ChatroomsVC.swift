@@ -18,7 +18,8 @@ class ChatroomsVC: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .chatroomsDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchChatroomMessages), name: .newMessage, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .newMessage, object: nil)
         
         tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
         
@@ -56,7 +57,7 @@ class ChatroomsVC: UIViewController {
         }
     }
     
-    @objc private func fetchChatroomMessages(_ notification: Notification) {
+    @objc private func refreshChatroom(_ notification: Notification) {
         guard let info = notification.userInfo else { return }
         
         if let chatroomID = info["chatroomID"] as? UUID {

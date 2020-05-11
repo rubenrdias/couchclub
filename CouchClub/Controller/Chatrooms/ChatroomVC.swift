@@ -35,9 +35,7 @@ class ChatroomVC: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.scrollToBottom()
-        }
+        scrollToBottom()
     }
     
     deinit {
@@ -64,7 +62,29 @@ class ChatroomVC: UITableViewController {
     }
     
     @IBAction func moreButtonTapped(_ sender: UIBarButtonItem) {
-        // TODO: present chatroom options
+        let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        ac.addAction(UIAlertAction(title: "Delete Chatroom", style: .destructive) { [weak self] _ in
+            let deletionAlert = Alerts.deletionAlert(title: "Delete Chatroom?", message: "This action is irreversible.") { _ in
+                guard let chatroom = self?.chatroom else { return }
+                DataCoordinator.shared.deleteChatroom(chatroom) { error in
+                    if let error = error {
+                        // TODO: handle errors
+                        print("Error when deleting chatroom: ", error.localizedDescription)
+                    } else {
+                        self?.navigationController?.popViewController(animated: true)
+                    }
+                }
+            }
+            
+            self?.present(deletionAlert, animated: true, completion: nil)
+        })
+                
+        ac.popoverPresentationController?.barButtonItem = sender
+        present(ac, animated: true, completion: nil)
     }
     
     private func setupFetchedResultsController() {
@@ -99,7 +119,8 @@ class ChatroomVC: UITableViewController {
 extension ChatroomVC: MessageDelegate {
     
     func didSendMessage(_ text: String) {
-        DataCoordinator.shared.createMessage(text: text, sender: "Me", chatroom: chatroom) { (id, error) in
+        let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        DataCoordinator.shared.createMessage(text: trimmedText, sender: "Me", chatroom: chatroom) { (id, error) in
             // TODO: handle errors
         }
         

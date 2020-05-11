@@ -141,6 +141,7 @@ extension UIColor {
     enum AssetColorName: String {
         case dynamicBackground = "Dynamic.Background"
         case dynamicBackgroundHighlight = "Dynamic.BackgroundHighlight"
+        case dynamicChatBubble = "Dynamic.ChatBubble"
         case dynamicLabel = "Dynamic.Label"
         case dynamicLabelSecondary = "Dynamic.LabelSecondary"
         case dynamicSecondary = "Dynamic.Secondary"

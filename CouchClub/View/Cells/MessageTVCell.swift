@@ -20,7 +20,7 @@ class MessageTVCell: UITableViewCell {
             if sentByMe {
                 bubbleBackgroundView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
             } else {
-                bubbleBackgroundView.backgroundColor = UIColor.colorAsset(.dynamicSecondary).withAlphaComponent(0.5)
+                bubbleBackgroundView.backgroundColor = UIColor.colorAsset(.dynamicChatBubble)
             }
             
             leadingConstraint.isActive = !sentByMe
