@@ -17,8 +17,16 @@ protocol ItemOperationDelegate: AnyObject {
     func didTapSeen(_ item: Item)
 }
 
+protocol ItemSelectionDelegate: SelectionDelegate {
+    func didSelectItem(_ id: String)
+}
+
 protocol WatchlistOperationDelegate: AnyObject {
     func didCreateWatchlist(_ id: UUID)
+}
+
+protocol WatchlistSelectionDelegate: SelectionDelegate {
+    func didSelectWatchlist(_ id: UUID)
 }
 
 protocol ChatroomOperationDelegate: AnyObject {
@@ -26,7 +34,6 @@ protocol ChatroomOperationDelegate: AnyObject {
 }
 
 protocol SelectionDelegate: AnyObject {
-    func didSelectSubject(_ id: String)
     func didCancelSelection()
 }
 

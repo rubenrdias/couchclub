@@ -34,11 +34,6 @@ class ChatroomBuilder {
         return self
     }
     
-    func relatedTo(_ subjectID: UUID) -> ChatroomBuilder {
-        self.chatroom.subjectID = subjectID.uuidString
-        return self
-    }
-    
     func relatedTo(_ subjectID: String) -> ChatroomBuilder {
         self.chatroom.subjectID = subjectID
         return self

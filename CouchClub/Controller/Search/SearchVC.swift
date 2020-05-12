@@ -13,7 +13,7 @@ class SearchVC: UICollectionViewController {
     var searchResults = [SearchItem]()
     var searchType: ItemType = .movie
     
-    weak var delegate: SelectionDelegate?
+    weak var delegate: ItemSelectionDelegate?
     
     var watchlist: Watchlist? {
         didSet {
@@ -236,10 +236,10 @@ extension SearchVC: HeaderButtonsDelegate {
     
 }
 
-extension SearchVC: SelectionDelegate {
+extension SearchVC: ItemSelectionDelegate {
     
-    func didSelectSubject(_ id: String) {
-        delegate?.didSelectSubject(id)
+    func didSelectItem(_ id: String) {
+        delegate?.didSelectItem(id)
         dismiss(animated: true, completion: nil)
     }
     

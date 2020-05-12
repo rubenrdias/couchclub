@@ -118,7 +118,7 @@ final class DataCoordinator {
     
     // MARK: - Chatrooms
     
-    func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: UUID, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
+    func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: String, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
         let cb = ChatroomBuilder()
         let chatroom = cb.named(title)
             .ofType(type)

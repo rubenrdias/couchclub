@@ -133,7 +133,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4Mu-dI-hvc">
                                 <rect key="frame" x="16" y="228" width="382" height="44"/>
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSF-5M-HsL">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSF-5M-HsL">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -228,17 +228,37 @@
                     </navigationItem>
                     <connections>
                         <outlet property="createChatroomButton" destination="087-zn-hul" id="Jx0-q5-42b"/>
-                        <outlet property="subjectTitleLabel" destination="NSF-5M-HsL" id="PaP-sF-Jd7"/>
+                        <outlet property="subjectTitleLabel" destination="NSF-5M-HsL" id="iTB-o6-R7l"/>
                         <outlet property="textView" destination="62f-Ul-WsD" id="EIX-8g-qwh"/>
                         <outletCollection property="radioButtons" destination="KJH-Nx-W6q" collectionClass="NSMutableArray" id="Dlg-zn-BeD"/>
                         <outletCollection property="radioButtons" destination="pWF-8i-bXf" collectionClass="NSMutableArray" id="JZK-cD-FkI"/>
                         <outletCollection property="radioButtons" destination="apT-mC-2YN" collectionClass="NSMutableArray" id="ECq-lG-DKY"/>
                         <segue destination="ca9-Xe-T0r" kind="show" identifier="SearchVC" id="Rss-n3-HHw"/>
+                        <segue destination="pFF-2k-9Um" kind="show" identifier="SelectWatchlistVC" id="3eM-if-zEf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8gl-as-pBa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5864" y="939"/>
+        </scene>
+        <!--Watchlists-->
+        <scene sceneID="XNh-1b-2ur">
+            <objects>
+                <tableViewController id="pFF-2k-9Um" customClass="SelectWatchlistVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="obp-ne-EoP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="pFF-2k-9Um" id="FkO-sp-XFD"/>
+                            <outlet property="delegate" destination="pFF-2k-9Um" id="e9d-L6-dJY"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Watchlists" id="dmr-eV-OI9"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pfk-bh-DHq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6709" y="939"/>
         </scene>
         <!--Search-->
         <scene sceneID="HWs-U7-Pa4">
@@ -248,7 +268,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDB-MY-rWa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6593" y="939"/>
+            <point key="canvasLocation" x="6463" y="1356"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="V9j-Ub-S7h">

@@ -31,7 +31,6 @@ class NewChatroomVC: UIViewController {
         view.addGestureRecognizer(tap)
         
         setupButtons()
-        
         setupTitleToolbar()
         resetTextView(setPlaceholder: false)
         
@@ -46,6 +45,9 @@ class NewChatroomVC: UIViewController {
             guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
             searchVC.delegate = self
             searchVC.searchType = sender.tag == 1 ? .movie : .series
+        } else if segue.identifier == "SelectWatchlistVC" {
+            guard let selectWatchlistVC = segue.destination as? SelectWatchlistVC else { return }
+            selectWatchlistVC.delegate = self
         }
     }
     
@@ -58,12 +60,11 @@ class NewChatroomVC: UIViewController {
     }
     
     @IBAction func createButtonTapped(_ sender: UIButton) {
-        // temporary
-        guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
-        guard let watchlist = watchlists.randomElement() else { return }
-        
+        guard let chatroomType = chatroomType else { return }
+        guard let subjectID = selectedSubjectID else { return }
         let title = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        DataCoordinator.shared.createChatroom(title, .watchlist, watchlist.id) { [weak self] (id, _) in
+        
+        DataCoordinator.shared.createChatroom(title, chatroomType, subjectID) { [weak self] (id, _) in
             // TODO: handle errors
             if let id = id {
                 self?.dismiss(animated: true, completion: {
@@ -87,7 +88,7 @@ class NewChatroomVC: UIViewController {
         
         if sender.tag == 0 {
             chatroomType = .watchlist
-            // select watchlist
+            performSegue(withIdentifier: "SelectWatchlistVC", sender: nil)
         } else {
             chatroomType = sender.tag == 0 ? .movie : .show
             performSegue(withIdentifier: "SearchVC", sender: sender)
@@ -148,7 +149,7 @@ class NewChatroomVC: UIViewController {
     func validateInputs() {
         let validText = !textView.text.isEmpty && textView.text != placeholderText
         
-        if validText {
+        if chatroomType != nil && selectedSubjectID != nil && validText {
             UIView.animate(withDuration: 0.25, animations: { [weak self] in
                 self?.createChatroomButton.alpha = 1
             }, completion: { [weak self] _ in
@@ -197,22 +198,26 @@ extension NewChatroomVC: UITextViewDelegate {
     
 }
 
-extension NewChatroomVC: SelectionDelegate {
+extension NewChatroomVC: WatchlistSelectionDelegate, ItemSelectionDelegate {
     
-    func didSelectSubject(_ id: String) {
-        guard let chatroomType = chatroomType else { return }
+    func didSelectWatchlist(_ id: UUID) {
+        selectedSubjectID = id.uuidString
         
+        guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
+        subjectTitleLabel.text = watchlist.title
+        subjectTitleLabel.isHidden = false
+        
+        validateInputs()
+    }
+    
+    func didSelectItem(_ id: String) {
         selectedSubjectID = id
         
-        if chatroomType == .watchlist, let uuid = UUID(uuidString: id) {
-            guard let watchlist = LocalDatabase.shared.fetchWatchlist(uuid) else { return }
-            subjectTitleLabel.text = watchlist.title
-        } else {
-            guard let item = LocalDatabase.shared.fetchItem(id) else { return }
-            subjectTitleLabel.text = item.title
-        }
+        guard let item = LocalDatabase.shared.fetchItem(id) else { return }
+        subjectTitleLabel.text = item.title
+        subjectTitleLabel.isHidden = false
         
-        // TODO: fix subject title label not showing
+        validateInputs()
     }
     
     func didCancelSelection() {

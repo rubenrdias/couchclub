@@ -24,7 +24,7 @@ class ItemDetailVC: UIViewController {
     }
     
     weak var delegate: ItemOperationDelegate?
-    weak var selectionDelegate: SelectionDelegate?
+    weak var selectionDelegate: ItemSelectionDelegate?
     
     private var tableView: UITableView!
     @IBOutlet weak var actionButton: UIButton!
@@ -93,7 +93,7 @@ class ItemDetailVC: UIViewController {
                 }
             }
         } else {
-            selectionDelegate?.didSelectSubject(item.id)
+            selectionDelegate?.didSelectItem(item.id)
         }
     }
     

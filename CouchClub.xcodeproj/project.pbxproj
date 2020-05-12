@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		53153CC02456253F0089AEA7 /* SmallHeaderCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CBF2456253F0089AEA7 /* SmallHeaderCVCell.swift */; };
 		53153CC2245625950089AEA7 /* SearchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CC1245625950089AEA7 /* SearchItemCell.swift */; };
+		5321D39F246B0CF500FC7E83 /* SelectWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */; };
 		53251069245ABF4200DBBA04 /* NewWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */; };
 		5325106F245AD9FE00DBBA04 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5325106E245AD9FE00DBBA04 /* Extensions.swift */; };
 		53264A3624669DD4006C3423 /* SmallHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53264A3524669DD4006C3423 /* SmallHeaderTVCell.swift */; };
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		53153CBF2456253F0089AEA7 /* SmallHeaderCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallHeaderCVCell.swift; sourceTree = "<group>"; };
 		53153CC1245625950089AEA7 /* SearchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCell.swift; sourceTree = "<group>"; };
+		5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWatchlistVC.swift; sourceTree = "<group>"; };
 		53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWatchlistVC.swift; sourceTree = "<group>"; };
 		5325106E245AD9FE00DBBA04 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		53264A3524669DD4006C3423 /* SmallHeaderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallHeaderTVCell.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				538D29D82454978600CDB99F /* WatchlistsVC.swift */,
 				53CC6A3F245ADB2500744012 /* WatchlistVC.swift */,
 				53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */,
+				5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */,
 			);
 			path = Watchlists;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */,
 				536013062464A64700E00C6F /* Chatroom+CoreDataClass.swift in Sources */,
 				53264A3624669DD4006C3423 /* SmallHeaderTVCell.swift in Sources */,
+				5321D39F246B0CF500FC7E83 /* SelectWatchlistVC.swift in Sources */,
 				53286A162465D13F00934B4D /* MessageInputAccessoryView.swift in Sources */,
 				53153CC02456253F0089AEA7 /* SmallHeaderCVCell.swift in Sources */,
 				53264A392466C92F006C3423 /* Message+CoreDataClass.swift in Sources */,
