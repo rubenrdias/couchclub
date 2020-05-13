@@ -21,6 +21,8 @@ class SelectWatchlistVC: UITableViewController {
         navigationItem.backBarButtonItem?.action = #selector(cancelSelection)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        
+        tableView.tableFooterView = UIView()
     }
     
     @objc private func cancelSelection() {

@@ -106,15 +106,11 @@ class ChatroomsVC: UIViewController {
         return attributtedString
     }()
     
-    private lazy var createChatroomButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var createChatroomButton: RoundedButton = {
+        let btn = RoundedButton()
+        btn.makeCTA()
         btn.setTitle("Create Chatroom", for: .normal)
-        btn.titleLabel?.font = .translatedFont(for: .headline, .semibold)
-        btn.setTitleColor(UIColor.white, for: .normal)
-        btn.backgroundColor = UIColor.systemOrange
-        btn.layer.cornerRadius = 4
-        btn.clipsToBounds = true
+        btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(createChatroom), for: .touchUpInside)
         return btn
     }()

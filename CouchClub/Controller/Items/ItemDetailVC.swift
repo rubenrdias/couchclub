@@ -27,7 +27,7 @@ class ItemDetailVC: UIViewController {
     weak var selectionDelegate: ItemSelectionDelegate?
     
     private var tableView: UITableView!
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var actionButton: RoundedButton!
     
     var item: Item!
     var watchlist: Watchlist?
@@ -129,7 +129,7 @@ class ItemDetailVC: UIViewController {
                 if items.contains(item) {
                     shouldAddToList = false
                     actionButton.setTitle("Remove from Watchlist", for: .normal)
-                    actionButton.backgroundColor = UIColor.init(white: 0.4, alpha: 1)
+                    actionButton.makeCTA(style: .secondary)
                 }
             } else {
                 actionButton.setTitle("Add to Watchlist", for: .normal)
@@ -137,6 +137,7 @@ class ItemDetailVC: UIViewController {
         } else {
             let type = item.isKind(of: Movie.self) ? ItemType.movie.rawValue : "Show"
             actionButton.setTitle("Select this \(type)", for: .normal)
+            actionButton.makeCTA()
         }
         
         actionButton.layer.cornerRadius = 4

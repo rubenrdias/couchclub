@@ -16,7 +16,7 @@ class NewChatroomVC: UIViewController {
     @IBOutlet weak var subjectTitleLabel: UILabel!
     @IBOutlet var radioButtons: [UIButton]!
     @IBOutlet weak var createChatroomButton: UIButton!
-        
+    
     let placeholderText = "Chatroom title..."
     let titleRegex = NSRegularExpression(".*")
     
@@ -25,6 +25,8 @@ class NewChatroomVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 13.0, *) { isModalInPresentation = true }
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
@@ -97,11 +99,9 @@ class NewChatroomVC: UIViewController {
     
     private func setupButtons() {
         radioButtons.forEach {
-            formatButtonCorners($0)
             restoreButton($0)
         }
         
-        formatButtonCorners(createChatroomButton)
         createChatroomButton.alpha = 0
         createChatroomButton.isEnabled = false
     }
@@ -139,11 +139,6 @@ class NewChatroomVC: UIViewController {
         textView.text = setPlaceholder ? placeholderText : nil
         textView.font = .translatedFont(for: .body, .regular)
         textView.textColor = .colorAsset(.dynamicLabelSecondary)
-    }
-    
-    func formatButtonCorners(_ button: UIButton) {
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 4
     }
     
     func validateInputs() {

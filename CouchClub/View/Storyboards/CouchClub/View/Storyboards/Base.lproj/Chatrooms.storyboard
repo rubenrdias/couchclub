@@ -142,7 +142,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="oAX-Ne-2x2">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJH-Nx-W6q">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJH-Nx-W6q" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
                                                 <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                                 <constraints>
@@ -155,7 +155,7 @@
                                                     <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="t2f-eR-ohw"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWF-8i-bXf">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWF-8i-bXf" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                                 <rect key="frame" x="132.5" y="0.0" width="117" height="44"/>
                                                 <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                                 <constraints>
@@ -168,7 +168,7 @@
                                                     <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="YIs-xp-WNV"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apT-mC-2YN">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apT-mC-2YN" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                                 <rect key="frame" x="265.5" y="0.0" width="116.5" height="44"/>
                                                 <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                                 <constraints>
@@ -185,7 +185,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="087-zn-hul">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="087-zn-hul" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="16" y="720" width="382" height="56"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -227,7 +227,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createChatroomButton" destination="087-zn-hul" id="Jx0-q5-42b"/>
+                        <outlet property="createChatroomButton" destination="087-zn-hul" id="nVe-56-MqX"/>
                         <outlet property="subjectTitleLabel" destination="NSF-5M-HsL" id="iTB-o6-R7l"/>
                         <outlet property="textView" destination="62f-Ul-WsD" id="EIX-8g-qwh"/>
                         <outletCollection property="radioButtons" destination="KJH-Nx-W6q" collectionClass="NSMutableArray" id="Dlg-zn-BeD"/>

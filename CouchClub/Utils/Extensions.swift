@@ -40,6 +40,18 @@ extension UIView {
     
 }
 
+// MARK: - UIButton
+
+extension UIButton {
+    
+    func makeCTA(style: ButtonStyle = .primary) {
+        backgroundColor = style == .primary ? UIColor.systemOrange : UIColor.init(white: 0.4, alpha: 1)
+        setTitleColor(UIColor.white, for: .normal)
+        titleLabel?.font = .translatedFont(for: .headline, .semibold)
+    }
+    
+}
+
 // MARK: - UIImage
 
 extension UIImage {
@@ -145,6 +157,7 @@ extension UIColor {
         case dynamicLabel = "Dynamic.Label"
         case dynamicLabelSecondary = "Dynamic.LabelSecondary"
         case dynamicSecondary = "Dynamic.Secondary"
+        case dynamicTertiary = "Dynamic.LabelTertiary"
         case dynamicSeparator = "Dynamic.Separator"
         case staticGray2 = "Static.Gray2"
     }

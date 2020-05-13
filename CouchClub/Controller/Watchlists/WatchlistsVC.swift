@@ -15,6 +15,7 @@ class WatchlistsVC: UICollectionViewController {
     private var usableWidth: CGFloat = 0
     
     var watchlists = [Watchlist]()
+    var isLoggedIn = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,16 @@ class WatchlistsVC: UICollectionViewController {
         super.viewWillTransition(to: size, with: coordinator)
         setupCollectionViewLayout(size)
         collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // TODO: check login status
+        if !isLoggedIn {
+            isLoggedIn = true
+            performSegue(withIdentifier: "LoginVC", sender: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -133,15 +144,11 @@ class WatchlistsVC: UICollectionViewController {
         return attributtedString
     }()
     
-    private lazy var createWatchlistButton: UIButton = {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var createWatchlistButton: RoundedButton = {
+        let btn = RoundedButton()
+        btn.makeCTA()
         btn.setTitle("Create Watchlist", for: .normal)
-        btn.titleLabel?.font = .translatedFont(for: .headline, .semibold)
-        btn.setTitleColor(UIColor.white, for: .normal)
-        btn.backgroundColor = UIColor.systemOrange
-        btn.layer.cornerRadius = 4
-        btn.clipsToBounds = true
+        btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(createWatchlist), for: .touchUpInside)
         return btn
     }()

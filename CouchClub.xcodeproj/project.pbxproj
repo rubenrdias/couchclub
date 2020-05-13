@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		53153CC02456253F0089AEA7 /* SmallHeaderCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CBF2456253F0089AEA7 /* SmallHeaderCVCell.swift */; };
 		53153CC2245625950089AEA7 /* SearchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CC1245625950089AEA7 /* SearchItemCell.swift */; };
+		531FE206246C29A500AE0505 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 531FE205246C29A500AE0505 /* Login.storyboard */; };
+		531FE209246C2AB000AE0505 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531FE208246C2AB000AE0505 /* LoginVC.swift */; };
+		531FE20B246C2FD400AE0505 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531FE20A246C2FD400AE0505 /* Buttons.swift */; };
 		5321D39F246B0CF500FC7E83 /* SelectWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */; };
 		53251069245ABF4200DBBA04 /* NewWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */; };
 		5325106F245AD9FE00DBBA04 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5325106E245AD9FE00DBBA04 /* Extensions.swift */; };
@@ -29,6 +32,8 @@
 		53645A64245CA382009A4AE6 /* TextCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A63245CA382009A4AE6 /* TextCVCell.swift */; };
 		53645A66245DBEB0009A4AE6 /* HighlightCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */; };
 		53645A68245DD8A0009A4AE6 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A67245DD8A0009A4AE6 /* ItemCell.swift */; };
+		53649011246C3EE400628A32 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649010246C3EE400628A32 /* TextFields.swift */; };
+		53649013246C781D00628A32 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649012246C781D00628A32 /* CreateAccountVC.swift */; };
 		536A3922245F717E00E1FAA0 /* Item+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536A3921245F717E00E1FAA0 /* Item+CoreDataProperties.swift */; };
 		5376F2B024595EE7007FB93C /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376F2AF24595EE7007FB93C /* LocalDatabase.swift */; };
 		537C14322455CDE7005FC745 /* SearchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537C14312455CDE7005FC745 /* SearchItems.swift */; };
@@ -77,6 +82,9 @@
 /* Begin PBXFileReference section */
 		53153CBF2456253F0089AEA7 /* SmallHeaderCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallHeaderCVCell.swift; sourceTree = "<group>"; };
 		53153CC1245625950089AEA7 /* SearchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCell.swift; sourceTree = "<group>"; };
+		531FE205246C29A500AE0505 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		531FE208246C2AB000AE0505 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		531FE20A246C2FD400AE0505 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWatchlistVC.swift; sourceTree = "<group>"; };
 		53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWatchlistVC.swift; sourceTree = "<group>"; };
 		5325106E245AD9FE00DBBA04 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -97,6 +105,8 @@
 		53645A63245CA382009A4AE6 /* TextCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCVCell.swift; sourceTree = "<group>"; };
 		53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCVCell.swift; sourceTree = "<group>"; };
 		53645A67245DD8A0009A4AE6 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		53649010246C3EE400628A32 /* TextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
+		53649012246C781D00628A32 /* CreateAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountVC.swift; sourceTree = "<group>"; };
 		536A3921245F717E00E1FAA0 /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlists/Item+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		5376F2AF24595EE7007FB93C /* LocalDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
 		537C14312455CDE7005FC745 /* SearchItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItems.swift; sourceTree = "<group>"; };
@@ -179,9 +189,20 @@
 			path = "Headers and Footers";
 			sourceTree = "<group>";
 		};
+		531FE207246C2AA700AE0505 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				531FE208246C2AB000AE0505 /* LoginVC.swift */,
+				53649012246C781D00628A32 /* CreateAccountVC.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		53286A142465D12700934B4D /* Custom Components */ = {
 			isa = PBXGroup;
 			children = (
+				531FE20A246C2FD400AE0505 /* Buttons.swift */,
+				53649010246C3EE400628A32 /* TextFields.swift */,
 				53286A152465D13F00934B4D /* MessageInputAccessoryView.swift */,
 				53286A172465D1DC00934B4D /* MessageInputTextView.swift */,
 			);
@@ -331,6 +352,7 @@
 		53B7CDE02454A223007395EE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				531FE207246C2AA700AE0505 /* Login */,
 				53645A69245DDB21009A4AE6 /* Items */,
 				537C14352455CE5A005FC745 /* Watchlists */,
 				53C5ADB72455D0F800873F90 /* Chatrooms */,
@@ -343,6 +365,7 @@
 		53C0B1FB2454D7EB0019640D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				531FE205246C29A500AE0505 /* Login.storyboard */,
 				534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */,
 				534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */,
 				534BFBA12454DED600F9F772 /* Settings.storyboard */,
@@ -460,6 +483,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				531FE206246C29A500AE0505 /* Login.storyboard in Resources */,
 				538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */,
 				538D29E12454978800CDB99F /* Assets.xcassets in Resources */,
 				534BFB9D2454DDB500F9F772 /* Watchlists.storyboard in Resources */,
@@ -488,6 +512,7 @@
 				53B7144B245B524D00915FF8 /* Item+CoreDataClass.swift in Sources */,
 				5376F2B024595EE7007FB93C /* LocalDatabase.swift in Sources */,
 				53F6880B2458CFE500230CE9 /* Show+CoreDataClass.swift in Sources */,
+				531FE20B246C2FD400AE0505 /* Buttons.swift in Sources */,
 				538D29D92454978600CDB99F /* WatchlistsVC.swift in Sources */,
 				53C0B1F72454AF2B0019640D /* WatchlistCell.swift in Sources */,
 				53251069245ABF4200DBBA04 /* NewWatchlistVC.swift in Sources */,
@@ -510,6 +535,7 @@
 				53D16F4E2458D790001DD4FA /* Constants.swift in Sources */,
 				53B71449245B524D00915FF8 /* Watchlist+CoreDataClass.swift in Sources */,
 				538D29D52454978600CDB99F /* AppDelegate.swift in Sources */,
+				531FE209246C2AB000AE0505 /* LoginVC.swift in Sources */,
 				539448BB24640366002A9544 /* NewChatroomVC.swift in Sources */,
 				538D29DF2454978600CDB99F /* CouchClub.xcdatamodeld in Sources */,
 				53BEA6962459820100F7D770 /* DataCoordinator.swift in Sources */,
@@ -527,7 +553,9 @@
 				53CC6A40245ADB2500744012 /* WatchlistVC.swift in Sources */,
 				53264A3A2466C92F006C3423 /* Message+CoreDataProperties.swift in Sources */,
 				53F6880C2458CFE500230CE9 /* Show+CoreDataProperties.swift in Sources */,
+				53649011246C3EE400628A32 /* TextFields.swift in Sources */,
 				5325106F245AD9FE00DBBA04 /* Extensions.swift in Sources */,
+				53649013246C781D00628A32 /* CreateAccountVC.swift in Sources */,
 				53B7144A245B524D00915FF8 /* Watchlist+CoreDataProperties.swift in Sources */,
 				536012FF2464A33000E00C6F /* Protocols.swift in Sources */,
 				53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */,

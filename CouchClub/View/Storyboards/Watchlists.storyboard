@@ -9,6 +9,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Login-->
+        <scene sceneID="Yp3-nZ-crn">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Login" id="RBo-Vv-K0g" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tBn-DP-xPb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5530" y="-313"/>
+        </scene>
         <!--Watchlists-->
         <scene sceneID="dIB-3H-U38">
             <objects>
@@ -33,6 +41,7 @@
                     <connections>
                         <segue destination="bjv-dN-JRy" kind="show" identifier="WatchlistVC" id="bxh-KB-sxb"/>
                         <segue destination="C7c-yU-jlx" kind="presentation" identifier="NewWatchlistVC" id="FKe-zq-wiE"/>
+                        <segue destination="RBo-Vv-K0g" kind="presentation" identifier="LoginVC" id="RJZ-Eq-Tc5"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y7S-MR-mdF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -80,7 +89,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2Ae-rh-zfU">
                                 <rect key="frame" x="16" y="228" width="343" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk1-bv-lxf">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kk1-bv-lxf" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="163.66666666666666" height="44"/>
                                         <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                         <constraints>
@@ -93,7 +102,7 @@
                                             <action selector="buttonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="AnF-ZC-dVA"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBS-jy-FzT">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aBS-jy-FzT" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                         <rect key="frame" x="179.66666666666663" y="0.0" width="163.33333333333337" height="44"/>
                                         <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                         <constraints>
@@ -108,7 +117,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBM-6O-MW3">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBM-6O-MW3" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="16" y="636" width="343" height="56"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -150,7 +159,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="createWatchlistButton" destination="xBM-6O-MW3" id="kv8-IW-zkE"/>
+                        <outlet property="createWatchlistButton" destination="xBM-6O-MW3" id="Ttf-Me-v7j"/>
                         <outlet property="textView" destination="fTT-8j-JuF" id="IVw-D2-t4m"/>
                         <outletCollection property="radioButtons" destination="kk1-bv-lxf" collectionClass="NSMutableArray" id="951-oy-a5G"/>
                         <outletCollection property="radioButtons" destination="aBS-jy-FzT" collectionClass="NSMutableArray" id="8iv-ap-fq8"/>
@@ -257,7 +266,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbs-Ia-tc0">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbs-Ia-tc0" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="16" y="690" width="343" height="56"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -288,7 +297,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="actionButton" destination="Jbs-Ia-tc0" id="HTT-23-mh1"/>
+                        <outlet property="actionButton" destination="Jbs-Ia-tc0" id="1E7-q8-RSE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fIV-Y8-LNl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

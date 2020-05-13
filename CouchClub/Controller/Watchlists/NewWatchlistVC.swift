@@ -14,8 +14,8 @@ class NewWatchlistVC: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var radioButtons: [UIButton]!
-    @IBOutlet weak var createWatchlistButton: UIButton!
-        
+    @IBOutlet weak var createWatchlistButton: RoundedButton!
+    
     let placeholderText = "Watchlist title..."
     let titleRegex = NSRegularExpression(".*")
     
@@ -23,6 +23,8 @@ class NewWatchlistVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 13.0, *) { isModalInPresentation = true }
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
@@ -80,13 +82,12 @@ class NewWatchlistVC: UIViewController {
     }
     
     private func setupButtons() {
-        radioButtons.forEach { formatButtonCorners($0) }
         highlightButton(radioButtons[0])
         restoreButton(radioButtons[1])
         
-        formatButtonCorners(createWatchlistButton)
         createWatchlistButton.alpha = 0
         createWatchlistButton.isEnabled = false
+        createWatchlistButton.makeCTA()
     }
     
     private func highlightButton(_ button: UIButton) {
@@ -122,11 +123,6 @@ class NewWatchlistVC: UIViewController {
         textView.text = setPlaceholder ? placeholderText : nil
         textView.font = .translatedFont(for: .body, .regular)
         textView.textColor = .colorAsset(.dynamicLabelSecondary)
-    }
-    
-    func formatButtonCorners(_ button: UIButton) {
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 4
     }
     
     func validateInputs() {

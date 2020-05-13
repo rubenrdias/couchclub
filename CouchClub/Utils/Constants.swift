@@ -15,6 +15,11 @@ let context = ad.persistentContainer.viewContext
 
 // MARK: - Enums
 
+enum ButtonStyle {
+    case primary
+    case secondary
+}
+
 enum ItemType: String {
     case movie
     case series
