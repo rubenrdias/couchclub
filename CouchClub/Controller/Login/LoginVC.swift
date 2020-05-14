@@ -41,18 +41,17 @@ class LoginVC: UIViewController {
     @IBAction func signInTapped(_ sender: Any) {
         if let errorMessage = validateForm() {
             let alert = Alerts.simpleAlert(title: errorMessage.0, message: errorMessage.1)
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true)
         } else {
-            // create user
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            Auth.auth().signIn(withEmail: email, password: password) { [unowned self] (result, error) in
+            DataCoordinator.shared.signIn(email, password) { [unowned self] (error) in
                 if let error = error {
-                    // TODO: handle error
-                    print("Firebase Auth | Error creating user: \(error.localizedDescription)")
+                    let alert = Alerts.simpleAlert(title: "Sign in failed", message: error.localizedDescription)
+                    self.present(alert, animated: true)
                 } else {
-                    self.navigationController?.dismiss(animated: true, completion: nil)
+                    self.navigationController?.dismiss(animated: true)
                 }
             }
         }

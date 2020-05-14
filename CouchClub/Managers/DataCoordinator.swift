@@ -7,10 +7,49 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 final class DataCoordinator {
     
     static let shared = DataCoordinator()
+    
+    // MARK: - Users
+    
+    func createUser(_ username: String, _ email: String, _ password: String, completion: @escaping (_ uid: String?, _ error: Error?)->()) {
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("Firebase Auth | Error creating user: \(error.localizedDescription)")
+                // TODO: handle error
+                completion(nil, error)
+                return
+            }
+            
+            Firestore.firestore().collection("users").document(result!.user.uid).setData([
+                "username": username
+            ]) { (error) in
+                if let error = error {
+                    print("Firebase Firestore | Error creating user data: \(error.localizedDescription)")
+                    // TODO: retry later
+                }
+                
+                completion(result!.user.uid, nil)
+            }
+        }
+    }
+    
+    func signIn(_ email: String, _ password: String, completion: @escaping (_ error: Error?)->()) {
+        Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
+            if let error = error {
+                print("Firebase Auth | Error creating user: \(error.localizedDescription)")
+                // TODO: handle error
+                completion(error)
+                return
+            }
+            
+            completion(nil)
+        }
+    }
     
     // MARK: - Watchlists
     
