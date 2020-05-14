@@ -10,7 +10,7 @@
         <!--Settings-->
         <scene sceneID="7bW-eQ-u8I">
             <objects>
-                <tableViewController id="Qp2-c3-n5F" sceneMemberID="viewController">
+                <tableViewController id="Qp2-c3-n5F" customClass="SettingsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Fbl-cL-e5y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,10 +21,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="hGa-Fn-xC6"/>
+                    <connections>
+                        <segue destination="KCv-ma-3tU" kind="presentation" identifier="LoginVC" id="kDc-Ka-QV1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZJ2-ej-0fm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5431.1999999999998" y="131.52709359605913"/>
+        </scene>
+        <!--Login-->
+        <scene sceneID="uAe-DV-5Gz">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Login" id="KCv-ma-3tU" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cmy-HN-exb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6151" y="131"/>
         </scene>
         <!--Settings-->
         <scene sceneID="FiQ-lD-JN6">

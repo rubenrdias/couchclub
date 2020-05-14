@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class CreateAccountVC: UIViewController {
     
@@ -19,6 +21,9 @@ class CreateAccountVC: UIViewController {
     @IBOutlet weak var createAccountButton: RoundedButton!
     @IBOutlet weak var signInLabel: UILabel!
     @IBOutlet weak var signInButton: UIButton!
+    
+    let emailRegex = NSRegularExpression("[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]")
+    let passwordRegex = NSRegularExpression(".{6,50}")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +38,35 @@ class CreateAccountVC: UIViewController {
     }
     
     @IBAction func createAccountTapped(_ sender: Any) {
-        navigationController?.dismiss(animated: true, completion: nil)
+        if let errorMessage = validateForm() {
+            let alert = Alerts.simpleAlert(title: errorMessage.0, message: errorMessage.1)
+            present(alert, animated: true, completion: nil)
+        } else {
+            // create user
+            let username = usernameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            print("Should create user: \(username) | \(email) | \(password)")
+            
+            Auth.auth().createUser(withEmail: email, password: password) { [unowned self] (result, error) in
+                if let error = error {
+                    // TODO: handle error
+                    print("Firebase Auth | Error creating user: \(error.localizedDescription)")
+                } else {
+                    Firestore.firestore().collection("users").addDocument(data: [
+                        "uid": result!.user.uid,
+                        "username": username
+                    ]) { (error) in
+                        if let error = error {
+                            // TODO: handle error
+                            print("Firebase Firestore | Error creating user data: \(error.localizedDescription)")
+                        } else {
+                            self.navigationController?.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func signInTapped(_ sender: Any) {
@@ -67,6 +100,22 @@ class CreateAccountVC: UIViewController {
     private func setupButtons() {
         createAccountButton.makeCTA()
         signInButton.titleLabel?.font = .translatedFont(for: .subheadline, .bold)
+    }
+    
+    private func validateForm() -> (String, String)? {
+        guard let username = usernameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !username.isEmpty else { return ("Missing username", "Please make sure to enter a username.") }
+        guard let email = emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !email.isEmpty else { return ("Missing email", "Please make sure to enter an email.") }
+        guard let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !password.isEmpty else { return ("Missing password", "Please make sure to enter a password.") }
+        
+        if !emailRegex.matches(email) {
+            return ("Invalid email", "Please check this field and try again.")
+        }
+        
+        if !passwordRegex.matches(password) {
+            return ("Invalid password", "Passwords must have between 6-50 characters.")
+        }
+        
+        return nil
     }
     
 }

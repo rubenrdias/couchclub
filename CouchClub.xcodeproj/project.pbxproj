@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -359,7 +359,6 @@
 				53286A142465D12700934B4D /* Custom Components */,
 				53153CBE245624D20089AEA7 /* Headers and Footers */,
 				53153CBB245624A50089AEA7 /* Cells */,
-				53D91F06245AEF5A00BC9F82 /* Alerts.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -382,6 +381,7 @@
 				53C5ADB72455D0F800873F90 /* Chatrooms */,
 				53C5ADB82455D10100873F90 /* Settings */,
 				53C5ADB92455D23300873F90 /* Search */,
+				53D91F06245AEF5A00BC9F82 /* Alerts.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -434,7 +434,6 @@
 				7C224FFD5468964A9A651875 /* Pods-CouchClubTests.debug.xcconfig */,
 				66146CAEF669EBBF4C95FDB2 /* Pods-CouchClubTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

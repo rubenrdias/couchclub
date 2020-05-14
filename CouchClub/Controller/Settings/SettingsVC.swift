@@ -7,21 +7,44 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SettingsVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
         tableView.tableFooterView = UIView()
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
-    }
+}
+
+extension SettingsVC {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 1
     }
-
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = "Log Out"
+        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.textColor = .systemRed
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        do {
+            try Auth.auth().signOut()
+            performSegue(withIdentifier: "LoginVC", sender: nil)
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: selectedIndexPath, animated: true)
+            }
+        } catch {
+            print("Firebase Auth | Error when signing out: \(error.localizedDescription)")
+        }
+    }
+    
 }

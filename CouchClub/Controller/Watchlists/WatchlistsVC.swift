@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import FirebaseAuth
 
 class WatchlistsVC: UICollectionViewController {
     
@@ -15,7 +16,6 @@ class WatchlistsVC: UICollectionViewController {
     private var usableWidth: CGFloat = 0
     
     var watchlists = [Watchlist]()
-    var isLoggedIn = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +39,7 @@ class WatchlistsVC: UICollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // TODO: check login status
-        if !isLoggedIn {
-            isLoggedIn = true
+        if Auth.auth().currentUser == nil {
             performSegue(withIdentifier: "LoginVC", sender: nil)
         }
     }
