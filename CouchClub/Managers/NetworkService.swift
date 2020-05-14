@@ -37,6 +37,8 @@ final class NetworkService {
     
     static let shared = NetworkService()
     
+    private init() {}
+    
     private let baseURL = "http://www.omdbapi.com/"
     private let apiKey = "d4d6a41c"
     

@@ -7,47 +7,33 @@
 //
 
 import UIKit
-import FirebaseAuth
-import FirebaseFirestore
 
 final class DataCoordinator {
     
     static let shared = DataCoordinator()
     
-    // MARK: - Users
+    private init() {}
     
-    func createUser(_ username: String, _ email: String, _ password: String, completion: @escaping (_ uid: String?, _ error: Error?)->()) {
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+    // MARK: - users
+    
+    func createUser(_ username: String, _ email: String, _ password: String, completion: @escaping (_ error: Error?)->()) {
+        FirebaseService.shared.createUser(username, email, password) { (uid, error) in
             if let error = error {
-                print("Firebase Auth | Error creating user: \(error.localizedDescription)")
-                // TODO: handle error
-                completion(nil, error)
-                return
-            }
-            
-            Firestore.firestore().collection("users").document(result!.user.uid).setData([
-                "username": username
-            ]) { (error) in
-                if let error = error {
-                    print("Firebase Firestore | Error creating user data: \(error.localizedDescription)")
-                    // TODO: retry later
-                }
-                
-                completion(result!.user.uid, nil)
+                completion(error)
+            } else {
+                // TODO: create local user
+                completion(nil)
             }
         }
     }
     
     func signIn(_ email: String, _ password: String, completion: @escaping (_ error: Error?)->()) {
-        Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
+        FirebaseService.shared.signIn(email, password) { (error) in
             if let error = error {
-                print("Firebase Auth | Error creating user: \(error.localizedDescription)")
-                // TODO: handle error
                 completion(error)
-                return
+            } else {
+                completion(nil)
             }
-            
-            completion(nil)
         }
     }
     
@@ -59,11 +45,15 @@ final class DataCoordinator {
             .ofType(type)
             .build()
         
-        // TODO: add to firebase
-        // TODO: handle errors
-        
-        NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
-        completion(watchlist.id, nil)
+        FirebaseService.shared.createWatchlist(watchlist) { (error) in
+            if let error = error {
+                LocalDatabase.shared.deleteWatchlist(watchlist)
+                completion(nil, error)
+            } else {
+                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+                completion(watchlist.id, nil)
+            }
+        }
     }
     
     func addToWatchlist(_ items: [Item], _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {

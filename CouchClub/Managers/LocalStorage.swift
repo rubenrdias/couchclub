@@ -12,6 +12,8 @@ final class LocalStorage {
     
     static let shared = LocalStorage()
     
+    private init() {}
+    
     private var documentsDirectory: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }

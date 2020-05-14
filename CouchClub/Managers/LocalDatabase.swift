@@ -12,6 +12,8 @@ final class LocalDatabase {
     
     static let shared = LocalDatabase()
     
+    private init() {}
+    
     let coreDataQueue = DispatchQueue(label: "com.couchclub.coreDataQueue")
     
     // MARK: - Watchlists

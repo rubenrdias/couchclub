@@ -50,16 +50,18 @@ class NewWatchlistVC: UIViewController {
     
     @IBAction func createButtonTapped(_ sender: UIButton) {
         let title = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        DataCoordinator.shared.createWatchlist(title, itemType) { [weak self] (id, _) in
-            // TODO: handle errors
-            if let id = id {
-                self?.dismiss(animated: true, completion: {
-                    self?.delegate?.didCreateWatchlist(id)
-                })
-            } else {
-                let ac = Alerts.simpleAlert(title: "Error", message: "Something went wrong when creating the watchlist.")
-                self?.present(ac, animated: true, completion: nil)
+        DataCoordinator.shared.createWatchlist(title, itemType) { [unowned self] (id, error) in
+            if let error = error {
+                let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                self.present(alert, animated: true)
+                return
             }
+            
+            guard let id = id else { return }
+            
+            self.dismiss(animated: true, completion: {
+                self.delegate?.didCreateWatchlist(id)
+            })
         }
     }
     

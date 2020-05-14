@@ -12,6 +12,8 @@ class Converter {
     
     static let shared = Converter()
     
+    private init() {}
+    
     func toMovie(_ item: SearchItemMovie) -> Movie {
         let builder = MovieBuilder()
         let movie = builder.withID(item.id)

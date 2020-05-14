@@ -45,12 +45,11 @@ class CreateAccountVC: UIViewController {
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            DataCoordinator.shared.createUser(username, email, password) { [unowned self] (uid, error) in
+            DataCoordinator.shared.createUser(username, email, password) { [unowned self] (error) in
                 if let error = error {
                     let alert = Alerts.simpleAlert(title: "Account creation failed", message: error.localizedDescription)
                     self.present(alert, animated: true)
                 } else {
-                    // TODO: create local user
                     self.navigationController?.dismiss(animated: true)
                 }
             }
