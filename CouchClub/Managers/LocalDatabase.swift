@@ -52,18 +52,16 @@ final class LocalDatabase {
         }
     }
     
-    func addToWatchlist(_ items: [Item], _ watchlist: Watchlist) {
+    func addToWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
-            let itemsSet = NSSet(array: items)
-            watchlist.addToItems(itemsSet)
+            watchlist.addToItems(item)
             ad.saveContext()
         }
     }
     
-    func removeFromWatchlist(_ items: [Item], _ watchlist: Watchlist) {
+    func removeFromWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
-            let itemsSet = NSSet(array: items)
-            watchlist.removeFromItems(itemsSet)
+            watchlist.removeFromItems(item)
             ad.saveContext()
         }
     }

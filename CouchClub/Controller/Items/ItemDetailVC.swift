@@ -68,28 +68,30 @@ class ItemDetailVC: UIViewController {
     @IBAction func watchlistButtonTapped(_ sender: UIButton) {
         if let watchlist = watchlist {
             if shouldAddToList {
-                DataCoordinator.shared.addToWatchlist([item], watchlist) { [weak self] error in
+                DataCoordinator.shared.addToWatchlist(item, watchlist) { [weak self] error in
                     if let error = error {
-                        print("Failed to add \(self?.item.title ?? "item") to watchlist: \(error.localizedDescription)")
+                        let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                        self?.present(alert, animated: true)
+                    } else {
+                        let ac = Alerts.simpleAlert(title: "Added!", message: "The watchlist has been updated.") { _ in
+                            self?.navigationController?.popViewController(animated: true)
+                        }
+                        
+                        self?.present(ac, animated: true, completion: nil)
                     }
-                    
-                    let ac = Alerts.simpleAlert(title: "Added!", message: "The watchlist has been updated.") { [weak self] _ in
-                        self?.navigationController?.popViewController(animated: true)
-                    }
-                    
-                    self?.present(ac, animated: true, completion: nil)
                 }
             } else {
-                DataCoordinator.shared.removeFromWatchlist([item], watchlist) { [weak self] error in
+                DataCoordinator.shared.removeFromWatchlist(item, watchlist) { [weak self] error in
                     if let error = error {
-                        print("Failed to remove \(self?.item.title ?? "item") from watchlist: \(error.localizedDescription)")
+                        let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                        self?.present(alert, animated: true)
+                    } else {
+                        let ac = Alerts.simpleAlert(title: "Removed!", message: "The watchlist has been updated.") { _ in
+                            self?.navigationController?.popViewController(animated: true)
+                        }
+                        
+                        self?.present(ac, animated: true, completion: nil)
                     }
-                    
-                    let ac = Alerts.simpleAlert(title: "Removed!", message: "The watchlist has been updated.") { [weak self] _ in
-                        self?.navigationController?.popViewController(animated: true)
-                    }
-                    
-                    self?.present(ac, animated: true, completion: nil)
                 }
             }
         } else {

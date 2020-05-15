@@ -71,4 +71,26 @@ class FirebaseService {
         }
     }
     
+    func add(_ item: Item, to watchlist: Watchlist, completion: @escaping (_ error: Error?)->()) {
+        Firestore.firestore().collection("watchlists").document(watchlist.id.uuidString).updateData([
+            "items": FieldValue.arrayUnion([item.id])
+        ]) { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error when adding an item to watchlist: \(error.localizedDescription)")
+            }
+            completion(error)
+        }
+    }
+    
+    func remove(_ item: Item, from watchlist: Watchlist, completion: @escaping (_ error: Error?)->()) {
+        Firestore.firestore().collection("watchlists").document(watchlist.id.uuidString).updateData([
+            "items": FieldValue.arrayRemove([item.id])
+        ]) { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error when removing an item from watchlist: \(error.localizedDescription)")
+            }
+            completion(error)
+        }
+    }
+    
 }

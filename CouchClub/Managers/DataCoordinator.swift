@@ -56,30 +56,38 @@ final class DataCoordinator {
         }
     }
     
-    func addToWatchlist(_ items: [Item], _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
-        // TODO: sync to firebase
-        // TODO: handle errors
-        
-        LocalDatabase.shared.addToWatchlist(items, watchlist)
-        
-        let info = ["watchlistID": watchlist.id]
-        NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
-        notifyOfChatroomChanges(watchlist)
+    func addToWatchlist(_ item: Item, _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
+        FirebaseService.shared.add(item, to: watchlist) { [unowned self] (error) in
+            if let error = error {
+                // TODO: handle error
+                completion(error)
+            } else {
+                LocalDatabase.shared.addToWatchlist(item, watchlist)
     
-        completion(nil)
+                let info = ["watchlistID": watchlist.id]
+                NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+                self.notifyOfChatroomChanges(watchlist)
+            
+                completion(nil)
+            }
+        }
     }
     
-    func removeFromWatchlist(_ items: [Item], _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
-        // TODO: sync to firebase
-        // TODO: handle errors
-        
-        LocalDatabase.shared.removeFromWatchlist(items, watchlist)
-        
-        let info = ["watchlistID": watchlist.id]
-        NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
-        notifyOfChatroomChanges(watchlist)
-        
-        completion(nil)
+    func removeFromWatchlist(_ item: Item, _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
+        FirebaseService.shared.remove(item, from: watchlist) { [unowned self] (error) in
+            if let error = error {
+                // TODO: handle error
+                completion(error)
+            } else {
+                LocalDatabase.shared.removeFromWatchlist(item, watchlist)
+                
+                let info = ["watchlistID": watchlist.id]
+                NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+                self.notifyOfChatroomChanges(watchlist)
+                
+                completion(nil)
+            }
+        }
     }
     
     private func notifyOfChatroomChanges(_ watchlist: Watchlist) {
