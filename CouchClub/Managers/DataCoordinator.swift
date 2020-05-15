@@ -40,10 +40,7 @@ final class DataCoordinator {
     // MARK: - Watchlists
     
     func createWatchlist(_ title: String, _ type: ItemType, completion: @escaping (_ id: UUID?, _ error: Error?)->() ) {
-        let wb = WatchlistBuilder()
-        let watchlist = wb.named(title)
-            .ofType(type)
-            .build()
+        let watchlist = LocalDatabase.shared.createWatchlist(title, type)
         
         FirebaseService.shared.createWatchlist(watchlist) { (error) in
             if let error = error {
@@ -158,17 +155,17 @@ final class DataCoordinator {
     // MARK: - Chatrooms
     
     func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: String, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
-        let cb = ChatroomBuilder()
-        let chatroom = cb.named(title)
-            .ofType(type)
-            .relatedTo(relatedTo)
-            .build()
+        let chatroom = LocalDatabase.shared.createChatroom(title, type, relatedTo)
         
-        // TODO: add to firebase
-        // TODO: handle errors
-        
-        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
-        completion(chatroom.id, nil)
+        FirebaseService.shared.createChatroom(chatroom) { (error) in
+            if let error = error {
+                LocalDatabase.shared.deleteChatroom(chatroom)
+                completion(nil, error)
+            } else {
+                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                completion(chatroom.id, nil)
+            }
+        }
     }
     
     func deleteChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {

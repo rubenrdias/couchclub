@@ -52,6 +52,22 @@ final class LocalDatabase {
         }
     }
     
+    func createWatchlist(_ title: String, _ type: ItemType) -> Watchlist {
+        coreDataQueue.sync {
+            let wb = WatchlistBuilder()
+            return wb.named(title)
+                .ofType(type)
+                .build()
+        }
+    }
+    
+    func deleteWatchlist(_ watchlist: Watchlist) {
+        coreDataQueue.sync {
+            context.delete(watchlist)
+            ad.saveContext()
+        }
+    }
+    
     func addToWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
             watchlist.addToItems(item)
@@ -62,13 +78,6 @@ final class LocalDatabase {
     func removeFromWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
             watchlist.removeFromItems(item)
-            ad.saveContext()
-        }
-    }
-    
-    func deleteWatchlist(_ watchlist: Watchlist) {
-        coreDataQueue.sync {
-            context.delete(watchlist)
             ad.saveContext()
         }
     }
@@ -133,6 +142,16 @@ final class LocalDatabase {
                 print("Core Data: Error fetching Chatrooms: \(error)")
                 return nil
             }
+        }
+    }
+    
+    func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: String) -> Chatroom {
+        coreDataQueue.sync {
+            let cb = ChatroomBuilder()
+            return cb.named(title)
+                .ofType(type)
+                .relatedTo(relatedTo)
+                .build()
         }
     }
     
