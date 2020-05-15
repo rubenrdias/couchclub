@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 // MARK: - UIView
 
@@ -48,6 +49,36 @@ extension UIButton {
         backgroundColor = style == .primary ? UIColor.systemOrange : UIColor.init(white: 0.4, alpha: 1)
         setTitleColor(UIColor.white, for: .normal)
         titleLabel?.font = .translatedFont(for: .headline, .semibold)
+    }
+    
+}
+
+// MARK: - UILabel
+
+extension UILabel {
+    
+    static func accessibleLabel(_ style: UIFont.TextStyle,_ weight: UIFont.Weight, _ color: UIColor? = nil) -> UILabel {
+        let lbl = UILabel()
+        lbl.adjustsFontForContentSizeCategory = true
+        lbl.font = .translatedFont(for: style, weight)
+        
+        if let color = color {
+            lbl.textColor = color
+        }
+        
+        return lbl
+    }
+    
+    static func standardLabel(_ style: UIFont.TextStyle,_ weight: UIFont.Weight, _ color: UIColor? = nil) -> UILabel {
+        let lbl = UILabel()
+        let size = UIFont.translatedFontSize(for: style)
+        lbl.font = .systemFont(ofSize: size, weight: weight)
+        
+        if let color = color {
+            lbl.textColor = color
+        }
+        
+        return lbl
     }
     
 }
@@ -112,36 +143,6 @@ extension UIFont {
         default:
             return 0
         }
-    }
-    
-}
-
-// MARK: - UILabel
-
-extension UILabel {
-    
-    static func accessibleLabel(_ style: UIFont.TextStyle,_ weight: UIFont.Weight, _ color: UIColor? = nil) -> UILabel {
-        let lbl = UILabel()
-        lbl.adjustsFontForContentSizeCategory = true
-        lbl.font = .translatedFont(for: style, weight)
-        
-        if let color = color {
-            lbl.textColor = color
-        }
-        
-        return lbl
-    }
-    
-    static func standardLabel(_ style: UIFont.TextStyle,_ weight: UIFont.Weight, _ color: UIColor? = nil) -> UILabel {
-        let lbl = UILabel()
-        let size = UIFont.translatedFontSize(for: style)
-        lbl.font = .systemFont(ofSize: size, weight: weight)
-        
-        if let color = color {
-            lbl.textColor = color
-        }
-        
-        return lbl
     }
     
 }

@@ -38,5 +38,5 @@ protocol SelectionDelegate: AnyObject {
 }
 
 protocol MessageDelegate: AnyObject {
-    func didSendMessage(_ text: String)
+    func shouldSendMessage(_ text: String)
 }

@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         performDefaultObjectsCustomization()
         
         FirebaseApp.configure()
+        FirebaseService.shared.configureListeners()
         
         return true
     }

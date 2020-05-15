@@ -179,21 +179,35 @@ final class DataCoordinator {
         }
     }
     
-    func createMessage(text: String, sender: String, chatroom: Chatroom, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
-        let mb = MessageBuilder()
-        let message = mb.withText(text)
-            .sentBy(sender)
-            .at(Date())
-            .within(chatroom)
-            .seen(true)
-            .build()
+    func createMessage(_ text: String, in chatroom: Chatroom, by senderID: String? = nil, completion: @escaping (_ error: Error?)->()) {
+        let sentByCurrentUser = senderID == nil
+        let sender = sentByCurrentUser ? FirebaseService.currentUserID! : senderID!
+        
+        let message = LocalDatabase.shared.createMessage(nil, text, sender, chatroom: chatroom, seen: sentByCurrentUser)
 
-        // TODO: add to firebase
-        // TODO: handle errors
-
-        let info = ["chatroomID": chatroom.id]
-        NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
-        completion(message.id, nil)
+        FirebaseService.shared.createMessage(message) { (error) in
+            if let error = error {
+                completion(error)
+            } else {
+                let info = ["chatroomID": chatroom.id]
+                NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
+                completion(nil)
+            }
+        }
+    }
+    
+    func createMessage(_ id: String, from data: [String: Any]) {
+        guard let uuid = UUID(uuidString: id) else { return }
+        if LocalDatabase.shared.fetchMessage(uuid) == nil {
+            if let senderID = data["senderID"] as? String {
+                // TODO: create user if it does not exist
+            }
+            
+            if let message = LocalDatabase.shared.createMessage(uuid, from: data) {
+                let info = ["chatroomID": message.chatroom!.id]
+                NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
+            }
+        }
     }
     
     

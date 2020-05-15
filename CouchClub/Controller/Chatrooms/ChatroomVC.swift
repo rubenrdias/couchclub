@@ -25,6 +25,7 @@ class ChatroomVC: UITableViewController {
         title = chatroom.title
         
         tableView.backgroundColor = .colorAsset(.dynamicBackground)
+        tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
         
         tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
         tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
@@ -117,32 +118,14 @@ class ChatroomVC: UITableViewController {
 
 extension ChatroomVC: MessageDelegate {
     
-    func didSendMessage(_ text: String) {
+    func shouldSendMessage(_ text: String) {
         let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        DataCoordinator.shared.createMessage(text: trimmedText, sender: "Me", chatroom: chatroom) { (id, error) in
-            // TODO: handle errors
-        }
         
-        let delay: Double = Double.random(in: 3...5)
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak chatroom] in
-            guard let chatroom = chatroom else { return
-                
+        DataCoordinator.shared.createMessage(trimmedText, in: chatroom) { [unowned self] (error) in
+            if let error = error {
+                let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                self.present(alert, animated: true)
             }
-            let names = ["Paul", "John", "Mary", "Claire"]
-            let messages = [
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-                "Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu.",
-                "Commodo quis imperdiet massa tincidunt.",
-                "Adipiscing elit duis tristique sollicitudin nibh. Tincidunt arcu non sodales neque. Integer vitae justo eget magna.",
-                "Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi.",
-                "Amet cursus sit amet dictum sit amet.",
-                "Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Ac tortor dignissim convallis aenean et tortor at. Quis vel eros donec ac odio. Rhoncus mattis rhoncus urna neque viverra."
-            ]
-            
-            guard let message = messages.randomElement() else { return }
-            guard let person = names.randomElement() else { return }
-            
-            DataCoordinator.shared.createMessage(text: message, sender: person, chatroom: chatroom) { (_, _) in }
         }
     }
     

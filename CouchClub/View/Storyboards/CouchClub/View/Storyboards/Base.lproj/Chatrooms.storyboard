@@ -22,7 +22,7 @@
                             <outlet property="delegate" destination="11b-q4-XNZ" id="MYX-np-Yha"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="mB7-3g-SZz">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="mB7-3g-SZz">
                         <barButtonItem key="rightBarButtonItem" image="more" id="Caw-04-MSq">
                             <connections>
                                 <action selector="moreButtonTapped:" destination="11b-q4-XNZ" id="NB3-iF-VVQ"/>

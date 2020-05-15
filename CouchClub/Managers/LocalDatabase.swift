@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import Firebase
 
 final class LocalDatabase {
     
@@ -162,43 +163,49 @@ final class LocalDatabase {
         }
     }
     
-    // MARK: - Database Reset (debugging)
+    // MARK: - Messages
     
-    func clearDatabase() {
+    func fetchMessage(_ id: UUID) -> Message? {
         coreDataQueue.sync {
-            deleteWatchlists()
-            deleteItems()
+            let fetchRequest = Message.createFetchRequest()
+            // filtering
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            
+            do {
+                let messages = try context.fetch(fetchRequest)
+                return messages.isEmpty ? nil : messages[0]
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching Message by id (\(id.uuidString)): \(error)")
+                return nil
+            }
+        }
+    }
+
+    func createMessage(_ id: UUID? = nil, _ text: String, _ sender: String, chatroom: Chatroom, seen: Bool, _ date: Date = Date()) -> Message {
+        coreDataQueue.sync {
+            let mb = MessageBuilder(id)
+            return mb.withText(text)
+                .sentBy(sender)
+                .at(date)
+                .within(chatroom)
+                .seen(seen)
+                .build()
         }
     }
     
-    private func deleteItems() {
-        let fetchRequest = Item.createFetchRequest()
+    func createMessage(_ id: UUID, from data: [String: Any]) -> Message? {
+        guard let senderID = data["sender"] as? String else { return nil }
+        guard let text = data["text"] as? String else { return nil }
+        guard let timestamp = data["date"] as? Timestamp else { return nil }
+        guard let chatroomID = data["chatroomID"] as? String else { return nil }
         
-        do {
-            let items = try context.fetch(fetchRequest)
-            for item in items {
-                context.delete(item)
-            }
-            ad.saveContext()
-        } catch {
-            let error = error as NSError
-            print("Core Data: Error deleting Items: \(error)")
-        }
-    }
-    
-    private func deleteWatchlists() {
-        let fetchRequest = Watchlist.createFetchRequest()
+        guard let chatroomUUID = UUID(uuidString: chatroomID),
+              let chatroom = LocalDatabase.shared.fetchChatroom(chatroomUUID) else { return nil }
         
-        do {
-            let watchlists = try context.fetch(fetchRequest)
-            for watchlist in watchlists {
-                context.delete(watchlist)
-            }
-            ad.saveContext()
-        } catch {
-            let error = error as NSError
-            print("Core Data: Error deleting Watchlists: \(error)")
-        }
+        let date = timestamp.dateValue()
+        
+        return createMessage(id, text, senderID, chatroom: chatroom, seen: false, date)
     }
     
 }

@@ -39,7 +39,7 @@ class WatchlistsVC: UICollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if Auth.auth().currentUser == nil {
+        if FirebaseService.currentUserID == nil {
             performSegue(withIdentifier: "LoginVC", sender: nil)
         }
     }

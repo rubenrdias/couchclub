@@ -13,8 +13,51 @@ import FirebaseFirestore
 class FirebaseService {
     
     static let shared = FirebaseService()
+    static var currentUserID: String? {
+        Auth.auth().currentUser?.uid
+    }
+    
+    private var messageListeners = [ListenerRegistration]()
     
     private init() {}
+    
+    // MARK: - Listen to changes in DB
+    
+    func configureListeners() {
+        setupMessageListener()
+    }
+    
+    private func setupMessageListener() {
+        let chatrooms = LocalDatabase.shared.fetchChatrooms()
+        
+        chatrooms?.forEach {
+            let listener = Firestore.firestore().collection("messages").whereField("chatroomID", isEqualTo: $0.id.uuidString).addSnapshotListener { (querySnapshot, error) in
+                if let error = error {
+                    // TODO: handle errors
+                    print("Firebase Firestore | Error fetching snapshots: \(error.localizedDescription)")
+                }
+                
+                print("\(querySnapshot?.count ?? 0) message updates")
+                
+                querySnapshot?.documentChanges.forEach { diff in
+                    if (diff.type == .added) {
+                        let documentID = diff.document.documentID
+                        DataCoordinator.shared.createMessage(documentID, from: diff.document.data())
+                    } else {
+                        print("Firebase Firestore | Error: message was updated or deleted (invalid)")
+                    }
+                }
+            }
+            messageListeners.append(listener)
+        }
+        
+        
+    }
+    
+    private func resetMessageListeners() {
+        messageListeners.forEach { $0.remove() }
+        messageListeners.removeAll()
+    }
     
     // MARK: - Users
     
@@ -57,7 +100,7 @@ class FirebaseService {
     
     func createWatchlist(_ watchlist: Watchlist, completion: @escaping (_ error: Error?)->()) {
         let watchlistDict = [
-            "owner": Auth.auth().currentUser!.uid,
+            "owner": FirebaseService.currentUserID!,
             "title": watchlist.title,
             "type": watchlist.type
         ]
@@ -106,7 +149,7 @@ class FirebaseService {
     
     func createChatroom(_ chatroom: Chatroom, completion: @escaping (_ error: Error?)->()) {
         let chatroomDict = [
-            "owner": Auth.auth().currentUser!.uid,
+            "owner": FirebaseService.currentUserID!,
             "title": chatroom.title,
             "type": chatroom.type,
             "subjectID": chatroom.subjectID
@@ -126,6 +169,26 @@ class FirebaseService {
             if let error = error {
                 print("Firebase Firestore | Error deleting chatroom: \(error.localizedDescription)")
             }
+            completion(error)
+        }
+    }
+    
+    // MARK: - Messages
+    
+    func createMessage(_ message: Message, completion: @escaping (_ error: Error?)->()) {
+        guard let chatroomID = message.chatroom?.id.uuidString else { return }
+        let messageDict: [String : Any] = [
+            "sender": message.sender,
+            "text": message.text,
+            "date": Timestamp(date: message.date),
+            "chatroomID": chatroomID
+        ]
+        
+        Firestore.firestore().collection("messages").document(message.id.uuidString).setData(messageDict) { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error creating message: \(error.localizedDescription)")
+            }
+            
             completion(error)
         }
     }

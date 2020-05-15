@@ -70,7 +70,7 @@ class MessageInputAccessoryView: UIView {
     @objc func handleSend() {
         guard let messageText = messageTextView.text else { return }
         
-        delegate?.didSendMessage(messageText)
+        delegate?.shouldSendMessage(messageText)
         messageTextView.reset()
         messageTextView.resignFirstResponder()
     }
