@@ -58,11 +58,13 @@ class ChatroomsVC: UIViewController {
     }
     
     @objc private func refreshChatroom(_ notification: Notification) {
-        guard let info = notification.userInfo else { return }
-        
-        if let chatroomID = info["chatroomID"] as? UUID {
-            if let index = chatrooms.firstIndex(where: { $0.id == chatroomID }) {
-                tableView.reloadRows(at: [.init(row: index, section: 0)], with: .automatic)
+        DispatchQueue.main.async { [weak self] in
+            guard let info = notification.userInfo else { return }
+            
+            if let chatroomID = info["chatroomID"] as? UUID {
+                if let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
+                    self?.tableView.reloadRows(at: [.init(row: index, section: 0)], with: .automatic)
+                }
             }
         }
     }

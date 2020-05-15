@@ -67,20 +67,19 @@ class ChatroomVC: UITableViewController {
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        ac.addAction(UIAlertAction(title: "Delete Chatroom", style: .destructive) { [weak self] _ in
+        ac.addAction(UIAlertAction(title: "Delete Chatroom", style: .destructive) { [unowned self] _ in
             let deletionAlert = Alerts.deletionAlert(title: "Delete Chatroom?", message: "This action is irreversible.") { _ in
-                guard let chatroom = self?.chatroom else { return }
-                DataCoordinator.shared.deleteChatroom(chatroom) { error in
+                DataCoordinator.shared.deleteChatroom(self.chatroom) { error in
                     if let error = error {
-                        // TODO: handle errors
-                        print("Error when deleting chatroom: ", error.localizedDescription)
+                        let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                        self.present(alert, animated: true)
                     } else {
-                        self?.navigationController?.popViewController(animated: true)
+                        self.navigationController?.popViewController(animated: true)
                     }
                 }
             }
             
-            self?.present(deletionAlert, animated: true, completion: nil)
+            self.present(deletionAlert, animated: true, completion: nil)
         })
                 
         ac.popoverPresentationController?.barButtonItem = sender
