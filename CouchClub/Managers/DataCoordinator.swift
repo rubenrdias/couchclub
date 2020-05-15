@@ -101,14 +101,16 @@ final class DataCoordinator {
     }
     
     func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
-        // TODO: delete from firebase
-        // TODO: delete chatroom messages firebase
-        // TODO: handle errors
-        
-        LocalDatabase.shared.deleteWatchlist(watchlist)
-        
-        NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
-        completion(nil)
+        FirebaseService.shared.deleteWatchlist(watchlist) { (error) in
+            if let error = error {
+                completion(error)
+            } else {
+                LocalDatabase.shared.deleteWatchlist(watchlist)
+                
+                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+                completion(nil)
+            }
+        }
     }
     
     // MARK: - Items

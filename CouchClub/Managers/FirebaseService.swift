@@ -71,6 +71,15 @@ class FirebaseService {
         }
     }
     
+    func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping (_ error: Error?)->()) {
+        Firestore.firestore().collection("watchlists").document(watchlist.id.uuidString).delete { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error deleting watchlist: \(error.localizedDescription)")
+            }
+            completion(error)
+        }
+    }
+    
     func add(_ item: Item, to watchlist: Watchlist, completion: @escaping (_ error: Error?)->()) {
         Firestore.firestore().collection("watchlists").document(watchlist.id.uuidString).updateData([
             "items": FieldValue.arrayUnion([item.id])
