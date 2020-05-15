@@ -102,4 +102,32 @@ class FirebaseService {
         }
     }
     
+    // MARK: - Chatrooms
+    
+    func createChatroom(_ chatroom: Chatroom, completion: @escaping (_ error: Error?)->()) {
+        let chatroomDict = [
+            "owner": Auth.auth().currentUser!.uid,
+            "title": chatroom.title,
+            "type": chatroom.type,
+            "subjectID": chatroom.subjectID
+        ]
+        
+        Firestore.firestore().collection("chatrooms").document(chatroom.id.uuidString).setData(chatroomDict) { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error creating chatroom: \(error.localizedDescription)")
+            }
+            
+            completion(error)
+        }
+    }
+    
+    func deleteChatroom(_ chatroom: Chatroom, completion: @escaping (_ error: Error?)->()) {
+        Firestore.firestore().collection("chatrooms").document(chatroom.id.uuidString).delete { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error deleting chatroom: \(error.localizedDescription)")
+            }
+            completion(error)
+        }
+    }
+    
 }

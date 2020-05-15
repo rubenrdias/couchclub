@@ -53,10 +53,22 @@ final class DataCoordinator {
         }
     }
     
+    func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
+        FirebaseService.shared.deleteWatchlist(watchlist) { (error) in
+            if let error = error {
+                completion(error)
+            } else {
+                LocalDatabase.shared.deleteWatchlist(watchlist)
+                
+                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+                completion(nil)
+            }
+        }
+    }
+    
     func addToWatchlist(_ item: Item, _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
         FirebaseService.shared.add(item, to: watchlist) { [unowned self] (error) in
             if let error = error {
-                // TODO: handle error
                 completion(error)
             } else {
                 LocalDatabase.shared.addToWatchlist(item, watchlist)
@@ -73,7 +85,6 @@ final class DataCoordinator {
     func removeFromWatchlist(_ item: Item, _ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
         FirebaseService.shared.remove(item, from: watchlist) { [unowned self] (error) in
             if let error = error {
-                // TODO: handle error
                 completion(error)
             } else {
                 LocalDatabase.shared.removeFromWatchlist(item, watchlist)
@@ -93,19 +104,6 @@ final class DataCoordinator {
             chatroomsForWatchlist.forEach {
                 let info = ["chatroomID": $0.id]
                 NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
-            }
-        }
-    }
-    
-    func deleteWatchlist(_ watchlist: Watchlist, completion: @escaping(_ error: Error?)->()) {
-        FirebaseService.shared.deleteWatchlist(watchlist) { (error) in
-            if let error = error {
-                completion(error)
-            } else {
-                LocalDatabase.shared.deleteWatchlist(watchlist)
-                
-                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
-                completion(nil)
             }
         }
     }
@@ -169,13 +167,16 @@ final class DataCoordinator {
     }
     
     func deleteChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
-        // TODO: delete from firebase
-        // TODO: handle errors
-        
-        LocalDatabase.shared.deleteChatroom(chatroom)
-        
-        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
-        completion(nil)
+        FirebaseService.shared.deleteChatroom(chatroom) { (error) in
+            if let error = error {
+                completion(error)
+            } else {
+                LocalDatabase.shared.deleteChatroom(chatroom)
+                
+                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                completion(nil)
+            }
+        }
     }
     
     func createMessage(text: String, sender: String, chatroom: Chatroom, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
