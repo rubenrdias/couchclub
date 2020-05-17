@@ -6,7 +6,7 @@
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
-import UIKit
+import FirebaseFirestore
 
 final class DataCoordinator {
     
@@ -17,22 +17,61 @@ final class DataCoordinator {
     // MARK: - users
     
     func createUser(_ username: String, _ email: String, _ password: String, completion: @escaping (_ error: Error?)->()) {
-        FirebaseService.shared.createUser(username, email, password) { (uid, error) in
+        FirebaseService.shared.createUser(username, email, password) { [unowned self] (uid, error) in
             if let error = error {
                 completion(error)
             } else {
-                // TODO: create local user
-                completion(nil)
+                self.createLocalUser(FirebaseService.currentUserID!) { (_, error) in
+                    if error != nil {
+                        FirebaseService.shared.signOut { (error) in
+                            if error != nil { fatalError("Can't go on with user signed in, when no local user can be created.") }
+                        }
+                    }
+                    completion(error)
+                }
             }
         }
     }
     
     func signIn(_ email: String, _ password: String, completion: @escaping (_ error: Error?)->()) {
-        FirebaseService.shared.signIn(email, password) { (error) in
+        FirebaseService.shared.signIn(email, password) { [unowned self] (error) in
             if let error = error {
                 completion(error)
+            } else if LocalDatabase.shared.fetchUser(FirebaseService.currentUserID!) == nil {
+                self.createLocalUser(FirebaseService.currentUserID!) { (_, error) in
+                    if error != nil {
+                        FirebaseService.shared.signOut { (error) in
+                            if error != nil { fatalError("Can't go on with user signed in, when no local user can be created.") }
+                        }
+                    }
+                    completion(error)
+                }
             } else {
                 completion(nil)
+            }
+        }
+    }
+    
+    func createLocalUser(_ id: String, completion: @escaping (_ user: User?, _ error: Error?)->()) {
+        FirebaseService.shared.fetchUserDetails(id) { (userData, error) in
+            if let error = error {
+                completion(nil, error)
+            } else {
+                guard let userData = userData else { return }
+                guard let username = userData["username"] as? String else { return }
+                
+                let user = LocalDatabase.shared.createUser(id, username)
+                completion(user, nil)
+            }
+        }
+    }
+    
+    func createCurrentUserObject() {
+        guard let currentUserID = FirebaseService.currentUserID else { return }
+        
+        if LocalDatabase.shared.fetchUser(currentUserID) == nil {
+            createLocalUser(currentUserID) { (_, error) in
+                if error != nil { fatalError("When logged in, a user object for Current User must exist") }
             }
         }
     }
@@ -47,6 +86,7 @@ final class DataCoordinator {
                 LocalDatabase.shared.deleteWatchlist(watchlist)
                 completion(nil, error)
             } else {
+                FirebaseService.shared.createChatroomListener(watchlist.id)
                 NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
                 completion(watchlist.id, nil)
             }
@@ -181,7 +221,14 @@ final class DataCoordinator {
     
     func createMessage(_ text: String, in chatroom: Chatroom, by senderID: String? = nil, completion: @escaping (_ error: Error?)->()) {
         let sentByCurrentUser = senderID == nil
-        let sender = sentByCurrentUser ? FirebaseService.currentUserID! : senderID!
+        let sender: User
+        
+        if sentByCurrentUser {
+            sender = LocalDatabase.shared.fetchCurrentuser()
+        } else {
+            guard let user = LocalDatabase.shared.fetchUser(senderID!) else { fatalError("User should exist") }
+            sender = user
+        }
         
         let message = LocalDatabase.shared.createMessage(nil, text, sender, chatroom: chatroom, seen: sentByCurrentUser)
 
@@ -198,15 +245,40 @@ final class DataCoordinator {
     
     func createMessage(_ id: String, from data: [String: Any]) {
         guard let uuid = UUID(uuidString: id) else { return }
+        
         if LocalDatabase.shared.fetchMessage(uuid) == nil {
-            if let senderID = data["senderID"] as? String {
-                // TODO: create user if it does not exist
+            guard let text = data["text"] as? String else { return }
+            guard let timestamp = data["date"] as? Timestamp else { return }
+            let date = timestamp.dateValue()
+            
+            guard let chatroomID = data["chatroomID"] as? String, let chatroomUUID = UUID(uuidString: chatroomID) else { return }
+            guard let chatroom = LocalDatabase.shared.fetchChatroom(chatroomUUID) else { return }
+            
+            let dispatchGroup = DispatchGroup()
+            
+            var sender: User?
+            guard let senderID = data["sender"] as? String else { return }
+            if let user = LocalDatabase.shared.fetchUser(senderID) {
+                sender = user
+            } else {
+                dispatchGroup.enter()
+                FirebaseService.shared.fetchUserDetails(senderID) { (userData, error) in
+                    // TODO: display error?
+                    guard let userData = userData else { return }
+                    guard let username = userData["username"] as? String else { return }
+                    
+                    sender = LocalDatabase.shared.createUser(senderID, username)
+                    dispatchGroup.leave()
+                }
             }
             
-            if let message = LocalDatabase.shared.createMessage(uuid, from: data) {
-                let info = ["chatroomID": message.chatroom!.id]
-                NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
-            }
+            dispatchGroup.wait()
+            
+            if sender == nil { return }
+            
+            let message = LocalDatabase.shared.createMessage(uuid, text, sender!, chatroom: chatroom, seen: false, date)
+            let info = ["chatroomID": message.chatroom.id]
+            NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
         }
     }
     

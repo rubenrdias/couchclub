@@ -35,15 +35,17 @@ extension SettingsVC {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        do {
-            try Auth.auth().signOut()
-            performSegue(withIdentifier: "LoginVC", sender: nil)
-            
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                tableView.deselectRow(at: selectedIndexPath, animated: true)
+        FirebaseService.shared.signOut { (error) in
+            if let error = error {
+                let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                present(alert, animated: true)
+            } else {
+                performSegue(withIdentifier: "LoginVC", sender: nil)
+                
+                if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                    tableView.deselectRow(at: selectedIndexPath, animated: true)
+                }
             }
-        } catch {
-            print("Firebase Auth | Error when signing out: \(error.localizedDescription)")
         }
     }
     

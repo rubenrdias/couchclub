@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         FirebaseService.shared.configureListeners()
         
+        DataCoordinator.shared.createCurrentUserObject()
+        
         return true
     }
 

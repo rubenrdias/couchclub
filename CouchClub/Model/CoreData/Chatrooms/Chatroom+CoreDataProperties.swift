@@ -2,7 +2,7 @@
 //  Chatroom+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 07/05/2020.
+//  Created by Ruben Dias on 15/05/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -18,10 +18,11 @@ extension Chatroom {
     }
 
     @NSManaged public var id: UUID
-    @NSManaged public var title: String
     @NSManaged public var subjectID: String
+    @NSManaged public var title: String
     @NSManaged public var type: String
     @NSManaged public var messages: NSSet?
+    @NSManaged public var users: NSSet
 
 }
 
@@ -39,5 +40,22 @@ extension Chatroom {
 
     @objc(removeMessages:)
     @NSManaged public func removeFromMessages(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for users
+extension Chatroom {
+
+    @objc(addUsersObject:)
+    @NSManaged public func addToUsers(_ value: User)
+
+    @objc(removeUsersObject:)
+    @NSManaged public func removeFromUsers(_ value: User)
+
+    @objc(addUsers:)
+    @NSManaged public func addToUsers(_ values: NSSet)
+
+    @objc(removeUsers:)
+    @NSManaged public func removeFromUsers(_ values: NSSet)
 
 }

@@ -2,7 +2,7 @@
 //  Chatroom+CoreDataClass.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 07/05/2020.
+//  Created by Ruben Dias on 15/05/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //

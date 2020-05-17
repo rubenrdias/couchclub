@@ -29,29 +29,28 @@ class FirebaseService {
     
     private func setupMessageListener() {
         let chatrooms = LocalDatabase.shared.fetchChatrooms()
-        
-        chatrooms?.forEach {
-            let listener = Firestore.firestore().collection("messages").whereField("chatroomID", isEqualTo: $0.id.uuidString).addSnapshotListener { (querySnapshot, error) in
-                if let error = error {
-                    // TODO: handle errors
-                    print("Firebase Firestore | Error fetching snapshots: \(error.localizedDescription)")
-                }
-                
-                print("\(querySnapshot?.count ?? 0) message updates")
-                
-                querySnapshot?.documentChanges.forEach { diff in
-                    if (diff.type == .added) {
-                        let documentID = diff.document.documentID
-                        DataCoordinator.shared.createMessage(documentID, from: diff.document.data())
-                    } else {
-                        print("Firebase Firestore | Error: message was updated or deleted (invalid)")
-                    }
+        chatrooms?.forEach { createChatroomListener($0.id) }
+    }
+    
+    func createChatroomListener(_ id: UUID) {
+        let listener = Firestore.firestore().collection("messages").whereField("chatroomID", isEqualTo: id.uuidString).addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                // TODO: handle errors
+                print("Firebase Firestore | Error fetching snapshots: \(error.localizedDescription)")
+            }
+            
+            print("\(querySnapshot?.count ?? 0) message updates")
+            
+            querySnapshot?.documentChanges.forEach { diff in
+                if (diff.type == .added) {
+                    let documentID = diff.document.documentID
+                    DataCoordinator.shared.createMessage(documentID, from: diff.document.data())
+                } else {
+                    print("Firebase Firestore | Error: message was updated or deleted (invalid)")
                 }
             }
-            messageListeners.append(listener)
         }
-        
-        
+        messageListeners.append(listener)
     }
     
     private func resetMessageListeners() {
@@ -93,6 +92,25 @@ class FirebaseService {
             }
             
             completion(error)
+        }
+    }
+    
+    func signOut(completion: (_ error: Error?)->()) {
+        do {
+            try Auth.auth().signOut()
+            completion(nil)
+        } catch {
+            print("Firebase Auth | Error when signing out: \(error.localizedDescription)")
+            completion(error)
+        }
+    }
+    
+    func fetchUserDetails(_ id: String, completion: @escaping (_ userData: [String: Any]?, _ error: Error?)->()) {
+        Firestore.firestore().collection("users").document(id).getDocument { (snapshot, error) in
+            if let error = error {
+                print("Firebase Firestore | Error when fetching details for user \(id): \(error.localizedDescription)")
+            }
+            completion(snapshot?.data(), error)
         }
     }
     
@@ -176,12 +194,11 @@ class FirebaseService {
     // MARK: - Messages
     
     func createMessage(_ message: Message, completion: @escaping (_ error: Error?)->()) {
-        guard let chatroomID = message.chatroom?.id.uuidString else { return }
         let messageDict: [String : Any] = [
-            "sender": message.sender,
+            "sender": message.sender.id,
             "text": message.text,
             "date": Timestamp(date: message.date),
-            "chatroomID": chatroomID
+            "chatroomID": message.chatroom.id.uuidString
         ]
         
         Firestore.firestore().collection("messages").document(message.id.uuidString).setData(messageDict) { (error) in

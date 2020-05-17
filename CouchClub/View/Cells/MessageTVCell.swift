@@ -16,15 +16,15 @@ class MessageTVCell: UITableViewCell {
         didSet {
             messageLabel.attributedText = attributtedMessageText()
             
-            let sentByMe = message.sender == "Me"
-            if sentByMe {
+            let sentBySelf = message.sender.id == FirebaseService.currentUserID!
+            if sentBySelf {
                 bubbleBackgroundView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
             } else {
                 bubbleBackgroundView.backgroundColor = UIColor.colorAsset(.dynamicChatBubble)
             }
             
-            leadingConstraint.isActive = !sentByMe
-            trailingConstraint.isActive = sentByMe
+            leadingConstraint.isActive = !sentBySelf
+            trailingConstraint.isActive = sentBySelf
         }
     }
     
@@ -92,11 +92,11 @@ class MessageTVCell: UITableViewCell {
     private func attributtedMessageText() -> NSAttributedString {
         let messageString = NSMutableAttributedString()
         
-        if message.sender != "Me" {
+        if message.sender.id != FirebaseService.currentUserID! {
             let senderAttributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.translatedFont(for: .footnote, .bold)
             ]
-            messageString.append(NSAttributedString(string: "\(message.sender)\n", attributes: senderAttributes))
+            messageString.append(NSAttributedString(string: "\(message.sender.username)\n", attributes: senderAttributes))
         }
         
         let bodyAttributes: [NSAttributedString.Key: Any] = [

@@ -17,6 +17,39 @@ final class LocalDatabase {
     
     let coreDataQueue = DispatchQueue(label: "com.couchclub.coreDataQueue")
     
+    // MARK: - Users
+    
+    func fetchUser(_ id: String) -> User? {
+        coreDataQueue.sync {
+            let fetchRequest = User.createFetchRequest()
+            // filtering
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            
+            do {
+                let users = try context.fetch(fetchRequest)
+                return users.isEmpty ? nil : users[0]
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching User by id (\(id)): \(error)")
+                return nil
+            }
+        }
+    }
+    
+    func fetchCurrentuser() -> User {
+        guard let currentuser = fetchUser(FirebaseService.currentUserID!) else {
+            fatalError("There should always be a current user.")
+        }
+        return currentuser
+    }
+    
+    func createUser(_ id: String, _ username: String) -> User {
+        coreDataQueue.sync {
+            let ub = UserBuilder(id)
+            return ub.named(username).build()
+        }
+    }
+    
     // MARK: - Watchlists
     
     func fetchWatchlist(_ id: UUID) -> Watchlist? {
@@ -182,7 +215,7 @@ final class LocalDatabase {
         }
     }
 
-    func createMessage(_ id: UUID? = nil, _ text: String, _ sender: String, chatroom: Chatroom, seen: Bool, _ date: Date = Date()) -> Message {
+    func createMessage(_ id: UUID? = nil, _ text: String, _ sender: User, chatroom: Chatroom, seen: Bool, _ date: Date = Date()) -> Message {
         coreDataQueue.sync {
             let mb = MessageBuilder(id)
             return mb.withText(text)
@@ -192,20 +225,6 @@ final class LocalDatabase {
                 .seen(seen)
                 .build()
         }
-    }
-    
-    func createMessage(_ id: UUID, from data: [String: Any]) -> Message? {
-        guard let senderID = data["sender"] as? String else { return nil }
-        guard let text = data["text"] as? String else { return nil }
-        guard let timestamp = data["date"] as? Timestamp else { return nil }
-        guard let chatroomID = data["chatroomID"] as? String else { return nil }
-        
-        guard let chatroomUUID = UUID(uuidString: chatroomID),
-              let chatroom = LocalDatabase.shared.fetchChatroom(chatroomUUID) else { return nil }
-        
-        let date = timestamp.dateValue()
-        
-        return createMessage(id, text, senderID, chatroom: chatroom, seen: false, date)
     }
     
 }

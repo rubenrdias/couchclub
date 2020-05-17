@@ -109,10 +109,11 @@ class ChatroomTVCell: UITableViewCell {
             let sortedMessages = messages.sorted { $0.date > $1.date }
             if let lastMessage = sortedMessages.first {
                 dateLabel.text = messageSectionFormatter.string(from: lastMessage.date)
-                if lastMessage.sender == "Me" {
+                
+                if lastMessage.sender.id == FirebaseService.currentUserID! {
                     messageLabel.text = lastMessage.text
                 } else {
-                    messageLabel.text = "\(lastMessage.sender): \(lastMessage.text)"
+                    messageLabel.text = "\(lastMessage.sender.username): \(lastMessage.text)"
                 }
             }
         }

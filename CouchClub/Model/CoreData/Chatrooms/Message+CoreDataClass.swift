@@ -2,7 +2,7 @@
 //  Message+CoreDataClass.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 09/05/2020.
+//  Created by Ruben Dias on 15/05/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -12,7 +12,7 @@ import CoreData
 
 @objc(Message)
 public class Message: NSManagedObject {
-    
+
 }
 
 class MessageBuilder {
@@ -29,7 +29,7 @@ class MessageBuilder {
         return self
     }
     
-    func sentBy(_ sender: String) -> MessageBuilder {
+    func sentBy(_ sender: User) -> MessageBuilder {
         self.message.sender = sender
         return self
     }
@@ -57,3 +57,4 @@ class MessageBuilder {
     }
     
 }
+
