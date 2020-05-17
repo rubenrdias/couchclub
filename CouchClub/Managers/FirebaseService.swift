@@ -170,7 +170,8 @@ class FirebaseService {
             "owner": FirebaseService.currentUserID!,
             "title": chatroom.title,
             "type": chatroom.type,
-            "subjectID": chatroom.subjectID
+            "subjectID": chatroom.subjectID,
+            "inviteCode": chatroom.inviteCode
         ]
         
         Firestore.firestore().collection("chatrooms").document(chatroom.id.uuidString).setData(chatroomDict) { (error) in

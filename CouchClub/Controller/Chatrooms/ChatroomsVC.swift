@@ -113,12 +113,47 @@ class ChatroomsVC: UIViewController {
         btn.makeCTA()
         btn.setTitle("Create Chatroom", for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(createChatroom), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(newChatroomDialog), for: .touchUpInside)
         return btn
     }()
     
-    @objc private func createChatroom() {
-        performSegue(withIdentifier: "NewChatroomVC", sender: nil)
+    @objc private func newChatroomDialog() {
+        let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        ac.addAction(UIAlertAction(title: "Create Chatroom", style: .default, handler: { [unowned self] (_) in
+            self.performSegue(withIdentifier: "NewChatroomVC", sender: nil)
+        }))
+        
+        ac.addAction(UIAlertAction(title: "Join Chatroom", style: .default, handler: { [unowned self] (_) in
+            self.presentJoinChatroomDialog()
+        }))
+        
+        present(ac, animated: true)
+    }
+    
+    private func presentJoinChatroomDialog() {
+        let alert = UIAlertController(title: "Invite Code", message: nil, preferredStyle: .alert)
+        alert.view.tintColor = .colorAsset(.dynamicLabel)
+        
+        alert.addTextField(configurationHandler: nil)
+        
+        alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { [weak alert] (_) in
+            guard let inviteCode = alert?.textFields?[0].text else { return }
+            
+            DataCoordinator.shared.joinChatroom(inviteCode) { [unowned self] (chatroom, error) in
+                if let error = error {
+                    let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                    self.present(alert, animated: true)
+                } else if let chatroom = chatroom {
+                    self.didCreateChatroom(chatroom.id)
+                }
+            }
+        }))
+        
+        self.present(alert, animated: true)
     }
     
     private lazy var createChatroomButtonConstraints: [NSLayoutConstraint] = {
@@ -138,7 +173,7 @@ class ChatroomsVC: UIViewController {
             NSLayoutConstraint.activate(noDataLabelConstraints)
             NSLayoutConstraint.activate(createChatroomButtonConstraints)
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createChatroom))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newChatroomDialog))
             noDataLabel.removeFromSuperview()
             createChatroomButton.removeFromSuperview()
         }

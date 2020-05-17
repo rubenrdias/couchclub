@@ -219,6 +219,15 @@ final class DataCoordinator {
         }
     }
     
+    func joinChatroom(_ inviteCode: String, completion: @escaping(_ chatroom: Chatroom?, _ error: Error?)->()) {
+        // TODO: fetch chatroom details
+        // TODO: fetch chatroom messages
+        // TODO: create local chatroom (core data)
+        // TODO: create local messages (core data)
+        
+        // completion(chatroom, nil)
+    }
+    
     func createMessage(_ text: String, in chatroom: Chatroom, by senderID: String? = nil, completion: @escaping (_ error: Error?)->()) {
         let sentByCurrentUser = senderID == nil
         let sender: User

@@ -2,7 +2,7 @@
 //  Chatroom+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 15/05/2020.
+//  Created by Ruben Dias on 17/05/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -21,6 +21,7 @@ extension Chatroom {
     @NSManaged public var subjectID: String
     @NSManaged public var title: String
     @NSManaged public var type: String
+    @NSManaged public var inviteCode: String
     @NSManaged public var messages: NSSet?
     @NSManaged public var users: NSSet
 

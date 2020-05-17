@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Chatroom" representedClassName="Chatroom" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="inviteCode" attributeType="String"/>
         <attribute name="subjectID" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
@@ -55,7 +56,7 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="watchlists" inverseEntity="Item"/>
     </entity>
     <elements>
-        <element name="Chatroom" positionX="-27" positionY="135" width="128" height="133"/>
+        <element name="Chatroom" positionX="-27" positionY="135" width="128" height="148"/>
         <element name="Item" positionX="-36" positionY="9" width="128" height="283"/>
         <element name="Message" positionX="-36" positionY="126" width="128" height="148"/>
         <element name="Movie" positionX="-54" positionY="-9" width="128" height="73"/>
