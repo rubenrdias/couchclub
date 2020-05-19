@@ -10,5 +10,16 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "ChatroomTVCell.getThumbnailImage():ChatroomTVCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "chatroom.subjectID">
+            </PersistentString>
+            <PersistentString
+               value = "chatroom.title">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

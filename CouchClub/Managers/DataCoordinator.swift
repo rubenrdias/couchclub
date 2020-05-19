@@ -296,8 +296,10 @@ final class DataCoordinator {
                         completion(nil, nil)
                         return
                     }
-                    let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, movie.id)
-                    completion(chatroom, nil)
+                    self.getImage(movie.id, movie.poster) { _ in
+                        let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, movie.id)
+                        completion(chatroom, nil)
+                    }
                 }
             case .show:
                 self.getShow(subjectID) { (show) in
@@ -306,8 +308,10 @@ final class DataCoordinator {
                         completion(nil, nil)
                         return
                     }
-                    let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, show.id)
-                    completion(chatroom, nil)
+                    self.getImage(show.id, show.poster) { _ in
+                        let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, show.id)
+                        completion(chatroom, nil)
+                    }
                 }
             }
         }
@@ -362,22 +366,22 @@ final class DataCoordinator {
     
     // MARK: - Data Download
     
-    func getImage(_ itemID: String, _ url: String, completion: @escaping (UIImage?)->()) {
+    func getImage(_ itemID: String, _ url: String, completion: ((UIImage?)->())? = nil) {
         if let image = LocalStorage.shared.retrieve(itemID) {
-            completion(image)
+            completion?(image)
             return
         }
         
         guard let url = URL(string: url) else {
-            completion(nil)
+            completion?(nil)
             return
         }
         
         NetworkService.shared.downloadImage(url) { image in
             if let image = image {
-                completion(image)
                 LocalStorage.shared.store(image, named: itemID)
             }
+            completion?(image)
         }
     }
     
