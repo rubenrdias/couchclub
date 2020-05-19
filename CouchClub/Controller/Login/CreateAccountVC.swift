@@ -30,6 +30,10 @@ class CreateAccountVC: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
         setupLabels()
         setupTextFields()
         setupButtons()
@@ -58,6 +62,10 @@ class CreateAccountVC: UIViewController {
     
     @IBAction func signInTapped(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func editingFinished() {
+        view.endEditing(true)
     }
     
     private func setupLabels() {

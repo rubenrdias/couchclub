@@ -30,6 +30,10 @@ class LoginVC: UIViewController {
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
         setupLabels()
         setupTextFields()
         setupButtons()
@@ -59,6 +63,10 @@ class LoginVC: UIViewController {
     
     @IBAction func createAccountTapped(_ sender: Any) {
         performSegue(withIdentifier: "CreateAccountVC", sender: nil)
+    }
+    
+    @objc private func editingFinished() {
+        view.endEditing(true)
     }
     
     private func setupLabels() {
