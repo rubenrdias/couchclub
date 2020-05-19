@@ -183,6 +183,32 @@ class FirebaseService {
         }
     }
     
+    func joinChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
+        let currentUser = LocalDatabase.shared.fetchCurrentuser()
+        
+        Firestore.firestore().collection("chatrooms").document(chatroom.id.uuidString).updateData([
+            "users": FieldValue.arrayUnion([currentUser.id])
+        ]) { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error when adding a user to a chatroom: \(error.localizedDescription)")
+            }
+            completion(error)
+        }
+    }
+    
+    func leaveChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
+        let currentUser = LocalDatabase.shared.fetchCurrentuser()
+        
+        Firestore.firestore().collection("chatrooms").document(chatroom.id.uuidString).updateData([
+            "users": FieldValue.arrayRemove([currentUser.id])
+        ]) { (error) in
+            if let error = error {
+                print("Firebase Firestore | Error when removing a user from a chatroom: \(error.localizedDescription)")
+            }
+            completion(error)
+        }
+    }
+    
     func deleteChatroom(_ chatroom: Chatroom, completion: @escaping (_ error: Error?)->()) {
         Firestore.firestore().collection("chatrooms").document(chatroom.id.uuidString).delete { (error) in
             if let error = error {

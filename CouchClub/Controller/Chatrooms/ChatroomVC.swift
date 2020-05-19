@@ -70,22 +70,7 @@ class ChatroomVC: UITableViewController {
         
         if chatroom.owner === LocalDatabase.shared.fetchCurrentuser() {
             ac.addAction(UIAlertAction(title: "Delete Chatroom", style: .destructive) { [unowned self] _ in
-                let deletionAlert = Alerts.deletionAlert(title: "Delete Chatroom?", message: "This action is irreversible.") { _ in
-                    DataCoordinator.shared.deleteChatroom(self.chatroom) { error in
-                        if let error = error {
-                            let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
-                            self.present(alert, animated: true)
-                        } else {
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                    }
-                }
-                
-                self.present(deletionAlert, animated: true, completion: nil)
-            })
-        } else {
-            ac.addAction(UIAlertAction(title: "Leave Chatroom", style: .destructive) { [unowned self] _ in
-                let deletionAlert = Alerts.deletionAlert(title: "Delete Chatroom?", message: "This action is irreversible.") { _ in
+                let deletionAlert = Alerts.deletionAlert(title: "Are you sure?", message: "This action is irreversible.") { _ in
                     DataCoordinator.shared.deleteChatroom(self.chatroom) { error in
                         if let error = error {
                             let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
@@ -99,6 +84,21 @@ class ChatroomVC: UITableViewController {
                 self.present(deletionAlert, animated: true, completion: nil)
             })
         }
+        
+        ac.addAction(UIAlertAction(title: "Leave Chatroom", style: .destructive) { [unowned self] _ in
+            let deletionAlert = Alerts.deletionAlert(title: "Are you sure?", message: "You can only rejoin later by with an invite code.") { _ in
+                DataCoordinator.shared.leaveChatroom(self.chatroom) { error in
+                    if let error = error {
+                        let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                        self.present(alert, animated: true)
+                    } else {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            }
+            
+            self.present(deletionAlert, animated: true, completion: nil)
+        })
                 
         ac.popoverPresentationController?.barButtonItem = sender
         present(ac, animated: true, completion: nil)

@@ -108,10 +108,10 @@ class ChatroomsVC: UIViewController {
         return attributtedString
     }()
     
-    private lazy var createChatroomButton: RoundedButton = {
+    private lazy var newChatroomButton: RoundedButton = {
         let btn = RoundedButton()
         btn.makeCTA()
-        btn.setTitle("Create Chatroom", for: .normal)
+        btn.setTitle("New Chatroom", for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(newChatroomDialog), for: .touchUpInside)
         return btn
@@ -120,7 +120,7 @@ class ChatroomsVC: UIViewController {
     @objc private func newChatroomDialog() {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
         ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = createChatroomButton.frame
+        ac.popoverPresentationController?.sourceRect = newChatroomButton.frame
         ac.view.tintColor = .colorAsset(.dynamicLabel)
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -166,10 +166,10 @@ class ChatroomsVC: UIViewController {
     
     private lazy var createChatroomButtonConstraints: [NSLayoutConstraint] = {
         return [
-            createChatroomButton.heightAnchor.constraint(equalToConstant: 56),
-            createChatroomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            createChatroomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            createChatroomButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32)
+            newChatroomButton.heightAnchor.constraint(equalToConstant: 56),
+            newChatroomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            newChatroomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            newChatroomButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -32)
         ]
     }()
     
@@ -177,13 +177,13 @@ class ChatroomsVC: UIViewController {
         if chatrooms.isEmpty {
             navigationItem.rightBarButtonItem = nil
             view.addSubview(noDataLabel)
-            view.addSubview(createChatroomButton)
+            view.addSubview(newChatroomButton)
             NSLayoutConstraint.activate(noDataLabelConstraints)
             NSLayoutConstraint.activate(createChatroomButtonConstraints)
         } else {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newChatroomDialog))
             noDataLabel.removeFromSuperview()
-            createChatroomButton.removeFromSuperview()
+            newChatroomButton.removeFromSuperview()
         }
     }
 

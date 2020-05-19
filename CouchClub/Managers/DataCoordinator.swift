@@ -252,12 +252,32 @@ final class DataCoordinator {
                         return
                     }
                     
-                    FirebaseService.shared.createChatroomListener(chatroom.id)
-                    NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
-                    completion(chatroom.id, nil)
+                    FirebaseService.shared.joinChatroom(chatroom) { (error) in
+                        if let error = error {
+                            LocalDatabase.shared.deleteChatroom(chatroom)
+                            completion(nil, error)
+                        } else {
+                            FirebaseService.shared.createChatroomListener(chatroom.id)
+                            NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                            completion(chatroom.id, nil)
+                        }
+                    }
                 }
             } else {
                 completion(nil, nil)
+            }
+        }
+    }
+    
+    func leaveChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
+        FirebaseService.shared.leaveChatroom(chatroom) { (error) in
+            if let error = error {
+                completion(error)
+            } else {
+                LocalDatabase.shared.deleteChatroom(chatroom)
+                
+                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                completion(nil)
             }
         }
     }
