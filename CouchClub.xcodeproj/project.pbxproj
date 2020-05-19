@@ -13,6 +13,10 @@
 		531FE209246C2AB000AE0505 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531FE208246C2AB000AE0505 /* LoginVC.swift */; };
 		531FE20B246C2FD400AE0505 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531FE20A246C2FD400AE0505 /* Buttons.swift */; };
 		5321D39F246B0CF500FC7E83 /* SelectWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */; };
+		532210752473F89200381419 /* Chatroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532210712473F89200381419 /* Chatroom+CoreDataClass.swift */; };
+		532210762473F89200381419 /* Chatroom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532210722473F89200381419 /* Chatroom+CoreDataProperties.swift */; };
+		532210772473F89200381419 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532210732473F89200381419 /* User+CoreDataClass.swift */; };
+		532210782473F89200381419 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532210742473F89200381419 /* User+CoreDataProperties.swift */; };
 		53251069245ABF4200DBBA04 /* NewWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */; };
 		5325106F245AD9FE00DBBA04 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5325106E245AD9FE00DBBA04 /* Extensions.swift */; };
 		53264A3624669DD4006C3423 /* SmallHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53264A3524669DD4006C3423 /* SmallHeaderTVCell.swift */; };
@@ -60,12 +64,8 @@
 		53CC6A40245ADB2500744012 /* WatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CC6A3F245ADB2500744012 /* WatchlistVC.swift */; };
 		53D16F4E2458D790001DD4FA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D16F4D2458D790001DD4FA /* Constants.swift */; };
 		53D91F07245AEF5A00BC9F82 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D91F06245AEF5A00BC9F82 /* Alerts.swift */; };
-		53EFBCDA246F11DE00958A76 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCD4246F11DE00958A76 /* User+CoreDataClass.swift */; };
-		53EFBCDB246F11DE00958A76 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCD5246F11DE00958A76 /* User+CoreDataProperties.swift */; };
 		53EFBCDE246F11DE00958A76 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCD8246F11DE00958A76 /* Message+CoreDataClass.swift */; };
 		53EFBCDF246F11DE00958A76 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCD9246F11DE00958A76 /* Message+CoreDataProperties.swift */; };
-		53EFBCE32471D98400958A76 /* Chatroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCE12471D98400958A76 /* Chatroom+CoreDataClass.swift */; };
-		53EFBCE42471D98400958A76 /* Chatroom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCE22471D98400958A76 /* Chatroom+CoreDataProperties.swift */; };
 		53F6880B2458CFE500230CE9 /* Show+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688052458CFE500230CE9 /* Show+CoreDataClass.swift */; };
 		53F6880C2458CFE500230CE9 /* Show+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688062458CFE500230CE9 /* Show+CoreDataProperties.swift */; };
 		53F6880D2458CFE500230CE9 /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */; };
@@ -93,6 +93,10 @@
 		531FE208246C2AB000AE0505 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		531FE20A246C2FD400AE0505 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWatchlistVC.swift; sourceTree = "<group>"; };
+		532210712473F89200381419 /* Chatroom+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Chatroom+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Chatroom+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		532210722473F89200381419 /* Chatroom+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Chatroom+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Chatroom+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		532210732473F89200381419 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Users/User+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		532210742473F89200381419 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Users/User+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWatchlistVC.swift; sourceTree = "<group>"; };
 		5325106E245AD9FE00DBBA04 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		53264A3524669DD4006C3423 /* SmallHeaderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallHeaderTVCell.swift; sourceTree = "<group>"; };
@@ -144,12 +148,8 @@
 		53CC6A3F245ADB2500744012 /* WatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistVC.swift; sourceTree = "<group>"; };
 		53D16F4D2458D790001DD4FA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		53D91F06245AEF5A00BC9F82 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		53EFBCD4246F11DE00958A76 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Users/User+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		53EFBCD5246F11DE00958A76 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Users/User+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53EFBCD8246F11DE00958A76 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		53EFBCD9246F11DE00958A76 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		53EFBCE12471D98400958A76 /* Chatroom+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Chatroom+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Chatroom+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		53EFBCE22471D98400958A76 /* Chatroom+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Chatroom+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Chatrooms/Chatroom+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53F688052458CFE500230CE9 /* Show+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Show+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		53F688062458CFE500230CE9 /* Show+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Show+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlists/Show+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -286,8 +286,8 @@
 		538014402464A96000C9ED6E /* Chatrooms */ = {
 			isa = PBXGroup;
 			children = (
-				53EFBCE12471D98400958A76 /* Chatroom+CoreDataClass.swift */,
-				53EFBCE22471D98400958A76 /* Chatroom+CoreDataProperties.swift */,
+				532210712473F89200381419 /* Chatroom+CoreDataClass.swift */,
+				532210722473F89200381419 /* Chatroom+CoreDataProperties.swift */,
 				53EFBCD8246F11DE00958A76 /* Message+CoreDataClass.swift */,
 				53EFBCD9246F11DE00958A76 /* Message+CoreDataProperties.swift */,
 			);
@@ -437,8 +437,8 @@
 		53EFBCE0246F12A700958A76 /* Users */ = {
 			isa = PBXGroup;
 			children = (
-				53EFBCD4246F11DE00958A76 /* User+CoreDataClass.swift */,
-				53EFBCD5246F11DE00958A76 /* User+CoreDataProperties.swift */,
+				532210732473F89200381419 /* User+CoreDataClass.swift */,
+				532210742473F89200381419 /* User+CoreDataProperties.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -629,7 +629,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				538774402468113A009247CA /* ChatroomTVCell.swift in Sources */,
-				53EFBCDA246F11DE00958A76 /* User+CoreDataClass.swift in Sources */,
 				53B7144B245B524D00915FF8 /* Item+CoreDataClass.swift in Sources */,
 				5376F2B024595EE7007FB93C /* LocalDatabase.swift in Sources */,
 				53F6880B2458CFE500230CE9 /* Show+CoreDataClass.swift in Sources */,
@@ -650,6 +649,7 @@
 				53286A182465D1DC00934B4D /* MessageInputTextView.swift in Sources */,
 				532A2F33245730D000AE14B6 /* ItemDetailVC.swift in Sources */,
 				53645A66245DBEB0009A4AE6 /* HighlightCVCell.swift in Sources */,
+				532210782473F89200381419 /* User+CoreDataProperties.swift in Sources */,
 				536A3922245F717E00E1FAA0 /* Item+CoreDataProperties.swift in Sources */,
 				53C5ADBB2455D24800873F90 /* SearchVC.swift in Sources */,
 				53D16F4E2458D790001DD4FA /* Constants.swift in Sources */,
@@ -663,18 +663,18 @@
 				53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */,
 				53645A68245DD8A0009A4AE6 /* ItemCell.swift in Sources */,
 				53F688102458D4AC00230CE9 /* Converter.swift in Sources */,
-				53EFBCE42471D98400958A76 /* Chatroom+CoreDataProperties.swift in Sources */,
+				532210762473F89200381419 /* Chatroom+CoreDataProperties.swift in Sources */,
 				536012FD246497CC00E00C6F /* ChatroomVC.swift in Sources */,
 				53F6880D2458CFE500230CE9 /* Movie+CoreDataClass.swift in Sources */,
 				53BEA6942459722500F7D770 /* LocalStorage.swift in Sources */,
 				53EFBCDF246F11DE00958A76 /* Message+CoreDataProperties.swift in Sources */,
+				532210772473F89200381419 /* User+CoreDataClass.swift in Sources */,
 				53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */,
 				53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */,
 				53F6880E2458CFE500230CE9 /* Movie+CoreDataProperties.swift in Sources */,
 				53CC6A40245ADB2500744012 /* WatchlistVC.swift in Sources */,
-				53EFBCDB246F11DE00958A76 /* User+CoreDataProperties.swift in Sources */,
 				53F6880C2458CFE500230CE9 /* Show+CoreDataProperties.swift in Sources */,
-				53EFBCE32471D98400958A76 /* Chatroom+CoreDataClass.swift in Sources */,
+				532210752473F89200381419 /* Chatroom+CoreDataClass.swift in Sources */,
 				53649011246C3EE400628A32 /* TextFields.swift in Sources */,
 				5369E491246DE79C00E9CB91 /* FirebaseService.swift in Sources */,
 				5325106F245AD9FE00DBBA04 /* Extensions.swift in Sources */,

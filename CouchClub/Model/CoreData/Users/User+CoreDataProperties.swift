@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 15/05/2020.
+//  Created by Ruben Dias on 19/05/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -21,6 +21,7 @@ extension User {
     @NSManaged public var username: String
     @NSManaged public var chatrooms: NSSet?
     @NSManaged public var messages: NSSet?
+    @NSManaged public var ownedChatrooms: NSSet?
 
 }
 
@@ -55,5 +56,22 @@ extension User {
 
     @objc(removeMessages:)
     @NSManaged public func removeFromMessages(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for ownedChatrooms
+extension User {
+
+    @objc(addOwnedChatroomsObject:)
+    @NSManaged public func addToOwnedChatrooms(_ value: Chatroom)
+
+    @objc(removeOwnedChatroomsObject:)
+    @NSManaged public func removeFromOwnedChatrooms(_ value: Chatroom)
+
+    @objc(addOwnedChatrooms:)
+    @NSManaged public func addToOwnedChatrooms(_ values: NSSet)
+
+    @objc(removeOwnedChatrooms:)
+    @NSManaged public func removeFromOwnedChatrooms(_ values: NSSet)
 
 }

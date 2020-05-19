@@ -179,10 +179,11 @@ final class LocalDatabase {
         }
     }
     
-    func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: String) -> Chatroom {
+    func createChatroom(_ id: UUID? = nil, _ owner: User, _ title: String, _ type: ChatroomType, _ relatedTo: String) -> Chatroom {
         coreDataQueue.sync {
-            let cb = ChatroomBuilder()
+            let cb = ChatroomBuilder(id)
             return cb.named(title)
+                .ownedBy(owner)
                 .ofType(type)
                 .relatedTo(relatedTo)
                 .build()

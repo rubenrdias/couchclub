@@ -119,7 +119,9 @@ class ChatroomsVC: UIViewController {
     
     @objc private func newChatroomDialog() {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
-        ac.view.tintColor = .colorAsset(.dynamicLabel)
+        ac.popoverPresentationController?.sourceView = self.view
+        ac.popoverPresentationController?.sourceRect = createChatroomButton.frame
+        ac.view.tintColor = UIColor.systemOrange
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -136,19 +138,19 @@ class ChatroomsVC: UIViewController {
     
     private func presentJoinChatroomDialog() {
         let alert = UIAlertController(title: "Invite Code", message: nil, preferredStyle: .alert)
-        alert.view.tintColor = .colorAsset(.dynamicLabel)
+        alert.view.tintColor = UIColor.systemOrange
         
         alert.addTextField(configurationHandler: nil)
         
         alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { [weak alert] (_) in
             guard let inviteCode = alert?.textFields?[0].text else { return }
             
-            DataCoordinator.shared.joinChatroom(inviteCode) { [unowned self] (chatroom, error) in
+            // TODO: check if chatroom with same invite code exists locally
+            
+            DataCoordinator.shared.joinChatroom(inviteCode) { [unowned self] (_, error) in
                 if let error = error {
                     let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                     self.present(alert, animated: true)
-                } else if let chatroom = chatroom {
-                    self.didCreateChatroom(chatroom.id)
                 }
             }
         }))

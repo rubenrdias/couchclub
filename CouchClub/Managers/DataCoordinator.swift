@@ -76,6 +76,26 @@ final class DataCoordinator {
         }
     }
     
+    func fetchUser(id: String, completion: @escaping (_ user: User?, _ error: Error?)->()) {
+        if let user = LocalDatabase.shared.fetchUser(id) {
+            completion(user, nil)
+        } else {
+            FirebaseService.shared.fetchUserDetails(id) { (userData, error) in
+                if let error = error {
+                    print("Firebase Firestore | Error when fetching user \(id) data: \(error.localizedDescription)")
+                    completion(nil, error)
+                } else {
+                    // TODO: create errors for missing userData and username
+                    guard let userData = userData else { completion(nil, nil); return }
+                    guard let username = userData["username"] as? String else { completion(nil, nil); return }
+                    
+                    let user = LocalDatabase.shared.createUser(id, username)
+                    completion(user, nil)
+                }
+            }
+        }
+    }
+    
     // MARK: - Watchlists
     
     func createWatchlist(_ title: String, _ type: ItemType, completion: @escaping (_ id: UUID?, _ error: Error?)->() ) {
@@ -152,26 +172,22 @@ final class DataCoordinator {
     
     func getMovie(_ id: String, completion: @escaping (Movie?)->() ) {
         NetworkService.shared.searchResult(forID: id, ofType: .movie) { searchItem in
-            DispatchQueue.main.async {
-                if let searchItemMovie = searchItem as? SearchItemMovie {
-                    let movie = Converter.shared.toMovie(searchItemMovie)
-                    completion(movie)
-                } else {
-                    completion(nil)
-                }
+            if let searchItemMovie = searchItem as? SearchItemMovie {
+                let movie = Converter.shared.toMovie(searchItemMovie)
+                completion(movie)
+            } else {
+                completion(nil)
             }
         }
     }
     
     func getShow(_ id: String, completion: @escaping (Show?)->() ) {
         NetworkService.shared.searchResult(forID: id, ofType: .series) { searchItem in
-            DispatchQueue.main.async {
-                if let searchItemShow = searchItem as? SearchItemShow {
-                    let show = Converter.shared.toShow(searchItemShow)
-                    completion(show)
-                } else {
-                    completion(nil)
-                }
+            if let searchItemShow = searchItem as? SearchItemShow {
+                let show = Converter.shared.toShow(searchItemShow)
+                completion(show)
+            } else {
+                completion(nil)
             }
         }
     }
@@ -193,7 +209,8 @@ final class DataCoordinator {
     // MARK: - Chatrooms
     
     func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: String, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
-        let chatroom = LocalDatabase.shared.createChatroom(title, type, relatedTo)
+        let currentUser = LocalDatabase.shared.fetchCurrentuser()
+        let chatroom = LocalDatabase.shared.createChatroom(nil, currentUser, title, type, relatedTo)
         
         FirebaseService.shared.createChatroom(chatroom) { (error) in
             if let error = error {
@@ -219,13 +236,81 @@ final class DataCoordinator {
         }
     }
     
-    func joinChatroom(_ inviteCode: String, completion: @escaping(_ chatroom: Chatroom?, _ error: Error?)->()) {
-        // TODO: fetch chatroom details
-        // TODO: fetch chatroom messages
-        // TODO: create local chatroom (core data)
-        // TODO: create local messages (core data)
-        
-        // completion(chatroom, nil)
+    func joinChatroom(_ inviteCode: String, completion: @escaping(_ chatroomID: UUID?, _ error: Error?)->()) {
+        FirebaseService.shared.fetchChatroomDetails(inviteCode) { [unowned self] (chatroomID, chatroomData, error) in
+            if let error = error {
+                completion(nil, error)
+            } else if let chatroomID = chatroomID, let chatroomData = chatroomData {
+                self.createChatroom(chatroomID, from: chatroomData) { (chatroom, error) in
+                    if let error = error {
+                        completion(nil, error)
+                        return
+                    }
+                    guard let chatroom = chatroom else {
+                        // TODO: create error to warn the user
+                        completion(nil, nil)
+                        return
+                    }
+                    
+                    FirebaseService.shared.createChatroomListener(chatroom.id)
+                    NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                    completion(chatroom.id, nil)
+                }
+            } else {
+                completion(nil, nil)
+            }
+        }
+    }
+    
+    func createChatroom(_ id: String, from data: [String: Any], completion: @escaping (_ chatroom: Chatroom?, _ error: Error?) -> ()) {
+        guard let uuid = UUID(uuidString: id),
+              let title = data["title"] as? String,
+              let subjectID = data["subjectID"] as? String,
+              let ownerID = data["owner"] as? String,
+              let typeString = data["type"] as? String,
+              let type = ChatroomType(rawValue: typeString) else {
+                // TODO: crete invalid data error
+                completion(nil, nil)
+                return
+        }
+    
+        fetchUser(id: ownerID) { [unowned self] (user, error) in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            guard let user = user else {
+                // TODO: crete invalid data error
+                completion(nil, nil)
+                return
+            }
+            
+            switch type {
+            case .watchlist:
+                // TODO: fetch watchlist and all items
+                break
+            case .movie:
+                self.getMovie(subjectID) { (movie) in
+                    guard let movie = movie else {
+                        // TODO: crete movie fetch error
+                        completion(nil, nil)
+                        return
+                    }
+                    let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, movie.id)
+                    completion(chatroom, nil)
+                }
+            case .show:
+                self.getShow(subjectID) { (show) in
+                    guard let show = show else {
+                        // TODO: crete show fetch error
+                        completion(nil, nil)
+                        return
+                    }
+                    let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, show.id)
+                    completion(chatroom, nil)
+                }
+            }
+        }
     }
     
     func createMessage(_ text: String, in chatroom: Chatroom, by senderID: String? = nil, completion: @escaping (_ error: Error?)->()) {
@@ -263,31 +348,14 @@ final class DataCoordinator {
             guard let chatroomID = data["chatroomID"] as? String, let chatroomUUID = UUID(uuidString: chatroomID) else { return }
             guard let chatroom = LocalDatabase.shared.fetchChatroom(chatroomUUID) else { return }
             
-            let dispatchGroup = DispatchGroup()
-            
-            var sender: User?
             guard let senderID = data["sender"] as? String else { return }
-            if let user = LocalDatabase.shared.fetchUser(senderID) {
-                sender = user
-            } else {
-                dispatchGroup.enter()
-                FirebaseService.shared.fetchUserDetails(senderID) { (userData, error) in
-                    // TODO: display error?
-                    guard let userData = userData else { return }
-                    guard let username = userData["username"] as? String else { return }
-                    
-                    sender = LocalDatabase.shared.createUser(senderID, username)
-                    dispatchGroup.leave()
+            fetchUser(id: senderID) { (user, error) in
+                if error == nil, let user = user {
+                    let message = LocalDatabase.shared.createMessage(uuid, text, user, chatroom: chatroom, seen: false, date)
+                    let info = ["chatroomID": message.chatroom.id]
+                    NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
                 }
             }
-            
-            dispatchGroup.wait()
-            
-            if sender == nil { return }
-            
-            let message = LocalDatabase.shared.createMessage(uuid, text, sender!, chatroom: chatroom, seen: false, date)
-            let info = ["chatroomID": message.chatroom.id]
-            NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
         }
     }
     

@@ -92,7 +92,7 @@ class NewChatroomVC: UIViewController {
             chatroomType = .watchlist
             performSegue(withIdentifier: "SelectWatchlistVC", sender: nil)
         } else {
-            chatroomType = sender.tag == 0 ? .movie : .show
+            chatroomType = sender.tag == 1 ? .movie : .show
             performSegue(withIdentifier: "SearchVC", sender: sender)
         }
     }

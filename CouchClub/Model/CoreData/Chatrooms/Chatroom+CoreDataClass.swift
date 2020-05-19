@@ -2,7 +2,7 @@
 //  Chatroom+CoreDataClass.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 17/05/2020.
+//  Created by Ruben Dias on 19/05/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -22,9 +22,7 @@ class ChatroomBuilder {
     init(_ id: UUID? = nil) {
         self.chatroom = Chatroom(context: context)
         self.chatroom.id = id == nil ? UUID() : id!
-        
-        let code = UUID().uuidString.prefix(8)
-        self.chatroom.inviteCode = String(code)
+        generateInviteCode()
     }
     
     func named(_ title: String) -> ChatroomBuilder {
@@ -40,6 +38,21 @@ class ChatroomBuilder {
     func relatedTo(_ subjectID: String) -> ChatroomBuilder {
         self.chatroom.subjectID = subjectID
         return self
+    }
+    
+    func ownedBy(_ owner: User) -> ChatroomBuilder {
+        self.chatroom.owner = owner
+        return self
+    }
+    
+    func withInviteCode(_ code: String) -> ChatroomBuilder {
+        self.chatroom.inviteCode = code
+        return self
+    }
+    
+    private func generateInviteCode() {
+        let code = UUID().uuidString.prefix(8)
+        self.chatroom.inviteCode = String(code)
     }
     
     func build() -> Chatroom {

@@ -167,7 +167,7 @@ class FirebaseService {
     
     func createChatroom(_ chatroom: Chatroom, completion: @escaping (_ error: Error?)->()) {
         let chatroomDict = [
-            "owner": FirebaseService.currentUserID!,
+            "owner": chatroom.owner.id,
             "title": chatroom.title,
             "type": chatroom.type,
             "subjectID": chatroom.subjectID,
@@ -189,6 +189,23 @@ class FirebaseService {
                 print("Firebase Firestore | Error deleting chatroom: \(error.localizedDescription)")
             }
             completion(error)
+        }
+    }
+    
+    func fetchChatroomDetails(_ inviteCode: String, completion: @escaping (_ chatroomID: String?, _ chatroomData: [String: Any]?, _ error: Error?)->()) {
+        Firestore.firestore().collection("chatrooms").whereField("inviteCode", isEqualTo: inviteCode).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Firebase Firestore | Error fetching chatroom data for invite code \(inviteCode): \(error.localizedDescription)")
+                completion(nil, nil, error)
+                return
+            }
+            
+            guard let documents = snapshot?.documents, !documents.isEmpty else { completion(nil, nil, nil); return }
+            assert(documents.count == 1, "Invite Codes should be unique.")
+            
+            let chatroomID = documents[0].documentID
+            let chatroomData = documents[0].data()
+            completion(chatroomID, chatroomData, nil)
         }
     }
     
