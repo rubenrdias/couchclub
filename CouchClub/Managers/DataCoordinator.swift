@@ -210,7 +210,7 @@ final class DataCoordinator {
     
     func createChatroom(_ title: String, _ type: ChatroomType, _ relatedTo: String, completion: @escaping (_ id: UUID?, _ error: Error?)->()) {
         let currentUser = LocalDatabase.shared.fetchCurrentuser()
-        let chatroom = LocalDatabase.shared.createChatroom(nil, currentUser, title, type, relatedTo)
+        let chatroom = LocalDatabase.shared.createChatroom(nil, nil, currentUser, title, type, relatedTo)
         
         FirebaseService.shared.createChatroom(chatroom) { (error) in
             if let error = error {
@@ -264,6 +264,7 @@ final class DataCoordinator {
     
     func createChatroom(_ id: String, from data: [String: Any], completion: @escaping (_ chatroom: Chatroom?, _ error: Error?) -> ()) {
         guard let uuid = UUID(uuidString: id),
+              let inviteCode = data["inviteCode"] as? String,
               let title = data["title"] as? String,
               let subjectID = data["subjectID"] as? String,
               let ownerID = data["owner"] as? String,
@@ -297,7 +298,7 @@ final class DataCoordinator {
                         return
                     }
                     self.getImage(movie.id, movie.poster) { _ in
-                        let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, movie.id)
+                        let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, movie.id)
                         completion(chatroom, nil)
                     }
                 }
@@ -309,7 +310,7 @@ final class DataCoordinator {
                         return
                     }
                     self.getImage(show.id, show.poster) { _ in
-                        let chatroom = LocalDatabase.shared.createChatroom(uuid, user, title, type, show.id)
+                        let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, show.id)
                         completion(chatroom, nil)
                     }
                 }

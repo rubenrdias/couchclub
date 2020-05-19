@@ -121,7 +121,7 @@ class ChatroomsVC: UIViewController {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
         ac.popoverPresentationController?.sourceView = self.view
         ac.popoverPresentationController?.sourceRect = createChatroomButton.frame
-        ac.view.tintColor = UIColor.systemOrange
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -140,18 +140,24 @@ class ChatroomsVC: UIViewController {
         let alert = UIAlertController(title: "Invite Code", message: nil, preferredStyle: .alert)
         alert.view.tintColor = UIColor.systemOrange
         
-        alert.addTextField(configurationHandler: nil)
+        alert.addTextField { (textfield) in
+            textfield.tintColor = .colorAsset(.dynamicLabel)
+        }
         
-        alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { [weak alert] (_) in
+        alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { [unowned self, weak alert] (_) in
             guard let inviteCode = alert?.textFields?[0].text else { return }
             
-            // TODO: check if chatroom with same invite code exists locally
-            
-            DataCoordinator.shared.joinChatroom(inviteCode) { [unowned self] (_, error) in
-                if let error = error {
-                    let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
-                    self.present(alert, animated: true)
+            let chatrooms = LocalDatabase.shared.fetchChatrooms()
+            if chatrooms?.first(where: { $0.inviteCode == inviteCode }) == nil {
+                DataCoordinator.shared.joinChatroom(inviteCode) { (_, error) in
+                    if let error = error {
+                        let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+                        self.present(alert, animated: true)
+                    }
                 }
+            } else {
+                let alert = Alerts.simpleAlert(title: "Invalid Code", message: "This chatroom is already on this device.")
+                self.present(alert, animated: true)
             }
         }))
         

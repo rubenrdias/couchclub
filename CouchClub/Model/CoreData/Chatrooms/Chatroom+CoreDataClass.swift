@@ -19,10 +19,10 @@ class ChatroomBuilder {
     
     var chatroom: Chatroom
     
-    init(_ id: UUID? = nil) {
+    init(_ id: UUID? = nil, _ inviteCode: String? = nil) {
         self.chatroom = Chatroom(context: context)
         self.chatroom.id = id == nil ? UUID() : id!
-        generateInviteCode()
+        self.chatroom.inviteCode = inviteCode == nil ? generateInviteCode() : inviteCode!
     }
     
     func named(_ title: String) -> ChatroomBuilder {
@@ -50,9 +50,8 @@ class ChatroomBuilder {
         return self
     }
     
-    private func generateInviteCode() {
-        let code = UUID().uuidString.prefix(8)
-        self.chatroom.inviteCode = String(code)
+    private func generateInviteCode() -> String {
+        return String(UUID().uuidString.prefix(8))
     }
     
     func build() -> Chatroom {
