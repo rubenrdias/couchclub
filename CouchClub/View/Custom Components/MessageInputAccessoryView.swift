@@ -71,8 +71,7 @@ class MessageInputAccessoryView: UIView {
         guard let messageText = messageTextView.text else { return }
         
         delegate?.shouldSendMessage(messageText)
-        messageTextView.reset()
-        messageTextView.resignFirstResponder()
+        messageTextView.reset(hardReset: false)
     }
     
     required init?(coder aDecoder: NSCoder) {

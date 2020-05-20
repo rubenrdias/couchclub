@@ -39,16 +39,13 @@ class CommentInputTextView: UITextView {
         font = UIFont.translatedFont(for: .body, .regular)
     }
     
-    func reset() {
-//        if heightConstraint != nil {
-//            heightConstraint?.isActive = false
-//            heightConstraint = nil
-//        }
-//        singleLineHeightConstraint.isActive = false
-//        isScrollEnabled = false
-        
-        showPlaceholderText()
-        textViewDidEndEditing(self)
+    func reset(hardReset: Bool = true) {
+        if hardReset {
+            showPlaceholderText()
+            textViewDidEndEditing(self)
+        } else {
+            text = ""
+        }
     }
     
     func showPlaceholderText() {
