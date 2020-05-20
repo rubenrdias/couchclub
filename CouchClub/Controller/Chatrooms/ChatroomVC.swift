@@ -53,7 +53,10 @@ class ChatroomVC: UITableViewController {
         DispatchQueue.main.async { [weak self] in
             let chatrooms = LocalDatabase.shared.fetchChatrooms()
             if chatrooms?.firstIndex(where: { $0.id == self?.chatroomID }) == nil {
-                self?.navigationController?.popViewController(animated: true)
+                let alert = Alerts.simpleAlert(title: "Chatroom was deleted", message: "The chatroom owner has deleted this chatroom. It will now be deleted from the device.") { _ in
+                    self?.navigationController?.popViewController(animated: true)
+                }
+                self?.present(alert, animated: true)
             }
         }
     }
