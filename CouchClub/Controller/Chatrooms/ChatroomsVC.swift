@@ -144,6 +144,8 @@ class ChatroomsVC: UIViewController {
             textfield.tintColor = .colorAsset(.dynamicLabel)
         }
         
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
         alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { [unowned self, weak alert] (_) in
             guard let inviteCode = alert?.textFields?[0].text else { return }
             
