@@ -50,7 +50,6 @@ extension UIButton {
         setTitleColor(UIColor.white, for: .normal)
         titleLabel?.font = .translatedFont(for: .headline, .semibold)
     }
-    
 }
 
 // MARK: - UILabel
@@ -93,6 +92,7 @@ extension UIImage {
         case heart
         case imageUnavailable
         case imdb
+        case invite
         case list
         case send
         case settings

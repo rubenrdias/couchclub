@@ -122,6 +122,18 @@ class ChatroomVC: UITableViewController {
         present(ac, animated: true, completion: nil)
     }
     
+    @IBAction func inviteButtonTapped(_ sender: Any) {
+        resignFirstResponder()
+        Alerts.shared.presentInviteCodeShareDialog(chatroom.inviteCode, action: copyInviteCodeToClipboard)
+    }
+    
+    func copyInviteCodeToClipboard() {
+        UIPasteboard.general.string = chatroom.inviteCode
+        Alerts.shared.dismissActivityAlert(message: "Copied to clipboard!") { [weak self] in
+            self?.becomeFirstResponder()
+        }
+    }
+    
     private func setupFetchedResultsController() {
         let request = Message.createFetchRequest()
         
