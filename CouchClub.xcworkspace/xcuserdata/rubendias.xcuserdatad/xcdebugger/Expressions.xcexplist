@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in ChatroomsVC.refreshChatroom(_:):ChatroomsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self?.chatrooms">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in FirebaseService.fetchChatroomDetails(_:completion:):FirebaseService.swift">
          <PersistentStrings>
             <PersistentString

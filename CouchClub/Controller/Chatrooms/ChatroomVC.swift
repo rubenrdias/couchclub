@@ -13,10 +13,15 @@ class ChatroomVC: UITableViewController {
     
     var fetchedResultsController: NSFetchedResultsController<Message>!
     
-    var chatroom: Chatroom!
+    var chatroom: Chatroom! {
+        didSet { chatroomID = chatroom.id }
+    }
+    private var chatroomID: UUID!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(chatroomsWereUpdated), name: .chatroomsDidChange, object: nil)
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
@@ -40,7 +45,17 @@ class ChatroomVC: UITableViewController {
     }
     
     deinit {
+        NotificationCenter.default.removeObserver(self)
         print("-- DEINIT -- Chatroom VC")
+    }
+    
+    @objc private func chatroomsWereUpdated() {
+        DispatchQueue.main.async { [weak self] in
+            let chatrooms = LocalDatabase.shared.fetchChatrooms()
+            if chatrooms?.firstIndex(where: { $0.id == self?.chatroomID }) == nil {
+                self?.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     @objc private func editingFinished() {

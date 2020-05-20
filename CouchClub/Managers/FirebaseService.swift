@@ -63,8 +63,7 @@ class FirebaseService {
                 self.removeListener(.messages, id)
                 self.removeListener(.chatroom, id)
                 
-                let info: [AnyHashable: Any] = ["chatroomID": id, "event": "deleted"]
-                NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
+                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
             }
         }
         chatroomListeners.append((id, listener))
@@ -82,8 +81,6 @@ class FirebaseService {
                 if (diff.type == .added) {
                     let documentID = diff.document.documentID
                     DataCoordinator.shared.createMessage(documentID, from: diff.document.data())
-                } else {
-                    print("Firebase Firestore | Error: message was updated or deleted (invalid)")
                 }
             }
         }

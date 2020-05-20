@@ -181,9 +181,6 @@ extension Notification.Name {
     static let chatroomsDidChange = Notification.Name("chatroomsDidChange")
     static let chatroomDidChange = Notification.Name("chatroomDidChange")
     
-    // messages
-    static let newMessage = Notification.Name("newMessage")
-    
 }
 
 // MARK: - NSRegularExpression

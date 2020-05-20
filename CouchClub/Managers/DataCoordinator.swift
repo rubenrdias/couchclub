@@ -168,7 +168,7 @@ final class DataCoordinator {
         if let chatrooms = LocalDatabase.shared.fetchChatrooms() {
             let chatroomsForWatchlist = chatrooms.filter { $0.subjectID == watchlist.id.uuidString }
             chatroomsForWatchlist.forEach {
-                let info: [AnyHashable: Any] = ["chatroomID": $0.id, "event": "updated"]
+                let info: [AnyHashable: Any] = ["chatroomID": $0.id]
                 NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
             }
         }
@@ -364,8 +364,8 @@ final class DataCoordinator {
             if let error = error {
                 completion(error)
             } else {
-                let info = ["chatroomID": chatroom.id]
-                NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
+                let info: [AnyHashable: Any] = ["chatroomID": chatroom.id]
+                NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
                 completion(nil)
             }
         }
@@ -385,9 +385,11 @@ final class DataCoordinator {
             guard let senderID = data["sender"] as? String else { return }
             fetchUser(id: senderID) { (user, error) in
                 if error == nil, let user = user {
-                    let message = LocalDatabase.shared.createMessage(uuid, text, user, chatroom: chatroom, seen: false, date)
-                    let info = ["chatroomID": message.chatroom.id]
-                    NotificationCenter.default.post(name: .newMessage, object: nil, userInfo: info)
+                    // TODO: make the message returned discardable
+                    let _ = LocalDatabase.shared.createMessage(uuid, text, user, chatroom: chatroom, seen: false, date)
+                    
+                    let info: [AnyHashable: Any] = ["chatroomID": chatroomUUID]
+                    NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
                 }
             }
         }

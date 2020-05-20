@@ -19,7 +19,6 @@ class ChatroomsVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .chatroomsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .newMessage, object: nil)
         
         tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
         
@@ -49,8 +48,12 @@ class ChatroomsVC: UIViewController {
     
     @objc private func fetchData() {
         DispatchQueue.main.async { [weak self] in
-            guard let chatrooms = LocalDatabase.shared.fetchChatrooms() else { return }
-            self?.chatrooms = chatrooms
+            let chatrooms = LocalDatabase.shared.fetchChatrooms()
+            if chatrooms != nil {
+                self?.chatrooms = chatrooms!
+            } else {
+                self?.chatrooms.removeAll()
+            }
 
             self?.tableView.reloadData()
             self?.evaluateDataAvailable()
@@ -60,13 +63,10 @@ class ChatroomsVC: UIViewController {
     @objc private func refreshChatroom(_ notification: Notification) {
         DispatchQueue.main.async { [weak self] in
             guard let info = notification.userInfo else { return }
+            guard let chatroomID = info["chatroomID"] as? UUID else { return }
             
-            if let chatroomID = info["chatroomID"] as? UUID, let event = info["event"] as? String {
-                if event == "updated", let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
-                    self?.tableView.reloadRows(at: [.init(row: index, section: 0)], with: .automatic)
-                } else if event == "deleted", let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
-                    self?.tableView.deleteRows(at: [.init(row: index, section: 0)], with: .automatic)
-                }
+            if let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
+                self?.tableView.reloadRows(at: [.init(row: index, section: 0)], with: .automatic)
             }
         }
     }
