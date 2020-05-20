@@ -30,7 +30,7 @@ class UserBuilder {
     }
     
     func build() -> User {
-        ad.saveContext()
+        LocalDatabase.shared.saveContext()
         return self.user
     }
     

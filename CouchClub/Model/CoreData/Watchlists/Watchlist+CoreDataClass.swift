@@ -50,7 +50,7 @@ class WatchlistBuilder {
     }
     
     func build() -> Watchlist {
-        ad.saveContext()
+        LocalDatabase.shared.saveContext()
         return self.watchlist
     }
     

@@ -66,13 +66,19 @@ final class DataCoordinator {
         }
     }
     
-    func createCurrentUserObject() {
-        guard let currentUserID = FirebaseService.currentUserID else { return }
+    func createCurrentUserObject(completion: @escaping (_ userExists: Bool) -> ()) {
+        guard let currentUserID = FirebaseService.currentUserID else {
+            completion(false)
+            return
+        }
         
         if LocalDatabase.shared.fetchUser(currentUserID) == nil {
             createLocalUser(currentUserID) { (_, error) in
                 if error != nil { fatalError("When logged in, a user object for Current User must exist") }
+                completion(true)
             }
+        } else {
+            completion(true)
         }
     }
     
@@ -106,7 +112,7 @@ final class DataCoordinator {
                 LocalDatabase.shared.deleteWatchlist(watchlist)
                 completion(nil, error)
             } else {
-                FirebaseService.shared.createChatroomListener(watchlist.id)
+                FirebaseService.shared.startMessageListener(watchlist.id)
                 NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
                 completion(watchlist.id, nil)
             }
@@ -217,6 +223,7 @@ final class DataCoordinator {
                 LocalDatabase.shared.deleteChatroom(chatroom)
                 completion(nil, error)
             } else {
+                FirebaseService.shared.startMessageListener(chatroom.id)
                 NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
                 completion(chatroom.id, nil)
             }
@@ -257,7 +264,8 @@ final class DataCoordinator {
                             LocalDatabase.shared.deleteChatroom(chatroom)
                             completion(nil, error)
                         } else {
-                            FirebaseService.shared.createChatroomListener(chatroom.id)
+                            FirebaseService.shared.startChatroomListener(chatroom.id)
+                            FirebaseService.shared.startMessageListener(chatroom.id)
                             NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
                             completion(chatroom.id, nil)
                         }
@@ -274,6 +282,7 @@ final class DataCoordinator {
             if let error = error {
                 completion(error)
             } else {
+                FirebaseService.shared.removeListener(.chatroom, chatroom.id)
                 LocalDatabase.shared.deleteChatroom(chatroom)
                 
                 NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)

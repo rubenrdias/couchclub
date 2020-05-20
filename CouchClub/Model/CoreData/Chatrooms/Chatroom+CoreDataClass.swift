@@ -55,7 +55,7 @@ class ChatroomBuilder {
     }
     
     func build() -> Chatroom {
-        ad.saveContext()
+        LocalDatabase.shared.saveContext()
         return self.chatroom
     }
     

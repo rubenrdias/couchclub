@@ -104,7 +104,7 @@ class ShowBuilder {
     }
     
     func build() -> Show {
-        ad.saveContext()
+        LocalDatabase.shared.saveContext()
         return self.show
     }
     

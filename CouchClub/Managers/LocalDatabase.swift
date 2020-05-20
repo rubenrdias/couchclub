@@ -17,6 +17,33 @@ final class LocalDatabase {
     
     let coreDataQueue = DispatchQueue(label: "com.couchclub.coreDataQueue")
     
+    
+    // MARK: - Core Data stack
+    
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "CouchClub")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                // TODO: Handle container errors
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+
+    func saveContext () {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                // TODO: Handle context saving errors
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+    
     // MARK: - Users
     
     func fetchUser(_ id: String) -> User? {
@@ -98,21 +125,21 @@ final class LocalDatabase {
     func deleteWatchlist(_ watchlist: Watchlist) {
         coreDataQueue.sync {
             context.delete(watchlist)
-            ad.saveContext()
+            LocalDatabase.shared.saveContext()
         }
     }
     
     func addToWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
             watchlist.addToItems(item)
-            ad.saveContext()
+            LocalDatabase.shared.saveContext()
         }
     }
     
     func removeFromWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
             watchlist.removeFromItems(item)
-            ad.saveContext()
+            LocalDatabase.shared.saveContext()
         }
     }
     
@@ -139,7 +166,7 @@ final class LocalDatabase {
         coreDataQueue.sync { [weak item] in
             guard let item = item else { return }
             item.watched = !item.watched
-            ad.saveContext()
+            LocalDatabase.shared.saveContext()
         }
     }
     
@@ -193,7 +220,7 @@ final class LocalDatabase {
     func deleteChatroom(_ chatroom: Chatroom) {
         coreDataQueue.sync {
             context.delete(chatroom)
-            ad.saveContext()
+            LocalDatabase.shared.saveContext()
         }
     }
     
@@ -225,6 +252,23 @@ final class LocalDatabase {
                 .within(chatroom)
                 .seen(seen)
                 .build()
+        }
+    }
+    
+    func deleteMessages(_ chatroom: Chatroom) {
+        coreDataQueue.sync {
+            let fetchRequest = Message.createFetchRequest()
+            // filtering
+            fetchRequest.predicate = NSPredicate(format: "chatroom == %@", chatroom)
+            
+            do {
+                let messages = try context.fetch(fetchRequest)
+                messages.forEach { context.delete($0) }
+                LocalDatabase.shared.saveContext()
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error deleting Messages for Chatroom (\(chatroom.id.uuidString)): \(error)")
+            }
         }
     }
     

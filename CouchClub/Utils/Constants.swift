@@ -9,9 +9,7 @@
 import UIKit
 
 // MARK: - Core Data
-
-let ad = UIApplication.shared.delegate as! AppDelegate
-let context = ad.persistentContainer.viewContext
+let context = LocalDatabase.shared.persistentContainer.viewContext
 
 // MARK: - Enums
 

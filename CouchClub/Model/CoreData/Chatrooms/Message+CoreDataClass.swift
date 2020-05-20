@@ -52,7 +52,7 @@ class MessageBuilder {
     }
     
     func build() -> Message {
-        ad.saveContext()
+        LocalDatabase.shared.saveContext()
         return self.message
     }
     

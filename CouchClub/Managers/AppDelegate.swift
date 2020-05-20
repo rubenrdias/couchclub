@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         performDefaultObjectsCustomization()
         
         FirebaseApp.configure()
-        FirebaseService.shared.configureListeners()
-        
-        DataCoordinator.shared.createCurrentUserObject()
+        DataCoordinator.shared.createCurrentUserObject { (userExists) in
+            FirebaseService.shared.configureListeners()
+        }
         
         return true
     }
@@ -40,32 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.systemOrange
         UIToolbar.appearance().tintColor = UIColor.systemOrange
         UINavigationBar.appearance().tintColor = UIColor.systemOrange
-    }
-    
-    // MARK: - Core Data stack
-    
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "CouchClub")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // TODO: Handle container errors
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
-
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // TODO: Handle context saving errors
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
     }
 
 }

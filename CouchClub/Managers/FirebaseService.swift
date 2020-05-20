@@ -12,34 +12,69 @@ import FirebaseFirestore
 
 class FirebaseService {
     
+    enum Listener {
+        case chatroom
+        case messages
+    }
+    
     static let shared = FirebaseService()
     static var currentUserID: String? {
         Auth.auth().currentUser?.uid
     }
     
-    private var messageListeners = [ListenerRegistration]()
+    private var chatroomListeners = [(UUID, ListenerRegistration)]()
+    private var messageListeners = [(UUID, ListenerRegistration)]()
     
     private init() {}
     
     // MARK: - Listen to changes in DB
     
     func configureListeners() {
-        setupMessageListener()
+        guard Auth.auth().currentUser != nil else { return }
+        
+        configureChatroomListeners()
     }
     
-    private func setupMessageListener() {
+    private func configureChatroomListeners() {
+        let currentUser = LocalDatabase.shared.fetchCurrentuser()
         let chatrooms = LocalDatabase.shared.fetchChatrooms()
-        chatrooms?.forEach { createChatroomListener($0.id) }
+        
+        chatrooms?.forEach {
+            if $0.owner !== currentUser {
+                startChatroomListener($0.id)
+            }
+            startMessageListener($0.id)
+        }
     }
     
-    func createChatroomListener(_ id: UUID) {
+    func startChatroomListener(_ id: UUID) {
+        let listener = Firestore.firestore().collection("chatrooms").document(id.uuidString).addSnapshotListener { [unowned self] (snapshot, error) in
+            if let error = error {
+                // TODO: handle errors
+                print("Firebase Firestore | Error fetching chatroom snapshot: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let snapshot = snapshot else { return }
+            
+            if !snapshot.exists, let chatroom = LocalDatabase.shared.fetchChatroom(id) {
+                LocalDatabase.shared.deleteMessages(chatroom)
+                LocalDatabase.shared.deleteChatroom(chatroom)
+                self.removeListener(.messages, id)
+                self.removeListener(.chatroom, id)
+                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+            }
+        }
+        chatroomListeners.append((id, listener))
+    }
+    
+    func startMessageListener(_ id: UUID) {
         let listener = Firestore.firestore().collection("messages").whereField("chatroomID", isEqualTo: id.uuidString).addSnapshotListener { (querySnapshot, error) in
             if let error = error {
                 // TODO: handle errors
-                print("Firebase Firestore | Error fetching snapshots: \(error.localizedDescription)")
+                print("Firebase Firestore | Error fetching chatroom message snapshots: \(error.localizedDescription)")
+                return
             }
-            
-            print("\(querySnapshot?.count ?? 0) message updates")
             
             querySnapshot?.documentChanges.forEach { diff in
                 if (diff.type == .added) {
@@ -50,11 +85,27 @@ class FirebaseService {
                 }
             }
         }
-        messageListeners.append(listener)
+        messageListeners.append((id, listener))
     }
     
-    private func resetMessageListeners() {
-        messageListeners.forEach { $0.remove() }
+    func removeListener(_ listenerType: Listener, _ id: UUID) {
+        switch listenerType {
+        case .chatroom:
+            guard let index = chatroomListeners.firstIndex(where: { $0.0 == id }) else { return }
+            chatroomListeners[index].1.remove()
+            chatroomListeners.remove(at: index)
+        case .messages:
+            guard let index = messageListeners.firstIndex(where: { $0.0 == id }) else { return }
+            messageListeners[index].1.remove()
+            messageListeners.remove(at: index)
+        }
+    }
+    
+    private func resetListeners() {
+        chatroomListeners.forEach { $0.1.remove() }
+        chatroomListeners.removeAll()
+        
+        messageListeners.forEach { $0.1.remove() }
         messageListeners.removeAll()
     }
     
@@ -166,12 +217,13 @@ class FirebaseService {
     // MARK: - Chatrooms
     
     func createChatroom(_ chatroom: Chatroom, completion: @escaping (_ error: Error?)->()) {
-        let chatroomDict = [
+        let chatroomDict: [String: Any] = [
             "owner": chatroom.owner.id,
             "title": chatroom.title,
             "type": chatroom.type,
             "subjectID": chatroom.subjectID,
-            "inviteCode": chatroom.inviteCode
+            "inviteCode": chatroom.inviteCode,
+            "users": FieldValue.arrayUnion([chatroom.owner.id])
         ]
         
         Firestore.firestore().collection("chatrooms").document(chatroom.id.uuidString).setData(chatroomDict) { (error) in

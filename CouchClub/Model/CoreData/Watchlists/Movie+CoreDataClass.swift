@@ -109,7 +109,7 @@ class MovieBuilder {
     }
     
     func build() -> Movie {
-        ad.saveContext()
+        LocalDatabase.shared.saveContext()
         return self.movie
     }
     
