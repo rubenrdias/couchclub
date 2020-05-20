@@ -62,7 +62,9 @@ class FirebaseService {
                 LocalDatabase.shared.deleteChatroom(chatroom)
                 self.removeListener(.messages, id)
                 self.removeListener(.chatroom, id)
-                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                
+                let info: [AnyHashable: Any] = ["chatroomID": id, "event": "deleted"]
+                NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
             }
         }
         chatroomListeners.append((id, listener))

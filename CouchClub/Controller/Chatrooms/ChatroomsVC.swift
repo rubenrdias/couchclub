@@ -61,9 +61,11 @@ class ChatroomsVC: UIViewController {
         DispatchQueue.main.async { [weak self] in
             guard let info = notification.userInfo else { return }
             
-            if let chatroomID = info["chatroomID"] as? UUID {
-                if let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
+            if let chatroomID = info["chatroomID"] as? UUID, let event = info["event"] as? String {
+                if event == "updated", let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
                     self?.tableView.reloadRows(at: [.init(row: index, section: 0)], with: .automatic)
+                } else if event == "deleted", let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
+                    self?.tableView.deleteRows(at: [.init(row: index, section: 0)], with: .automatic)
                 }
             }
         }

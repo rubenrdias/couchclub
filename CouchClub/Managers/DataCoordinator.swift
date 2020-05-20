@@ -168,7 +168,7 @@ final class DataCoordinator {
         if let chatrooms = LocalDatabase.shared.fetchChatrooms() {
             let chatroomsForWatchlist = chatrooms.filter { $0.subjectID == watchlist.id.uuidString }
             chatroomsForWatchlist.forEach {
-                let info = ["chatroomID": $0.id]
+                let info: [AnyHashable: Any] = ["chatroomID": $0.id, "event": "updated"]
                 NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
             }
         }
