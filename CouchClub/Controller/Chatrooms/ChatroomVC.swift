@@ -14,9 +14,13 @@ class ChatroomVC: UITableViewController {
     var fetchedResultsController: NSFetchedResultsController<Message>!
     
     var chatroom: Chatroom! {
-        didSet { chatroomID = chatroom.id }
+        didSet {
+            chatroomID = chatroom.id
+            chatroomOwner = chatroom.owner
+        }
     }
     private var chatroomID: UUID!
+    private var chatroomOwner: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +56,9 @@ class ChatroomVC: UITableViewController {
     @objc private func chatroomsWereUpdated() {
         DispatchQueue.main.async { [weak self] in
             let chatrooms = LocalDatabase.shared.fetchChatrooms()
-            if chatrooms?.firstIndex(where: { $0.id == self?.chatroomID }) == nil {
+            if chatrooms?.firstIndex(where: { $0.id == self?.chatroomID }) == nil, self?.chatroomOwner.id != FirebaseService.currentUserID {
                 let alert = Alerts.simpleAlert(title: "Chatroom was deleted", message: "The chatroom owner has deleted this chatroom. It will now be deleted from the device.") { _ in
+                    self?.resignFirstResponder()
                     self?.navigationController?.popViewController(animated: true)
                 }
                 self?.present(alert, animated: true)
