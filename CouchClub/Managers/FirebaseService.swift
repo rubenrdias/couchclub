@@ -9,6 +9,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseMessaging
 
 class FirebaseService {
     
@@ -112,7 +113,6 @@ class FirebaseService {
     
     func createUser(_ username: String, _ email: String, _ password: String, completion: @escaping (_ uid: String?, _ error: Error?)->()) {
         // TODO: make user creation a Transaction
-        
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 print("Firebase Auth | Error creating user: \(error.localizedDescription)")
@@ -135,22 +135,26 @@ class FirebaseService {
     }
     
     func signIn(_ email: String, _ password: String, completion: @escaping (_ error: Error?)->()) {
-        Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { [unowned self] (_, error) in
             if let error = error {
                 print("Firebase Auth | Error creating user: \(error.localizedDescription)")
                 // TODO: handle error
+            } else {
+                self.addDeviceFCMToken()
             }
-            
             completion(error)
         }
     }
     
     func signOut(completion: (_ error: Error?)->()) {
+        removeDeviceFCMToken()
+        
         do {
             try Auth.auth().signOut()
             completion(nil)
         } catch {
             print("Firebase Auth | Error when signing out: \(error.localizedDescription)")
+            addDeviceFCMToken()
             completion(error)
         }
     }
@@ -161,6 +165,32 @@ class FirebaseService {
                 print("Firebase Firestore | Error when fetching details for user \(id): \(error.localizedDescription)")
             }
             completion(snapshot?.data(), error)
+        }
+    }
+    
+    func addDeviceFCMToken() {
+        guard let currentUserID = FirebaseService.currentUserID else { return }
+        guard let token = Messaging.messaging().fcmToken else { return }
+        
+        Firestore.firestore().collection("users").document(currentUserID).updateData([
+            "devices": FieldValue.arrayUnion([token])
+        ]) { (error) in
+            if let error = error {
+                print("Firebase Messaging | Error when adding device token to devices list: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func removeDeviceFCMToken() {
+        guard let currentUserID = FirebaseService.currentUserID else { return }
+        guard let token = Messaging.messaging().fcmToken else { return }
+        
+        Firestore.firestore().collection("users").document(currentUserID).updateData([
+            "devices": FieldValue.arrayRemove([token])
+        ]) { (error) in
+            if let error = error {
+                print("Firebase Messaging | Error when removing device token to devices list: \(error.localizedDescription)")
+            }
         }
     }
     

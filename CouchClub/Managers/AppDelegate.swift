@@ -20,8 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         DataCoordinator.shared.createCurrentUserObject { (userExists) in
-            FirebaseService.shared.configureListeners()
+            if userExists {
+                FirebaseService.shared.configureListeners()
+            }
         }
+        
+        PushNotificationsManager.shared.registerForPushNotifications()
         
         return true
     }
@@ -41,5 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIToolbar.appearance().tintColor = UIColor.systemOrange
         UINavigationBar.appearance().tintColor = UIColor.systemOrange
     }
-
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        PushNotificationsManager.shared.processNotification(userInfo)
+        completionHandler(.newData)
+    }
+    
 }

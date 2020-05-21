@@ -49,6 +49,7 @@
 		538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E22454978800CDB99F /* LaunchScreen.storyboard */; };
 		538D29EF2454978800CDB99F /* CouchClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29EE2454978800CDB99F /* CouchClubTests.swift */; };
 		539448BB24640366002A9544 /* NewChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539448BA24640366002A9544 /* NewChatroomVC.swift */; };
+		53A8BBD624768FC7001B3E6C /* PushNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A8BBD524768FC7001B3E6C /* PushNotificationsManager.swift */; };
 		53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
 		53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */; };
 		53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2F24580D160076B148 /* HighlightTVCell.swift */; };
@@ -134,6 +135,8 @@
 		538D29EE2454978800CDB99F /* CouchClubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouchClubTests.swift; sourceTree = "<group>"; };
 		538D29F02454978800CDB99F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		539448BA24640366002A9544 /* NewChatroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatroomVC.swift; sourceTree = "<group>"; };
+		53A8BBD524768FC7001B3E6C /* PushNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsManager.swift; sourceTree = "<group>"; };
+		53AD80572476967900356449 /* CouchClub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CouchClub.entitlements; sourceTree = "<group>"; };
 		53AE644A2455DE4E00D7F817 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailHeaderTVCell.swift; sourceTree = "<group>"; };
 		53B34E2F24580D160076B148 /* HighlightTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTVCell.swift; sourceTree = "<group>"; };
@@ -320,6 +323,7 @@
 		538D29D32454978600CDB99F /* CouchClub */ = {
 			isa = PBXGroup;
 			children = (
+				53AD80572476967900356449 /* CouchClub.entitlements */,
 				534BFBA32454E48900F9F772 /* Utils */,
 				53AE64472455DE2700D7F817 /* Managers */,
 				53B7CDDF2454A21F007395EE /* Model */,
@@ -355,6 +359,7 @@
 				538D29D42454978600CDB99F /* AppDelegate.swift */,
 				53AE644A2455DE4E00D7F817 /* NetworkService.swift */,
 				5369E490246DE79C00E9CB91 /* FirebaseService.swift */,
+				53A8BBD524768FC7001B3E6C /* PushNotificationsManager.swift */,
 				5376F2AF24595EE7007FB93C /* LocalDatabase.swift */,
 				53BEA6932459722500F7D770 /* LocalStorage.swift */,
 				53F6880F2458D4AC00230CE9 /* Converter.swift */,
@@ -631,6 +636,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53A8BBD624768FC7001B3E6C /* PushNotificationsManager.swift in Sources */,
 				538774402468113A009247CA /* ChatroomTVCell.swift in Sources */,
 				53B7144B245B524D00915FF8 /* Item+CoreDataClass.swift in Sources */,
 				5376F2B024595EE7007FB93C /* LocalDatabase.swift in Sources */,
@@ -854,6 +860,7 @@
 			baseConfigurationReference = 3950BC54F639061C280CD2FD /* Pods-CouchClub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C62GU5R7P6;
 				INFOPLIST_FILE = CouchClub/Utils/Info.plist;
@@ -874,6 +881,7 @@
 			baseConfigurationReference = 9CB43F872B3E2FDA0802E497 /* Pods-CouchClub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C62GU5R7P6;
 				INFOPLIST_FILE = CouchClub/Utils/Info.plist;

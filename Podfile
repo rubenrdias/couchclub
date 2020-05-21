@@ -9,6 +9,7 @@ target 'CouchClub' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Messaging'
 
   target 'CouchClubTests' do
     inherit! :search_paths
