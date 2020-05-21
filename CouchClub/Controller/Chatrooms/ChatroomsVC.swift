@@ -122,7 +122,13 @@ class ChatroomsVC: UIViewController {
     @objc private func newChatroomDialog() {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
         ac.popoverPresentationController?.sourceView = self.view
-        ac.popoverPresentationController?.sourceRect = newChatroomButton.frame
+        
+        if chatrooms.isEmpty {
+            ac.popoverPresentationController?.sourceRect = newChatroomButton.frame
+        } else {
+            ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        
         ac.view.tintColor = .colorAsset(.dynamicLabel)
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -153,10 +159,10 @@ class ChatroomsVC: UIViewController {
             
             let chatrooms = LocalDatabase.shared.fetchChatrooms()
             if chatrooms?.first(where: { $0.inviteCode == inviteCode }) == nil {
-                DataCoordinator.shared.joinChatroom(inviteCode) { (_, error) in
-                    if let error = error {
-                        let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
-                        self.present(alert, animated: true)
+                Alerts.shared.presentActivityAlert(title: "Attempting to join chatroom...", subtitle: nil, showSpinner: true, action: nil) {
+                    DataCoordinator.shared.joinChatroom(inviteCode) { (_, error) in
+                        let message = error == nil ? "Success!" : "Failed. Please try again later."
+                        Alerts.shared.dismissActivityAlert(message: message)
                     }
                 }
             } else {
@@ -179,12 +185,14 @@ class ChatroomsVC: UIViewController {
     
     private func evaluateDataAvailable() {
         if chatrooms.isEmpty {
+            tableView.alwaysBounceVertical = false
             navigationItem.rightBarButtonItem = nil
             view.addSubview(noDataLabel)
             view.addSubview(newChatroomButton)
             NSLayoutConstraint.activate(noDataLabelConstraints)
             NSLayoutConstraint.activate(createChatroomButtonConstraints)
         } else {
+            tableView.alwaysBounceVertical = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newChatroomDialog))
             noDataLabel.removeFromSuperview()
             newChatroomButton.removeFromSuperview()

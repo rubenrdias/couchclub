@@ -128,6 +128,7 @@ class ChatroomVC: UITableViewController {
     }
     
     @IBAction func inviteButtonTapped(_ sender: Any) {
+        inputAccessoryViewContainer.dismissKeyboard()
         resignFirstResponder()
         Alerts.shared.presentInviteCodeShareDialog(chatroom.inviteCode, action: copyInviteCodeToClipboard)
     }
