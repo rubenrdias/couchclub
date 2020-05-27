@@ -49,7 +49,6 @@ final class LocalDatabase {
     func fetchUser(_ id: String) -> User? {
         coreDataQueue.sync {
             let fetchRequest = User.createFetchRequest()
-            // filtering
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
             
             do {
@@ -82,7 +81,6 @@ final class LocalDatabase {
     func fetchWatchlist(_ id: UUID) -> Watchlist? {
         coreDataQueue.sync {
             let fetchRequest = Watchlist.createFetchRequest()
-            // filtering
             fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
             
             do {
@@ -99,7 +97,6 @@ final class LocalDatabase {
     func fetchWatchlists() -> [Watchlist]? {
         coreDataQueue.sync {
             let fetchRequest = Watchlist.createFetchRequest()
-            // sorting
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
             
             do {
@@ -148,7 +145,6 @@ final class LocalDatabase {
     func fetchItem(_ id: String) -> Item? {
         coreDataQueue.sync {
             let fetchRequest = Item.createFetchRequest()
-            // filtering
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
             
             do {
@@ -163,12 +159,13 @@ final class LocalDatabase {
     }
     
     func toggleWatched(_ item: Item) {
-        coreDataQueue.sync { [weak item] in
-            guard let item = item else { return }
+        coreDataQueue.sync {
             item.watched = !item.watched
             LocalDatabase.shared.saveContext()
         }
     }
+    
+    func createMovie(from )
     
     // MARK: - Chatrooms
     
@@ -192,7 +189,6 @@ final class LocalDatabase {
     func fetchChatrooms() -> [Chatroom]? {
         coreDataQueue.sync {
             let fetchRequest = Chatroom.createFetchRequest()
-            // sorting
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
             
             do {
@@ -229,7 +225,6 @@ final class LocalDatabase {
     func fetchMessage(_ id: UUID) -> Message? {
         coreDataQueue.sync {
             let fetchRequest = Message.createFetchRequest()
-            // filtering
             fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
             
             do {
@@ -258,7 +253,6 @@ final class LocalDatabase {
     func deleteMessages(_ chatroom: Chatroom) {
         coreDataQueue.sync {
             let fetchRequest = Message.createFetchRequest()
-            // filtering
             fetchRequest.predicate = NSPredicate(format: "chatroom == %@", chatroom)
             
             do {

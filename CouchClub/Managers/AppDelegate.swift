@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        PushNotificationsManager.shared.registerForPushNotifications()
+        PushNotifications.shared.registerForNotifications()
         
         return true
     }
@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        PushNotificationsManager.shared.processNotification(userInfo)
+        PushNotifications.shared.process(withUserInfo: userInfo)
         completionHandler(.newData)
     }
     

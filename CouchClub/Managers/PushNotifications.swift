@@ -1,5 +1,5 @@
 //
-//  PushNotificationsManager.swift
+//  PushNotifications.swift
 //  CouchClub
 //
 //  Created by Ruben Dias on 21/05/2020.
@@ -9,11 +9,11 @@
 import UIKit
 import Firebase
 
-class PushNotificationsManager: NSObject {
+class PushNotifications: NSObject {
     
-    static var shared = PushNotificationsManager()
+    static var shared = PushNotifications()
     
-    func registerForPushNotifications() {
+    func registerForNotifications() {
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
         
@@ -22,13 +22,13 @@ class PushNotificationsManager: NSObject {
         UIApplication.shared.registerForRemoteNotifications()
     }
     
-    func processNotification(_ userInfo: [AnyHashable: Any]) {
+    func process(withUserInfo userInfo: [AnyHashable: Any]) {
         print("Firebase Messaging | Received new notification:\n\(userInfo)")
     }
     
 }
 
-extension PushNotificationsManager: UNUserNotificationCenterDelegate {
+extension PushNotifications: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
@@ -44,7 +44,7 @@ extension PushNotificationsManager: UNUserNotificationCenterDelegate {
     
 }
 
-extension PushNotificationsManager: MessagingDelegate {
+extension PushNotifications: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         FirebaseService.shared.addDeviceFCMToken()
