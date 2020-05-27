@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-class WatchlistCoordinator: Coordinator {
+class WatchlistsCoordinator: Coordinator {
+    
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
@@ -22,6 +23,19 @@ class WatchlistCoordinator: Coordinator {
         let vc = WatchlistsVC.instantiate()
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: false)
+    }
+    
+    func showDetail(_ watchlist: Watchlist) {
+        let vc = WatchlistVC.instantiate()
+        vc.coordinator = self
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func newWatchlist(delegate: WatchlistOperationDelegate?) {
+        let child = NewWatchlistCoordinator()
+        child.parentCoordinator = self
+        childCoordinators.append(child)
+        child.start(delegate: delegate)
     }
     
 }

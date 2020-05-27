@@ -8,13 +8,15 @@
 
 import UIKit
 
-class WatchlistVC: UICollectionViewController {
+class WatchlistVC: UICollectionViewController, Storyboarded {
     
     private enum Section: String {
         case statistics = "statistics"
         case movies = "movies"
         case shows = "shows"
     }
+    
+    weak var coordinator: WatchlistsCoordinator?
     
     private var itemsPerRow: Int = 1
     private var usableWidth: CGFloat = 0

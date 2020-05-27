@@ -10,7 +10,7 @@ import UIKit
 
 class MainTabBarController: UITabBarController, Storyboarded {
     
-    let watchlists = WatchlistCoordinator()
+    let watchlists = WatchlistsCoordinator()
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class WatchlistsVC: UICollectionViewController, Storyboarded {
     
-    weak var coordinator: WatchlistCoordinator?
+    weak var coordinator: WatchlistsCoordinator?
     
     private var itemsPerRow: Int = 1
     private var usableWidth: CGFloat = 0
@@ -43,19 +43,6 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         
         if FirebaseService.currentUserID == nil {
             performSegue(withIdentifier: "LoginVC", sender: nil)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NewWatchlistVC" {
-            guard let navController = segue.destination as? UINavigationController else { return }
-            guard let newWatchlistVC = navController.viewControllers.first as? NewWatchlistVC else { return }
-            newWatchlistVC.delegate = self
-        }
-        else if segue.identifier == "WatchlistVC" {
-            guard let watchlist = sender as? Watchlist else { return }
-            guard let watchlistVC = segue.destination as? WatchlistVC else { return }
-            watchlistVC.watchlist = watchlist
         }
     }
     
@@ -154,7 +141,7 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     }()
     
     @objc private func createWatchlist() {
-        performSegue(withIdentifier: "NewWatchlistVC", sender: nil)
+        coordinator?.newWatchlist(delegate: self)
     }
     
     private lazy var createWatchlistButtonConstraints: [NSLayoutConstraint] = {
@@ -207,7 +194,7 @@ extension WatchlistsVC {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let watchlist = watchlists[indexPath.item]
-        performSegue(withIdentifier: "WatchlistVC", sender: watchlist)
+        coordinator?.showDetail(watchlist)
     }
     
 }
@@ -217,7 +204,7 @@ extension WatchlistsVC: WatchlistOperationDelegate {
     func didCreateWatchlist(_ id: UUID) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
-            self?.performSegue(withIdentifier: "WatchlistVC", sender: watchlist)
+            self?.coordinator?.showDetail(watchlist)
         }
     }
     

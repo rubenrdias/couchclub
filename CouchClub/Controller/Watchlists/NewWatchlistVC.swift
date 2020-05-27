@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewWatchlistVC: UIViewController {
+class NewWatchlistVC: UIViewController, Storyboarded {
     
     weak var delegate: WatchlistOperationDelegate?
 
