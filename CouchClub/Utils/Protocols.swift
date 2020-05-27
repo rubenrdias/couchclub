@@ -6,7 +6,27 @@
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+protocol Coordinator {
+    var childCoordinators: [Coordinator] { get set }
+    var navigationController: UINavigationController { get set }
+    
+    func start()
+}
+
+protocol Storyboarded {
+    static func instantiate() -> Self
+}
+
+extension Storyboarded where Self: UIViewController {
+    static func instantiate() -> Self {
+        let id = String(describing: self)
+        let storyboardName = UIStoryboard.name(for: id)
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
+        return storyboard.instantiateViewController(withIdentifier: id) as! Self
+    }
+}
 
 protocol HeaderButtonsDelegate: AnyObject {
     func didTapThumbnailsButton()

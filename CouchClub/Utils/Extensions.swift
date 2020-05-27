@@ -10,6 +10,21 @@ import Foundation
 import UIKit
 import Firebase
 
+// MARK: - UIStoryboard
+
+extension UIStoryboard {
+    
+    static func name(for identifier: String) -> String {
+        switch identifier {
+        case "WatchlistsVC", "WatchlistVC", "NewWatchlistVC", "SelectWatchlistVC":
+            return "Watchlists"
+        default:
+            fatalError("Unexpected ViewController type for \(identifier)")
+        }
+    }
+    
+}
+
 // MARK: - UIView
 
 extension UIView {

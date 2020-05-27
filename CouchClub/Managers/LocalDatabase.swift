@@ -165,8 +165,6 @@ final class LocalDatabase {
         }
     }
     
-    func createMovie(from )
-    
     // MARK: - Chatrooms
     
     func fetchChatroom(_ id: UUID) -> Chatroom? {

@@ -20,7 +20,7 @@
         <!--Watchlists-->
         <scene sceneID="dIB-3H-U38">
             <objects>
-                <collectionViewController id="VBi-i0-u3i" customClass="WatchlistsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="WatchlistsVC" id="VBi-i0-u3i" customClass="WatchlistsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jfB-3x-6Kf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

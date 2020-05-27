@@ -10,7 +10,9 @@ import UIKit
 import CoreData
 import FirebaseAuth
 
-class WatchlistsVC: UICollectionViewController {
+class WatchlistsVC: UICollectionViewController, Storyboarded {
+    
+    weak var coordinator: WatchlistCoordinator?
     
     private var itemsPerRow: Int = 1
     private var usableWidth: CGFloat = 0
