@@ -10,7 +10,7 @@ import UIKit
 
 class NewWatchlistVC: UIViewController, Storyboarded {
     
-    weak var delegate: WatchlistOperationDelegate?
+    weak var coordinator: NewWatchlistCoordinator?
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var radioButtons: [UIButton]!
@@ -23,8 +23,6 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if #available(iOS 13.0, *) { isModalInPresentation = true }
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
@@ -45,7 +43,7 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     }
     
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        coordinator?.didFinishCreating(nil)
     }
     
     @IBAction func createButtonTapped(_ sender: UIButton) {
@@ -57,11 +55,7 @@ class NewWatchlistVC: UIViewController, Storyboarded {
                 return
             }
             
-            guard let id = id else { return }
-            
-            self.dismiss(animated: true, completion: {
-                self.delegate?.didCreateWatchlist(id)
-            })
+            self.coordinator?.didFinishCreating(id)
         }
     }
     

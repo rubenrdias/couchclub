@@ -9,14 +9,18 @@
 import Foundation
 import UIKit
 
-class WatchlistsCoordinator: Coordinator {
+class WatchlistsCoordinator: NSObject, Coordinator {
     
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
-    init() {
-        self.navigationController = UINavigationController()
-        navigationController.tabBarItem = UITabBarItem(title: "Watchlists", image: .iconAsset(.watchlists), tag: 0)
+    override init() {
+        let navController = UINavigationController()
+        navController.modalPresentationStyle = .overCurrentContext
+        navController.tabBarItem = UITabBarItem(title: "Watchlists", image: .iconAsset(.watchlists), tag: 0)
+        
+        self.navigationController = navController
+        super.init()
     }
     
     func start() {
@@ -28,14 +32,28 @@ class WatchlistsCoordinator: Coordinator {
     func showDetail(_ watchlist: Watchlist) {
         let vc = WatchlistVC.instantiate()
         vc.coordinator = self
+        vc.watchlist = watchlist
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func newWatchlist(delegate: WatchlistOperationDelegate?) {
-        let child = NewWatchlistCoordinator()
-        child.parentCoordinator = self
+    func newWatchlist() {
+        let child = NewWatchlistCoordinator(parentCoordinator: self)
         childCoordinators.append(child)
-        child.start(delegate: delegate)
+        child.start()
+    }
+    
+    func watchlistCreated(_ id: UUID) {
+        guard let vc = navigationController.viewControllers[0] as? WatchlistsVC else { return }
+        vc.didCreateWatchlist(id)
+    }
+    
+    func childDidFinish(_ child: Coordinator?) {
+        for (index, coordinator) in childCoordinators.enumerated() {
+            if coordinator === child {
+                childCoordinators.remove(at: index)
+                break
+            }
+        }
     }
     
 }

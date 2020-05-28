@@ -11,13 +11,12 @@ import UIKit
 
 class NewWatchlistCoordinator: Coordinator {
 
-    weak var parentCoordinator: Coordinator?
+    weak var parentCoordinator: WatchlistsCoordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
-    private weak var watchlistOperationDelegate: WatchlistOperationDelegate?
-    
-    init() {
+    init(parentCoordinator: WatchlistsCoordinator) {
+        self.parentCoordinator = parentCoordinator
         self.navigationController = UINavigationController()
     }
     
@@ -27,17 +26,19 @@ class NewWatchlistCoordinator: Coordinator {
         }
         
         let vc = NewWatchlistVC.instantiate()
-        vc.delegate = watchlistOperationDelegate
-        
+        vc.coordinator = self
+        if #available(iOS 13.0, *) { vc.isModalInPresentation = true }
         navigationController.pushViewController(vc, animated: false)
         
-        parentNavController.modalPresentationStyle = .overCurrentContext
         parentNavController.present(navigationController, animated: true)
     }
     
-    func start(delegate: WatchlistOperationDelegate?) {
-        watchlistOperationDelegate = delegate
-        start()
+    func didFinishCreating(_ id: UUID?) {
+        if let id = id {
+            parentCoordinator?.watchlistCreated(id)
+        }
+        parentCoordinator?.childDidFinish(self)
+        navigationController.dismiss(animated: true)
     }
     
 }

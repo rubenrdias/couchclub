@@ -41,10 +41,6 @@ protocol ItemSelectionDelegate: SelectionDelegate {
     func didSelectItem(_ id: String)
 }
 
-protocol WatchlistOperationDelegate: AnyObject {
-    func didCreateWatchlist(_ id: UUID)
-}
-
 protocol WatchlistSelectionDelegate: SelectionDelegate {
     func didSelectWatchlist(_ id: UUID)
 }

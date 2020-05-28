@@ -46,32 +46,6 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         }
     }
     
-    private func setupCollectionViewLayout(_ size: CGSize) {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            switch UIDevice.current.orientation {
-            case .portrait, .portraitUpsideDown:
-                itemsPerRow = 2
-            default:
-                itemsPerRow = 3
-            }
-            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
-        } else {
-            itemsPerRow = 1
-            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
-        }
-        
-        usableWidth = size.width - 2 * 16
-        updateItemSize()
-    }
-    
-    private func updateItemSize() {
-        let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
-        let height: CGFloat = width * 11/16
-        
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = .init(width: width, height: height)
-    }
-    
     @objc private func fetchData() {
         DispatchQueue.main.async { [weak self] in
             guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
@@ -141,7 +115,7 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     }()
     
     @objc private func createWatchlist() {
-        coordinator?.newWatchlist(delegate: self)
+        coordinator?.newWatchlist()
     }
     
     private lazy var createWatchlistButtonConstraints: [NSLayoutConstraint] = {
@@ -176,9 +150,42 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         return "\(watched) of \(items.count) \(typeString)\(items.count == 1 ? "" : "s") watched"
     }
     
+    func didCreateWatchlist(_ id: UUID) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
+            self?.coordinator?.showDetail(watchlist)
+        }
+    }
+    
 }
 
 extension WatchlistsVC {
+    
+    private func setupCollectionViewLayout(_ size: CGSize) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            switch UIDevice.current.orientation {
+            case .portrait, .portraitUpsideDown:
+                itemsPerRow = 2
+            default:
+                itemsPerRow = 3
+            }
+            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
+        } else {
+            itemsPerRow = 1
+            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
+        }
+        
+        usableWidth = size.width - 2 * 16
+        updateItemSize()
+    }
+    
+    private func updateItemSize() {
+        let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
+        let height: CGFloat = width * 11/16
+        
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = .init(width: width, height: height)
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return watchlists.count
@@ -198,15 +205,3 @@ extension WatchlistsVC {
     }
     
 }
-
-extension WatchlistsVC: WatchlistOperationDelegate {
-    
-    func didCreateWatchlist(_ id: UUID) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
-            self?.coordinator?.showDetail(watchlist)
-        }
-    }
-    
-}
-
