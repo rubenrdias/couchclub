@@ -8,9 +8,9 @@
 
 import UIKit
 
-class NewChatroomVC: UIViewController {
+class NewChatroomVC: UIViewController, Storyboarded {
     
-    weak var delegate: ChatroomOperationDelegate?
+    weak var coordinator: NewChatroomCoordinator?
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var subjectTitleLabel: UILabel!
@@ -41,18 +41,6 @@ class NewChatroomVC: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SearchVC", let sender = sender as? UIButton {
-            guard let navController = segue.destination as? UINavigationController else { return }
-            guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
-            searchVC.delegate = self
-            searchVC.searchType = sender.tag == 1 ? .movie : .series
-        } else if segue.identifier == "SelectWatchlistVC" {
-            guard let selectWatchlistVC = segue.destination as? SelectWatchlistVC else { return }
-            selectWatchlistVC.delegate = self
-        }
-    }
-    
     deinit {
         print("-- DEINIT -- New Chatroom VC")
     }
@@ -69,9 +57,7 @@ class NewChatroomVC: UIViewController {
         DataCoordinator.shared.createChatroom(title, chatroomType, subjectID) { [weak self] (id, _) in
             // TODO: handle errors
             if let id = id {
-                self?.dismiss(animated: true, completion: {
-                    self?.delegate?.didCreateChatroom(id)
-                })
+                self?.coordinator?.didFinishCreating(id)
             } else {
                 let ac = Alerts.simpleAlert(title: "Error", message: "Something went wrong when creating the chatroom.")
                 self?.present(ac, animated: true, completion: nil)
@@ -90,10 +76,10 @@ class NewChatroomVC: UIViewController {
         
         if sender.tag == 0 {
             chatroomType = .watchlist
-            performSegue(withIdentifier: "SelectWatchlistVC", sender: nil)
+            coordinator?.showWatchlistSelector()
         } else {
             chatroomType = sender.tag == 1 ? .movie : .show
-            performSegue(withIdentifier: "SearchVC", sender: sender)
+            coordinator?.showItemSelector(type: sender.tag == 1 ? .movie : .series)
         }
     }
     
@@ -157,6 +143,37 @@ class NewChatroomVC: UIViewController {
             }
         }
     }
+    
+    func didSelectWatchlist(_ id: UUID) {
+        selectedSubjectID = id.uuidString
+        
+        guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
+        subjectTitleLabel.text = watchlist.title
+        subjectTitleLabel.isHidden = false
+        
+        validateInputs()
+    }
+    
+    func didSelectItem(_ id: String) {
+        selectedSubjectID = id
+        
+        guard let item = LocalDatabase.shared.fetchItem(id) else { return }
+        subjectTitleLabel.text = item.title
+        subjectTitleLabel.isHidden = false
+        
+        validateInputs()
+    }
+    
+    func didCancelSelection() {
+        if selectedSubjectID == nil {
+            chatroomType = nil
+            subjectTitleLabel.text = nil
+            
+            radioButtons.forEach {
+                restoreButton($0)
+            }
+        }
+    }
 
 }
 
@@ -188,41 +205,6 @@ extension NewChatroomVC: UITextViewDelegate {
             return textView.text.count + (text.count - range.length) <= 60
         } else {
             return false
-        }
-    }
-    
-}
-
-extension NewChatroomVC: WatchlistSelectionDelegate, ItemSelectionDelegate {
-    
-    func didSelectWatchlist(_ id: UUID) {
-        selectedSubjectID = id.uuidString
-        
-        guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
-        subjectTitleLabel.text = watchlist.title
-        subjectTitleLabel.isHidden = false
-        
-        validateInputs()
-    }
-    
-    func didSelectItem(_ id: String) {
-        selectedSubjectID = id
-        
-        guard let item = LocalDatabase.shared.fetchItem(id) else { return }
-        subjectTitleLabel.text = item.title
-        subjectTitleLabel.isHidden = false
-        
-        validateInputs()
-    }
-    
-    func didCancelSelection() {
-        if selectedSubjectID == nil {
-            chatroomType = nil
-            subjectTitleLabel.text = nil
-            
-            radioButtons.forEach {
-                restoreButton($0)
-            }
         }
     }
     

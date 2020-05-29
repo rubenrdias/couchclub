@@ -16,8 +16,16 @@ extension UIStoryboard {
     
     static func name(for identifier: String) -> String {
         switch identifier {
-        case "WatchlistsVC", "WatchlistVC", "NewWatchlistVC", "SelectWatchlistVC":
+        case "LoginVC", "CreateAccountVC":
+            return "Login"
+        case "WatchlistsVC", "WatchlistVC", "NewWatchlistVC", "SelectWatchlistVC", "ItemDetailVC":
             return "Watchlists"
+        case "ChatroomsVC", "ChatroomVC", "NewChatroomVC":
+            return "Chatrooms"
+        case "SettingsVC":
+            return "Settings"
+        case "SearchVC":
+            return "Search"
         default:
             fatalError("Unexpected ViewController type for \(identifier)")
         }
@@ -109,6 +117,7 @@ extension UIImage {
         case imdb
         case invite
         case list
+        case more
         case send
         case settings
         case thumbnails

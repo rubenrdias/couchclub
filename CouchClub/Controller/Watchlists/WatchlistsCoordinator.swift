@@ -6,7 +6,6 @@
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class WatchlistsCoordinator: NSObject, Coordinator {
@@ -17,23 +16,27 @@ class WatchlistsCoordinator: NSObject, Coordinator {
     override init() {
         let navController = UINavigationController()
         navController.modalPresentationStyle = .overCurrentContext
-        navController.tabBarItem = UITabBarItem(title: "Watchlists", image: .iconAsset(.watchlists), tag: 0)
+        navController.navigationBar.prefersLargeTitles = true
         
         self.navigationController = navController
         super.init()
-    }
-    
-    func start() {
+        
         let vc = WatchlistsVC.instantiate()
+        vc.tabBarItem = UITabBarItem(title: "Watchlists", image: .iconAsset(.watchlists), tag: 0)
         vc.coordinator = self
-        navigationController.pushViewController(vc, animated: false)
+        self.navigationController.viewControllers = [vc]
     }
     
     func showDetail(_ watchlist: Watchlist) {
         let vc = WatchlistVC.instantiate()
-        vc.coordinator = self
         vc.watchlist = watchlist
         navigationController.pushViewController(vc, animated: true)
+    }
+    
+    func showSearch(watchlist: Watchlist?) {
+        let vc = SearchVC.instantiate()
+        vc.watchlist = watchlist
+        
     }
     
     func newWatchlist() {
@@ -47,13 +50,21 @@ class WatchlistsCoordinator: NSObject, Coordinator {
         vc.didCreateWatchlist(id)
     }
     
-    func childDidFinish(_ child: Coordinator?) {
-        for (index, coordinator) in childCoordinators.enumerated() {
-            if coordinator === child {
-                childCoordinators.remove(at: index)
-                break
-            }
-        }
+}
+
+extension WatchlistsCoordinator: HandlesItemDetail {
+    
+    func showItemDetail(_ item: Item, watchlist: Watchlist?) {
+        let vc = ItemDetailVC.instantiate()
+        vc.coordinator = self
+        vc.hidesBottomBarWhenPushed = true
+        vc.item = item
+        vc.watchlist = watchlist
+        navigationController.pushViewController(vc, animated: true)
     }
+    
+    func didSelectItem(_ id: String) {}
+    
+    func didTapSeen(_ item: Item) {}
     
 }

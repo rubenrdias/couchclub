@@ -8,9 +8,9 @@
 
 import UIKit
 
-class SelectWatchlistVC: UITableViewController {
+class SelectWatchlistVC: UITableViewController, Storyboarded {
     
-    weak var delegate: WatchlistSelectionDelegate?
+    weak var coordinator: NewChatroomCoordinator?
     
     private let cellId = "cellId"
     private let watchlists = LocalDatabase.shared.fetchWatchlists()
@@ -21,12 +21,11 @@ class SelectWatchlistVC: UITableViewController {
         navigationItem.backBarButtonItem?.action = #selector(cancelSelection)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
-        
         tableView.tableFooterView = UIView()
     }
     
     @objc private func cancelSelection() {
-        delegate?.didCancelSelection()
+        coordinator?.didCancelSelection()
     }
     
 }
@@ -47,8 +46,7 @@ extension SelectWatchlistVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let watchlist = watchlists?[indexPath.row] else { return }
-        delegate?.didSelectWatchlist(watchlist.id)
-        navigationController?.popViewController(animated: true)
+        coordinator?.didFinishSelectingWatchlist(id: watchlist.id)
     }
     
 }

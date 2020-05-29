@@ -8,12 +8,12 @@
 
 import UIKit
 
-class SearchVC: UICollectionViewController {
+class SearchVC: UICollectionViewController, Storyboarded {
+    
+    weak var coordinator: NewChatroomCoordinator?
     
     var searchResults = [SearchItem]()
     var searchType: ItemType = .movie
-    
-    weak var delegate: ItemSelectionDelegate?
     
     var watchlist: Watchlist? {
         didSet {
@@ -107,18 +107,17 @@ class SearchVC: UICollectionViewController {
     }
 
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
-        delegate?.didCancelSelection()
-        dismiss(animated: true, completion: nil)
+        coordinator?.didCancelSelection()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SearchItemDetail" {
-            guard let item = sender as? Item else { return }
-            guard let detailVC = segue.destination as? ItemDetailVC else { return }
-            detailVC.selectionDelegate = self
-            detailVC.item = item
-            detailVC.watchlist = watchlist
-        }
+//        if segue.identifier == "SearchItemDetail" {
+//            guard let item = sender as? Item else { return }
+//            guard let detailVC = segue.destination as? ItemDetailVC else { return }
+//            detailVC.selectionDelegate = self
+//            detailVC.item = item
+//            detailVC.watchlist = watchlist
+//        }
     }
     
 }
@@ -192,6 +191,7 @@ extension SearchVC {
                     DispatchQueue.main.async {
                         self?.toggleActivityIndicator()
                         if let show = show {
+                            self?.coordinator?.
                             self?.performSegue(withIdentifier: "SearchItemDetail", sender: show)
                         } else {
                             // TODO: display alert with error message
@@ -233,16 +233,5 @@ extension SearchVC: HeaderButtonsDelegate {
     func didTapListButton() {
         // TODO: change to list
     }
-    
-}
-
-extension SearchVC: ItemSelectionDelegate {
-    
-    func didSelectItem(_ id: String) {
-        delegate?.didSelectItem(id)
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func didCancelSelection() {}
     
 }

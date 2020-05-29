@@ -12,7 +12,15 @@ protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var navigationController: UINavigationController { get set }
     
-    func start()
+    func childDidFinish(_ child: Coordinator?)
+}
+
+extension Coordinator {
+    func childDidFinish(_ child: Coordinator?) {
+        if let index = childCoordinators.firstIndex(where: { $0 === child }) {
+            childCoordinators.remove(at: index)
+        }
+    }
 }
 
 protocol Storyboarded {
@@ -33,24 +41,20 @@ protocol HeaderButtonsDelegate: AnyObject {
     func didTapListButton()
 }
 
-protocol ItemOperationDelegate: AnyObject {
-    func didTapSeen(_ item: Item)
-}
-
-protocol ItemSelectionDelegate: SelectionDelegate {
-    func didSelectItem(_ id: String)
-}
-
-protocol WatchlistSelectionDelegate: SelectionDelegate {
+protocol WatchlistSelectionDelegate: AnyObject {
     func didSelectWatchlist(_ id: UUID)
 }
 
-protocol ChatroomOperationDelegate: AnyObject {
-    func didCreateChatroom(_ id: UUID)
+protocol HandlesItemDetail: ItemSelectionDelegate, ItemOperationDelegate {
+    func showItemDetail(_ item: Item, watchlist: Watchlist?)
 }
 
-protocol SelectionDelegate: AnyObject {
-    func didCancelSelection()
+protocol ItemSelectionDelegate: AnyObject {
+    func didSelectItem(_ id: String)
+}
+
+protocol ItemOperationDelegate: AnyObject {
+    func didTapSeen(_ item: Item)
 }
 
 protocol MessageDelegate: AnyObject {

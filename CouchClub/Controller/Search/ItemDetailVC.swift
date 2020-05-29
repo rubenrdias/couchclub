@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemDetailVC: UIViewController {
+class ItemDetailVC: UIViewController, Storyboarded {
     
     private enum Attribute: String {
         case actors = "actors"
@@ -23,8 +23,7 @@ class ItemDetailVC: UIViewController {
         case runtime = "Runtime"
     }
     
-    weak var delegate: ItemOperationDelegate?
-    weak var selectionDelegate: ItemSelectionDelegate?
+    weak var coordinator: (Coordinator & HandlesItemDetail)?
     
     private var tableView: UITableView!
     @IBOutlet weak var actionButton: RoundedButton!
@@ -95,7 +94,7 @@ class ItemDetailVC: UIViewController {
                 }
             }
         } else {
-            selectionDelegate?.didSelectItem(item.id)
+            coordinator?.didSelectItem(item.id)
         }
     }
     
@@ -274,7 +273,7 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
 extension ItemDetailVC: ItemOperationDelegate {
     
     func didTapSeen(_ item: Item) {
-        delegate?.didTapSeen(item)
+        coordinator?.didTapSeen(item)
     }
     
 }

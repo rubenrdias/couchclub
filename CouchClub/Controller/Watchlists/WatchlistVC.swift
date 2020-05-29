@@ -46,6 +46,11 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
         
         NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistDidChange, object: nil)
         
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(showSearch)),
+            UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped))
+        ]
+        
         collectionView.register(SmallHeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier)
         collectionView.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerCellID)
         collectionView.register(TextCVCell.self, forCellWithReuseIdentifier: TextCVCell.reuseIdentifier)
@@ -63,27 +68,16 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SearchVC" {
-            guard let navController = segue.destination as? UINavigationController else { return }
-            guard let searchVC = navController.viewControllers.first as? SearchVC else { return }
-            searchVC.watchlist = watchlist
-        } else if segue.identifier == "ItemDetailVC" {
-            guard let item = sender as? Item else { return }
-            guard let detailVC = segue.destination as? ItemDetailVC else { return }
-            detailVC.hidesBottomBarWhenPushed = true
-            detailVC.delegate = self
-            detailVC.item = item
-            detailVC.watchlist = watchlist
-        }
-    }
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
         print("-- DEINIT -- Watchlist VC")
     }
     
-    @IBAction func moreButtonTapped(_ sender: UIBarButtonItem) {
+    @objc private func showSearch() {
+        coordinator?.showSearch(watchlist: watchlist)
+    }
+    
+    @objc private func moreButtonTapped(_ sender: UIBarButtonItem) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         ac.view.tintColor = .colorAsset(.dynamicLabel)
         
@@ -260,7 +254,7 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section > 1 {
             let item = watchlistItems[indexPath.item]
-            performSegue(withIdentifier: "ItemDetailVC", sender: item)
+            coordinator?.showItemDetail(item, watchlist: watchlist)
         }
     }
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rr5-w1-Nde">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -12,7 +12,7 @@
         <!--ChatroomVC-->
         <scene sceneID="0bf-0i-yFR">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="11b-q4-XNZ" customClass="ChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ChatroomVC" hidesBottomBarWhenPushed="YES" id="11b-q4-XNZ" customClass="ChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="28" sectionFooterHeight="18" id="ohg-bB-O7C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,76 +39,36 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tfn-Qw-mUR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5864" y="204"/>
+            <point key="canvasLocation" x="5787" y="204"/>
         </scene>
-        <!--Chatrooms-->
-        <scene sceneID="Ngu-ky-lBl">
+        <!--ChatroomsVC-->
+        <scene sceneID="JKd-8T-8HT">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rr5-w1-Nde" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chatrooms" image="chatrooms" id="Gxn-Jq-18P">
-                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-2"/>
-                    </tabBarItem>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="2CG-lk-RIQ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="yx5-s9-GBX" kind="relationship" relationship="rootViewController" id="2vP-5A-DzA"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VjI-s8-fM8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4180" y="204"/>
-        </scene>
-        <!--Chatrooms-->
-        <scene sceneID="K7Z-4u-QWz">
-            <objects>
-                <viewController id="yx5-s9-GBX" customClass="ChatroomsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="TU7-QW-Ugb">
+                <tableViewController storyboardIdentifier="ChatroomsVC" id="AIB-UF-3BZ" customClass="ChatroomsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="75" sectionHeaderHeight="18" sectionFooterHeight="18" id="5BT-ZH-cLb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="75" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="CiN-nk-gTw">
-                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="yx5-s9-GBX" id="wm0-Iz-B8P"/>
-                                    <outlet property="delegate" destination="yx5-s9-GBX" id="Ly1-Zj-nR5"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="9V3-uX-5sG" firstAttribute="trailing" secondItem="CiN-nk-gTw" secondAttribute="trailing" id="6mt-1U-Pt0"/>
-                            <constraint firstItem="CiN-nk-gTw" firstAttribute="leading" secondItem="9V3-uX-5sG" secondAttribute="leading" id="Tk6-pa-0kZ"/>
-                            <constraint firstItem="CiN-nk-gTw" firstAttribute="top" secondItem="9V3-uX-5sG" secondAttribute="top" id="pKS-oW-IQ3"/>
-                            <constraint firstItem="9V3-uX-5sG" firstAttribute="bottom" secondItem="CiN-nk-gTw" secondAttribute="bottom" id="udI-f7-e7a"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="9V3-uX-5sG"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Chatrooms" id="m3F-1v-pjc"/>
-                    <connections>
-                        <outlet property="tableView" destination="CiN-nk-gTw" id="km5-bF-WFL"/>
-                        <segue destination="8eW-MU-P8Z" kind="presentation" identifier="NewChatroomVC" id="tHH-gS-oyk"/>
-                        <segue destination="11b-q4-XNZ" kind="show" identifier="ChatroomVC" id="nOm-99-ta5"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="98i-ce-TAd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <connections>
+                            <outlet property="dataSource" destination="AIB-UF-3BZ" id="MVD-ia-hr4"/>
+                            <outlet property="delegate" destination="AIB-UF-3BZ" id="mdQ-HK-rJY"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NFD-Nn-FLW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5038" y="204"/>
         </scene>
         <!--New Chatroom-->
         <scene sceneID="UUd-91-T6P">
             <objects>
-                <viewController id="69O-JY-xoc" customClass="NewChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewChatroomVC" id="69O-JY-xoc" customClass="NewChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ogu-8p-6M2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ZA-5s-DAL">
-                                <rect key="frame" x="16" y="64" width="382" height="44"/>
+                                <rect key="frame" x="16" y="52" width="382" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Eyn-a9-4b0"/>
                                 </constraints>
@@ -117,7 +77,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Chatroom title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62f-Ul-WsD">
-                                <rect key="frame" x="12" y="108" width="390" height="44"/>
+                                <rect key="frame" x="12" y="96" width="390" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Sh6-Wy-p4H"/>
                                 </constraints>
@@ -129,7 +89,7 @@
                                 </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR CHATTING ABOUT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hb-yG-Mu4">
-                                <rect key="frame" x="16" y="184" width="382" height="44"/>
+                                <rect key="frame" x="16" y="172" width="382" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="S8X-y2-cEY"/>
                                 </constraints>
@@ -138,7 +98,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4Mu-dI-hvc">
-                                <rect key="frame" x="16" y="228" width="382" height="44"/>
+                                <rect key="frame" x="16" y="216" width="382" height="44"/>
                                 <subviews>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSF-5M-HsL">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
@@ -193,7 +153,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="087-zn-hul" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
-                                <rect key="frame" x="16" y="720" width="382" height="56"/>
+                                <rect key="frame" x="16" y="774" width="382" height="56"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="vy6-Fs-d6b"/>
@@ -240,20 +200,18 @@
                         <outletCollection property="radioButtons" destination="KJH-Nx-W6q" collectionClass="NSMutableArray" id="Dlg-zn-BeD"/>
                         <outletCollection property="radioButtons" destination="pWF-8i-bXf" collectionClass="NSMutableArray" id="JZK-cD-FkI"/>
                         <outletCollection property="radioButtons" destination="apT-mC-2YN" collectionClass="NSMutableArray" id="ECq-lG-DKY"/>
-                        <segue destination="ca9-Xe-T0r" kind="show" identifier="SearchVC" id="Rss-n3-HHw"/>
-                        <segue destination="pFF-2k-9Um" kind="show" identifier="SelectWatchlistVC" id="3eM-if-zEf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8gl-as-pBa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5864" y="939"/>
+            <point key="canvasLocation" x="5038" y="883"/>
         </scene>
         <!--Watchlists-->
         <scene sceneID="XNh-1b-2ur">
             <objects>
-                <tableViewController id="pFF-2k-9Um" customClass="SelectWatchlistVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SelectWatchlistVC" id="pFF-2k-9Um" customClass="SelectWatchlistVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="obp-ne-EoP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <connections>
@@ -265,39 +223,10 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pfk-bh-DHq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6709" y="939"/>
-        </scene>
-        <!--Search-->
-        <scene sceneID="HWs-U7-Pa4">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Search" id="ca9-Xe-T0r" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="o5o-sn-ZRL"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aDB-MY-rWa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6463" y="1356"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="V9j-Ub-S7h">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8eW-MU-P8Z" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7gx-7l-S2t">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="69O-JY-xoc" kind="relationship" relationship="rootViewController" id="pnv-hd-AEd"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ypM-MB-qOs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5039" y="939"/>
+            <point key="canvasLocation" x="5787" y="883"/>
         </scene>
     </scenes>
     <resources>
-        <image name="chatrooms" width="24" height="24"/>
         <image name="invite" width="25" height="25"/>
         <image name="more" width="24" height="24"/>
         <namedColor name="Dynamic.BackgroundHighlight">

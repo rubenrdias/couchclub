@@ -22,6 +22,8 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Watchlists"
+        
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .watchlistsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateWatchlist), name: .watchlistDidChange, object: nil)
         

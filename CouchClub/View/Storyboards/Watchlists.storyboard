@@ -9,14 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login-->
-        <scene sceneID="Yp3-nZ-crn">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Login" id="RBo-Vv-K0g" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tBn-DP-xPb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5530" y="-313"/>
-        </scene>
         <!--Watchlists-->
         <scene sceneID="dIB-3H-U38">
             <objects>
@@ -162,15 +154,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ax7-rh-2Ha" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5948" y="842"/>
-        </scene>
-        <!--Search-->
-        <scene sceneID="Uv1-5t-pVG">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Search" id="Bq0-EL-HVo" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UvZ-Xe-9Oh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6617" y="528"/>
+            <point key="canvasLocation" x="6402" y="99"/>
         </scene>
         <!--WatchlistVC-->
         <scene sceneID="WMe-iV-k2l">
@@ -194,11 +178,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KHE-fh-pxx">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="LQr-e4-4Ay">
-                                <connections>
-                                    <segue destination="Bq0-EL-HVo" kind="presentation" identifier="SearchVC" id="ccm-eX-viH"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="LQr-e4-4Ay"/>
                             <barButtonItem image="more" id="ZHC-Ko-efX">
                                 <connections>
                                     <action selector="moreButtonTapped:" destination="bjv-dN-JRy" id="p3V-XD-7Sh"/>
@@ -206,24 +186,21 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
-                    <connections>
-                        <segue destination="NXx-Ng-5bk" kind="show" identifier="ItemDetailVC" id="Sc0-jT-xOJ"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j7c-2K-M1Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5948" y="100"/>
+            <point key="canvasLocation" x="5695" y="99"/>
         </scene>
         <!--Item DetailVC-->
         <scene sceneID="VZD-bh-DTS">
             <objects>
-                <viewController id="NXx-Ng-5bk" customClass="ItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ItemDetailVC" id="NXx-Ng-5bk" customClass="ItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yNI-qB-BTH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbs-Ia-tc0" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
-                                <rect key="frame" x="16" y="636" width="343" height="56"/>
+                                <rect key="frame" x="16" y="690" width="343" height="56"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="YKM-QQ-TYz"/>
@@ -258,7 +235,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fIV-Y8-LNl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6858" y="100"/>
+            <point key="canvasLocation" x="7118" y="98"/>
         </scene>
     </scenes>
     <resources>

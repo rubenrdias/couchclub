@@ -8,14 +8,16 @@
 
 import UIKit
 
-class ChatroomsVC: UIViewController {
+class ChatroomsVC: UITableViewController, Storyboarded {
     
-    @IBOutlet weak var tableView: UITableView!
+    weak var coordinator: ChatroomsCoordinator?
     
     var chatrooms = [Chatroom]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Chatrooms"
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .chatroomsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
@@ -30,19 +32,6 @@ class ChatroomsVC: UIViewController {
         
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectedIndexPath, animated: animated)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NewChatroomVC" {
-            guard let navController = segue.destination as? UINavigationController else { return }
-            guard let newChatroomVC = navController.viewControllers.first as? NewChatroomVC else { return }
-            newChatroomVC.delegate = self
-        }
-        else if segue.identifier == "ChatroomVC" {
-            guard let chatroom = sender as? Chatroom else { return }
-            guard let chatroomVC = segue.destination as? ChatroomVC else { return }
-            chatroomVC.chatroom = chatroom
         }
     }
     
@@ -134,7 +123,7 @@ class ChatroomsVC: UIViewController {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         ac.addAction(UIAlertAction(title: "Create Chatroom", style: .default, handler: { [unowned self] (_) in
-            self.performSegue(withIdentifier: "NewChatroomVC", sender: nil)
+            self.coordinator?.newChatroom()
         }))
         
         ac.addAction(UIAlertAction(title: "Join Chatroom", style: .default, handler: { [unowned self] (_) in
@@ -198,34 +187,51 @@ class ChatroomsVC: UIViewController {
             newChatroomButton.removeFromSuperview()
         }
     }
-
+    
+    func didCreateChatroom(_ id: UUID) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [unowned self] in
+            guard let chatroom = LocalDatabase.shared.fetchChatroom(id) else { return }
+            self.coordinator?.showDetail(chatroom)
+        }
+    }
+    
 }
 
-extension ChatroomsVC: UITableViewDelegate, UITableViewDataSource {
+extension ChatroomsVC {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatrooms.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTVCell.reuseIdentifier, for: indexPath) as! ChatroomTVCell
         cell.chatroom = chatrooms[indexPath.row]
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ChatroomVC", sender: chatrooms[indexPath.row])
-    }
-    
-}
-
-extension ChatroomsVC: ChatroomOperationDelegate {
-    
-    func didCreateChatroom(_ id: UUID) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            guard let watchlist = LocalDatabase.shared.fetchChatroom(id) else { return }
-            self?.performSegue(withIdentifier: "ChatroomVC", sender: watchlist)
-        }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chatroom = chatrooms[indexPath.row]
+        coordinator?.showDetail(chatroom)
     }
     
 }

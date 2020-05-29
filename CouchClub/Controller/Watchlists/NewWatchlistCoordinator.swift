@@ -15,7 +15,7 @@ class NewWatchlistCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
-    init(parentCoordinator: WatchlistsCoordinator) {
+    init(parentCoordinator: WatchlistsCoordinator? = nil) {
         self.parentCoordinator = parentCoordinator
         self.navigationController = UINavigationController()
     }

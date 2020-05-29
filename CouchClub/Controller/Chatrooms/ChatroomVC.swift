@@ -9,16 +9,18 @@
 import UIKit
 import CoreData
 
-class ChatroomVC: UITableViewController {
+class ChatroomVC: UITableViewController, Storyboarded {
     
     var fetchedResultsController: NSFetchedResultsController<Message>!
     
     var chatroom: Chatroom! {
         didSet {
+            title = chatroom.title
             chatroomID = chatroom.id
             chatroomOwner = chatroom.owner
         }
     }
+    
     private var chatroomID: UUID!
     private var chatroomOwner: User!
     
@@ -30,8 +32,6 @@ class ChatroomVC: UITableViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        
-        title = chatroom.title
         
         tableView.backgroundColor = .colorAsset(.dynamicBackground)
         tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)

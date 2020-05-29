@@ -19,11 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         performDefaultObjectsCustomization()
         
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//    
-//        tabBarController = MainTabBarController()
-//        window?.rootViewController = tabBarController
-//        window?.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.main.bounds)
+    
+        tabBarController = MainTabBarController()
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
         
         
         FirebaseApp.configure()
