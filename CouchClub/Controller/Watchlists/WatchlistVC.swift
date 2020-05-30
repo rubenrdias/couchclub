@@ -186,6 +186,18 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
 
 }
 
+extension WatchlistVC: ItemOperationDelegate {
+    
+    func didTapSeen(_ item: Item) {
+        DataCoordinator.shared.toggleWatched(item)
+        
+        if let highlightCell = collectionView.cellForItem(at: .init(item: 0, section: 1)) as? HighlightCVCell {
+            highlightCell.highlightLeft = (calculateItemsWatched(), "Watched")
+        }
+    }
+    
+}
+
 extension WatchlistVC: UICollectionViewDelegateFlowLayout {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -271,19 +283,6 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
             let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
             let height: CGFloat = width * 3/2
             return .init(width: width, height: height)
-        }
-    }
-    
-}
-
-extension WatchlistVC: ItemOperationDelegate {
-    
-    func didTapSeen(_ item: Item) {
-        DataCoordinator.shared.toggleWatched(item)
-        // TODO: handle errors
-        
-        if let highlightCell = collectionView.cellForItem(at: .init(item: 0, section: 1)) as? HighlightCVCell {
-            highlightCell.highlightLeft = (calculateItemsWatched(), "Watched")
         }
     }
     

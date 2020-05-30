@@ -204,12 +204,8 @@ final class DataCoordinator {
         
         LocalDatabase.shared.toggleWatched(item)
         
-        if let watchlists = item.watchlists?.allObjects as? [Watchlist] {
-            watchlists.forEach {
-                let info = ["watchlistID": $0.id]
-                NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
-            }
-        }
+        let info = ["item": item]
+        NotificationCenter.default.post(name: .itemWatchedStatusChanged, object: nil, userInfo: info)
     }
     
     // MARK: - Chatrooms

@@ -41,16 +41,24 @@ protocol HeaderButtonsDelegate: AnyObject {
     func didTapListButton()
 }
 
+protocol SelectionDelegate: WatchlistSelectionDelegate & ItemSelectionDelegate {
+    func didCancelSelection()
+}
+
 protocol WatchlistSelectionDelegate: AnyObject {
     func didSelectWatchlist(_ id: UUID)
 }
 
-protocol HandlesItemDetail: ItemSelectionDelegate, ItemOperationDelegate {
+protocol HandlesItemDetail {
     func showItemDetail(_ item: Item, watchlist: Watchlist?)
 }
 
 protocol ItemSelectionDelegate: AnyObject {
     func didSelectItem(_ id: String)
+}
+
+protocol ItemActionDelegate: AnyObject {
+    func didTapActionButton(_ item: Item)
 }
 
 protocol ItemOperationDelegate: AnyObject {

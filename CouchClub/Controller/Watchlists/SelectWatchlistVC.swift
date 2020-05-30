@@ -46,7 +46,7 @@ extension SelectWatchlistVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let watchlist = watchlists?[indexPath.row] else { return }
-        coordinator?.didFinishSelectingWatchlist(id: watchlist.id)
+        coordinator?.didSelectWatchlist(watchlist.id)
     }
     
 }

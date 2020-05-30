@@ -39,26 +39,10 @@ class NewChatroomCoordinator: Coordinator {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func didFinishSelectingWatchlist(id: UUID) {
-        guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
-        vc.didSelectWatchlist(id)
-        navigationController.popViewController(animated: true)
-    }
-    
-    func didSelectWatchlist(id: UUID) {
-        guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
-        vc.didSelectWatchlist(id)
-    }
-    
     func showItemSelector(type: ItemType) {
-        let vc = SearchVC.instantiate()
-        vc.searchType = type
-    }
-    
-    func didCancelSelection() {
-        guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
-        vc.didCancelSelection()
-        navigationController.dismiss(animated: true)
+        // TODO: present search VC for item type
+//        let vc = SearchVC.instantiate()
+//        vc.searchType = type
     }
     
     func didFinishCreating(_ id: UUID?) {
@@ -71,29 +55,24 @@ class NewChatroomCoordinator: Coordinator {
     
 }
 
-extension NewChatroomCoordinator: HandlesItemDetail {
+extension NewChatroomCoordinator: SelectionDelegate {
     
-    func showItemDetail(_ item: Item, watchlist: Watchlist?) {
-        guard let parentNavController = parentCoordinator?.navigationController else {
-            fatalError("NewChatroomCoordinator should be started from within a parent coordinator.")
-        }
-        
-        let vc = ItemDetailVC.instantiate()
-        vc.coordinator = self
-        vc.item = item
-        vc.watchlist = watchlist
-        
-        parentNavController.present(vc, animated: true)
-    }
-    
-    func didTapSeen(_ item: Item) {
-        <#code#>
+    func didSelectWatchlist(_ id: UUID) {
+        guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
+        vc.didSelectWatchlist(id)
+        navigationController.popViewController(animated: true)
     }
     
     func didSelectItem(_ id: String) {
         guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
         vc.didSelectItem(id)
-        navigationController.popViewController(animated: true)
+        navigationController.dismiss(animated: true)
+    }
+    
+    func didCancelSelection() {
+        guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
+        vc.didCancelSelection()
+        navigationController.dismiss(animated: true)
     }
     
 }

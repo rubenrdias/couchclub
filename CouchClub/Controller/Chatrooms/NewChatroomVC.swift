@@ -46,7 +46,7 @@ class NewChatroomVC: UIViewController, Storyboarded {
     }
     
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        coordinator?.didFinishCreating(nil)
     }
     
     @IBAction func createButtonTapped(_ sender: UIButton) {

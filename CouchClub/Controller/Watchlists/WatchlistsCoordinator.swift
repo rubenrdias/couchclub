@@ -29,14 +29,15 @@ class WatchlistsCoordinator: NSObject, Coordinator {
     
     func showDetail(_ watchlist: Watchlist) {
         let vc = WatchlistVC.instantiate()
+        vc.coordinator = self
         vc.watchlist = watchlist
         navigationController.pushViewController(vc, animated: true)
     }
     
     func showSearch(watchlist: Watchlist?) {
-        let vc = SearchVC.instantiate()
-        vc.watchlist = watchlist
-        
+        let child = SearchCoordinator(parentCoordinator: self, watchlist: watchlist)
+        childCoordinators.append(child)
+        child.start()
     }
     
     func newWatchlist() {
@@ -52,7 +53,7 @@ class WatchlistsCoordinator: NSObject, Coordinator {
     
 }
 
-extension WatchlistsCoordinator: HandlesItemDetail {
+extension WatchlistsCoordinator: HandlesItemDetail, ItemSelectionDelegate, ItemActionDelegate {
     
     func showItemDetail(_ item: Item, watchlist: Watchlist?) {
         let vc = ItemDetailVC.instantiate()
@@ -65,6 +66,6 @@ extension WatchlistsCoordinator: HandlesItemDetail {
     
     func didSelectItem(_ id: String) {}
     
-    func didTapSeen(_ item: Item) {}
+    func didTapActionButton(_ item: Item) {}
     
 }

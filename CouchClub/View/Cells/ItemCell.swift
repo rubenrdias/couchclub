@@ -121,7 +121,7 @@ class ItemCell: UICollectionViewCell {
         delegate?.didTapSeen(item)
     }
     
-    private func updateWatchedButtonIcon(inverted: Bool = false) {
+    func updateWatchedButtonIcon(inverted: Bool = false) {
         let markAsWatched = inverted ? item.watched : !item.watched
         
         if markAsWatched {

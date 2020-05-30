@@ -209,8 +209,8 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Add to Watchlist"/>
                                 <connections>
+                                    <action selector="actionButtonTapped:" destination="NXx-Ng-5bk" eventType="touchUpInside" id="huF-HD-k6t"/>
                                     <action selector="createButtonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="wcP-UR-qmN"/>
-                                    <action selector="watchlistButtonTapped:" destination="NXx-Ng-5bk" eventType="touchUpInside" id="huF-HD-k6t"/>
                                 </connections>
                             </button>
                         </subviews>

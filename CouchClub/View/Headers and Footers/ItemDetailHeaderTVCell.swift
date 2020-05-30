@@ -10,8 +10,6 @@ import UIKit
 
 class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     
-    weak var delegate: ItemOperationDelegate?
-    
     static let reuseIdentifier = "ItemDetailHeaderTVCell"
     
     var item: Item! {
@@ -88,25 +86,15 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         return lbl
     }()
     
-    private lazy var seenButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(seenButtonTapped), for: .touchUpInside)
-        btn.imageEdgeInsets = .init(top: 2, left: 2, bottom: 2, right: 2)
-        btn.setImage(UIImage.iconAsset(.checkmark), for: .normal)
-        btn.tintColor = .colorAsset(.dynamicLabelSecondary)
-        return btn
-    }()
-    
-    private lazy var favoriteButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
-        btn.imageEdgeInsets = .init(top: 2, left: 2, bottom: 2, right: 2)
-        btn.setImage(UIImage.iconAsset(.heart), for: .normal)
-        btn.tintColor = .colorAsset(.dynamicLabelSecondary)
-        return btn
-    }()
+//    private lazy var favoriteButton: UIButton = {
+//        let btn = UIButton(type: .system)
+//        btn.translatesAutoresizingMaskIntoConstraints = false
+//        btn.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
+//        btn.imageEdgeInsets = .init(top: 2, left: 2, bottom: 2, right: 2)
+//        btn.setImage(UIImage.iconAsset(.heart), for: .normal)
+//        btn.tintColor = .colorAsset(.dynamicLabelSecondary)
+//        return btn
+//    }()
     
     private lazy var spacer1 = UIView.spacerView()
     private lazy var spacer2 = UIView.spacerView()
@@ -114,7 +102,6 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
     private func setupText() {
         ratingsContainerView.addSubview(imdbIconView)
         ratingsContainerView.addSubview(ratingsLabel)
-        ratingsContainerView.addSubview(seenButton)
 //        ratingsContainerView.addSubview(favoriteButton)
         
         contentView.addSubview(stackView)
@@ -128,13 +115,8 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
             ratingsLabel.leadingAnchor.constraint(equalTo: imdbIconView.trailingAnchor, constant: 8),
             ratingsLabel.centerYAnchor.constraint(equalTo: ratingsContainerView.centerYAnchor),
             
-            NSLayoutConstraint(item: seenButton, attribute: .height, relatedBy: .equal, toItem: seenButton, attribute: .width, multiplier: 1, constant: 0),
 //            NSLayoutConstraint(item: favoriteButton, attribute: .height, relatedBy: .equal, toItem: favoriteButton, attribute: .width, multiplier: 1, constant: 0),
 
-            seenButton.heightAnchor.constraint(equalTo: ratingsContainerView.heightAnchor),
-            seenButton.centerYAnchor.constraint(equalTo: ratingsContainerView.centerYAnchor),
-            seenButton.trailingAnchor.constraint(equalTo: ratingsContainerView.trailingAnchor),
-//            seenButton.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor),
 //            favoriteButton.heightAnchor.constraint(equalTo: ratingsContainerView.heightAnchor),
 //            favoriteButton.centerYAnchor.constraint(equalTo: ratingsContainerView.centerYAnchor),
 //            favoriteButton.trailingAnchor.constraint(equalTo: ratingsContainerView.trailingAnchor),
@@ -159,8 +141,6 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         } else {
             setImageUnavailable()
         }
-        
-        updateWatchedButtonIcon(inverted: true)
     }
     
     private func setImageUnavailable() {
@@ -169,28 +149,13 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         imageView.image = UIImage.iconAsset(.imageUnavailable)
     }
     
-    @objc private func seenButtonTapped() {
-        updateWatchedButtonIcon()
-        delegate?.didTapSeen(item)
-    }
-    
-    private func updateWatchedButtonIcon(inverted: Bool = false) {
-        let markAsWatched = inverted ? item.watched : !item.watched
-        
-        if markAsWatched {
-            seenButton.tintColor = UIColor.systemOrange
-        } else {
-            seenButton.tintColor = .colorAsset(.dynamicLabelSecondary)
-        }
-    }
-    
-    @objc private func favoriteButtonTapped() {
-        if favoriteButton.tintColor == UIColor.systemOrange {
-            favoriteButton.tintColor = .colorAsset(.dynamicLabelSecondary)
-        } else {
-            favoriteButton.tintColor = UIColor.systemOrange
-        }
-    }
+//    @objc private func favoriteButtonTapped() {
+//        if favoriteButton.tintColor == UIColor.systemOrange {
+//            favoriteButton.tintColor = .colorAsset(.dynamicLabelSecondary)
+//        } else {
+//            favoriteButton.tintColor = UIColor.systemOrange
+//        }
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

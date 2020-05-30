@@ -23,7 +23,7 @@ class ItemDetailVC: UIViewController, Storyboarded {
         case runtime = "Runtime"
     }
     
-    weak var coordinator: (Coordinator & HandlesItemDetail)?
+    weak var coordinator: (Coordinator & ItemSelectionDelegate & ItemActionDelegate)?
     
     private var tableView: UITableView!
     @IBOutlet weak var actionButton: RoundedButton!
@@ -64,29 +64,31 @@ class ItemDetailVC: UIViewController, Storyboarded {
         // TODO: start chatroom...
     }
     
-    @IBAction func watchlistButtonTapped(_ sender: UIButton) {
+    @IBAction func actionButtonTapped(_ sender: UIButton) {
         if let watchlist = watchlist {
             if shouldAddToList {
-                DataCoordinator.shared.addToWatchlist(item, watchlist) { [weak self] error in
+                DataCoordinator.shared.addToWatchlist(item, watchlist) { [weak self, weak item] error in
                     if let error = error {
                         let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                         self?.present(alert, animated: true)
                     } else {
                         let ac = Alerts.simpleAlert(title: "Added!", message: "The watchlist has been updated.") { _ in
-                            self?.navigationController?.popViewController(animated: true)
+                            guard let item = item else { return }
+                            self?.coordinator?.didTapActionButton(item)
                         }
                         
                         self?.present(ac, animated: true, completion: nil)
                     }
                 }
             } else {
-                DataCoordinator.shared.removeFromWatchlist(item, watchlist) { [weak self] error in
+                DataCoordinator.shared.removeFromWatchlist(item, watchlist) { [weak self, weak item] error in
                     if let error = error {
                         let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                         self?.present(alert, animated: true)
                     } else {
                         let ac = Alerts.simpleAlert(title: "Removed!", message: "The watchlist has been updated.") { _ in
-                            self?.navigationController?.popViewController(animated: true)
+                            guard let item = item else { return }
+                            self?.coordinator?.didTapActionButton(item)
                         }
                         
                         self?.present(ac, animated: true, completion: nil)
@@ -201,7 +203,6 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ItemDetailHeaderTVCell.reuseIdentifier) as! ItemDetailHeaderTVCell
-            headerView.delegate = self
             headerView.item = item
             return headerView
         } else {
@@ -266,14 +267,6 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             return UITableView.automaticDimension
         }
-    }
-    
-}
-
-extension ItemDetailVC: ItemOperationDelegate {
-    
-    func didTapSeen(_ item: Item) {
-        coordinator?.didTapSeen(item)
     }
     
 }

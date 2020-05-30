@@ -10,7 +10,7 @@ import UIKit
 
 class SearchVC: UICollectionViewController, Storyboarded {
     
-    weak var coordinator: NewChatroomCoordinator?
+    weak var coordinator: SearchCoordinator?
     
     var searchResults = [SearchItem]()
     var searchType: ItemType = .movie
@@ -32,6 +32,12 @@ class SearchVC: UICollectionViewController, Storyboarded {
         super.viewDidLoad()
         
         if #available(iOS 13.0, *) { isModalInPresentation = true }
+        
+        if watchlist != nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishSearch))
+        } else {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(finishSearch))
+        }
         
         collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
         collectionView.register(SmallHeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier)
@@ -65,6 +71,10 @@ class SearchVC: UICollectionViewController, Storyboarded {
     
     deinit {
         print("-- DEINIT -- Search VC")
+    }
+
+    @objc private func finishSearch() {
+        coordinator?.didFinishSearch()
     }
     
     private func setupCollectionViewLayout(_ size: CGSize) {
@@ -104,20 +114,6 @@ class SearchVC: UICollectionViewController, Storyboarded {
             navigationItem.leftBarButtonItem = nil
             collectionView.isUserInteractionEnabled = true
         }
-    }
-
-    @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
-        coordinator?.didCancelSelection()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "SearchItemDetail" {
-//            guard let item = sender as? Item else { return }
-//            guard let detailVC = segue.destination as? ItemDetailVC else { return }
-//            detailVC.selectionDelegate = self
-//            detailVC.item = item
-//            detailVC.watchlist = watchlist
-//        }
     }
     
 }
@@ -168,14 +164,15 @@ extension SearchVC {
         switch searchType {
         case .movie:
             if let movie = LocalDatabase.shared.fetchItem(item.id) as? Movie {
-                performSegue(withIdentifier: "SearchItemDetail", sender: movie)
+                coordinator?.showItemDetail(movie, watchlist: watchlist)
             } else {
                 toggleActivityIndicator()
                 DataCoordinator.shared.getMovie(item.id) { [weak self] movie in
                     DispatchQueue.main.async {
-                        self?.toggleActivityIndicator()
+                        guard self != nil else { return }
+                        self!.toggleActivityIndicator()
                         if let movie = movie {
-                            self?.performSegue(withIdentifier: "SearchItemDetail", sender: movie)
+                            self!.coordinator?.showItemDetail(movie, watchlist: self!.watchlist)
                         } else {
                             // TODO: display alert with error message
                         }
@@ -184,15 +181,15 @@ extension SearchVC {
             }
         case .series:
             if let show = LocalDatabase.shared.fetchItem(item.id) as? Show {
-                performSegue(withIdentifier: "SearchItemDetail", sender: show)
+                coordinator?.showItemDetail(show, watchlist: watchlist)
             } else {
                 toggleActivityIndicator()
                 DataCoordinator.shared.getShow(item.id) { [weak self] show in
                     DispatchQueue.main.async {
-                        self?.toggleActivityIndicator()
+                        guard self != nil else { return }
+                        self!.toggleActivityIndicator()
                         if let show = show {
-                            self?.coordinator?.
-                            self?.performSegue(withIdentifier: "SearchItemDetail", sender: show)
+                            self!.coordinator?.showItemDetail(show, watchlist: self!.watchlist)
                         } else {
                             // TODO: display alert with error message
                         }

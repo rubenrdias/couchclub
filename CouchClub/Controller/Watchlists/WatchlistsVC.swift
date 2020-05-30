@@ -26,6 +26,7 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .watchlistsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateWatchlist), name: .watchlistDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemSeenStatusUpdated), name: .itemWatchedStatusChanged, object: nil)
         
         collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
         
@@ -59,12 +60,10 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     }
     
     @objc private func updateWatchlist(_ notification: Notification) {
-        guard let info = notification.userInfo else { return }
+        guard let watchlistID = notification.userInfo?["watchlistID"] as? UUID else { return }
         
-        if let watchlistID = info["watchlistID"] as? UUID {
-            if let index = watchlists.firstIndex(where: { $0.id == watchlistID }) {
-                collectionView.reloadItems(at: [.init(item: index, section: 0)])
-            }
+        if let index = watchlists.firstIndex(where: { $0.id == watchlistID }) {
+            collectionView.reloadItems(at: [.init(item: index, section: 0)])
         }
     }
     
@@ -141,6 +140,12 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
             noDataLabel.removeFromSuperview()
             createWatchlistButton.removeFromSuperview()
         }
+    }
+        
+    @objc private func itemSeenStatusUpdated(_ notification: Notification) {
+        guard let item = notification.userInfo?["item"] as? Item else { return }
+
+        // TODO: reload watchlist cells containing the updated item
     }
     
     private func calculateItemsWatched(_ watchlist: Watchlist) -> String {

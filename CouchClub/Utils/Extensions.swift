@@ -18,9 +18,9 @@ extension UIStoryboard {
         switch identifier {
         case "LoginVC", "CreateAccountVC":
             return "Login"
-        case "WatchlistsVC", "WatchlistVC", "NewWatchlistVC", "SelectWatchlistVC", "ItemDetailVC":
+        case "WatchlistsVC", "WatchlistVC", "NewWatchlistVC", "ItemDetailVC":
             return "Watchlists"
-        case "ChatroomsVC", "ChatroomVC", "NewChatroomVC":
+        case "ChatroomsVC", "ChatroomVC", "NewChatroomVC", "SelectWatchlistVC":
             return "Chatrooms"
         case "SettingsVC":
             return "Settings"
@@ -200,6 +200,9 @@ extension Notification.Name {
     // watchlists
     static let watchlistsDidChange = Notification.Name("watchlistsDidChange")
     static let watchlistDidChange = Notification.Name("watchlistDidChange")
+    
+    // items
+    static let itemWatchedStatusChanged = Notification.Name("itemWatchedStatusChanged")
     
     // chatrooms
     static let chatroomsDidChange = Notification.Name("chatroomsDidChange")
