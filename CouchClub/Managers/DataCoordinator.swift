@@ -295,9 +295,9 @@ final class DataCoordinator {
               let ownerID = data["owner"] as? String,
               let typeString = data["type"] as? String,
               let type = ChatroomType(rawValue: typeString) else {
-                // TODO: crete invalid data error
-                completion(nil, nil)
-                return
+            // TODO: crete invalid data error
+            completion(nil, nil)
+            return
         }
     
         fetchUser(id: ownerID) { [unowned self] (user, error) in
@@ -318,7 +318,7 @@ final class DataCoordinator {
             case .movie:
                 self.getMovie(subjectID) { (movie) in
                     guard let movie = movie else {
-                        // TODO: crete movie fetch error
+                        // TODO: create movie fetch error
                         completion(nil, nil)
                         return
                     }

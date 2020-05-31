@@ -17,14 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var tabBarController: MainTabBarController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        performDefaultObjectsCustomization()
-        
         window = UIWindow(frame: UIScreen.main.bounds)
     
         tabBarController = MainTabBarController()
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
+        performDefaultObjectsCustomization()
         
         FirebaseApp.configure()
         DataCoordinator.shared.createCurrentUserObject { (userExists) in

@@ -72,6 +72,8 @@ extension WatchlistsCoordinator: HandlesItemDetail, ItemSelectionDelegate, ItemA
     
     func didSelectItem(_ id: String) {}
     
-    func didTapActionButton(_ item: Item) {}
+    func didTapActionButton(_ item: Item) {
+        navigationController.popViewController(animated: true)
+    }
     
 }

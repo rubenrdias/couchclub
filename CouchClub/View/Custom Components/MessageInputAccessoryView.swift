@@ -36,16 +36,24 @@ class MessageInputAccessoryView: UIView {
         super.init(frame: frame)
         
         autoresizingMask = .flexibleHeight
-        backgroundColor = .colorAsset(.dynamicBackground)
+        backgroundColor = .colorAsset(.dynamicBackgroundTranslucent)
         
         let lineSeparatorView = UIView()
         lineSeparatorView.translatesAutoresizingMaskIntoConstraints = false
         lineSeparatorView.backgroundColor = .colorAsset(.dynamicSeparator)
         
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        
         addSubview(sendButton)
         addSubview(messageTextView)
         addSubview(lineSeparatorView)
+        insertSubview(blurView, at: 0)
         NSLayoutConstraint.activate([
+            blurView.heightAnchor.constraint(equalTo: heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: widthAnchor),
+            
             sendButton.widthAnchor.constraint(equalToConstant: 32),
             sendButton.heightAnchor.constraint(equalToConstant: 32),
             sendButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),

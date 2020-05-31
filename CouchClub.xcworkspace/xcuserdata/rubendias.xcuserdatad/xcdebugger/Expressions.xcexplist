@@ -3,17 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ChatroomTVCell.getThumbnailImage():ChatroomTVCell.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "chatroom.title">
-            </PersistentString>
-            <PersistentString
-               value = "chatroom.subjectID">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "SearchCoordinator.start():SearchCoordinator.swift">
          <PersistentStrings>
             <PersistentString
@@ -30,6 +19,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ChatroomTVCell.getThumbnailImage():ChatroomTVCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "chatroom.subjectID">
+            </PersistentString>
+            <PersistentString
+               value = "chatroom.title">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in FirebaseService.fetchChatroomDetails(_:completion:):FirebaseService.swift">
          <PersistentStrings>
             <PersistentString
@@ -42,6 +42,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self?.chatrooms">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #2 in ItemDetailVC.actionButtonTapped(_:):ItemDetailVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self?.coordinator">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

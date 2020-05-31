@@ -33,16 +33,16 @@ class Alerts {
     
     static func simpleAlert(title: String?, message: String?, action: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        ac.view.tintColor = UIColor.systemOrange
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
         
-        ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: action))
+        ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: action))
         
         return ac
     }
     
     static func deletionAlert(title: String?, message: String?, action: ((UIAlertAction) -> Void)?) -> UIAlertController {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        ac.view.tintColor = UIColor.systemOrange
+        ac.view.tintColor = .colorAsset(.dynamicLabel)
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
@@ -86,7 +86,7 @@ class Alerts {
             ])
             
             // title
-            self.activityIndicatorTitleLabel = UILabel.standardLabel(.body, .bold, .colorAsset(.dynamicLabel))
+            self.activityIndicatorTitleLabel = UILabel.standardLabel(.body, .semibold, .colorAsset(.dynamicLabel))
             self.activityIndicatorTitleLabel?.text = title
             self.activityIndicatorTitleLabel?.numberOfLines = 0
             self.activityIndicatorTitleLabel?.textAlignment = .center
@@ -185,6 +185,7 @@ class Alerts {
         self.activityIndicatorSubtitleLabel = nil
         self.activityIndicatorButton?.removeFromSuperview()
         self.activityIndicatorButtonAction = nil
+        self.activityIndicatorDismissAction = nil
         self.activityIndicatorSpinner?.removeFromSuperview()
         self.activityIndicatorSpinner = nil
         
@@ -211,12 +212,16 @@ class Alerts {
     @objc private func dismissInstantly() {
         if !self.isPresenting { return }
         
+        if let tapGesture = self.activityDismissGesture {
+            self.activityIndicatorBackgroundView?.removeGestureRecognizer(tapGesture)
+            self.activityDismissGesture = nil
+        }
+        
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: 0.25, animations: {
                 self.activityIndicatorBackgroundView?.alpha = 0
                 self.activityIndicatorContentView?.alpha = 0
             }) { _ in
-                self.activityDismissGesture = nil
                 self.activityIndicatorTitleLabel?.removeFromSuperview()
                 self.activityIndicatorTitleLabel = nil
                 self.activityIndicatorSubtitleLabel?.removeFromSuperview()

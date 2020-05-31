@@ -11,6 +11,8 @@ import CoreData
 
 class ChatroomVC: UITableViewController, Storyboarded {
     
+    weak var coordinator: ChatroomsCoordinator?
+    
     var fetchedResultsController: NSFetchedResultsController<Message>!
     
     var chatroom: Chatroom! {
@@ -23,6 +25,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
     
     private var chatroomID: UUID!
     private var chatroomOwner: User!
+    private var leavingChatroom: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +57,13 @@ class ChatroomVC: UITableViewController, Storyboarded {
     
     @objc private func chatroomsWereUpdated() {
         DispatchQueue.main.async { [weak self] in
+            guard let leavingChatroom = self?.leavingChatroom, !leavingChatroom else { return }
+            
             let chatrooms = LocalDatabase.shared.fetchChatrooms()
             if chatrooms?.firstIndex(where: { $0.id == self?.chatroomID }) == nil, self?.chatroomOwner.id != FirebaseService.currentUserID {
                 let alert = Alerts.simpleAlert(title: "Chatroom was deleted", message: "The chatroom owner has deleted this chatroom. It will now be deleted from the device.") { _ in
                     self?.resignFirstResponder()
-                    self?.navigationController?.popViewController(animated: true)
+                    self?.coordinator?.chatroomDismissed()
                 }
                 self?.present(alert, animated: true)
             }
@@ -98,7 +103,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
                             let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                             self.present(alert, animated: true)
                         } else {
-                            self.navigationController?.popViewController(animated: true)
+                            self.coordinator?.chatroomDismissed()
                         }
                     }
                 }
@@ -108,13 +113,16 @@ class ChatroomVC: UITableViewController, Storyboarded {
         }
         
         ac.addAction(UIAlertAction(title: "Leave Chatroom", style: .destructive) { [unowned self] _ in
+            self.leavingChatroom = true
+            
             let deletionAlert = Alerts.deletionAlert(title: "Are you sure?", message: "You can only rejoin later by with an invite code.") { _ in
                 DataCoordinator.shared.leaveChatroom(self.chatroom) { error in
                     if let error = error {
                         let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                         self.present(alert, animated: true)
+                        self.leavingChatroom = false
                     } else {
-                        self.navigationController?.popViewController(animated: true)
+                        self.coordinator?.chatroomDismissed()
                     }
                 }
             }

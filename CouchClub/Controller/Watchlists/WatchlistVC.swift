@@ -48,7 +48,7 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
         NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistDidChange, object: nil)
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(showSearch)),
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showSearch)),
             UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped))
         ]
         

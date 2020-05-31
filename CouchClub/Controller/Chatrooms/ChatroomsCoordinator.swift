@@ -29,6 +29,7 @@ class ChatroomsCoordinator: NSObject, Coordinator {
     
     func showDetail(_ chatroom: Chatroom) {
         let vc = ChatroomVC.instantiate()
+        vc.coordinator = self
         vc.chatroom = chatroom
         navigationController.pushViewController(vc, animated: true)
     }
@@ -42,6 +43,10 @@ class ChatroomsCoordinator: NSObject, Coordinator {
     func chatroomCreated(_ id: UUID) {
         guard let vc = navigationController.viewControllers[0] as? ChatroomsVC else { return }
         vc.didCreateChatroom(id)
+    }
+    
+    func chatroomDismissed() {
+        navigationController.popViewController(animated: true)
     }
     
 }
