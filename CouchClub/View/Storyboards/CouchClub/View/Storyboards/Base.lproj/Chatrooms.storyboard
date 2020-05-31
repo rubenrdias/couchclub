@@ -12,8 +12,9 @@
         <!--ChatroomVC-->
         <scene sceneID="0bf-0i-yFR">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tfn-Qw-mUR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="ChatroomVC" hidesBottomBarWhenPushed="YES" id="11b-q4-XNZ" customClass="ChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="28" sectionFooterHeight="18" id="ohg-bB-O7C">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="28" sectionFooterHeight="16" id="ohg-bB-O7C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -24,25 +25,36 @@
                     </tableView>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="mB7-3g-SZz"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tfn-Qw-mUR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5787" y="204"/>
         </scene>
         <!--ChatroomsVC-->
-        <scene sceneID="JKd-8T-8HT">
+        <scene sceneID="YNk-7z-HHS">
             <objects>
-                <tableViewController storyboardIdentifier="ChatroomsVC" id="AIB-UF-3BZ" customClass="ChatroomsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="75" sectionHeaderHeight="18" sectionFooterHeight="18" id="5BT-ZH-cLb">
+                <viewController storyboardIdentifier="ChatroomsVC" id="myg-cD-Iup" customClass="ChatroomsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ugf-Kr-ZTo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="75" sectionHeaderHeight="16" sectionFooterHeight="16" translatesAutoresizingMaskIntoConstraints="NO" id="8Nd-1p-wrm">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="AIB-UF-3BZ" id="MVD-ia-hr4"/>
-                            <outlet property="delegate" destination="AIB-UF-3BZ" id="mdQ-HK-rJY"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NFD-Nn-FLW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <constraints>
+                            <constraint firstItem="8Nd-1p-wrm" firstAttribute="top" secondItem="Vle-ls-RlB" secondAttribute="top" id="3st-nL-ATO"/>
+                            <constraint firstItem="8Nd-1p-wrm" firstAttribute="leading" secondItem="Vle-ls-RlB" secondAttribute="leading" id="aWh-zY-bGS"/>
+                            <constraint firstItem="Vle-ls-RlB" firstAttribute="trailing" secondItem="8Nd-1p-wrm" secondAttribute="trailing" id="ix6-0x-cax"/>
+                            <constraint firstAttribute="bottom" secondItem="8Nd-1p-wrm" secondAttribute="bottom" id="wCh-cP-3g8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Vle-ls-RlB"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="8Nd-1p-wrm" id="XLP-li-7Zi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B72-Tz-sTV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5038" y="204"/>
         </scene>

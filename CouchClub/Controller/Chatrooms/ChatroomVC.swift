@@ -38,13 +38,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
-        tableView.backgroundColor = .colorAsset(.dynamicBackground)
-        tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
-        
-        tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
-        tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
-        
-        setupFetchedResultsController()
+        configureTableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -135,7 +129,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
     @objc private func inviteButtonTapped(_ sender: Any) {
         inputAccessoryViewContainer.dismissKeyboard()
         resignFirstResponder()
-        Alerts.shared.presentInviteCodeShareDialog(chatroom.inviteCode, action: copyInviteCodeToClipboard)
+        Alerts.shared.presentInviteCodeShareDialog(chatroom.inviteCode, action: copyInviteCodeToClipboard, dismissAction: dismissInviteCodeDialog)
     }
     
     func copyInviteCodeToClipboard() {
@@ -143,6 +137,10 @@ class ChatroomVC: UITableViewController, Storyboarded {
         Alerts.shared.dismissActivityAlert(message: "Copied to clipboard!") { [weak self] in
             self?.becomeFirstResponder()
         }
+    }
+    
+    func dismissInviteCodeDialog() {
+        becomeFirstResponder()
     }
     
     private func setupFetchedResultsController() {
@@ -191,6 +189,16 @@ extension ChatroomVC: MessageDelegate {
 
 extension ChatroomVC {
     
+    private func configureTableView() {
+        tableView.backgroundColor = .colorAsset(.dynamicBackground)
+        tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
+        
+        tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
+        tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
+        
+        setupFetchedResultsController()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         guard let sections = fetchedResultsController.sections else { return 0 }
         return sections.count
@@ -203,14 +211,6 @@ extension ChatroomVC {
         headerView.text = messageSectionFormatter.string(from: firstItem.date)
         headerView.useCenteredText = true
         return headerView
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 16
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

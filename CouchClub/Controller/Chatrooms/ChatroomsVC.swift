@@ -8,9 +8,11 @@
 
 import UIKit
 
-class ChatroomsVC: UITableViewController, Storyboarded {
+class ChatroomsVC: UIViewController, Storyboarded {
     
     weak var coordinator: ChatroomsCoordinator?
+    
+    @IBOutlet weak var tableView: UITableView!
     
     var chatrooms = [Chatroom]()
 
@@ -22,9 +24,7 @@ class ChatroomsVC: UITableViewController, Storyboarded {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .chatroomsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
         
-        tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
-        
-        fetchData()
+        configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,54 +59,6 @@ class ChatroomsVC: UITableViewController, Storyboarded {
             }
         }
     }
-    
-    private lazy var noDataLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.attributedText = noDataText
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.numberOfLines = 0
-        return lbl
-    }()
-    
-    private lazy var noDataLabelConstraints: [NSLayoutConstraint] = {
-        return [
-            noDataLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            noDataLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            noDataLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ]
-    }()
-    
-    private lazy var noDataText: NSMutableAttributedString = {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = 8
-        paragraphStyle.alignment = .center
-        paragraphStyle.lineSpacing = 1.15
-        
-        let titleAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.colorAsset(.dynamicLabel),
-            .font: UIFont.translatedFont(for: .title2, .semibold),
-            .paragraphStyle: paragraphStyle
-        ]
-        let attributtedString = NSMutableAttributedString(string: "No chatrooms found...\n", attributes: titleAttributes)
-        
-        let subtitleAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.colorAsset(.dynamicLabelSecondary),
-            .font: UIFont.translatedFont(for: .subheadline, .regular),
-            .paragraphStyle: paragraphStyle
-        ]
-        attributtedString.append(NSAttributedString(string: "You can use Chatrooms to discuss watchlists, movies or shows with your friends.", attributes: subtitleAttributes))
-        
-        return attributtedString
-    }()
-    
-    private lazy var newChatroomButton: RoundedButton = {
-        let btn = RoundedButton()
-        btn.makeCTA()
-        btn.setTitle("New Chatroom", for: .normal)
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(newChatroomDialog), for: .touchUpInside)
-        return btn
-    }()
     
     @objc private func newChatroomDialog() {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
@@ -163,6 +115,54 @@ class ChatroomsVC: UITableViewController, Storyboarded {
         self.present(alert, animated: true)
     }
     
+    private lazy var noDataLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.attributedText = noDataText
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.numberOfLines = 0
+        return lbl
+    }()
+    
+    private lazy var noDataLabelConstraints: [NSLayoutConstraint] = {
+        return [
+            noDataLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            noDataLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            noDataLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ]
+    }()
+    
+    private lazy var noDataText: NSMutableAttributedString = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 8
+        paragraphStyle.alignment = .center
+        paragraphStyle.lineSpacing = 1.15
+        
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.colorAsset(.dynamicLabel),
+            .font: UIFont.translatedFont(for: .title2, .semibold),
+            .paragraphStyle: paragraphStyle
+        ]
+        let attributtedString = NSMutableAttributedString(string: "No chatrooms found...\n", attributes: titleAttributes)
+        
+        let subtitleAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.colorAsset(.dynamicLabelSecondary),
+            .font: UIFont.translatedFont(for: .subheadline, .regular),
+            .paragraphStyle: paragraphStyle
+        ]
+        attributtedString.append(NSAttributedString(string: "You can use Chatrooms to discuss watchlists, movies or shows with your friends.", attributes: subtitleAttributes))
+        
+        return attributtedString
+    }()
+    
+    private lazy var newChatroomButton: RoundedButton = {
+        let btn = RoundedButton()
+        btn.makeCTA()
+        btn.setTitle("New Chatroom", for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.addTarget(self, action: #selector(newChatroomDialog), for: .touchUpInside)
+        return btn
+    }()
+    
     private lazy var createChatroomButtonConstraints: [NSLayoutConstraint] = {
         return [
             newChatroomButton.heightAnchor.constraint(equalToConstant: 56),
@@ -197,39 +197,48 @@ class ChatroomsVC: UITableViewController, Storyboarded {
     
 }
 
-extension ChatroomsVC {
+extension ChatroomsVC: UITableViewDataSource, UITableViewDelegate {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    private func configureTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
+        
+        fetchData()
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView()
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0
     }
     
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatrooms.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTVCell.reuseIdentifier, for: indexPath) as! ChatroomTVCell
         cell.chatroom = chatrooms[indexPath.row]
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chatroom = chatrooms[indexPath.row]
         coordinator?.showDetail(chatroom)
     }

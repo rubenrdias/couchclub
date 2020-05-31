@@ -23,7 +23,9 @@ class Alerts {
     private var activityIndicatorSubtitleLabel: UILabel?
     private var activityIndicatorButton: UIButton?
     private var activityIndicatorButtonAction: (() -> Void)?
+    private var activityIndicatorDismissAction: (() -> Void)?
     private var activityIndicatorSpinner: UIActivityIndicatorView?
+    private var activityDismissGesture: UITapGestureRecognizer?
     
     private var keyWindow: UIWindow {
         UIApplication.shared.windows.filter{$0.isKeyWindow}.first!
@@ -49,11 +51,11 @@ class Alerts {
         return ac
     }
     
-    func presentInviteCodeShareDialog(_ inviteCode: String, action: (() -> Void)?) {
-        presentActivityAlert(title: inviteCode, subtitle: "Share this invite code with your friends, they can join by tapping the '+' or the 'New Chatroom' buttons in the Chatrooms tab.", showSpinner: false, action: action)
+    func presentInviteCodeShareDialog(_ inviteCode: String, action: (() -> Void)?, dismissAction:(() -> Void)?) {
+        presentActivityAlert(title: inviteCode, subtitle: "Share this invite code with your friends, they can join by tapping the '+' or the 'New Chatroom' buttons in the Chatrooms tab.", showSpinner: false, action: action, dismissAction: dismissAction)
     }
     
-    func presentActivityAlert(title: String, subtitle: String?, showSpinner: Bool = true, action: (() -> Void)? = nil, completion: (() -> ())? = nil) {
+    func presentActivityAlert(title: String, subtitle: String?, showSpinner: Bool = true, action: (() -> Void)? = nil, dismissAction: (() -> Void)? = nil, completion: (() -> ())? = nil) {
         if isPresenting { return }
         
         DispatchQueue.main.async { [unowned self] in
@@ -106,6 +108,14 @@ class Alerts {
                 self.activityIndicatorButton?.titleLabel?.font = .translatedFont(for: .headline, .semibold)
                 self.activityIndicatorButton?.setTitleColor(UIColor.systemOrange, for: .normal)
                 self.activityIndicatorButton?.addTarget(self, action: #selector(self.performButtonAction), for: .touchUpInside)
+                
+                if dismissAction != nil {
+                    self.activityIndicatorDismissAction = dismissAction
+                    
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissInstantly))
+                    self.activityIndicatorBackgroundView?.addGestureRecognizer(tapGesture)
+                    self.activityDismissGesture = tapGesture
+                }
             }
             
             // spinner
@@ -165,8 +175,14 @@ class Alerts {
     func dismissActivityAlert(message: String, completion: (()->())? = nil) {
         if !self.isPresenting { completion?(); return }
         
+        if let tapGesture = self.activityDismissGesture {
+            self.activityIndicatorBackgroundView?.removeGestureRecognizer(tapGesture)
+            self.activityDismissGesture = nil
+        }
+        
         self.activityIndicatorTitleLabel?.text = message
         self.activityIndicatorSubtitleLabel?.removeFromSuperview()
+        self.activityIndicatorSubtitleLabel = nil
         self.activityIndicatorButton?.removeFromSuperview()
         self.activityIndicatorButtonAction = nil
         self.activityIndicatorSpinner?.removeFromSuperview()
@@ -188,6 +204,41 @@ class Alerts {
                 
                 self.isPresenting = false
                 completion?()
+            }
+        }
+    }
+    
+    @objc private func dismissInstantly() {
+        if !self.isPresenting { return }
+        
+        DispatchQueue.main.async { [unowned self] in
+            UIView.animate(withDuration: 0.25, animations: {
+                self.activityIndicatorBackgroundView?.alpha = 0
+                self.activityIndicatorContentView?.alpha = 0
+            }) { _ in
+                self.activityDismissGesture = nil
+                self.activityIndicatorTitleLabel?.removeFromSuperview()
+                self.activityIndicatorTitleLabel = nil
+                self.activityIndicatorSubtitleLabel?.removeFromSuperview()
+                self.activityIndicatorSubtitleLabel = nil
+                self.activityIndicatorButton?.removeFromSuperview()
+                self.activityIndicatorButtonAction = nil
+                self.activityIndicatorSpinner?.removeFromSuperview()
+                self.activityIndicatorSpinner = nil
+                self.activityIndicatorStackView?.removeFromSuperview()
+                self.activityIndicatorStackView = nil
+                self.activityIndicatorContentView?.removeFromSuperview()
+                self.activityIndicatorContentView = nil
+                self.activityIndicatorBackgroundView?.removeFromSuperview()
+                self.activityIndicatorBackgroundView = nil
+                
+                self.isPresenting = false
+
+                if let dismissAction = self.activityIndicatorDismissAction {
+                    dismissAction()
+                }
+                self.activityIndicatorDismissAction = nil
+                
             }
         }
     }

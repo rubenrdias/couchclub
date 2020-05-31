@@ -32,6 +32,7 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         
         let size = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
         setupCollectionViewLayout(size)
+        
         fetchData()
     }
     
@@ -51,8 +52,12 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     
     @objc private func fetchData() {
         DispatchQueue.main.async { [weak self] in
-            guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
-            self?.watchlists = watchlists
+            let watchlists = LocalDatabase.shared.fetchWatchlists()
+            if watchlists != nil {
+                self?.watchlists = watchlists!
+            } else {
+                self?.watchlists.removeAll()
+            }
             
             self?.collectionView.reloadData()
             self?.evaluateDataAvailable()
