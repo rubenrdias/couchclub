@@ -31,11 +31,11 @@ class SettingsVC: UITableViewController, Storyboarded {
 extension SettingsVC {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return FirebaseService.currentUserID == nil ? 1 : 2
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
+        if indexPath.row == 0 && FirebaseService.currentUserID != nil {
             let currentUser = LocalDatabase.shared.fetchCurrentuser()
             let cell = UITableViewCell()
             cell.textLabel?.text = "Logged in as \(currentUser.username)"
@@ -56,6 +56,7 @@ extension SettingsVC {
                 let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                 present(alert, animated: true)
             } else {
+                tableView.reloadData()
                 coordinator?.showLogin()
                 
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {

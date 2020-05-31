@@ -94,7 +94,9 @@ class ChatroomsVC: UIViewController, Storyboarded {
             textfield.tintColor = .colorAsset(.dynamicLabel)
         }
         
-        alert.addAction(UIAlertAction(title: "Join", style: .cancel, handler: { [unowned self, weak alert] (_) in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        
+        alert.addAction(UIAlertAction(title: "Join", style: .default, handler: { [unowned self, weak alert] (_) in
             guard let inviteCode = alert?.textFields?[0].text else { return }
             
             let chatrooms = LocalDatabase.shared.fetchChatrooms()
@@ -110,8 +112,6 @@ class ChatroomsVC: UIViewController, Storyboarded {
                 self.present(alert, animated: true)
             }
         }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
         
         self.present(alert, animated: true)
     }
