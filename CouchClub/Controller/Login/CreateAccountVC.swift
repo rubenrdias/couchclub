@@ -8,7 +8,9 @@
 
 import UIKit
 
-class CreateAccountVC: UIViewController {
+class CreateAccountVC: UIViewController, Storyboarded {
+    
+    weak var coordinator: LoginCoordinator?
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -39,6 +41,11 @@ class CreateAccountVC: UIViewController {
         setupButtons()
     }
     
+    deinit {
+        print("-- DEINIT -- Create Account VC")
+    }
+
+    
     @IBAction func createAccountTapped(_ sender: Any) {
         if let errorMessage = validateForm() {
             let alert = Alerts.simpleAlert(title: errorMessage.0, message: errorMessage.1)
@@ -54,14 +61,14 @@ class CreateAccountVC: UIViewController {
                     let alert = Alerts.simpleAlert(title: "Account creation failed", message: error.localizedDescription)
                     self.present(alert, animated: true)
                 } else {
-                    self.navigationController?.dismiss(animated: true)
+                    self.coordinator?.accountCreated()
                 }
             }
         }
     }
     
     @IBAction func signInTapped(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        coordinator?.showLoginScreen()
     }
     
     @objc private func editingFinished() {

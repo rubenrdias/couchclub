@@ -15,17 +15,25 @@ class SelectWatchlistVC: UITableViewController, Storyboarded {
     private let cellId = "cellId"
     private let watchlists = LocalDatabase.shared.fetchWatchlists()
     
+    private var didSelectWatchlist = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.backBarButtonItem?.action = #selector(cancelSelection)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
     }
     
-    @objc private func cancelSelection() {
-        coordinator?.didCancelSelection()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if !didSelectWatchlist {
+            coordinator?.didCancelSelection()
+        }
+    }
+    
+    deinit {
+        print("-- DEINIT -- Select Watchlist VC")
     }
     
 }
@@ -46,6 +54,7 @@ extension SelectWatchlistVC {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let watchlist = watchlists?[indexPath.row] else { return }
+        didSelectWatchlist = true
         coordinator?.didSelectWatchlist(watchlist.id)
     }
     

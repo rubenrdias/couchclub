@@ -45,7 +45,7 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         super.viewDidAppear(animated)
         
         if FirebaseService.currentUserID == nil {
-            performSegue(withIdentifier: "LoginVC", sender: nil)
+            coordinator?.showLogin()
         }
     }
     
@@ -145,7 +145,19 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     @objc private func itemSeenStatusUpdated(_ notification: Notification) {
         guard let item = notification.userInfo?["item"] as? Item else { return }
 
-        // TODO: reload watchlist cells containing the updated item
+        var indexPathsToUpdate = [IndexPath]()
+        for (index, watchlist) in watchlists.enumerated() {
+            guard let items = watchlist.items?.allObjects as? [Item] else { continue }
+            if items.contains(item) {
+                indexPathsToUpdate.append(.init(item: index, section: 0))
+            }
+        }
+        
+        guard !indexPathsToUpdate.isEmpty else { return }
+        
+        DispatchQueue.main.async { [unowned self] in
+            self.collectionView.reloadItems(at: indexPathsToUpdate)
+        }
     }
     
     private func calculateItemsWatched(_ watchlist: Watchlist) -> String {

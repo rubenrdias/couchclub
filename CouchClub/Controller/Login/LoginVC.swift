@@ -9,7 +9,9 @@
 import UIKit
 import FirebaseAuth
 
-class LoginVC: UIViewController {
+class LoginVC: UIViewController, Storyboarded {
+    
+    weak var coordinator: LoginCoordinator?
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -39,6 +41,10 @@ class LoginVC: UIViewController {
         setupButtons()
     }
     
+    deinit {
+        print("-- DEINIT -- Login VC")
+    }
+    
     @IBAction func forgottenPasswordTapped(_ sender: UIButton) {
     }
     
@@ -55,14 +61,14 @@ class LoginVC: UIViewController {
                     let alert = Alerts.simpleAlert(title: "Sign in failed", message: error.localizedDescription)
                     self.present(alert, animated: true)
                 } else {
-                    self.navigationController?.dismiss(animated: true)
+                    self.coordinator?.loggedIn()
                 }
             }
         }
     }
     
     @IBAction func createAccountTapped(_ sender: Any) {
-        performSegue(withIdentifier: "CreateAccountVC", sender: nil)
+        coordinator?.showCreateAccountScreen()
     }
     
     @objc private func editingFinished() {

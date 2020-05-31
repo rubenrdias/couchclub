@@ -26,7 +26,9 @@ class NewChatroomVC: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 13.0, *) { isModalInPresentation = true }
+        title = "New Chatroom"
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
@@ -45,7 +47,7 @@ class NewChatroomVC: UIViewController, Storyboarded {
         print("-- DEINIT -- New Chatroom VC")
     }
     
-    @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+    @objc private func cancelTapped(_ sender: UIBarButtonItem) {
         coordinator?.didFinishCreating(nil)
     }
     
@@ -165,13 +167,12 @@ class NewChatroomVC: UIViewController, Storyboarded {
     }
     
     func didCancelSelection() {
-        if selectedSubjectID == nil {
-            chatroomType = nil
-            subjectTitleLabel.text = nil
-            
-            radioButtons.forEach {
-                restoreButton($0)
-            }
+        chatroomType = nil
+        subjectTitleLabel.text = nil
+        subjectTitleLabel.isHidden = true
+        
+        radioButtons.forEach {
+            restoreButton($0)
         }
     }
 

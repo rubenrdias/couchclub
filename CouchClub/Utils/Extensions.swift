@@ -18,13 +18,13 @@ extension UIStoryboard {
         switch identifier {
         case "LoginVC", "CreateAccountVC":
             return "Login"
-        case "WatchlistsVC", "WatchlistVC", "NewWatchlistVC", "ItemDetailVC":
+        case "WatchlistsVC", "WatchlistVC", "NewWatchlistVC":
             return "Watchlists"
         case "ChatroomsVC", "ChatroomVC", "NewChatroomVC", "SelectWatchlistVC":
             return "Chatrooms"
         case "SettingsVC":
             return "Settings"
-        case "SearchVC":
+        case "SearchVC", "ItemDetailVC":
             return "Search"
         default:
             fatalError("Unexpected ViewController type for \(identifier)")

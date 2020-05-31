@@ -29,6 +29,11 @@ class ChatroomVC: UITableViewController, Storyboarded {
         
         NotificationCenter.default.addObserver(self, selector: #selector(chatroomsWereUpdated), name: .chatroomsDidChange, object: nil)
         
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped)),
+            UIBarButtonItem(image: .iconAsset(.invite), style: .plain, target: self, action: #selector(inviteButtonTapped))
+        ]
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
@@ -85,7 +90,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
         return true
     }
     
-    @IBAction func moreButtonTapped(_ sender: UIBarButtonItem) {
+    @objc private func moreButtonTapped(_ sender: UIBarButtonItem) {
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         ac.view.tintColor = .colorAsset(.dynamicLabel)
         
@@ -127,7 +132,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
         present(ac, animated: true, completion: nil)
     }
     
-    @IBAction func inviteButtonTapped(_ sender: Any) {
+    @objc private func inviteButtonTapped(_ sender: Any) {
         inputAccessoryViewContainer.dismissKeyboard()
         resignFirstResponder()
         Alerts.shared.presentInviteCodeShareDialog(chatroom.inviteCode, action: copyInviteCodeToClipboard)

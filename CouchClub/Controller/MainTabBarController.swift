@@ -12,11 +12,12 @@ class MainTabBarController: UITabBarController, Storyboarded {
     
     let watchlists = WatchlistsCoordinator()
     let chatrooms = ChatroomsCoordinator()
+    let settings = SettingsCoordinator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewControllers = [watchlists.navigationController, chatrooms.navigationController]
+        viewControllers = [watchlists.navigationController, chatrooms.navigationController, settings.navigationController]
     }
 
 }

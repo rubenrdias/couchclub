@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Watchlists-->
+        <!--WatchlistsVC-->
         <scene sceneID="dIB-3H-U38">
             <objects>
                 <collectionViewController storyboardIdentifier="WatchlistsVC" id="VBi-i0-u3i" customClass="WatchlistsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
@@ -29,7 +29,7 @@
                             <outlet property="delegate" destination="VBi-i0-u3i" id="uR5-mO-YzJ"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Watchlists" id="dVq-Xu-1ck"/>
+                    <navigationItem key="navigationItem" id="dVq-Xu-1ck"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y7S-MR-mdF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -138,13 +138,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Gdd-Zd-Oms"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New Watchlist" id="6VB-k2-rYg">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Mwa-0s-lp6">
-                            <connections>
-                                <action selector="cancelTapped:" destination="eCY-jQ-ImS" id="60O-ei-9ra"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="New Watchlist" id="6VB-k2-rYg"/>
                     <connections>
                         <outlet property="createWatchlistButton" destination="xBM-6O-MW3" id="Ttf-Me-v7j"/>
                         <outlet property="textView" destination="fTT-8j-JuF" id="IVw-D2-t4m"/>
@@ -176,70 +170,14 @@
                             <outlet property="delegate" destination="bjv-dN-JRy" id="Zxd-6m-cP9"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KHE-fh-pxx">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="LQr-e4-4Ay"/>
-                            <barButtonItem image="more" id="ZHC-Ko-efX">
-                                <connections>
-                                    <action selector="moreButtonTapped:" destination="bjv-dN-JRy" id="p3V-XD-7Sh"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="KHE-fh-pxx"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j7c-2K-M1Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5695" y="99"/>
         </scene>
-        <!--Item DetailVC-->
-        <scene sceneID="VZD-bh-DTS">
-            <objects>
-                <viewController storyboardIdentifier="ItemDetailVC" id="NXx-Ng-5bk" customClass="ItemDetailVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="yNI-qB-BTH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jbs-Ia-tc0" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
-                                <rect key="frame" x="16" y="690" width="343" height="56"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="YKM-QQ-TYz"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Add to Watchlist"/>
-                                <connections>
-                                    <action selector="actionButtonTapped:" destination="NXx-Ng-5bk" eventType="touchUpInside" id="huF-HD-k6t"/>
-                                    <action selector="createButtonTapped:" destination="eCY-jQ-ImS" eventType="touchUpInside" id="wcP-UR-qmN"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="myA-7x-mSK" firstAttribute="trailing" secondItem="Jbs-Ia-tc0" secondAttribute="trailing" constant="16" id="4Zn-V4-Tmp"/>
-                            <constraint firstItem="myA-7x-mSK" firstAttribute="bottom" secondItem="Jbs-Ia-tc0" secondAttribute="bottom" constant="32" id="C2C-x8-DkL"/>
-                            <constraint firstItem="Jbs-Ia-tc0" firstAttribute="leading" secondItem="myA-7x-mSK" secondAttribute="leading" constant="16" id="goy-fN-mdz"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="myA-7x-mSK"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="4kT-73-T7k">
-                        <barButtonItem key="rightBarButtonItem" title="Start Chatroom" id="9pO-sh-6qt">
-                            <connections>
-                                <action selector="startChatroomTapped:" destination="NXx-Ng-5bk" id="CW1-DP-nxa"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="actionButton" destination="Jbs-Ia-tc0" id="1E7-q8-RSE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fIV-Y8-LNl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7118" y="98"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="more" width="24" height="24"/>
         <namedColor name="Dynamic.BackgroundHighlight">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

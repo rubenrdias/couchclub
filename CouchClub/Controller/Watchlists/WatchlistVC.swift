@@ -22,6 +22,7 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
     private var usableWidth: CGFloat = 0
     
     private var sectionHeaders: [Section] = [.statistics]
+    private weak var highlightCell: HighlightCVCell?
     
     var watchlist: Watchlist! {
         didSet {
@@ -191,9 +192,7 @@ extension WatchlistVC: ItemOperationDelegate {
     func didTapSeen(_ item: Item) {
         DataCoordinator.shared.toggleWatched(item)
         
-        if let highlightCell = collectionView.cellForItem(at: .init(item: 0, section: 1)) as? HighlightCVCell {
-            highlightCell.highlightLeft = (calculateItemsWatched(), "Watched")
-        }
+        highlightCell?.highlightLeft = (calculateItemsWatched(), "Watched")
     }
     
 }
@@ -254,6 +253,7 @@ extension WatchlistVC: UICollectionViewDelegateFlowLayout {
             } else {
                 cell.highlightRight = (calculateAverageRating(), "Average rating")
             }
+            highlightCell = cell
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell

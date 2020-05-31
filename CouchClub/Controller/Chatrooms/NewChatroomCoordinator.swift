@@ -40,9 +40,9 @@ class NewChatroomCoordinator: Coordinator {
     }
     
     func showItemSelector(type: ItemType) {
-        // TODO: present search VC for item type
-//        let vc = SearchVC.instantiate()
-//        vc.searchType = type
+        let child = SearchCoordinator(parentCoordinator: self, searchType: type)
+        childCoordinators.append(child)
+        child.start()
     }
     
     func didFinishCreating(_ id: UUID?) {
@@ -53,6 +53,15 @@ class NewChatroomCoordinator: Coordinator {
         navigationController.dismiss(animated: true)
     }
     
+    private func didFinishSelection() {
+        if let child = childCoordinators.first as? SearchCoordinator {
+            childDidFinish(child)
+            navigationController.dismiss(animated: true)
+        } else {
+            navigationController.popViewController(animated: true)
+        }
+    }
+    
 }
 
 extension NewChatroomCoordinator: SelectionDelegate {
@@ -60,19 +69,19 @@ extension NewChatroomCoordinator: SelectionDelegate {
     func didSelectWatchlist(_ id: UUID) {
         guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
         vc.didSelectWatchlist(id)
-        navigationController.popViewController(animated: true)
+        didFinishSelection()
     }
     
     func didSelectItem(_ id: String) {
         guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
         vc.didSelectItem(id)
-        navigationController.dismiss(animated: true)
+        didFinishSelection()
     }
     
     func didCancelSelection() {
         guard let vc = navigationController.viewControllers[0] as? NewChatroomVC else { return }
         vc.didCancelSelection()
-        navigationController.dismiss(animated: true)
+        didFinishSelection()
     }
     
 }

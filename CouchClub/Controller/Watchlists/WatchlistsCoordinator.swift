@@ -27,6 +27,12 @@ class WatchlistsCoordinator: NSObject, Coordinator {
         self.navigationController.viewControllers = [vc]
     }
     
+    func showLogin() {
+        let child = LoginCoordinator(parentCoordinator: self)
+        childCoordinators.append(child)
+        child.start()
+    }
+    
     func showDetail(_ watchlist: Watchlist) {
         let vc = WatchlistVC.instantiate()
         vc.coordinator = self

@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Settings-->
+        <!--SettingsVC-->
         <scene sceneID="7bW-eQ-u8I">
             <objects>
                 <tableViewController storyboardIdentifier="SettingsVC" id="Qp2-c3-n5F" customClass="SettingsVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,7 +20,7 @@
                             <outlet property="delegate" destination="Qp2-c3-n5F" id="fcA-hr-1iV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="hGa-Fn-xC6"/>
+                    <navigationItem key="navigationItem" id="hGa-Fn-xC6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZJ2-ej-0fm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

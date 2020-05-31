@@ -33,11 +33,8 @@ class SearchVC: UICollectionViewController, Storyboarded {
         
         if #available(iOS 13.0, *) { isModalInPresentation = true }
         
-        if watchlist != nil {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishSearch))
-        } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(finishSearch))
-        }
+        let dismissTitle = watchlist != nil ? "Done" : "Cancel"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: dismissTitle, style: .plain, target: self, action: #selector(finishSearch))
         
         collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
         collectionView.register(SmallHeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier)
@@ -46,6 +43,7 @@ class SearchVC: UICollectionViewController, Storyboarded {
         searchController.searchBar.delegate = self
         let typeString = searchType == .series ? "show" : searchType.rawValue
         searchController.searchBar.placeholder = "Search for a \(typeString) title"
+        searchController.searchBar.autocapitalizationType = .none
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -104,14 +102,14 @@ class SearchVC: UICollectionViewController, Storyboarded {
     }
     
     func toggleActivityIndicator() {
-        if navigationItem.leftBarButtonItem == nil {
+        if navigationItem.rightBarButtonItem == nil {
             collectionView.isUserInteractionEnabled = false
             
             let activityIndicator = UIActivityIndicatorView(style: .gray)
             activityIndicator.startAnimating()
-            navigationItem.leftBarButtonItem = UIBarButtonItem(customView: activityIndicator)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicator)
         } else {
-            navigationItem.leftBarButtonItem = nil
+            navigationItem.rightBarButtonItem = nil
             collectionView.isUserInteractionEnabled = true
         }
     }

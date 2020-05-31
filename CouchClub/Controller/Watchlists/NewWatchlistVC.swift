@@ -24,6 +24,10 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "New Watchlist"
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
@@ -42,7 +46,7 @@ class NewWatchlistVC: UIViewController, Storyboarded {
         print("-- DEINIT -- New Watchlist VC")
     }
     
-    @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+    @objc private func cancelTapped(_ sender: UIBarButtonItem) {
         coordinator?.didFinishCreating(nil)
     }
     

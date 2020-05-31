@@ -9,24 +9,21 @@
 import UIKit
 import FirebaseAuth
 
-class SettingsVC: UITableViewController {
+class SettingsVC: UITableViewController, Storyboarded {
     
-    var presentingLoginScreen = false
+    weak var coordinator: SettingsCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Settings"
         
         tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
         tableView.tableFooterView = UIView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if presentingLoginScreen {
-            tableView.reloadData()
-            presentingLoginScreen = false
-        }
+    func userDidChange() {
+        tableView.reloadData()
     }
 
 }
@@ -59,8 +56,7 @@ extension SettingsVC {
                 let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                 present(alert, animated: true)
             } else {
-                presentingLoginScreen = true
-                performSegue(withIdentifier: "LoginVC", sender: nil)
+                coordinator?.showLogin()
                 
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {
                     tableView.deselectRow(at: selectedIndexPath, animated: true)
