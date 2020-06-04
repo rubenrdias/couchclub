@@ -12,8 +12,7 @@ import CoreData
 class ChatroomVC: UITableViewController, Storyboarded {
     
     weak var coordinator: ChatroomsCoordinator?
-    
-    var fetchedResultsController: NSFetchedResultsController<Message>!
+    lazy var dataSource = ChatroomMessagesDataSource(chatroom: chatroom, tableView: tableView, delegate: self)
     
     var chatroom: Chatroom! {
         didSet {
@@ -71,10 +70,10 @@ class ChatroomVC: UITableViewController, Storyboarded {
     }
     
     @objc private func editingFinished() {
-        inputAccessoryViewContainer.dismissKeyboard()
+        messageAccessoryView.dismissKeyboard()
     }
     
-    lazy var inputAccessoryViewContainer: MessageInputAccessoryView = {
+    lazy var messageAccessoryView: MessageInputAccessoryView = {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         let messageInputAccessoryView = MessageInputAccessoryView(frame: frame)        
         messageInputAccessoryView.delegate = self
@@ -82,7 +81,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
     }()
     
     override var inputAccessoryView: UIView? {
-        get { return inputAccessoryViewContainer }
+        get { return messageAccessoryView }
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -135,7 +134,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
     }
     
     @objc private func inviteButtonTapped(_ sender: Any) {
-        inputAccessoryViewContainer.dismissKeyboard()
+        messageAccessoryView.dismissKeyboard()
         resignFirstResponder()
         Alerts.shared.presentInviteCodeShareDialog(chatroom.inviteCode, action: copyInviteCodeToClipboard, dismissAction: dismissInviteCodeDialog)
     }
@@ -151,31 +150,20 @@ class ChatroomVC: UITableViewController, Storyboarded {
         becomeFirstResponder()
     }
     
-    private func setupFetchedResultsController() {
-        let request = Message.createFetchRequest()
+    private func configureTableView() {
+        tableView.dataSource = dataSource
+        tableView.delegate = dataSource
         
-        // sorting
-        let dateSort = NSSortDescriptor(key: "date", ascending: true)
-        request.sortDescriptors = [dateSort]
+        tableView.backgroundColor = .colorAsset(.dynamicBackground)
+        tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
         
-        // filtering
-        request.predicate = NSPredicate(format: "chatroom == %@", chatroom)
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: "dateSection", cacheName: nil)
-        fetchedResultsController.delegate = self
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
-        }
+        tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
+        tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
     }
     
-    func scrollToBottom(animated: Bool = true) {
-        guard let sections = fetchedResultsController.sections, sections.count > 0 else { return }
-        let validSectionCount = sections.count - 1
-        let lastMessageIndex = sections[validSectionCount].numberOfObjects - 1
-        tableView.scrollToRow(at: .init(row: lastMessageIndex, section: validSectionCount), at: .bottom, animated: animated)
+    func scrollToBottom() {
+        guard let bottomIndexPath = dataSource.bottomIndexPath() else { return }
+        tableView.scrollToRow(at: bottomIndexPath, at: .bottom, animated: true)
     }
     
 }
@@ -195,102 +183,9 @@ extension ChatroomVC: MessageDelegate {
     
 }
 
-extension ChatroomVC {
+extension ChatroomVC: MessagesDataSourceDelegate {
     
-    private func configureTableView() {
-        tableView.backgroundColor = .colorAsset(.dynamicBackground)
-        tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
-        
-        tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
-        tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
-        
-        setupFetchedResultsController()
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sections = fetchedResultsController.sections else { return 0 }
-        return sections.count
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sections = fetchedResultsController.sections else { return UIView() }
-        guard let firstItem = sections[section].objects?.first as? Message else { return UIView() }
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SmallHeaderTVCell.reuseIdentifier) as! SmallHeaderTVCell
-        headerView.text = messageSectionFormatter.string(from: firstItem.date)
-        headerView.useCenteredText = true
-        return headerView
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = fetchedResultsController.sections else { return 0 }
-        return sections[section].numberOfObjects
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MessageTVCell.reuseIdentifier, for: indexPath) as! MessageTVCell
-        let message = fetchedResultsController.object(at: indexPath)
-        
-        var shouldReduceTopMargin = false
-        var shouldReduceBottomMargin = false
-        
-        if indexPath.row > 0 {
-            let previousMessage = fetchedResultsController.object(at: .init(row: indexPath.row - 1, section: indexPath.section))
-            if previousMessage.sender == message.sender {
-                shouldReduceTopMargin = true
-            }
-        }
-        
-        if indexPath.row < tableView.numberOfRows(inSection: indexPath.section) - 1 {
-            let nextMessage = fetchedResultsController.object(at: .init(row: indexPath.row + 1, section: indexPath.section))
-            if nextMessage.sender == message.sender {
-                shouldReduceBottomMargin = true
-            }
-        }
-        
-        cell.shouldReduceTopMargin = shouldReduceTopMargin
-        cell.shouldReduceBottomMargin = shouldReduceBottomMargin
-        cell.message = message
-        return cell
-    }
-    
-}
-
-extension ChatroomVC: NSFetchedResultsControllerDelegate {
-    
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView!.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        switch type {
-        case .insert:
-            let sectionIndexSet = IndexSet(integer: sectionIndex)
-            tableView!.insertSections(sectionIndexSet, with: .fade)
-        case .delete:
-            let sectionIndexSet = IndexSet(integer: sectionIndex)
-            tableView!.deleteSections(sectionIndexSet, with: .fade)
-        default:
-            break
-        }
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
-        case .update:
-            tableView.reloadRows(at: [indexPath!], with: .none)
-        case .move:
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-        @unknown default:
-            fatalError()
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView!.endUpdates()
+    func dataWasUpdated() {
         scrollToBottom()
     }
 }

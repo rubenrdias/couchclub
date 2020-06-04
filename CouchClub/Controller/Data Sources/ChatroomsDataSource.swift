@@ -10,15 +10,19 @@ import UIKit
 
 class ChatroomsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    var chatrooms = [Chatroom]()
+    private var chatrooms = [Chatroom]()
     weak var delegate: ChatroomsDataSourceDelegate?
+    
+    var isEmpty: Bool {
+        return chatrooms.isEmpty
+    }
     
     convenience init(delegate: ChatroomsDataSourceDelegate? = nil) {
         self.init()
         self.delegate = delegate
     }
     
-    override init() {
+    private override init() {
         super.init()
         
         fetchData()

@@ -56,7 +56,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
         ac.popoverPresentationController?.sourceView = self.view
         
-        if dataSource.chatrooms.isEmpty {
+        if dataSource.isEmpty {
             ac.popoverPresentationController?.sourceRect = newChatroomButton.frame
         } else {
             ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
@@ -166,7 +166,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
     }()
     
     private func evaluateDataAvailable() {
-        if dataSource.chatrooms.isEmpty {
+        if dataSource.isEmpty {
             tableView.alwaysBounceVertical = false
             navigationItem.rightBarButtonItem = nil
             view.addSubview(noDataLabel)

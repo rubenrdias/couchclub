@@ -53,6 +53,7 @@
 		538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E22454978800CDB99F /* LaunchScreen.storyboard */; };
 		538D29EF2454978800CDB99F /* CouchClubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29EE2454978800CDB99F /* CouchClubTests.swift */; };
 		5390F47F248901A600F6C211 /* ChatroomsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F47E248901A600F6C211 /* ChatroomsDataSource.swift */; };
+		5390F482248939B300F6C211 /* ChatroomMessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F481248939B300F6C211 /* ChatroomMessagesDataSource.swift */; };
 		539448BB24640366002A9544 /* NewChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539448BA24640366002A9544 /* NewChatroomVC.swift */; };
 		53A8BBD624768FC7001B3E6C /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A8BBD524768FC7001B3E6C /* PushNotifications.swift */; };
 		53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
@@ -147,6 +148,7 @@
 		538D29EE2454978800CDB99F /* CouchClubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouchClubTests.swift; sourceTree = "<group>"; };
 		538D29F02454978800CDB99F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5390F47E248901A600F6C211 /* ChatroomsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomsDataSource.swift; sourceTree = "<group>"; };
+		5390F481248939B300F6C211 /* ChatroomMessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomMessagesDataSource.swift; sourceTree = "<group>"; };
 		539448BA24640366002A9544 /* NewChatroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatroomVC.swift; sourceTree = "<group>"; };
 		53A8BBD524768FC7001B3E6C /* PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
 		53AD80572476967900356449 /* CouchClub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CouchClub.entitlements; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				5390F47E248901A600F6C211 /* ChatroomsDataSource.swift */,
+				5390F481248939B300F6C211 /* ChatroomMessagesDataSource.swift */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -699,6 +702,7 @@
 				53153CC2245625950089AEA7 /* SearchItemCell.swift in Sources */,
 				53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */,
 				53645A68245DD8A0009A4AE6 /* ItemCell.swift in Sources */,
+				5390F482248939B300F6C211 /* ChatroomMessagesDataSource.swift in Sources */,
 				53F688102458D4AC00230CE9 /* Converter.swift in Sources */,
 				532210762473F89200381419 /* Chatroom+CoreDataProperties.swift in Sources */,
 				536012FD246497CC00E00C6F /* ChatroomVC.swift in Sources */,
