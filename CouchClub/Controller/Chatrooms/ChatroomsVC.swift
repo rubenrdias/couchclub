@@ -20,7 +20,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
         
         title = "Chatrooms"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(dataSource.fetchData), name: .chatroomsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatrooms), name: .chatroomsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
         
         configureTableView()
@@ -39,6 +39,10 @@ class ChatroomsVC: UIViewController, Storyboarded {
         tableView.delegate = dataSource
         
         tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
+    }
+    
+    @objc private func refreshChatrooms() {
+        dataSource.fetchData()
     }
     
     @objc private func refreshChatroom(_ notification: Notification) {

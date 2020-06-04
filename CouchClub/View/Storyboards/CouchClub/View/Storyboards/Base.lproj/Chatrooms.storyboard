@@ -12,7 +12,6 @@
         <!--ChatroomVC-->
         <scene sceneID="0bf-0i-yFR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tfn-Qw-mUR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tableViewController storyboardIdentifier="ChatroomVC" hidesBottomBarWhenPushed="YES" id="11b-q4-XNZ" customClass="ChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="28" sectionFooterHeight="16" id="ohg-bB-O7C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -25,6 +24,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="mB7-3g-SZz"/>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tfn-Qw-mUR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5787" y="204"/>
         </scene>
@@ -75,7 +75,7 @@
                                 <color key="textColor" name="Dynamic.LabelSecondary"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Chatroom title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62f-Ul-WsD">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Chatroom title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62f-Ul-WsD" customClass="TitleTextView" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="12" y="96" width="390" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Sh6-Wy-p4H"/>
@@ -83,9 +83,6 @@
                                 <color key="textColor" name="Dynamic.LabelSecondary"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="69O-JY-xoc" id="RtX-eC-psZ"/>
-                                </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR CHATTING ABOUT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hb-yG-Mu4">
                                 <rect key="frame" x="16" y="172" width="382" height="44"/>
@@ -189,7 +186,7 @@
                     <connections>
                         <outlet property="createChatroomButton" destination="087-zn-hul" id="nVe-56-MqX"/>
                         <outlet property="subjectTitleLabel" destination="NSF-5M-HsL" id="iTB-o6-R7l"/>
-                        <outlet property="textView" destination="62f-Ul-WsD" id="EIX-8g-qwh"/>
+                        <outlet property="textView" destination="62f-Ul-WsD" id="Elc-OE-s9E"/>
                         <outletCollection property="radioButtons" destination="KJH-Nx-W6q" collectionClass="NSMutableArray" id="Dlg-zn-BeD"/>
                         <outletCollection property="radioButtons" destination="pWF-8i-bXf" collectionClass="NSMutableArray" id="JZK-cD-FkI"/>
                         <outletCollection property="radioButtons" destination="apT-mC-2YN" collectionClass="NSMutableArray" id="ECq-lG-DKY"/>

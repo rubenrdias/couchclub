@@ -14,8 +14,6 @@ class CommentInputTextView: UITextView {
         didSet { textColor = .colorAsset(.dynamicLabelSecondary) }
     }
     
-    let maxNumberOfLines: Int = 5
-    
     var heightConstraint: NSLayoutConstraint?
     var singleLineHeightConstraint: NSLayoutConstraint!
     
@@ -76,26 +74,5 @@ extension CommentInputTextView: UITextViewDelegate {
             showPlaceholderText()
         }
     }
-    
-//    func textViewDidChange(_ textView: UITextView) {
-//        let numberOfLines = Int(textView.contentSize.height / textView.font!.lineHeight)
-//
-//        if numberOfLines >= maxNumberOfLines && !isScrollEnabled {
-//            isScrollEnabled = true
-//
-//            heightConstraint = heightAnchor.constraint(equalToConstant: textView.contentSize.height)
-//
-//            heightConstraint!.isActive = true
-//            singleLineHeightConstraint.isActive = false
-//        } else if numberOfLines < maxNumberOfLines && isScrollEnabled {
-//            isScrollEnabled = false
-//
-//            heightConstraint?.isActive = false
-//            singleLineHeightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: textView.contentSize.height)
-//            singleLineHeightConstraint.isActive = true
-//            singleLineHeightConstraint.isActive = true
-//            textView.sizeToFit()
-//        }
-//    }
     
 }

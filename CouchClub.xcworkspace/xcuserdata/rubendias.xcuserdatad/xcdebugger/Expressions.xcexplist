@@ -3,14 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "SearchCoordinator.start():SearchCoordinator.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.watchlist">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "SearchVC.collectionView(_:didSelectItemAt:):SearchVC.swift">
          <PersistentStrings>
             <PersistentString
@@ -22,10 +14,18 @@
          contextName = "ChatroomTVCell.getThumbnailImage():ChatroomTVCell.swift">
          <PersistentStrings>
             <PersistentString
-               value = "chatroom.subjectID">
+               value = "chatroom.title">
             </PersistentString>
             <PersistentString
-               value = "chatroom.title">
+               value = "chatroom.subjectID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SearchCoordinator.start():SearchCoordinator.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.watchlist">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -38,10 +38,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in ChatroomsVC.refreshChatroom(_:):ChatroomsVC.swift">
+         contextName = "TitleTextView.showPlaceholderText():TitleTextView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self?.chatrooms">
+               value = "placeholderText">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -50,6 +50,14 @@
          <PersistentStrings>
             <PersistentString
                value = "self?.coordinator">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in ChatroomsVC.refreshChatroom(_:):ChatroomsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self?.chatrooms">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

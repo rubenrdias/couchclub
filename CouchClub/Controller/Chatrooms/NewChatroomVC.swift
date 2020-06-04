@@ -12,16 +12,15 @@ class NewChatroomVC: UIViewController, Storyboarded {
     
     weak var coordinator: NewChatroomCoordinator?
 
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: TitleTextView!
     @IBOutlet weak var subjectTitleLabel: UILabel!
     @IBOutlet var radioButtons: [UIButton]!
     @IBOutlet weak var createChatroomButton: UIButton!
-    
-    let placeholderText = "Chatroom title..."
-    let titleRegex = NSRegularExpression(".*")
-    
+        
     var chatroomType: ChatroomType?
     var selectedSubjectID: String?
+    
+    private let titlePlaceholderText = "Chatroom title..."
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +34,12 @@ class NewChatroomVC: UIViewController, Storyboarded {
         view.addGestureRecognizer(tap)
         
         setupButtons()
-        setupTitleToolbar()
-        resetTextView(setPlaceholder: false)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.textView.becomeFirstResponder()
-        }
+        setupTextView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textView.becomeFirstResponder()
     }
     
     deinit {
@@ -106,31 +105,18 @@ class NewChatroomVC: UIViewController, Storyboarded {
         button.titleLabel?.font = .translatedFont(for: .subheadline, .regular)
     }
     
-    private func setupTitleToolbar() {
-        let toolbar = UIToolbar(frame: .init(x: 0, y: 0, width: view.bounds.width, height: 44))
-        toolbar.tintColor = UIColor.systemOrange
-        
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(editingFinished))
-        
-        toolbar.setItems([spacer, doneButton], animated: false)
-        
-        textView.inputAccessoryView = toolbar
-    }
-    
     @objc private func editingFinished() {
         textView.resignFirstResponder()
         validateInputs()
     }
     
-    func resetTextView(setPlaceholder: Bool = true) {
-        textView.text = setPlaceholder ? placeholderText : nil
-        textView.font = .translatedFont(for: .body, .regular)
-        textView.textColor = .colorAsset(.dynamicLabelSecondary)
+    func setupTextView() {
+        textView.placeholderText = titlePlaceholderText
+        textView.titleDelegate = self
     }
     
     func validateInputs() {
-        let validText = !textView.text.isEmpty && textView.text != placeholderText
+        let validText = !textView.text.isEmpty && textView.text != titlePlaceholderText
         
         if chatroomType != nil && selectedSubjectID != nil && validText {
             UIView.animate(withDuration: 0.25, animations: { [weak self] in
@@ -178,35 +164,10 @@ class NewChatroomVC: UIViewController, Storyboarded {
 
 }
 
-extension NewChatroomVC: UITextViewDelegate {
+extension NewChatroomVC: TitleDelegate {
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text.isEmpty || textView.text == placeholderText  {
-            textView.text = ""
-            textView.font = .translatedFont(for: .title2, .semibold)
-            textView.textColor = .colorAsset(.dynamicLabel)
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            resetTextView()
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
+    func shouldValidateInputs() {
         validateInputs()
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            editingFinished()
-            return false
-        } else if titleRegex.matches(text) {
-            return textView.text.count + (text.count - range.length) <= 60
-        } else {
-            return false
-        }
     }
     
 }
