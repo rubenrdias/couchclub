@@ -11,17 +11,16 @@ import UIKit
 class ChatroomsVC: UIViewController, Storyboarded {
     
     weak var coordinator: ChatroomsCoordinator?
+    lazy var dataSource = ChatroomsDataSource(delegate: self)
     
     @IBOutlet weak var tableView: UITableView!
-    
-    var chatrooms = [Chatroom]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Chatrooms"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .chatroomsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dataSource.fetchData), name: .chatroomsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
         
         configureTableView()
@@ -35,18 +34,11 @@ class ChatroomsVC: UIViewController, Storyboarded {
         }
     }
     
-    @objc private func fetchData() {
-        DispatchQueue.main.async { [weak self] in
-            let chatrooms = LocalDatabase.shared.fetchChatrooms()
-            if chatrooms != nil {
-                self?.chatrooms = chatrooms!
-            } else {
-                self?.chatrooms.removeAll()
-            }
-
-            self?.tableView.reloadData()
-            self?.evaluateDataAvailable()
-        }
+    private func configureTableView() {
+        tableView.dataSource = dataSource
+        tableView.delegate = dataSource
+        
+        tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
     }
     
     @objc private func refreshChatroom(_ notification: Notification) {
@@ -54,7 +46,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
             guard let info = notification.userInfo else { return }
             guard let chatroomID = info["chatroomID"] as? UUID else { return }
             
-            if let index = self?.chatrooms.firstIndex(where: { $0.id == chatroomID }) {
+            if let index = self?.dataSource.indexOf(chatroomID) {
                 self?.tableView.reloadRows(at: [.init(row: index, section: 0)], with: .automatic)
             }
         }
@@ -64,7 +56,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
         ac.popoverPresentationController?.sourceView = self.view
         
-        if chatrooms.isEmpty {
+        if dataSource.chatrooms.isEmpty {
             ac.popoverPresentationController?.sourceRect = newChatroomButton.frame
         } else {
             ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
@@ -174,7 +166,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
     }()
     
     private func evaluateDataAvailable() {
-        if chatrooms.isEmpty {
+        if dataSource.chatrooms.isEmpty {
             tableView.alwaysBounceVertical = false
             navigationItem.rightBarButtonItem = nil
             view.addSubview(noDataLabel)
@@ -198,49 +190,14 @@ class ChatroomsVC: UIViewController, Storyboarded {
     
 }
 
-extension ChatroomsVC: UITableViewDataSource, UITableViewDelegate {
+extension ChatroomsVC: ChatroomsDataSourceDelegate {
     
-    private func configureTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        tableView.register(ChatroomTVCell.self, forCellReuseIdentifier: ChatroomTVCell.reuseIdentifier)
-        
-        fetchData()
+    func didRefreshData() {
+        tableView.reloadData()
+        evaluateDataAvailable()
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatrooms.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ChatroomTVCell.reuseIdentifier, for: indexPath) as! ChatroomTVCell
-        cell.chatroom = chatrooms[indexPath.row]
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatroom = chatrooms[indexPath.row]
+    func didTapChatroom(_ chatroom: Chatroom) {
         coordinator?.showDetail(chatroom)
     }
     

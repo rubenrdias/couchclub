@@ -68,3 +68,12 @@ protocol ItemOperationDelegate: AnyObject {
 protocol MessageDelegate: AnyObject {
     func shouldSendMessage(_ text: String)
 }
+
+// MARK: - Data Sources
+
+protocol ChatroomsDataSourceDelegate: AnyObject {
+    func didRefreshData()
+    func didTapChatroom(_ chatroom: Chatroom)
+}
+
+
