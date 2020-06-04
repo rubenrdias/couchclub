@@ -12,14 +12,13 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     
     weak var coordinator: NewWatchlistCoordinator?
 
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: TitleTextView!
     @IBOutlet var radioButtons: [UIButton]!
     @IBOutlet weak var createWatchlistButton: RoundedButton!
     
-    let placeholderText = "Watchlist title..."
-    let titleRegex = NSRegularExpression(".*")
-    
     var itemType: ItemType! = .movie
+    
+    private let titlePlaceholderText = "Watchlist title..."
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +32,12 @@ class NewWatchlistVC: UIViewController, Storyboarded {
         view.addGestureRecognizer(tap)
 
         setupButtons()
-        
-        setupTitleToolbar()
-        resetTextView(setPlaceholder: false)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.textView.becomeFirstResponder()
-        }
+        setupTextView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textView.becomeFirstResponder()
     }
     
     deinit {
@@ -64,13 +62,8 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
-        radioButtons.forEach {
-            if $0.tag == sender.tag {
-                highlightButton($0)
-            } else {
-                restoreButton($0)
-            }
-        }
+        highlightButton(sender)
+        radioButtons.filter{ $0.tag != sender.tag }.forEach({ restoreButton($0) })
         
         if sender.tag == 0 {
             itemType = .movie
@@ -119,14 +112,13 @@ class NewWatchlistVC: UIViewController, Storyboarded {
         validateInputs()
     }
     
-    func resetTextView(setPlaceholder: Bool = true) {
-        textView.text = setPlaceholder ? placeholderText : nil
-        textView.font = .translatedFont(for: .body, .regular)
-        textView.textColor = .colorAsset(.dynamicLabelSecondary)
+    func setupTextView() {
+        textView.placeholderText = titlePlaceholderText
+        textView.titleDelegate = self
     }
     
     func validateInputs() {
-        let validText = !textView.text.isEmpty && textView.text != placeholderText
+        let validText = !textView.text.isEmpty && textView.text != titlePlaceholderText
         let validType = itemType != nil
         
         if validText && validType {
@@ -145,35 +137,10 @@ class NewWatchlistVC: UIViewController, Storyboarded {
 
 }
 
-extension NewWatchlistVC: UITextViewDelegate {
+extension NewWatchlistVC: TitleDelegate {
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text.isEmpty || textView.text == placeholderText  {
-            textView.text = ""
-            textView.font = .translatedFont(for: .title2, .semibold)
-            textView.textColor = .colorAsset(.dynamicLabel)
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            resetTextView()
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
+    func titleDidChange() {
         validateInputs()
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            editingFinished()
-            return false
-        } else if titleRegex.matches(text) {
-            return textView.text.count + (text.count - range.length) <= 60
-        } else {
-            return false
-        }
     }
     
 }

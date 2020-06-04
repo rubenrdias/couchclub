@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol TitleDelegate: AnyObject {
-    func shouldValidateInputs()
-}
-
 class TitleTextView: UITextView {
     
     weak var titleDelegate: TitleDelegate?
@@ -20,7 +16,7 @@ class TitleTextView: UITextView {
         didSet { showPlaceholderText() }
     }
     
-    private let titleRegex = NSRegularExpression(".*")
+    private let validationExpression = NSRegularExpression(".*")
     private let maxCharacterCount = 60
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -52,7 +48,7 @@ class TitleTextView: UITextView {
     
     @objc private func finishEditing() {
         resignFirstResponder()
-        titleDelegate?.shouldValidateInputs()
+        titleDelegate?.titleDidChange()
     }
     
     func reset(hardReset: Bool = true) {
@@ -89,14 +85,14 @@ extension TitleTextView: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        titleDelegate?.shouldValidateInputs()
+        titleDelegate?.titleDidChange()
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             finishEditing()
             return false
-        } else if titleRegex.matches(text) {
+        } else if validationExpression.matches(text) {
             return textView.text.count + (text.count - range.length) <= maxCharacterCount
         } else {
             return false

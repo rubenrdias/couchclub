@@ -52,7 +52,7 @@
                                 <color key="textColor" name="Dynamic.LabelSecondary"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Watchlist title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fTT-8j-JuF">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Watchlist title..." textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fTT-8j-JuF" customClass="TitleTextView" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="12" y="96" width="351" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="DeG-VI-OjC"/>
@@ -60,9 +60,6 @@
                                 <color key="textColor" name="Dynamic.LabelSecondary"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="eCY-jQ-ImS" id="yRf-AZ-b47"/>
-                                </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOR TRACKING" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qrw-CD-BvX">
                                 <rect key="frame" x="16" y="172" width="343" height="44"/>
@@ -141,7 +138,7 @@
                     <navigationItem key="navigationItem" title="New Watchlist" id="6VB-k2-rYg"/>
                     <connections>
                         <outlet property="createWatchlistButton" destination="xBM-6O-MW3" id="Ttf-Me-v7j"/>
-                        <outlet property="textView" destination="fTT-8j-JuF" id="IVw-D2-t4m"/>
+                        <outlet property="textView" destination="fTT-8j-JuF" id="sLo-hg-SGl"/>
                         <outletCollection property="radioButtons" destination="kk1-bv-lxf" collectionClass="NSMutableArray" id="951-oy-a5G"/>
                         <outletCollection property="radioButtons" destination="aBS-jy-FzT" collectionClass="NSMutableArray" id="8iv-ap-fq8"/>
                     </connections>

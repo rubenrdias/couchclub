@@ -69,6 +69,10 @@ protocol MessageDelegate: AnyObject {
     func shouldSendMessage(_ text: String)
 }
 
+protocol TitleDelegate: AnyObject {
+    func titleDidChange()
+}
+
 // MARK: - Data Sources
 
 protocol ChatroomsDataSourceDelegate: AnyObject {

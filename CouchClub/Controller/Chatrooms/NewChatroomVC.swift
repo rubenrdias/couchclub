@@ -67,13 +67,8 @@ class NewChatroomVC: UIViewController, Storyboarded {
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
-        radioButtons.forEach {
-            if $0.tag == sender.tag {
-                highlightButton($0)
-            } else {
-                restoreButton($0)
-            }
-        }
+        highlightButton(sender)
+        radioButtons.filter{ $0.tag != sender.tag }.forEach({ restoreButton($0) })
         
         if sender.tag == 0 {
             chatroomType = .watchlist
@@ -85,9 +80,7 @@ class NewChatroomVC: UIViewController, Storyboarded {
     }
     
     private func setupButtons() {
-        radioButtons.forEach {
-            restoreButton($0)
-        }
+        radioButtons.forEach { restoreButton($0) }
         
         createChatroomButton.alpha = 0
         createChatroomButton.isEnabled = false
@@ -166,7 +159,7 @@ class NewChatroomVC: UIViewController, Storyboarded {
 
 extension NewChatroomVC: TitleDelegate {
     
-    func shouldValidateInputs() {
+    func titleDidChange() {
         validateInputs()
     }
     
