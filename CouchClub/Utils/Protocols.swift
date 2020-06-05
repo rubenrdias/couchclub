@@ -84,3 +84,8 @@ protocol ChatroomsDataSourceDelegate: AnyObject {
     func didRefreshData()
     func didTapChatroom(_ chatroom: Chatroom)
 }
+
+protocol ItemDataSourceDelegate: NSObject {
+    func didTapItem(_ item: Item)
+    func didTapItemSeen(_ item: Item)
+}

@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol ItemDataSourceDelegate: NSObject {
-    func didTapItem(_ item: Item)
-    func didTapItemSeen(_ item: Item)
-}
-
 class WatchlistItemsDataSource: NSObject {
     
     private enum Section: String {
