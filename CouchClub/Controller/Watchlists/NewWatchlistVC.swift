@@ -25,13 +25,8 @@ class NewWatchlistVC: UIViewController, Storyboarded {
         super.viewDidLoad()
         
         title = "New Watchlist"
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
 
+        setupView()
         setupButtons()
         setupTextView()
     }
@@ -47,6 +42,14 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     
     deinit {
         print("-- DEINIT -- New Watchlist VC")
+    }
+    
+    private func setupView() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
     
     @objc private func cancelTapped(_ sender: UIBarButtonItem) {

@@ -17,13 +17,9 @@ class ChatroomsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
         return chatrooms.isEmpty
     }
     
-    convenience init(delegate: ChatroomsDataSourceDelegate? = nil) {
-        self.init()
-        self.delegate = delegate
-    }
-    
-    private override init() {
+    init(delegate: ChatroomsDataSourceDelegate? = nil) {
         super.init()
+        self.delegate = delegate
         
         fetchData()
     }

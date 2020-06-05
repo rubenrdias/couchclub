@@ -20,16 +20,13 @@ class ChatroomMessagesDataSource: NSObject, UITableViewDataSource, UITableViewDe
     weak var tableView: UITableView!
     private var fetchedResultsController: NSFetchedResultsController<Message>!
     
-    convenience init(chatroom: Chatroom, tableView: UITableView, delegate: MessagesDataSourceDelegate? = nil) {
-        self.init(chatroom: chatroom, tableView: tableView)
-        self.delegate = delegate
-        setupFetchedResultsController()
-    }
-    
-    private init(chatroom: Chatroom, tableView: UITableView) {
+    init(chatroom: Chatroom, tableView: UITableView, delegate: MessagesDataSourceDelegate? = nil) {
+        super.init()
         self.chatroom = chatroom
         self.tableView = tableView
-        super.init()
+        self.delegate = delegate
+        
+        setupFetchedResultsController()
     }
     
     deinit {

@@ -21,17 +21,18 @@ class WatchlistsDataSource: NSObject {
     private var itemsPerRow: Int = 1
     private var usableWidth: CGFloat = 0
     
-    convenience init(collectionView: UICollectionView, delegate: WatchlistsDataSourceDelegate? = nil) {
-        self.init()
+    init(collectionView: UICollectionView, delegate: WatchlistsDataSourceDelegate? = nil) {
+        super.init()
         self.collectionView = collectionView
         self.delegate = delegate
-        self.setupCollectionViewLayout(collectionView.bounds.size)
+        
+        registerViews()
+        setupCollectionViewLayout(collectionView.bounds.size)
+        fetchData()
     }
     
-    private override init() {
-        super.init()
-        
-        fetchData()
+    private func registerViews() {
+        collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
     }
     
     func indexOf(_ id: UUID) -> Int? {

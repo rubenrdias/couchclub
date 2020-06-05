@@ -28,12 +28,67 @@ public class Watchlist: NSManagedObject {
         return thumbnail
     }
     
-    func itemsWatchedString() -> String {
+    func itemsWatchedString(withDescription: Bool = true) -> String {
         let typeString = type == ItemType.movie.rawValue ? ItemType.movie.rawValue : "show"
-        guard let items = items?.allObjects as? [Item] else { return "No \(typeString)s added" }
+        guard let items = items?.allObjects as? [Item], !items.isEmpty else {
+            return withDescription ? "No \(typeString)s added" : "N/A"
+        }
         
         let watchedItems = items.reduce(0) { $0 + ($1.watched ? 1 : 0) }
-        return "\(watchedItems) of \(items.count) \(typeString)\(items.count == 1 ? "" : "s") watched"
+        
+        var watchedString = "\(watchedItems) of \(items.count)"
+        if withDescription {
+            watchedString.append(" \(typeString)\(items.count == 1 ? "" : "s") watched")
+        }
+        
+        return watchedString
+    }
+    
+    func screenTimeString() -> String {
+        guard let items = items?.allObjects as? [Item], !items.isEmpty else { return "N/A" }
+        
+        var timeInMinutes = 0
+        items.forEach {
+            if $0.runtime == "N/A" { return }
+            let minutesString = $0.runtime.split(separator: " ")[0]
+            if let minutes = Int(minutesString) {
+                timeInMinutes += minutes
+            }
+        }
+        
+        let hours = Int(floor(Double(timeInMinutes / 60)))
+        let minutes = timeInMinutes - 60 * hours
+        
+        if timeInMinutes == 0 {
+            return "N/A"
+        } else if hours == 0 {
+            return "\(minutes) min"
+        } else {
+            var string = "\(hours) h"
+            if minutes > 0 {
+                string.append(" \(minutes) min")
+            }
+            return string
+        }
+    }
+    
+    func averageRatingString() -> String {
+        guard let items = items?.allObjects as? [Item], !items.isEmpty else { return "N/A" }
+        
+        var globalRating: Double = 0
+        items.forEach {
+            if let rating = Double($0.imdbRating) {
+                globalRating += rating
+            }
+        }
+        
+        globalRating = globalRating / Double(items.count)
+        
+        if globalRating == 0 {
+            return "N/A"
+        } else {
+            return "\(String(format: "%.1f", globalRating))/10"
+        }
     }
     
 }

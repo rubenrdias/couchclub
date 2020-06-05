@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "WatchlistItemsDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:):WatchlistItemsDataSource.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sectionHeaders">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "SearchVC.collectionView(_:didSelectItemAt:):SearchVC.swift">
          <PersistentStrings>
             <PersistentString

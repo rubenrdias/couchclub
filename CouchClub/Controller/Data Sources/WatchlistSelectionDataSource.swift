@@ -16,21 +16,24 @@ class WatchlistSelectionDataSource: NSObject, UITableViewDataSource, UITableView
     
     var cellID = "cell"
     
-    convenience init(tableView: UITableView, delegate: WatchlistSelectionDelegate? = nil) {
-        self.init()
+    init(tableView: UITableView, delegate: WatchlistSelectionDelegate? = nil) {
+        super.init()
         self.tableView = tableView
         self.delegate = delegate
         
-        if let watchlists = LocalDatabase.shared.fetchWatchlists() {
-            self.watchlists = watchlists
-        }
+        registerViews()
         
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        self.tableView.tableFooterView = UIView()
+        guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
+        self.watchlists = watchlists
     }
     
     deinit {
         print("-- DEINIT -- Watchlist Selection Data Source")
+    }
+    
+    private func registerViews() {
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        self.tableView.tableFooterView = UIView()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

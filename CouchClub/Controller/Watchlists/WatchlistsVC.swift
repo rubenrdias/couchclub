@@ -44,8 +44,6 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     private func configureCollectionView() {
         collectionView.dataSource = dataSource
         collectionView.delegate = dataSource
-        
-        collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
     }
     
     @objc private func refreshWatchlists() {
