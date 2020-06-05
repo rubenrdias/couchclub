@@ -28,6 +28,14 @@ public class Watchlist: NSManagedObject {
         return thumbnail
     }
     
+    func itemsWatchedString() -> String {
+        let typeString = type == ItemType.movie.rawValue ? ItemType.movie.rawValue : "show"
+        guard let items = items?.allObjects as? [Item] else { return "No \(typeString)s added" }
+        
+        let watchedItems = items.reduce(0) { $0 + ($1.watched ? 1 : 0) }
+        return "\(watchedItems) of \(items.count) \(typeString)\(items.count == 1 ? "" : "s") watched"
+    }
+    
 }
 
 class WatchlistBuilder {

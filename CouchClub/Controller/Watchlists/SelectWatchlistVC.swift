@@ -11,17 +11,14 @@ import UIKit
 class SelectWatchlistVC: UITableViewController, Storyboarded {
     
     weak var coordinator: NewChatroomCoordinator?
-    
-    private let cellId = "cellId"
-    private let watchlists = LocalDatabase.shared.fetchWatchlists()
+    lazy var dataSource = WatchlistSelectionDataSource(tableView: tableView, delegate: self)
     
     private var didSelectWatchlist = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
-        tableView.tableFooterView = UIView()
+        configureTableView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -36,26 +33,18 @@ class SelectWatchlistVC: UITableViewController, Storyboarded {
         print("-- DEINIT -- Select Watchlist VC")
     }
     
+    private func configureTableView() {
+        tableView.dataSource = dataSource
+        tableView.delegate = dataSource
+    }
+    
 }
 
-extension SelectWatchlistVC {
+extension SelectWatchlistVC: WatchlistSelectionDelegate {
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return watchlists?.count ?? 0
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let watchlist = watchlists?[indexPath.row] else { return UITableViewCell() }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        cell.textLabel?.text = watchlist.title
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let watchlist = watchlists?[indexPath.row] else { return }
+    func didSelectWatchlist(_ id: UUID) {
         didSelectWatchlist = true
-        coordinator?.didSelectWatchlist(watchlist.id)
+        coordinator?.didSelectWatchlist(id)
     }
     
 }

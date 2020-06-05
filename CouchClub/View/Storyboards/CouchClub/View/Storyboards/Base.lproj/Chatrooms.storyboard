@@ -17,10 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="11b-q4-XNZ" id="Zzo-a4-Gms"/>
-                            <outlet property="delegate" destination="11b-q4-XNZ" id="MYX-np-Yha"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="mB7-3g-SZz"/>
                 </tableViewController>
@@ -204,10 +200,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="pFF-2k-9Um" id="FkO-sp-XFD"/>
-                            <outlet property="delegate" destination="pFF-2k-9Um" id="e9d-L6-dJY"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="dmr-eV-OI9"/>
                 </tableViewController>

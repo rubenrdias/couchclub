@@ -19,6 +19,7 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     var itemType: ItemType! = .movie
     
     private let titlePlaceholderText = "Watchlist title..."
+    private var shouldFocusOnTitle = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,11 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        textView.becomeFirstResponder()
+        
+        if shouldFocusOnTitle {
+            textView.becomeFirstResponder()
+            shouldFocusOnTitle = false
+        }
     }
     
     deinit {

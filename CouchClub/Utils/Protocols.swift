@@ -75,9 +75,12 @@ protocol TitleDelegate: AnyObject {
 
 // MARK: - Data Sources
 
+protocol WatchlistsDataSourceDelegate: AnyObject {
+    func didRefreshData()
+    func didTapWatchlist(_ watchlist: Watchlist)
+}
+
 protocol ChatroomsDataSourceDelegate: AnyObject {
     func didRefreshData()
     func didTapChatroom(_ chatroom: Chatroom)
 }
-
-

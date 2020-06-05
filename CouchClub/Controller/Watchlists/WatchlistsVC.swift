@@ -13,32 +13,23 @@ import FirebaseAuth
 class WatchlistsVC: UICollectionViewController, Storyboarded {
     
     weak var coordinator: WatchlistsCoordinator?
-    
-    private var itemsPerRow: Int = 1
-    private var usableWidth: CGFloat = 0
-    
-    var watchlists = [Watchlist]()
+    lazy var dataSource = WatchlistsDataSource(collectionView: collectionView, delegate: self)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Watchlists"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchData), name: .watchlistsDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateWatchlist), name: .watchlistDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlists), name: .watchlistsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlist), name: .watchlistDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemSeenStatusUpdated), name: .itemWatchedStatusChanged, object: nil)
         
-        collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
-        
-        let size = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
-        setupCollectionViewLayout(size)
-        
-        fetchData()
+        configureCollectionView()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        setupCollectionViewLayout(size)
+        dataSource.setupCollectionViewLayout(size)
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
@@ -50,25 +41,25 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         }
     }
     
-    @objc private func fetchData() {
-        DispatchQueue.main.async { [weak self] in
-            let watchlists = LocalDatabase.shared.fetchWatchlists()
-            if watchlists != nil {
-                self?.watchlists = watchlists!
-            } else {
-                self?.watchlists.removeAll()
-            }
-            
-            self?.collectionView.reloadData()
-            self?.evaluateDataAvailable()
-        }
+    private func configureCollectionView() {
+        collectionView.dataSource = dataSource
+        collectionView.delegate = dataSource
+        
+        collectionView.register(WatchlistCell.self, forCellWithReuseIdentifier: WatchlistCell.reuseIdentifier)
     }
     
-    @objc private func updateWatchlist(_ notification: Notification) {
-        guard let watchlistID = notification.userInfo?["watchlistID"] as? UUID else { return }
-        
-        if let index = watchlists.firstIndex(where: { $0.id == watchlistID }) {
-            collectionView.reloadItems(at: [.init(item: index, section: 0)])
+    @objc private func refreshWatchlists() {
+        dataSource.fetchData()
+    }
+    
+    @objc private func refreshWatchlist(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            guard let info = notification.userInfo else { return }
+            guard let watchlistID = info["watchlistID"] as? UUID else { return }
+            
+            if let index = self?.dataSource.indexOf(watchlistID) {
+                self?.collectionView.reloadItems(at: [.init(item: index, section: 0)])
+            }
         }
     }
     
@@ -134,13 +125,15 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     }()
     
     private func evaluateDataAvailable() {
-        if watchlists.isEmpty {
+        if dataSource.isEmpty {
+            collectionView.alwaysBounceVertical = false
             navigationItem.rightBarButtonItem = nil
             view.addSubview(noDataLabel)
             view.addSubview(createWatchlistButton)
             NSLayoutConstraint.activate(noDataLabelConstraints)
             NSLayoutConstraint.activate(createWatchlistButtonConstraints)
         } else {
+            collectionView.alwaysBounceVertical = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createWatchlist))
             noDataLabel.removeFromSuperview()
             createWatchlistButton.removeFromSuperview()
@@ -149,29 +142,7 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         
     @objc private func itemSeenStatusUpdated(_ notification: Notification) {
         guard let item = notification.userInfo?["item"] as? Item else { return }
-
-        var indexPathsToUpdate = [IndexPath]()
-        for (index, watchlist) in watchlists.enumerated() {
-            guard let items = watchlist.items?.allObjects as? [Item] else { continue }
-            if items.contains(item) {
-                indexPathsToUpdate.append(.init(item: index, section: 0))
-            }
-        }
-        
-        guard !indexPathsToUpdate.isEmpty else { return }
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.collectionView.reloadItems(at: indexPathsToUpdate)
-        }
-    }
-    
-    private func calculateItemsWatched(_ watchlist: Watchlist) -> String {
-        guard let items = watchlist.items?.allObjects as? [Item] else { return "0 of 0 \(watchlist.type)s watched" }
-        let watched = items.reduce(0) { $0 + ($1.watched ? 1 : 0) }
-        
-        let typeString = watchlist.type == ItemType.movie.rawValue ? ItemType.movie.rawValue : "show"
-        
-        return "\(watched) of \(items.count) \(typeString)\(items.count == 1 ? "" : "s") watched"
+        dataSource.updateSeenStatus(item)
     }
     
     func didCreateWatchlist(_ id: UUID) {
@@ -183,49 +154,16 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     
 }
 
-extension WatchlistsVC {
+extension WatchlistsVC: WatchlistsDataSourceDelegate {
     
-    private func setupCollectionViewLayout(_ size: CGSize) {
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            switch UIDevice.current.orientation {
-            case .portrait, .portraitUpsideDown:
-                itemsPerRow = 2
-            default:
-                itemsPerRow = 3
-            }
-            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
-        } else {
-            itemsPerRow = 1
-            collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
-        }
-        
-        usableWidth = size.width - 2 * 16
-        updateItemSize()
+    func didRefreshData() {
+        collectionView.reloadData()
+        evaluateDataAvailable()
     }
     
-    private func updateItemSize() {
-        let width: CGFloat = (usableWidth - CGFloat(itemsPerRow - 1) * 16) / CGFloat(itemsPerRow)
-        let height: CGFloat = width * 11/16
-        
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = .init(width: width, height: height)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return watchlists.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchlistCell.reuseIdentifier, for: indexPath) as! WatchlistCell
-        let watchlist = watchlists[indexPath.item]
-        cell.watchlist = watchlist
-        cell.subtitle = calculateItemsWatched(watchlist)
-        return cell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let watchlist = watchlists[indexPath.item]
+    func didTapWatchlist(_ watchlist: Watchlist) {
         coordinator?.showDetail(watchlist)
     }
+    
     
 }
