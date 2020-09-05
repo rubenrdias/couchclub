@@ -165,7 +165,7 @@ extension SearchVC {
                 coordinator?.showItemDetail(movie, watchlist: watchlist)
             } else {
                 toggleActivityIndicator()
-                DataCoordinator.shared.getMovie(item.id) { [weak self] movie in
+                DataCoordinator.shared.getMovie(item.id) { [weak self] (movie, error) in
                     DispatchQueue.main.async {
                         guard self != nil else { return }
                         self!.toggleActivityIndicator()
@@ -182,7 +182,7 @@ extension SearchVC {
                 coordinator?.showItemDetail(show, watchlist: watchlist)
             } else {
                 toggleActivityIndicator()
-                DataCoordinator.shared.getShow(item.id) { [weak self] show in
+                DataCoordinator.shared.getShow(item.id) { [weak self] (show, error) in
                     DispatchQueue.main.async {
                         guard self != nil else { return }
                         self!.toggleActivityIndicator()

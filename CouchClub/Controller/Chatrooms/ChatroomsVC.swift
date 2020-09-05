@@ -22,6 +22,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshChatrooms), name: .chatroomsDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(refreshUserMessage), name: .userInfoDidChange, object: nil)
         
         configureTableView()
     }
@@ -55,6 +56,15 @@ class ChatroomsVC: UIViewController, Storyboarded {
             }
         }
     }
+	
+	@objc private func refreshUserMessage(_ notification: Notification) {
+		DispatchQueue.main.async { [weak self] in
+			guard let info = notification.userInfo else { return }
+			guard let user = info["user"] as? User else { return }
+		
+			self?.dataSource.updateUserInfo(user)
+		}
+	}
     
     @objc private func newChatroomDialog() {
         let ac = UIAlertController(title: nil, message: "Would you like to create a new Chatroom or join an existing one?", preferredStyle: .actionSheet)
@@ -204,5 +214,9 @@ extension ChatroomsVC: ChatroomsDataSourceDelegate {
     func didTapChatroom(_ chatroom: Chatroom) {
         coordinator?.showDetail(chatroom)
     }
+	
+	func shouldReloadRows(_ indices: [IndexPath]) {
+		tableView.reloadRows(at: indices, with: .automatic)
+	}
     
 }

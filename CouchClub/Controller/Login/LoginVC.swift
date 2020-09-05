@@ -21,7 +21,8 @@ class LoginVC: UIViewController, Storyboarded {
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var createAccountLabel: UILabel!
     @IBOutlet weak var createAccountButton: UIButton!
-    
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+	
     let emailRegex = NSRegularExpression("[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]")
     let passwordRegex = NSRegularExpression(".{6,50}")
     
@@ -53,9 +54,11 @@ class LoginVC: UIViewController, Storyboarded {
             let alert = Alerts.simpleAlert(title: errorMessage.0, message: errorMessage.1)
             present(alert, animated: true)
         } else {
+			setLoadingState(true)
+			
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            
+			
             DataCoordinator.shared.signIn(email, password) { [unowned self] (error) in
                 if let error = error {
                     let alert = Alerts.simpleAlert(title: "Sign in failed", message: error.localizedDescription)
@@ -63,6 +66,8 @@ class LoginVC: UIViewController, Storyboarded {
                 } else {
                     self.coordinator?.loggedIn()
                 }
+				
+				self.setLoadingState(false)
             }
         }
     }
@@ -74,6 +79,18 @@ class LoginVC: UIViewController, Storyboarded {
     @objc private func editingFinished() {
         view.endEditing(true)
     }
+	
+	private func setLoadingState(_ loading: Bool) {
+		if loading {
+			activityIndicator.startAnimating()
+			signInButton.setTitle(nil, for: .normal)
+			signInButton.isEnabled = false
+		} else {
+			activityIndicator.stopAnimating()
+			signInButton.setTitle("Sign In", for: .normal)
+			signInButton.isEnabled = true
+		}
+	}
     
     private func setupLabels() {
         titleLabel.text = "Sign In"

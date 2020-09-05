@@ -31,17 +31,17 @@ class SettingsVC: UITableViewController, Storyboarded {
 extension SettingsVC {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return FirebaseService.currentUserID == nil ? 1 : 2
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 && FirebaseService.currentUserID != nil {
+        if indexPath.row == 0 {
             let currentUser = LocalDatabase.shared.fetchCurrentuser()
             let cell = UITableViewCell()
             cell.textLabel?.text = "Logged in as \(currentUser.username)"
             cell.textLabel?.textAlignment = .left
             return cell
-        } else {
+		} else {
             let cell = UITableViewCell()
             cell.textLabel?.text = "Log Out"
             cell.textLabel?.textAlignment = .center
@@ -51,21 +51,16 @@ extension SettingsVC {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        FirebaseService.shared.signOut { (error) in
-            if let error = error {
-                let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
-                present(alert, animated: true)
-            } else {
-				LocalDatabase.shared.cleanupAfterLogout()
-				
-                tableView.reloadData()
-                coordinator?.showLogin()
-                
-                if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                    tableView.deselectRow(at: selectedIndexPath, animated: true)
-                }
-            }
-        }
+		tableView.deselectRow(at: indexPath, animated: true)
+		
+		DataCoordinator.shared.signOut { [unowned self] (error) in
+			if let error = error {
+				let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
+				self.present(alert, animated: true)
+			} else {
+				self.coordinator?.showLogin()
+			}
+		}
     }
     
 }

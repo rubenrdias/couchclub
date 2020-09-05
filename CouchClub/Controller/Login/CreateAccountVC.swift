@@ -21,7 +21,8 @@ class CreateAccountVC: UIViewController, Storyboarded {
     @IBOutlet weak var createAccountButton: RoundedButton!
     @IBOutlet weak var signInLabel: UILabel!
     @IBOutlet weak var signInButton: UIButton!
-    
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+	
     let emailRegex = NSRegularExpression("[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]")
     let passwordRegex = NSRegularExpression(".{6,50}")
     
@@ -51,7 +52,8 @@ class CreateAccountVC: UIViewController, Storyboarded {
             let alert = Alerts.simpleAlert(title: errorMessage.0, message: errorMessage.1)
             present(alert, animated: true)
         } else {
-            // create user
+			self.setLoadingState(true)
+			
             let username = usernameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -63,6 +65,8 @@ class CreateAccountVC: UIViewController, Storyboarded {
                 } else {
                     self.coordinator?.accountCreated()
                 }
+				
+				self.setLoadingState(false)
             }
         }
     }
@@ -74,6 +78,18 @@ class CreateAccountVC: UIViewController, Storyboarded {
     @objc private func editingFinished() {
         view.endEditing(true)
     }
+	
+	private func setLoadingState(_ loading: Bool) {
+		if loading {
+			activityIndicator.startAnimating()
+			createAccountButton.setTitle(nil, for: .normal)
+			createAccountButton.isEnabled = false
+		} else {
+			activityIndicator.stopAnimating()
+			createAccountButton.setTitle("Create Account", for: .normal)
+			createAccountButton.isEnabled = true
+		}
+	}
     
     private func setupLabels() {
         titleLabel.text = "Create Account"

@@ -13,6 +13,14 @@ import CoreData
 @objc(Chatroom)
 public class Chatroom: NSManagedObject {
 
+	var lastMessage: Message? {
+		get {
+			guard let messages = messages?.allObjects as? [Message], !messages.isEmpty else { return nil }
+			let sortedMessages = messages.sorted { $0.date > $1.date }
+			return sortedMessages.first
+		}
+	}
+	
 }
 
 class ChatroomBuilder {
