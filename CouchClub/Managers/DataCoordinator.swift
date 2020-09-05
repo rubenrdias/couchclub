@@ -14,14 +14,35 @@ final class DataCoordinator {
     
     private init() {}
     
-    // MARK: - users
+	// MARK: - Setup
+	
+	func configure() {
+		guard let currentUserID = FirebaseService.currentUserID else { return }
+		
+		if LocalDatabase.shared.fetchUser(currentUserID) == nil {
+			self.createLocalUser { (_, error) in
+				guard error == nil else {
+					FirebaseService.shared.signOut { (error) in
+						if error != nil { fatalError("Can't go on with user signed in, when no local user can be created.") }
+					}
+					return
+				}
+				
+				FirebaseService.shared.configureListeners()
+			}
+		} else {
+			FirebaseService.shared.configureListeners()
+		}
+	}
+	
+    // MARK: - Users
     
     func createUser(_ username: String, _ email: String, _ password: String, completion: @escaping (_ error: Error?)->()) {
         FirebaseService.shared.createUser(username, email, password) { [unowned self] (uid, error) in
             if let error = error {
                 completion(error)
             } else {
-                self.createLocalUser(FirebaseService.currentUserID!) { (_, error) in
+                self.createLocalUser() { (_, error) in
                     if error != nil {
                         FirebaseService.shared.signOut { (error) in
                             if error != nil { fatalError("Can't go on with user signed in, when no local user can be created.") }
@@ -37,22 +58,43 @@ final class DataCoordinator {
         FirebaseService.shared.signIn(email, password) { [unowned self] (error) in
             if let error = error {
                 completion(error)
-            } else if LocalDatabase.shared.fetchUser(FirebaseService.currentUserID!) == nil {
-                self.createLocalUser(FirebaseService.currentUserID!) { (_, error) in
-                    if error != nil {
-                        FirebaseService.shared.signOut { (error) in
-                            if error != nil { fatalError("Can't go on with user signed in, when no local user can be created.") }
-                        }
-                    }
-                    completion(error)
-                }
-            } else {
-                completion(nil)
-            }
+				return
+			}
+			
+			self.createLocalUser() { (_, error) in
+				guard error == nil else {
+					FirebaseService.shared.signOut { (error) in
+						if error != nil { fatalError("Can't continue: user signed in, no local user could be created.") }
+					}
+					completion(error)
+					return
+				}
+				
+				self.restoreUserData { (error) in
+					completion(error)
+				}
+			}
         }
     }
+	
+	func signOut(completion: @escaping (_ error: Error?)->()) {
+		FirebaseService.shared.signOut { [unowned self] (error) in
+			if let error = error {
+				completion(error)
+			} else {
+				LocalDatabase.shared.cleanupAfterLogout()
+				self.resetScreens()
+				completion(nil)
+			}
+		}
+	}
+	
+	private func resetScreens() {
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+		appDelegate.tabBarController?.resetScreens()
+	}
     
-    func createLocalUser(_ id: String, completion: @escaping (_ user: User?, _ error: Error?)->()) {
+	func createLocalUser(_ id: String = FirebaseService.currentUserID!, completion: @escaping (_ user: User?, _ error: Error?)->()) {
         FirebaseService.shared.fetchUserDetails(id) { (userData, error) in
             if let error = error {
                 completion(nil, error)
@@ -66,41 +108,138 @@ final class DataCoordinator {
         }
     }
     
-    func createCurrentUserObject(completion: @escaping (_ userExists: Bool) -> ()) {
-        guard let currentUserID = FirebaseService.currentUserID else {
-            completion(false)
-            return
-        }
-        
-        if LocalDatabase.shared.fetchUser(currentUserID) == nil {
-            createLocalUser(currentUserID) { (_, error) in
-                if error != nil { fatalError("When logged in, a user object for Current User must exist") }
-                completion(true)
-            }
-        } else {
-            completion(true)
-        }
-    }
-    
     func fetchUser(id: String, completion: @escaping (_ user: User?, _ error: Error?)->()) {
         if let user = LocalDatabase.shared.fetchUser(id) {
             completion(user, nil)
         } else {
-            FirebaseService.shared.fetchUserDetails(id) { (userData, error) in
-                if let error = error {
-                    print("Firebase Firestore | Error when fetching user \(id) data: \(error.localizedDescription)")
-                    completion(nil, error)
-                } else {
-                    // TODO: create errors for missing userData and username
-                    guard let userData = userData else { completion(nil, nil); return }
-                    guard let username = userData["username"] as? String else { completion(nil, nil); return }
-                    
-                    let user = LocalDatabase.shared.createUser(id, username)
-                    completion(user, nil)
-                }
-            }
+			let user = LocalDatabase.shared.createUser(id)
+			completion(user, nil)
+			
+			DispatchQueue.global(qos: .userInitiated).async {
+				FirebaseService.shared.fetchUserDetails(id) { (userData, error) in
+					if let error = error {
+						print("Firebase Firestore | Error when fetching user \(id) data: \(error.localizedDescription)")
+					} else {
+						guard let userData = userData else { completion(nil, nil); return }
+						guard let username = userData["username"] as? String else { completion(nil, nil); return }
+						
+						LocalDatabase.shared.updateUser(id, username)
+					}
+				}
+			}
         }
     }
+	
+	func restoreUserData(completion: @escaping (_ error: Error?)->()) {
+		self.restoreWatchlists { [unowned self] (error) in
+			if error != nil { completion(error); return }
+			
+			NotificationCenter.default.post(name: .watchlistsDidChange, object: nil, userInfo: nil)
+			
+			self.restoreChatrooms { (error) in
+				if error != nil { completion(error); return }
+				
+				NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
+				completion(nil)
+			}
+		}
+		
+	}
+	
+	func restoreWatchlists(completion: @escaping (_ error: Error?) -> ()) {
+		FirebaseService.shared.fetchWatchlists { [unowned self] (watchlistsData, error) in
+			guard error == nil else { completion(error); return }
+			guard let watchlistsData = watchlistsData else { completion(nil);  return }
+			
+			let watchlistGroup = DispatchGroup()
+			watchlistsData.forEach {
+				guard let uuidString = $0["id"] as? String, let id = UUID(uuidString: uuidString),
+					  let title = $0["title"] as? String,
+					  let rawType = $0["type"] as? String, let type = ItemType(rawValue: rawType)
+					  else { return }
+				
+				let watchlist = LocalDatabase.shared.createWatchlist(id: id, title, type)
+				var watchlistRestorationError: Error?
+				
+				guard let items = $0["items"] as? [String] else { return }
+				watchlistGroup.enter()
+				
+				let itemGroup = DispatchGroup()
+				var itemsToAdd = [Item]()
+				items.forEach {
+					itemGroup.enter()
+					
+					switch type {
+					case .movie:
+						self.getMovie($0) { (movie, error) in
+							guard let movie = movie else {
+								watchlistRestorationError = error
+								itemGroup.leave()
+								return
+							}
+							itemsToAdd.append(movie)
+							itemGroup.leave()
+						}
+					case .series:
+						self.getShow($0) { (show, error) in
+							guard let show = show else {
+								watchlistRestorationError = error
+								itemGroup.leave()
+								return
+							}
+							itemsToAdd.append(show)
+							itemGroup.leave()
+						}
+					}
+				}
+				
+				itemGroup.wait()
+				
+				if watchlistRestorationError != nil {
+					// TODO: mark watchlist error and retry later
+				}
+				
+				LocalDatabase.shared.addToWatchlist(itemsToAdd, watchlist)
+				watchlistGroup.leave()
+			}
+			
+			completion(nil)
+		}
+	}
+	
+	func restoreChatrooms(completion: @escaping (_ error: Error?) -> ()) {
+		FirebaseService.shared.fetchChatrooms { [unowned self] (chatroomsData, error) in
+			guard error == nil else { completion(error); return }
+			guard let chatroomsData = chatroomsData else { completion(nil);  return }
+			
+			let chatroomsGroup = DispatchGroup()
+			chatroomsData.forEach {
+				guard let uuidString = $0["id"] as? String else { return }
+				
+				chatroomsGroup.enter()
+				self.createChatroom(uuidString, from: $0) { (chatroom, error) in
+					if error != nil {
+						// TODO: mark chatroom error and retry later
+						chatroomsGroup.leave()
+						return
+					}
+					guard let chatroom = chatroom else {
+						// TODO: mark chatroom error and retry later
+						chatroomsGroup.leave()
+						return
+					}
+					
+					FirebaseService.shared.startChatroomListener(chatroom.id)
+					FirebaseService.shared.startMessageListener(chatroom.id)
+					chatroomsGroup.leave()
+				}
+			}
+			
+			chatroomsGroup.wait()
+			
+			completion(nil)
+		}
+	}
     
     // MARK: - Watchlists
     
@@ -112,7 +251,6 @@ final class DataCoordinator {
                 LocalDatabase.shared.deleteWatchlist(watchlist)
                 completion(nil, error)
             } else {
-                FirebaseService.shared.startMessageListener(watchlist.id)
                 NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
                 completion(watchlist.id, nil)
             }
@@ -176,24 +314,24 @@ final class DataCoordinator {
     
     // MARK: - Items
     
-    func getMovie(_ id: String, completion: @escaping (Movie?)->() ) {
-        NetworkService.shared.searchResult(forID: id, ofType: .movie) { searchItem in
+	func getMovie(_ id: String, completion: @escaping (_ movie: Movie?, _ error: Error?)->() ) {
+        NetworkService.shared.searchResult(forID: id, ofType: .movie) { (searchItem, error) in
             if let searchItemMovie = searchItem as? SearchItemMovie {
                 let movie = Converter.shared.toMovie(searchItemMovie)
-                completion(movie)
+                completion(movie, nil)
             } else {
-                completion(nil)
+                completion(nil, error)
             }
         }
     }
     
-    func getShow(_ id: String, completion: @escaping (Show?)->() ) {
-        NetworkService.shared.searchResult(forID: id, ofType: .series) { searchItem in
+	func getShow(_ id: String, completion: @escaping (_ show: Show?, _ error: Error?)->() ) {
+        NetworkService.shared.searchResult(forID: id, ofType: .series) { (searchItem, error) in
             if let searchItemShow = searchItem as? SearchItemShow {
                 let show = Converter.shared.toShow(searchItemShow)
-                completion(show)
+                completion(show, nil)
             } else {
-                completion(nil)
+                completion(nil, error)
             }
         }
     }
@@ -316,10 +454,9 @@ final class DataCoordinator {
                 // TODO: fetch watchlist and all items
                 break
             case .movie:
-                self.getMovie(subjectID) { (movie) in
+                self.getMovie(subjectID) { (movie, error) in
                     guard let movie = movie else {
-                        // TODO: create movie fetch error
-                        completion(nil, nil)
+                        completion(nil, error)
                         return
                     }
                     self.getImage(movie.id, movie.poster) { _ in
@@ -328,10 +465,9 @@ final class DataCoordinator {
                     }
                 }
             case .show:
-                self.getShow(subjectID) { (show) in
+                self.getShow(subjectID) { (show, error) in
                     guard let show = show else {
-                        // TODO: crete show fetch error
-                        completion(nil, nil)
+                        completion(nil, error)
                         return
                     }
                     self.getImage(show.id, show.poster) { _ in

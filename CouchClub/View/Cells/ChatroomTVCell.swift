@@ -105,18 +105,15 @@ class ChatroomTVCell: UITableViewCell {
     func updateInfo() {
         titleLabel.text = chatroom.title
         
-        if let messages = chatroom.messages?.allObjects as? [Message] {
-            let sortedMessages = messages.sorted { $0.date > $1.date }
-            if let lastMessage = sortedMessages.first {
-                dateLabel.text = messageSectionFormatter.string(from: lastMessage.date)
-                
-                if lastMessage.sender.id == FirebaseService.currentUserID! {
-                    messageLabel.text = lastMessage.text
-                } else {
-                    messageLabel.text = "\(lastMessage.sender.username): \(lastMessage.text)"
-                }
-            }
-        }
+		if let lastMessage = chatroom.lastMessage {
+			dateLabel.text = messageSectionFormatter.string(from: lastMessage.date)
+			
+			if lastMessage.sender.id == FirebaseService.currentUserID! {
+				messageLabel.text = lastMessage.text
+			} else {
+				messageLabel.text = "\(lastMessage.sender.username): \(lastMessage.text)"
+			}
+		}
         
         if let image = getThumbnailImage() {
             objectImageView.image = image

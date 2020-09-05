@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 19/05/2020.
+//  Created by Ruben Dias on 06/09/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -22,6 +22,7 @@ extension User {
     @NSManaged public var chatrooms: NSSet?
     @NSManaged public var messages: NSSet?
     @NSManaged public var ownedChatrooms: NSSet?
+    @NSManaged public var ownedWatchlists: Watchlist?
 
 }
 

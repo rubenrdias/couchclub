@@ -2,7 +2,7 @@
 //  Watchlist+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 30/04/2020.
+//  Created by Ruben Dias on 06/09/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -21,6 +21,7 @@ extension Watchlist {
     @NSManaged public var title: String
     @NSManaged public var type: String
     @NSManaged public var items: NSSet?
+    @NSManaged public var owner: User
 
 }
 

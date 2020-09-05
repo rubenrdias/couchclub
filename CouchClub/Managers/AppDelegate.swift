@@ -23,14 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
-        performDefaultObjectsCustomization()
+        configureDefaultAppearance()
         
         FirebaseApp.configure()
-        DataCoordinator.shared.createCurrentUserObject { (userExists) in
-            if userExists {
-                FirebaseService.shared.configureListeners()
-            }
-        }
+        DataCoordinator.shared.configure()
         
         PushNotifications.shared.registerForNotifications()
         
@@ -47,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {}
 
-    func performDefaultObjectsCustomization() {
+    func configureDefaultAppearance() {
         UITabBar.appearance().tintColor = UIColor.systemOrange
         UIToolbar.appearance().tintColor = UIColor.systemOrange
         UINavigationBar.appearance().tintColor = UIColor.systemOrange
