@@ -24,7 +24,7 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "New Watchlist"
+        title = "Create Watchlist"
 
         setupView()
         setupButtons()

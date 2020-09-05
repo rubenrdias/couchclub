@@ -26,7 +26,7 @@ class NewChatroomVC: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "New Chatroom"
+        title = "Create Chatroom"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
         

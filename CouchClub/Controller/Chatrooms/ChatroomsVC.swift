@@ -154,7 +154,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
     private lazy var newChatroomButton: RoundedButton = {
         let btn = RoundedButton()
         btn.makeCTA()
-        btn.setTitle("New Chatroom", for: .normal)
+        btn.setTitle("Create Chatroom", for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(newChatroomDialog), for: .touchUpInside)
         return btn
