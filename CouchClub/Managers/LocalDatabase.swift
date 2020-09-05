@@ -43,6 +43,17 @@ final class LocalDatabase {
             }
         }
     }
+	
+	// MARK: - General
+	
+	func cleanupAfterLogout() {
+		deleteWatchlists()
+		deleteChatrooms()
+		deleteUsers()
+		
+		NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+		NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+	}
     
     // MARK: - Users
     
@@ -75,6 +86,21 @@ final class LocalDatabase {
             return ub.named(username).build()
         }
     }
+	
+	func deleteUsers() {
+		coreDataQueue.sync {
+			let fetchRequest = User.createFetchRequest()
+			
+			do {
+				let users = try context.fetch(fetchRequest)
+				users.forEach { context.delete($0) }
+				saveContext()
+			} catch {
+				let error = error as NSError
+				print("Core Data: Error deleting Users: \(error)")
+			}
+		}
+	}
     
     // MARK: - Watchlists
     
@@ -122,21 +148,26 @@ final class LocalDatabase {
     func deleteWatchlist(_ watchlist: Watchlist) {
         coreDataQueue.sync {
             context.delete(watchlist)
-            LocalDatabase.shared.saveContext()
+			saveContext()
         }
     }
+	
+	func deleteWatchlists() {
+		guard let watchlists = fetchWatchlists() else { return }
+		watchlists.forEach { deleteWatchlist($0) }
+	}
     
     func addToWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
             watchlist.addToItems(item)
-            LocalDatabase.shared.saveContext()
+            saveContext()
         }
     }
     
     func removeFromWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {
             watchlist.removeFromItems(item)
-            LocalDatabase.shared.saveContext()
+            saveContext()
         }
     }
     
@@ -161,7 +192,7 @@ final class LocalDatabase {
     func toggleWatched(_ item: Item) {
         coreDataQueue.sync {
             item.watched = !item.watched
-            LocalDatabase.shared.saveContext()
+            saveContext()
         }
     }
     
@@ -214,9 +245,14 @@ final class LocalDatabase {
     func deleteChatroom(_ chatroom: Chatroom) {
         coreDataQueue.sync {
             context.delete(chatroom)
-            LocalDatabase.shared.saveContext()
+            saveContext()
         }
     }
+	
+	func deleteChatrooms() {
+		guard let chatrooms = fetchChatrooms() else { return }
+		chatrooms.forEach { deleteChatroom($0) }
+	}
     
     // MARK: - Messages
     
@@ -256,7 +292,7 @@ final class LocalDatabase {
             do {
                 let messages = try context.fetch(fetchRequest)
                 messages.forEach { context.delete($0) }
-                LocalDatabase.shared.saveContext()
+                saveContext()
             } catch {
                 let error = error as NSError
                 print("Core Data: Error deleting Messages for Chatroom (\(chatroom.id.uuidString)): \(error)")

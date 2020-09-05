@@ -56,6 +56,8 @@ extension SettingsVC {
                 let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                 present(alert, animated: true)
             } else {
+				LocalDatabase.shared.cleanupAfterLogout()
+				
                 tableView.reloadData()
                 coordinator?.showLogin()
                 

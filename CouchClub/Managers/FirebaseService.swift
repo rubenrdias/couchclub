@@ -148,7 +148,8 @@ class FirebaseService {
     
     func signOut(completion: (_ error: Error?)->()) {
         removeDeviceFCMToken()
-        
+        resetListeners()
+		
         do {
             try Auth.auth().signOut()
             completion(nil)
