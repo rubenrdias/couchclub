@@ -40,6 +40,20 @@ class ChatroomsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     func indexOf(_ id: UUID) -> Int? {
         return chatrooms.firstIndex(where: { $0.id == id })
     }
+	
+	func updateUserInfo(_ user: User) {
+		var indices = [IndexPath]()
+		
+		for (index, chatroom) in chatrooms.enumerated() {
+			if chatroom.users.contains(user) {
+				indices.append(.init(row: index, section: 0))
+			}
+		}
+		
+		if !indices.isEmpty {
+			delegate?.shouldReloadRows(indices)
+		}
+	}
         
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

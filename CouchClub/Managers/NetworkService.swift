@@ -74,7 +74,7 @@ final class NetworkService {
         }.resume()
     }
     
-    func searchResult(forID id: String, ofType type: ItemType, completion: @escaping (_ result: Any?)->()) {
+	func searchResult(forID id: String, ofType type: ItemType, completion: @escaping (_ result: Any?, _ error: Error?)->()) {
         var url = URLComponents(string: baseURL)!
         
         let params = [
@@ -92,16 +92,18 @@ final class NetworkService {
                     print("Failed to fetch search result: \(error.localizedDescription)")
                 }
                 // TODO: process response
-                completion(nil)
+                completion(nil, error)
                 return
             }
             
             if type == .movie, let movie = try? JSONDecoder().decode(SearchItemMovie.self, from: data) {
-                completion(movie)
+                completion(movie, nil)
             } else if type == .series, let show = try? JSONDecoder().decode(SearchItemShow.self, from: data) {
-                completion(show)
+                completion(show, nil)
             } else {
-                completion(nil)
+				// TODO: pass in some form of error
+				print("Decoder Error | Failed to decode search item into Movie or Show.")
+                completion(nil, nil)
             }
         }.resume()
     }

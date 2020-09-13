@@ -80,12 +80,27 @@ final class LocalDatabase {
         return currentuser
     }
     
-    func createUser(_ id: String, _ username: String) -> User {
+    func createUser(_ id: String, _ username: String = "") -> User {
         coreDataQueue.sync {
             let ub = UserBuilder(id)
             return ub.named(username).build()
         }
     }
+	
+	func updateUser(_ id: String, _ username: String) {
+		guard let user = fetchUser(id) else { return }
+		
+		coreDataQueue.sync {
+			user.username = username
+			saveContext()
+		}
+		
+		let userInfo = [
+			"user": user
+		]
+		
+		NotificationCenter.default.post(name: .userInfoDidChange, object: nil, userInfo: userInfo)
+	}
 	
 	func deleteUsers() {
 		coreDataQueue.sync {
@@ -136,10 +151,11 @@ final class LocalDatabase {
         }
     }
     
-    func createWatchlist(_ title: String, _ type: ItemType) -> Watchlist {
+	func createWatchlist(id: UUID = UUID(), _ title: String, _ type: ItemType, ownedBy owner: User = LocalDatabase.shared.fetchCurrentuser()) -> Watchlist {
         coreDataQueue.sync {
-            let wb = WatchlistBuilder()
+            let wb = WatchlistBuilder(id: id)
             return wb.named(title)
+				.ownedBy(owner)
                 .ofType(type)
                 .build()
         }
@@ -163,6 +179,14 @@ final class LocalDatabase {
             saveContext()
         }
     }
+	
+	func addToWatchlist(_ items: [Item], _ watchlist: Watchlist) {
+		coreDataQueue.sync {
+			let itemsSet = NSSet(array: items)
+			watchlist.addToItems(itemsSet)
+			saveContext()
+		}
+	}
     
     func removeFromWatchlist(_ item: Item, _ watchlist: Watchlist) {
         coreDataQueue.sync {

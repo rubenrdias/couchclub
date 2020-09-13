@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -92,11 +92,15 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="w4W-E4-qWs">
+                                <rect key="frame" x="177.66666666666666" y="399" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="n1V-G1-VUK" firstAttribute="centerX" secondItem="Tse-fs-NCQ" secondAttribute="centerX" id="2JP-1f-oyF"/>
                             <constraint firstItem="Y9D-sS-HKj" firstAttribute="trailing" secondItem="K47-W4-d6k" secondAttribute="trailing" constant="16" id="9jf-fo-f50"/>
+                            <constraint firstItem="w4W-E4-qWs" firstAttribute="centerX" secondItem="8ZT-Hd-h9M" secondAttribute="centerX" id="BMi-bS-cPX"/>
                             <constraint firstItem="By7-cg-DE4" firstAttribute="top" secondItem="5v9-bY-gH2" secondAttribute="bottom" constant="16" id="CrA-gt-dZm"/>
                             <constraint firstItem="8ZT-Hd-h9M" firstAttribute="top" secondItem="K47-W4-d6k" secondAttribute="bottom" constant="32" id="Ec9-El-Hw5"/>
                             <constraint firstItem="Y9D-sS-HKj" firstAttribute="trailing" secondItem="5v9-bY-gH2" secondAttribute="trailing" constant="32" id="Kne-sC-Uq0"/>
@@ -107,6 +111,7 @@
                             <constraint firstItem="By7-cg-DE4" firstAttribute="leading" secondItem="5v9-bY-gH2" secondAttribute="leading" id="dMp-Ox-Zaq"/>
                             <constraint firstItem="5v9-bY-gH2" firstAttribute="top" secondItem="Y9D-sS-HKj" secondAttribute="top" constant="64" id="fw5-lt-Y1V"/>
                             <constraint firstItem="n1V-G1-VUK" firstAttribute="top" secondItem="8ZT-Hd-h9M" secondAttribute="bottom" constant="8" id="jwr-sh-OdB"/>
+                            <constraint firstItem="w4W-E4-qWs" firstAttribute="centerY" secondItem="8ZT-Hd-h9M" secondAttribute="centerY" id="mfI-76-GqV"/>
                             <constraint firstItem="K47-W4-d6k" firstAttribute="top" secondItem="By7-cg-DE4" secondAttribute="bottom" constant="64" id="o1z-a9-fZ2"/>
                             <constraint firstItem="8ZT-Hd-h9M" firstAttribute="leading" secondItem="Y9D-sS-HKj" secondAttribute="leading" constant="16" id="xLO-sD-xC6"/>
                         </constraints>
@@ -115,6 +120,7 @@
                     <navigationItem key="navigationItem" id="Vv5-4m-k8u"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="w4W-E4-qWs" id="wIW-wt-ngV"/>
                         <outlet property="createAccountButton" destination="3Kx-JA-Tmf" id="G7d-MZ-6ZP"/>
                         <outlet property="createAccountLabel" destination="O7l-pD-YNZ" id="kG0-xj-xMy"/>
                         <outlet property="emailTextField" destination="mB8-EL-cGm" id="rIl-8i-dwx"/>
@@ -224,6 +230,9 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Pfe-4i-h8q">
+                                <rect key="frame" x="177.66666666666666" y="472.66666666666669" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -231,6 +240,7 @@
                             <constraint firstItem="xCt-0M-JEe" firstAttribute="leading" secondItem="trz-pg-d60" secondAttribute="leading" constant="16" id="2s3-Rg-Mvv"/>
                             <constraint firstItem="xBe-3a-bLl" firstAttribute="leading" secondItem="tCG-9R-qD0" secondAttribute="leading" id="4Vt-F6-jhe"/>
                             <constraint firstItem="dtV-rb-fem" firstAttribute="top" secondItem="xCt-0M-JEe" secondAttribute="bottom" constant="32" id="Eri-Kb-q1Z"/>
+                            <constraint firstItem="Pfe-4i-h8q" firstAttribute="centerY" secondItem="dtV-rb-fem" secondAttribute="centerY" id="Fal-lV-DHw"/>
                             <constraint firstItem="tCG-9R-qD0" firstAttribute="leading" secondItem="trz-pg-d60" secondAttribute="leading" constant="32" id="NPO-yK-igu"/>
                             <constraint firstItem="xCt-0M-JEe" firstAttribute="top" secondItem="xBe-3a-bLl" secondAttribute="bottom" constant="64" id="Q8N-OC-5hY"/>
                             <constraint firstItem="xBe-3a-bLl" firstAttribute="top" secondItem="tCG-9R-qD0" secondAttribute="bottom" constant="16" id="YcP-HY-yY9"/>
@@ -240,6 +250,7 @@
                             <constraint firstItem="tCG-9R-qD0" firstAttribute="top" secondItem="trz-pg-d60" secondAttribute="top" constant="64" id="lch-in-QCU"/>
                             <constraint firstItem="V7b-HW-9aA" firstAttribute="top" secondItem="dtV-rb-fem" secondAttribute="bottom" constant="8" id="rQT-hk-m2N"/>
                             <constraint firstItem="dtV-rb-fem" firstAttribute="leading" secondItem="trz-pg-d60" secondAttribute="leading" constant="16" id="t53-I0-Lxa"/>
+                            <constraint firstItem="Pfe-4i-h8q" firstAttribute="centerX" secondItem="dtV-rb-fem" secondAttribute="centerX" id="tsR-dx-pmP"/>
                             <constraint firstItem="trz-pg-d60" firstAttribute="trailing" secondItem="tCG-9R-qD0" secondAttribute="trailing" constant="32" id="usD-4s-vDE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="trz-pg-d60"/>
@@ -247,6 +258,7 @@
                     <navigationItem key="navigationItem" id="ktP-aB-myh"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="Pfe-4i-h8q" id="810-ii-VoE"/>
                         <outlet property="createAccountButton" destination="dtV-rb-fem" id="RZX-t6-KhJ"/>
                         <outlet property="emailTextField" destination="nZG-fj-ELJ" id="HUk-9v-jIV"/>
                         <outlet property="passwordHintlabel" destination="0bz-ZS-xwQ" id="Onc-2n-Ub1"/>

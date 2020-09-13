@@ -83,6 +83,7 @@ protocol WatchlistsDataSourceDelegate: AnyObject {
 protocol ChatroomsDataSourceDelegate: AnyObject {
     func didRefreshData()
     func didTapChatroom(_ chatroom: Chatroom)
+	func shouldReloadRows(_ indices: [IndexPath])
 }
 
 protocol ItemDataSourceDelegate: NSObject {

@@ -197,6 +197,9 @@ extension UIColor {
 // MARK: - Notification.Name
 
 extension Notification.Name {
+	
+	// users
+	static let userInfoDidChange = Notification.Name("userInfoDidChange")
     
     // watchlists
     static let watchlistsDidChange = Notification.Name("watchlistsDidChange")

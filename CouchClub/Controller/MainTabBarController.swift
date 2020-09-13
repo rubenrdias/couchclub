@@ -19,5 +19,12 @@ class MainTabBarController: UITabBarController, Storyboarded {
 
         viewControllers = [watchlists.navigationController, chatrooms.navigationController, settings.navigationController]
     }
+	
+	func resetScreens() {
+		viewControllers?.forEach {
+			guard let navController = $0 as? UINavigationController else { return }
+			navController.popToRootViewController(animated: false)
+		}
+	}
 
 }

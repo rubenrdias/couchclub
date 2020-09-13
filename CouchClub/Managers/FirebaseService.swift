@@ -49,6 +49,7 @@ class FirebaseService {
     }
     
     func startChatroomListener(_ id: UUID) {
+		
         let listener = Firestore.firestore().collection("chatrooms").document(id.uuidString).addSnapshotListener { [unowned self] (snapshot, error) in
             if let error = error {
                 // TODO: handle errors
@@ -139,10 +140,12 @@ class FirebaseService {
             if let error = error {
                 print("Firebase Auth | Error creating user: \(error.localizedDescription)")
                 // TODO: handle error
+				completion(error)
             } else {
-                self.addDeviceFCMToken()
+				self.addDeviceFCMToken { (error) in
+					completion(error)
+				}
             }
-            completion(error)
         }
     }
     
@@ -155,7 +158,8 @@ class FirebaseService {
             completion(nil)
         } catch {
             print("Firebase Auth | Error when signing out: \(error.localizedDescription)")
-            addDeviceFCMToken()
+			addDeviceFCMToken()
+			configureListeners()
             completion(error)
         }
     }
@@ -169,7 +173,7 @@ class FirebaseService {
         }
     }
     
-    func addDeviceFCMToken() {
+	func addDeviceFCMToken(completion: ((_ error: Error?)->())? = nil) {
         guard let currentUserID = FirebaseService.currentUserID else { return }
         guard let token = Messaging.messaging().fcmToken else { return }
         
@@ -179,10 +183,11 @@ class FirebaseService {
             if let error = error {
                 print("Firebase Messaging | Error when adding device token to devices list: \(error.localizedDescription)")
             }
+			completion?(error)
         }
     }
     
-    func removeDeviceFCMToken() {
+    func removeDeviceFCMToken(completion: ((_ error: Error?)->())? = nil) {
         guard let currentUserID = FirebaseService.currentUserID else { return }
         guard let token = Messaging.messaging().fcmToken else { return }
         
@@ -192,6 +197,7 @@ class FirebaseService {
             if let error = error {
                 print("Firebase Messaging | Error when removing device token to devices list: \(error.localizedDescription)")
             }
+			completion?(error)
         }
     }
     
@@ -221,6 +227,28 @@ class FirebaseService {
             completion(error)
         }
     }
+	
+	func fetchWatchlists(completion: @escaping (_ watchlistsData: [[String: Any]]?, _ error: Error?)->()) {
+		Firestore.firestore().collection("watchlists").whereField("owner", isEqualTo: FirebaseService.currentUserID!).getDocuments { (snapshot, error) in
+			if let error = error {
+				print("Firebase Firestore | Error fetching watchlists for current user: \(error.localizedDescription)")
+				completion(nil, error)
+				return
+			}
+
+			guard let documents = snapshot?.documents, !documents.isEmpty else {
+				completion(nil, nil)
+				return
+			}
+
+			let watchlistsData: [[String: Any]] = documents.map {
+				var data = $0.data()
+				data["id"] = $0.documentID
+				return data
+			}
+			completion(watchlistsData, nil)
+		}
+	}
     
     func add(_ item: Item, to watchlist: Watchlist, completion: @escaping (_ error: Error?)->()) {
         Firestore.firestore().collection("watchlists").document(watchlist.id.uuidString).updateData([
@@ -299,6 +327,28 @@ class FirebaseService {
             completion(error)
         }
     }
+	
+	func fetchChatrooms(completion: @escaping (_ chatroomsData: [[String: Any]]?, _ error: Error?)->()) {
+		Firestore.firestore().collection("chatrooms").whereField("users", arrayContains: FirebaseService.currentUserID!).getDocuments { (snapshot, error) in
+			if let error = error {
+				print("Firebase Firestore | Error fetching chatrooms for current user: \(error.localizedDescription)")
+				completion(nil, error)
+				return
+			}
+			
+			guard let documents = snapshot?.documents, !documents.isEmpty else {
+				completion(nil, nil)
+				return
+			}
+			
+			let chatroomsData: [[String: Any]] = documents.map {
+				var data = $0.data()
+				data["id"] = $0.documentID
+				return data
+			}
+			completion(chatroomsData, nil)
+		}
+	}
     
     func fetchChatroomDetails(_ inviteCode: String, completion: @escaping (_ chatroomID: String?, _ chatroomData: [String: Any]?, _ error: Error?)->()) {
         Firestore.firestore().collection("chatrooms").whereField("inviteCode", isEqualTo: inviteCode).getDocuments { (snapshot, error) in
