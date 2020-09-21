@@ -94,14 +94,18 @@ class WatchlistCell: UICollectionViewCell {
     }
     
     private func updateInfo() {
-        if let thumbnail = watchlist.getThumbnail() {
-            imageView.contentMode = .scaleAspectFill
-            imageView.image = thumbnail
-        } else {
-            setImageUnavailable()
-        }
-        
         titleLabel.text = watchlist.title
+        
+        watchlist.getThumbnail { thumbnail in
+            DispatchQueue.main.async { [weak self] in
+                if let thumbnail = thumbnail {
+                    self?.imageView.contentMode = .scaleAspectFill
+                    self?.imageView.image = thumbnail
+                } else {
+                    self?.setImageUnavailable()
+                }
+            }
+        }
     }
     
     private func updateSubtitle() {

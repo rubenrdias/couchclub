@@ -17,13 +17,9 @@ class ChatroomVC: UITableViewController, Storyboarded {
     var chatroom: Chatroom! {
         didSet {
             title = chatroom.title
-            chatroomID = chatroom.id
-            chatroomOwner = chatroom.owner
         }
     }
     
-    private var chatroomID: UUID!
-    private var chatroomOwner: User!
     private var leavingChatroom: Bool = false
     
     override func viewDidLoad() {
@@ -59,7 +55,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
             guard let leavingChatroom = self?.leavingChatroom, !leavingChatroom else { return }
             
             let chatrooms = LocalDatabase.shared.fetchChatrooms()
-            if chatrooms?.firstIndex(where: { $0.id == self?.chatroomID }) == nil, self?.chatroomOwner.id != FirebaseService.currentUserID {
+            if chatrooms?.firstIndex(where: { $0.id == self?.chatroom.id }) == nil, self?.chatroom.owner.id != FirebaseService.currentUserID {
                 let alert = Alerts.simpleAlert(title: "Chatroom was deleted", message: "The chatroom owner has deleted this chatroom. It will now be deleted from the device.") { _ in
                     self?.resignFirstResponder()
                     self?.coordinator?.chatroomDismissed()

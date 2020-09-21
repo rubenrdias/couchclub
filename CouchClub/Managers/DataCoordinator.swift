@@ -459,7 +459,7 @@ final class DataCoordinator {
                         completion(nil, error)
                         return
                     }
-                    self.getImage(movie.id, movie.poster) { _ in
+                    self.getImage(forItem: movie) { _ in
                         let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, movie.id)
                         completion(chatroom, nil)
                     }
@@ -470,7 +470,7 @@ final class DataCoordinator {
                         completion(nil, error)
                         return
                     }
-                    self.getImage(show.id, show.poster) { _ in
+                    self.getImage(forItem: show) { _ in
                         let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, show.id)
                         completion(chatroom, nil)
                     }
@@ -530,22 +530,38 @@ final class DataCoordinator {
     
     // MARK: - Data Download
     
-    func getImage(_ itemID: String, _ url: String, completion: ((UIImage?)->())? = nil) {
-        if let image = LocalStorage.shared.retrieve(itemID) {
-            completion?(image)
+    func getImage(forItem item: Item, completion: @escaping (UIImage?)->()) {
+        guard item.poster != "N/A" else {
+            completion(nil)
             return
         }
         
-        guard let url = URL(string: url) else {
-            completion?(nil)
+        getImage(itemID: item.id, urlString: item.poster, completion: completion)
+    }
+    
+    func getImage(forSearchItem item: SearchItem, completion: @escaping (UIImage?)->()) {
+        getImage(itemID: item.id, urlString: item.poster, completion: completion)
+    }
+    
+    private func getImage(itemID: String, urlString: String, completion: @escaping (UIImage?)->()) {
+        if let image = LocalStorage.shared.getImage(itemID) {
+            completion(image)
+            return
+        }
+        
+        guard let url = URL(string: urlString) else {
+            completion(nil)
             return
         }
         
         NetworkService.shared.downloadImage(url) { image in
             if let image = image {
-                LocalStorage.shared.store(image, named: itemID)
+                LocalStorage.shared.saveImage(image, named: itemID)
             }
-            completion?(image)
+            
+            DispatchQueue.main.async {
+                completion(image)
+            }
         }
     }
     

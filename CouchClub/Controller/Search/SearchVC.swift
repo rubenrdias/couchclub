@@ -140,13 +140,11 @@ extension SearchVC {
         cell.searchItem = item
         
         if item.poster != "N/A" {
-            DataCoordinator.shared.getImage(item.id, item.poster) { [weak cell] image in
-                DispatchQueue.main.async {
-                    if let image = image {
-                        cell?.updateImage(image, for: item.id)
-                    } else {
-                        cell?.setImageUnavailable()
-                    }
+            DataCoordinator.shared.getImage(forSearchItem: item) { [weak cell] image in
+                if let image = image {
+                    cell?.updateImage(image, for: item.id)
+                } else {
+                    cell?.setImageUnavailable()
                 }
             }
         } else {

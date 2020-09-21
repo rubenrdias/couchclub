@@ -14,18 +14,15 @@ import UIKit
 @objc(Watchlist)
 public class Watchlist: NSManagedObject {
 	
-	func getThumbnail() -> UIImage? {
-		guard var items = items?.allObjects as? [Item] else { return nil }
-		items.sort { $0.title < $1.title }
-		var thumbnail: UIImage? = nil
+    func getThumbnail(completion: @escaping (_ thumbnail: UIImage?)->()) {
+        guard var items = items?.allObjects as? [Item] else { completion(nil); return }
+        items.sort{ $0.title < $1.title }
+        
+        guard let firstItem = items.first else { completion(nil); return }
 		
-		items.forEach {
-			if thumbnail == nil, let image = LocalStorage.shared.retrieve($0.id) {
-				thumbnail = image
-			}
-		}
-		
-		return thumbnail
+        DataCoordinator.shared.getImage(forItem: firstItem) { image in
+            completion(image)
+        }
 	}
 	
 	func itemsWatchedString(withDescription: Bool = true) -> String {

@@ -115,22 +115,35 @@ class ChatroomTVCell: UITableViewCell {
 			}
 		}
         
-        if let image = getThumbnailImage() {
-            objectImageView.image = image
-        } else {
-            setImageUnavailable()
+        getThumbnailImage { thumbnail in
+            DispatchQueue.main.async { [weak self] in
+                if let thumbnail = thumbnail {
+                    self?.objectImageView.contentMode = .scaleAspectFill
+                    self?.objectImageView.image = thumbnail
+                } else {
+                    self?.setImageUnavailable()
+                }
+            }
         }
-        
     }
     
-    private func getThumbnailImage() -> UIImage? {
+    private func getThumbnailImage(completion: @escaping (_ image: UIImage?)->()) {
         switch chatroom.type {
-        case ChatroomType.watchlist.rawValue :
-            guard let watchlistID = UUID(uuidString: chatroom.subjectID) else { return nil }
-            guard let watchlist = LocalDatabase.shared.fetchWatchlist(watchlistID) else { return nil }
-            return watchlist.getThumbnail()
+        case ChatroomType.watchlist.rawValue:
+            guard let watchlistID = UUID(uuidString: chatroom.subjectID), let watchlist = LocalDatabase.shared.fetchWatchlist(watchlistID) else {
+                completion(nil)
+                return
+            }
+            
+            watchlist.getThumbnail { thumbnail in
+                completion(thumbnail)
+            }
         default:
-            return LocalStorage.shared.retrieve(chatroom.subjectID)
+            guard let item = LocalDatabase.shared.fetchItem(chatroom.subjectID) else { fatalError("Fetching thumbnail for chatroom \(chatroom.id.uuidString) but subject does not exist in database.") }
+            
+            DataCoordinator.shared.getImage(forItem: item) { (thumbnail) in
+                completion(thumbnail)
+            }
         }
     }
     

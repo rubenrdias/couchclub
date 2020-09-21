@@ -111,6 +111,7 @@ final class NetworkService {
     // MARK: - Download
     
     func downloadImage(_ url: URL, completion: @escaping (_ image: UIImage?)->()) {
+        print("Attempting to download image with url \(url.absoluteString)")
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
                 if let error = error {

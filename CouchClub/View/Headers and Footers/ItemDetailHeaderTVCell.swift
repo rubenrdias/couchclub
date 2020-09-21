@@ -136,10 +136,12 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         awardsLabel.text = item.awards
         ratingsLabel.text = "\(item.imdbRating)/10"
         
-        if let image = LocalStorage.shared.retrieve(item.id) {
-            imageView.image = image
-        } else {
-            setImageUnavailable()
+        DataCoordinator.shared.getImage(forItem: item) { [weak self] image in
+            if let image = image {
+                self?.imageView.image = image
+            } else {
+                self?.setImageUnavailable()
+            }
         }
     }
     

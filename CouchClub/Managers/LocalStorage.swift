@@ -22,7 +22,7 @@ final class LocalStorage {
         documentsDirectory.appendingPathComponent("images")
     }
     
-    func store(_ image: UIImage, named imageName: String) {
+    func saveImage(_ image: UIImage, named imageName: String) {
         DispatchQueue.global(qos: .utility).async { [unowned self, weak image] in
             guard let image = image else { return }
             let path = self.imagesDirectory.appendingPathComponent(imageName)
@@ -47,7 +47,7 @@ final class LocalStorage {
         }
     }
     
-    func retrieve(_ imageName: String) -> UIImage? {
+    func getImage(_ imageName: String) -> UIImage? {
         let imagePath = imagesDirectory.appendingPathComponent(imageName)
         let imageExists = FileManager.default.fileExists(atPath: imagePath.path)
         

@@ -150,16 +150,20 @@ class ItemCell: UICollectionViewCell {
     }
     
     private func updateInfo() {
-        if item.poster != "N/A", let image = LocalStorage.shared.retrieve(item.id) {
-            imageView.image = image
-        } else {
-            setImageUnavailable()
-        }
-        
         updateWatchedButtonIcon(inverted: true)
         
         titleLabel.text = item.title
         subtitleLabel.text = "\(item.year)  \(item.runtime)"
+        
+        DataCoordinator.shared.getImage(forItem: item) { image in
+            DispatchQueue.main.async { [weak self] in
+                if let image = image {
+                    self?.imageView.image = image
+                } else {
+                    self?.setImageUnavailable()
+                }
+            }
+        }
     }
     
     func setImageUnavailable() {

@@ -273,8 +273,6 @@
 		534BFBA32454E48900F9F772 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				538D29E52454978800CDB99F /* Info.plist */,
-				53817083246C9093006A4B3B /* GoogleService-Info.plist */,
 				538D29E02454978800CDB99F /* Assets.xcassets */,
 				5325106E245AD9FE00DBBA04 /* Extensions.swift */,
 				53D16F4D2458D790001DD4FA /* Constants.swift */,
@@ -346,6 +344,8 @@
 			isa = PBXGroup;
 			children = (
 				53AD80572476967900356449 /* CouchClub.entitlements */,
+				53817083246C9093006A4B3B /* GoogleService-Info.plist */,
+				538D29E52454978800CDB99F /* Info.plist */,
 				534BFBA32454E48900F9F772 /* Utils */,
 				53AE64472455DE2700D7F817 /* Managers */,
 				53B7CDDF2454A21F007395EE /* Model */,
@@ -907,7 +907,7 @@
 				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C62GU5R7P6;
-				INFOPLIST_FILE = CouchClub/Utils/Info.plist;
+				INFOPLIST_FILE = CouchClub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -928,7 +928,7 @@
 				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C62GU5R7P6;
-				INFOPLIST_FILE = CouchClub/Utils/Info.plist;
+				INFOPLIST_FILE = CouchClub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
