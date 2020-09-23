@@ -36,7 +36,7 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if FirebaseService.currentUserID == nil {
+        if FirebaseService.requiresLogin {
             coordinator?.showLogin()
         }
     }

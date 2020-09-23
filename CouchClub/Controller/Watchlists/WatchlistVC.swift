@@ -91,7 +91,16 @@ extension WatchlistVC: ItemDataSourceDelegate {
     }
     
     func didTapItemSeen(_ item: Item) {
-        DataCoordinator.shared.toggleWatched(item)
+        DataCoordinator.shared.toggleWatched(item) { [weak self] error in
+            if error != nil {
+                let ac = UIAlertController(title: "Error", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+                ac.view.tintColor = .colorAsset(.dynamicLabel)
+                
+                ac.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                        
+                self?.present(ac, animated: true, completion: nil)
+            }
+        }
     }
     
 }

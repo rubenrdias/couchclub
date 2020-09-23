@@ -17,9 +17,9 @@ final class DataCoordinator {
 	// MARK: - Setup
 	
 	func configure() {
-		guard let currentUserID = FirebaseService.currentUserID else { return }
+		guard !FirebaseService.requiresLogin else { return }
 		
-		if LocalDatabase.shared.fetchUser(currentUserID) == nil {
+        if LocalDatabase.shared.fetchUser(FirebaseService.currentUserID) == nil {
 			self.createLocalUser { (_, error) in
 				guard error == nil else {
 					FirebaseService.shared.signOut { (error) in
@@ -94,7 +94,7 @@ final class DataCoordinator {
 		appDelegate.tabBarController?.resetScreens()
 	}
     
-	func createLocalUser(_ id: String = FirebaseService.currentUserID!, completion: @escaping (_ user: User?, _ error: Error?)->()) {
+	func createLocalUser(_ id: String = FirebaseService.currentUserID, completion: @escaping (_ user: User?, _ error: Error?)->()) {
         FirebaseService.shared.fetchUserDetails(id) { (userData, error) in
             if let error = error {
                 completion(nil, error)
@@ -336,14 +336,17 @@ final class DataCoordinator {
         }
     }
     
-    func toggleWatched(_ item: Item) {
-        // TODO: update in firebase
-        // TODO: handle errors
-        
-        LocalDatabase.shared.toggleWatched(item)
-        
-        let info = ["item": item]
-        NotificationCenter.default.post(name: .itemWatchedStatusChanged, object: nil, userInfo: info)
+    func toggleWatched(_ item: Item, completion: @escaping (_ error: Error?)->()) {
+        FirebaseService.shared.setWatchedState(item, watched: !item.watched) { error in
+            if let error = error {
+                completion(error)
+                return
+            }
+            
+            LocalDatabase.shared.toggleWatched(item)
+            let info = ["item": item]
+            NotificationCenter.default.post(name: .itemWatchedStatusChanged, object: nil, userInfo: info)
+        }        
     }
     
     // MARK: - Chatrooms

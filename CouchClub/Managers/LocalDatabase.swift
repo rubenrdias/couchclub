@@ -74,10 +74,10 @@ final class LocalDatabase {
     }
     
     func fetchCurrentuser() -> User {
-        guard let currentuser = fetchUser(FirebaseService.currentUserID!) else {
+        guard let currentUser = fetchUser(FirebaseService.currentUserID) else {
             fatalError("There should always be a current user.")
         }
-        return currentuser
+        return currentUser
     }
     
     func createUser(_ id: String, _ username: String = "") -> User {
