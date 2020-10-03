@@ -19,20 +19,19 @@ class FirebaseService {
     }
     
     static let shared = FirebaseService()
+    private init() {}
     
-    static var requiresLogin: Bool {
-        return Auth.auth().currentUser == nil
+    var currentUserExists: Bool {
+        return Auth.auth().currentUser != nil
     }
     
-    static var currentUserID: String {
-        precondition(Auth.auth().currentUser != nil, "")
+    var currentUserID: String {
+        precondition(Auth.auth().currentUser != nil, "Accessing currentUserID when it is nil")
         return Auth.auth().currentUser!.uid
     }
     
     private var chatroomListeners = [(UUID, ListenerRegistration)]()
     private var messageListeners = [(UUID, ListenerRegistration)]()
-    
-    private init() {}
     
     // MARK: - Database Changes
     
@@ -154,18 +153,18 @@ class FirebaseService {
         }
     }
     
-    func signOut(completion: (_ error: Error?)->()) {
+    func signOut(completion: ((_ error: Error?)->())? = nil) {
         removeDeviceFCMToken()
         resetListeners()
 		
         do {
             try Auth.auth().signOut()
-            completion(nil)
+            completion?(nil)
         } catch {
             print("Firebase Auth | Error when signing out: \(error.localizedDescription)")
 			addDeviceFCMToken()
 			configureListeners()
-            completion(error)
+            completion?(error)
         }
     }
     
@@ -181,7 +180,7 @@ class FirebaseService {
 	func addDeviceFCMToken(completion: ((_ error: Error?)->())? = nil) {
         guard let token = Messaging.messaging().fcmToken else { return }
         
-        Firestore.firestore().collection("users").document(FirebaseService.currentUserID).updateData([
+        Firestore.firestore().collection("users").document(self.currentUserID).updateData([
             "devices": FieldValue.arrayUnion([token])
         ]) { (error) in
             if let error = error {
@@ -192,9 +191,10 @@ class FirebaseService {
     }
     
     func removeDeviceFCMToken(completion: ((_ error: Error?)->())? = nil) {
+        guard currentUserExists else { return }
         guard let token = Messaging.messaging().fcmToken else { return }
         
-        Firestore.firestore().collection("users").document(FirebaseService.currentUserID).updateData([
+        Firestore.firestore().collection("users").document(self.currentUserID).updateData([
             "devices": FieldValue.arrayRemove([token])
         ]) { (error) in
             if let error = error {
@@ -208,7 +208,7 @@ class FirebaseService {
     
     func createWatchlist(_ watchlist: Watchlist, completion: @escaping (_ error: Error?)->()) {
         let watchlistDict = [
-            "owner": FirebaseService.currentUserID,
+            "owner": self.currentUserID,
             "title": watchlist.title,
             "type": watchlist.type
         ]
@@ -232,7 +232,7 @@ class FirebaseService {
     }
 	
 	func fetchWatchlists(completion: @escaping (_ watchlistsData: [[String: Any]]?, _ error: Error?)->()) {
-		Firestore.firestore().collection("watchlists").whereField("owner", isEqualTo: FirebaseService.currentUserID).getDocuments { (snapshot, error) in
+		Firestore.firestore().collection("watchlists").whereField("owner", isEqualTo: self.currentUserID).getDocuments { (snapshot, error) in
 			if let error = error {
 				print("Firebase Firestore | Error fetching watchlists for current user: \(error.localizedDescription)")
 				completion(nil, error)
@@ -275,14 +275,27 @@ class FirebaseService {
         }
     }
     
-    func setWatchedState(_ item: Item, watched: Bool, completion: @escaping (_ error: Error?)->()) {
-        Firestore.firestore().collection("watched").document(FirebaseService.currentUserID).updateData([
+    func toggleWatched(_ item: Item, watched: Bool, completion: @escaping (_ error: Error?)->()) {
+        Firestore.firestore().collection("watched").document(self.currentUserID).updateData([
             "items": watched ? FieldValue.arrayUnion([item.id]) : FieldValue.arrayRemove([item.id])
         ]) { error in
             if let error = error {
                 print("Firebase Firestore | Error when setting an item's watched state: \(error.localizedDescription)")
             }
             completion(error)
+        }
+    }
+    
+    func fetchWatchedItems(completion: @escaping (_ items: [String], _ error: Error?)->()) {
+        Firestore.firestore().collection("watched").document(self.currentUserID).getDocument { (snapshot, error) in
+            if let error = error {
+                print("Firebase Firestore | Error fetching watched items for current user: \(error.localizedDescription)")
+                completion([], error)
+                return
+            }
+            
+            let items = snapshot?.get("items") as? [String] ?? []
+            completion(items, nil)
         }
     }
     
@@ -343,7 +356,7 @@ class FirebaseService {
     }
 	
 	func fetchChatrooms(completion: @escaping (_ chatroomsData: [[String: Any]]?, _ error: Error?)->()) {
-		Firestore.firestore().collection("chatrooms").whereField("users", arrayContains: FirebaseService.currentUserID).getDocuments { (snapshot, error) in
+		Firestore.firestore().collection("chatrooms").whereField("users", arrayContains: self.currentUserID).getDocuments { (snapshot, error) in
 			if let error = error {
 				print("Firebase Firestore | Error fetching chatrooms for current user: \(error.localizedDescription)")
 				completion(nil, error)

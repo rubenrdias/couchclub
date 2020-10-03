@@ -20,7 +20,7 @@ class MessageBuilder {
     var message: Message
     
     init(_ id: UUID? = nil) {
-        self.message = Message(context: context)
+        self.message = Message(context: LocalDatabase.shared.context)
         self.message.id = id == nil ? UUID() : id!
     }
     

@@ -20,7 +20,7 @@ class ShowBuilder {
     var show: Show
     
     init() {
-        self.show = Show(context: context)
+        self.show = Show(context: LocalDatabase.shared.context)
     }
     
     func withID(_ id: String) -> ShowBuilder {

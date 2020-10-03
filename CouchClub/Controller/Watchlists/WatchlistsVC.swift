@@ -20,10 +20,6 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         
         title = "Watchlists"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlists), name: .watchlistsDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlist), name: .watchlistDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemSeenStatusUpdated), name: .itemWatchedStatusChanged, object: nil)
-        
         configureCollectionView()
     }
     
@@ -36,29 +32,16 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if FirebaseService.requiresLogin {
-            coordinator?.showLogin()
+        if !FirebaseService.shared.currentUserExists {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in
+                self.coordinator?.showLogin()
+            }
         }
     }
     
     private func configureCollectionView() {
         collectionView.dataSource = dataSource
         collectionView.delegate = dataSource
-    }
-    
-    @objc private func refreshWatchlists() {
-        dataSource.fetchData()
-    }
-    
-    @objc private func refreshWatchlist(_ notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            guard let info = notification.userInfo else { return }
-            guard let watchlistID = info["watchlistID"] as? UUID else { return }
-            
-            if let index = self?.dataSource.indexOf(watchlistID) {
-                self?.collectionView.reloadItems(at: [.init(item: index, section: 0)])
-            }
-        }
     }
     
     private lazy var noDataLabel: UILabel = {
@@ -122,7 +105,18 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
         ]
     }()
     
-    private func evaluateDataAvailable() {
+    func didCreateWatchlist(_ id: UUID) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
+            self?.coordinator?.showDetail(watchlist)
+        }
+    }
+    
+}
+
+extension WatchlistsVC: WatchlistsDataSourceDelegate {
+    
+    func didRefreshData() {
         if dataSource.isEmpty {
             collectionView.alwaysBounceVertical = false
             navigationItem.rightBarButtonItem = nil
@@ -136,27 +130,6 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
             noDataLabel.removeFromSuperview()
             createWatchlistButton.removeFromSuperview()
         }
-    }
-        
-    @objc private func itemSeenStatusUpdated(_ notification: Notification) {
-        guard let item = notification.userInfo?["item"] as? Item else { return }
-        dataSource.updateSeenStatus(item)
-    }
-    
-    func didCreateWatchlist(_ id: UUID) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            guard let watchlist = LocalDatabase.shared.fetchWatchlist(id) else { return }
-            self?.coordinator?.showDetail(watchlist)
-        }
-    }
-    
-}
-
-extension WatchlistsVC: WatchlistsDataSourceDelegate {
-    
-    func didRefreshData() {
-        collectionView.reloadData()
-        evaluateDataAvailable()
     }
     
     func didTapWatchlist(_ watchlist: Watchlist) {

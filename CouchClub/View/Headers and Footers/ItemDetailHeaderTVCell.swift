@@ -136,7 +136,7 @@ class ItemDetailHeaderTVCell: UITableViewHeaderFooterView {
         awardsLabel.text = item.awards
         ratingsLabel.text = "\(item.imdbRating)/10"
         
-        DataCoordinator.shared.getImage(forItem: item) { [weak self] image in
+        DataCoordinator.shared.fetchImage(forItem: item) { [weak self] image in
             if let image = image {
                 self?.imageView.image = image
             } else {

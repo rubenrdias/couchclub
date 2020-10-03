@@ -23,12 +23,25 @@ class WatchlistsDataSource: NSObject {
     
     init(collectionView: UICollectionView, delegate: WatchlistsDataSourceDelegate? = nil) {
         super.init()
+        
         self.collectionView = collectionView
         self.delegate = delegate
         
+        setupObservers()
         registerViews()
         setupCollectionViewLayout(collectionView.bounds.size)
-        fetchData()
+        
+        refreshWatchlists()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlists), name: .watchlistsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlist), name: .watchlistDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSeenStatus), name: .itemWatchedStatusChanged, object: nil)
     }
     
     private func registerViews() {
@@ -39,32 +52,45 @@ class WatchlistsDataSource: NSObject {
         return watchlists.firstIndex(where: { $0.id == id })
     }
     
-    func updateSeenStatus(_ item: Item) {
-        var indexPathsToUpdate = [IndexPath]()
-        for (index, watchlist) in watchlists.enumerated() {
-            guard let items = watchlist.items?.allObjects as? [Item] else { continue }
-            if items.contains(item) {
-                indexPathsToUpdate.append(.init(item: index, section: 0))
-            }
-        }
-        
-        guard !indexPathsToUpdate.isEmpty else { return }
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.collectionView.reloadItems(at: indexPathsToUpdate)
-        }
-    }
-    
-    @objc func fetchData() {
+    @objc func refreshWatchlists() {
         DispatchQueue.main.async { [weak self] in
-            let watchlists = LocalDatabase.shared.fetchWatchlists()
-            if watchlists != nil {
-                self?.watchlists = watchlists!
+            if let watchlists = LocalDatabase.shared.fetchWatchlists() {
+                self?.watchlists = watchlists
             } else {
                 self?.watchlists.removeAll()
             }
-
+            
+            self?.collectionView.reloadData()
             self?.delegate?.didRefreshData()
+        }
+    }
+    
+    @objc func refreshWatchlist(_ notification: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            guard let info = notification.userInfo else { return }
+            guard let watchlistID = info["watchlistID"] as? UUID else { return }
+            
+            if let index = self?.indexOf(watchlistID) {
+                self?.collectionView.reloadItems(at: [.init(item: index, section: 0)])
+            }
+        }
+    }
+    
+    @objc private func updateSeenStatus(_ notification: Notification) {
+        guard let item = notification.userInfo?["item"] as? Item else { return }
+        
+        var watchlistIndexPathsToUpdate = [IndexPath]()
+        for (index, watchlist) in watchlists.enumerated() {
+            guard let items = watchlist.items?.allObjects as? [Item] else { continue }
+            if items.contains(item) {
+                watchlistIndexPathsToUpdate.append(.init(item: index, section: 0))
+            }
+        }
+        
+        guard !watchlistIndexPathsToUpdate.isEmpty else { return }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadItems(at: watchlistIndexPathsToUpdate)
         }
     }
     

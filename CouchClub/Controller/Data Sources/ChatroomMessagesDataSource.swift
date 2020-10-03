@@ -100,7 +100,7 @@ extension ChatroomMessagesDataSource: NSFetchedResultsControllerDelegate {
         // filtering
         request.predicate = NSPredicate(format: "chatroom == %@", chatroom)
         
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: "dateSection", cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: LocalDatabase.shared.context, sectionNameKeyPath: "dateSection", cacheName: nil)
         fetchedResultsController.delegate = self
         
         do {

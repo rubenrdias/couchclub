@@ -140,7 +140,7 @@ extension SearchVC {
         cell.searchItem = item
         
         if item.poster != "N/A" {
-            DataCoordinator.shared.getImage(forSearchItem: item) { [weak cell] image in
+            DataCoordinator.shared.fetchImage(forSearchItem: item) { [weak cell] image in
                 if let image = image {
                     cell?.updateImage(image, for: item.id)
                 } else {

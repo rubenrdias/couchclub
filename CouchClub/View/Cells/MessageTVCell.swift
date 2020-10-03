@@ -16,7 +16,7 @@ class MessageTVCell: UITableViewCell {
         didSet {
             messageLabel.attributedText = attributtedMessageText()
             
-            let sentBySelf = message.sender.id == FirebaseService.currentUserID
+            let sentBySelf = message.sender.id == FirebaseService.shared.currentUserID
             if sentBySelf {
                 bubbleBackgroundView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
             } else {
@@ -92,7 +92,7 @@ class MessageTVCell: UITableViewCell {
     private func attributtedMessageText() -> NSAttributedString {
         let messageString = NSMutableAttributedString()
         
-        if message.sender.id != FirebaseService.currentUserID {
+        if message.sender.id != FirebaseService.shared.currentUserID {
             let senderAttributes: [NSAttributedString.Key: Any] = [
                 .font: UIFont.translatedFont(for: .footnote, .bold)
             ]

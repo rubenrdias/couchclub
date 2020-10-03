@@ -30,6 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         PushNotifications.shared.registerForNotifications()
         
+        if UserDefaultsManager.shared.isFirstLaunch {
+            UserDefaultsManager.shared.isFirstLaunch = false
+            
+            if FirebaseService.shared.currentUserExists {
+                FirebaseService.shared.signOut()
+            }
+        }
+        
         return true
     }
 

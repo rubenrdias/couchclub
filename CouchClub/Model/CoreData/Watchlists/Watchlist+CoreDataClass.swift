@@ -20,7 +20,7 @@ public class Watchlist: NSManagedObject {
         
         guard let firstItem = items.first else { completion(nil); return }
 		
-        DataCoordinator.shared.getImage(forItem: firstItem) { image in
+        DataCoordinator.shared.fetchImage(forItem: firstItem) { image in
             completion(image)
         }
 	}
@@ -95,7 +95,7 @@ class WatchlistBuilder {
 	var watchlist: Watchlist
 	
 	init(id: UUID) {
-		self.watchlist = Watchlist(context: context)
+		self.watchlist = Watchlist(context: LocalDatabase.shared.context)
 		self.watchlist.id = id
 	}
 	

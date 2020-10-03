@@ -20,7 +20,7 @@ class MovieBuilder {
     var movie: Movie
     
     init() {
-        self.movie = Movie(context: context)
+        self.movie = Movie(context: LocalDatabase.shared.context)
     }
     
     func withID(_ id: String) -> MovieBuilder {

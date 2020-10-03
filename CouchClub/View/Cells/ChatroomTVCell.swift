@@ -108,7 +108,7 @@ class ChatroomTVCell: UITableViewCell {
 		if let lastMessage = chatroom.lastMessage {
 			dateLabel.text = messageSectionFormatter.string(from: lastMessage.date)
 			
-			if lastMessage.sender.id == FirebaseService.currentUserID {
+            if lastMessage.sender.id == FirebaseService.shared.currentUserID {
 				messageLabel.text = lastMessage.text
 			} else {
 				messageLabel.text = "\(lastMessage.sender.username): \(lastMessage.text)"
@@ -141,7 +141,7 @@ class ChatroomTVCell: UITableViewCell {
         default:
             guard let item = LocalDatabase.shared.fetchItem(chatroom.subjectID) else { fatalError("Fetching thumbnail for chatroom \(chatroom.id.uuidString) but subject does not exist in database.") }
             
-            DataCoordinator.shared.getImage(forItem: item) { (thumbnail) in
+            DataCoordinator.shared.fetchImage(forItem: item) { (thumbnail) in
                 completion(thumbnail)
             }
         }

@@ -47,6 +47,8 @@ extension PushNotifications: UNUserNotificationCenterDelegate {
 extension PushNotifications: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        guard FirebaseService.shared.currentUserExists else { return }
+        
         FirebaseService.shared.addDeviceFCMToken()
     }
     

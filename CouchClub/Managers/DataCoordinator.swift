@@ -17,9 +17,9 @@ final class DataCoordinator {
 	// MARK: - Setup
 	
 	func configure() {
-		guard !FirebaseService.requiresLogin else { return }
+        guard FirebaseService.shared.currentUserExists else { return }
 		
-        if LocalDatabase.shared.fetchUser(FirebaseService.currentUserID) == nil {
+        if LocalDatabase.shared.fetchUser(FirebaseService.shared.currentUserID) == nil {
 			self.createLocalUser { (_, error) in
 				guard error == nil else {
 					FirebaseService.shared.signOut { (error) in
@@ -83,6 +83,8 @@ final class DataCoordinator {
 				completion(error)
 			} else {
 				LocalDatabase.shared.cleanupAfterLogout()
+                LocalStorage.shared.cleanupAfterLogout()
+                
 				self.resetScreens()
 				completion(nil)
 			}
@@ -94,7 +96,7 @@ final class DataCoordinator {
 		appDelegate.tabBarController?.resetScreens()
 	}
     
-	func createLocalUser(_ id: String = FirebaseService.currentUserID, completion: @escaping (_ user: User?, _ error: Error?)->()) {
+    func createLocalUser(_ id: String = FirebaseService.shared.currentUserID, completion: @escaping (_ user: User?, _ error: Error?)->()) {
         FirebaseService.shared.fetchUserDetails(id) { (userData, error) in
             if let error = error {
                 completion(nil, error)
@@ -131,25 +133,29 @@ final class DataCoordinator {
     }
 	
 	func restoreUserData(completion: @escaping (_ error: Error?)->()) {
-		self.restoreWatchlists { [unowned self] (error) in
-			if error != nil { completion(error); return }
-			
-			NotificationCenter.default.post(name: .watchlistsDidChange, object: nil, userInfo: nil)
-			
-			self.restoreChatrooms { (error) in
-				if error != nil { completion(error); return }
-				
-				NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
-				completion(nil)
-			}
-		}
-		
+        FirebaseService.shared.fetchWatchedItems { [unowned self] (watchedItemIDs, error) in
+            if error != nil { completion(error); return }
+            
+            self.restoreWatchlists { (error) in
+                if error != nil { completion(error); return }
+                
+                LocalDatabase.shared.setWatchedState(watchedItemIDs) {
+                    NotificationCenter.default.post(name: .watchlistsDidChange, object: nil, userInfo: nil)
+                    
+                    self.restoreChatrooms { (error) in
+                        if error != nil { completion(error); return }
+                        
+                        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
+                        completion(nil)
+                    }
+                }
+            }
+        }
 	}
 	
 	func restoreWatchlists(completion: @escaping (_ error: Error?) -> ()) {
 		FirebaseService.shared.fetchWatchlists { [unowned self] (watchlistsData, error) in
-			guard error == nil else { completion(error); return }
-			guard let watchlistsData = watchlistsData else { completion(nil);  return }
+			guard error == nil, let watchlistsData = watchlistsData else { completion(error); return }
 			
 			let watchlistGroup = DispatchGroup()
 			watchlistsData.forEach {
@@ -166,29 +172,28 @@ final class DataCoordinator {
 				
 				let itemGroup = DispatchGroup()
 				var itemsToAdd = [Item]()
+                
 				items.forEach {
 					itemGroup.enter()
 					
 					switch type {
 					case .movie:
 						self.getMovie($0) { (movie, error) in
-							guard let movie = movie else {
-								watchlistRestorationError = error
-								itemGroup.leave()
-								return
-							}
-							itemsToAdd.append(movie)
+                            if let movie = movie {
+                                itemsToAdd.append(movie)
+                            } else {
+                                watchlistRestorationError = error
+                            }
 							itemGroup.leave()
 						}
 					case .series:
 						self.getShow($0) { (show, error) in
-							guard let show = show else {
-								watchlistRestorationError = error
-								itemGroup.leave()
-								return
-							}
-							itemsToAdd.append(show)
-							itemGroup.leave()
+                            if let show = show {
+                                itemsToAdd.append(show)
+                            } else {
+                                watchlistRestorationError = error
+                            }
+                            itemGroup.leave()
 						}
 					}
 				}
@@ -196,13 +201,15 @@ final class DataCoordinator {
 				itemGroup.wait()
 				
 				if watchlistRestorationError != nil {
-					// TODO: mark watchlist error and retry later
+                    // TODO: mark watchlist error and retry later
+                    print("Firebase Firestore | Error when restoring watchlist \(watchlist.id)")
 				}
 				
 				LocalDatabase.shared.addToWatchlist(itemsToAdd, watchlist)
 				watchlistGroup.leave()
 			}
-			
+            
+            watchlistGroup.wait()
 			completion(nil)
 		}
 	}
@@ -337,7 +344,7 @@ final class DataCoordinator {
     }
     
     func toggleWatched(_ item: Item, completion: @escaping (_ error: Error?)->()) {
-        FirebaseService.shared.setWatchedState(item, watched: !item.watched) { error in
+        FirebaseService.shared.toggleWatched(item, watched: !item.watched) { error in
             if let error = error {
                 completion(error)
                 return
@@ -346,7 +353,7 @@ final class DataCoordinator {
             LocalDatabase.shared.toggleWatched(item)
             let info = ["item": item]
             NotificationCenter.default.post(name: .itemWatchedStatusChanged, object: nil, userInfo: info)
-        }        
+        }
     }
     
     // MARK: - Chatrooms
@@ -436,19 +443,14 @@ final class DataCoordinator {
               let ownerID = data["owner"] as? String,
               let typeString = data["type"] as? String,
               let type = ChatroomType(rawValue: typeString) else {
-            // TODO: crete invalid data error
+            // TODO: create invalid data error
             completion(nil, nil)
             return
         }
     
         fetchUser(id: ownerID) { [unowned self] (user, error) in
-            if let error = error {
-                completion(nil, error)
-                return
-            }
             guard let user = user else {
-                // TODO: crete invalid data error
-                completion(nil, nil)
+                completion(nil, error)
                 return
             }
             
@@ -462,10 +464,10 @@ final class DataCoordinator {
                         completion(nil, error)
                         return
                     }
-                    self.getImage(forItem: movie) { _ in
-                        let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, movie.id)
-                        completion(chatroom, nil)
-                    }
+                    
+                    self.fetchImage(forItem: movie)
+                    let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, movie.id)
+                    completion(chatroom, nil)
                 }
             case .show:
                 self.getShow(subjectID) { (show, error) in
@@ -473,10 +475,10 @@ final class DataCoordinator {
                         completion(nil, error)
                         return
                     }
-                    self.getImage(forItem: show) { _ in
-                        let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, show.id)
-                        completion(chatroom, nil)
-                    }
+                    
+                    self.fetchImage(forItem: show)
+                    let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, show.id)
+                    completion(chatroom, nil)
                 }
             }
         }
@@ -533,27 +535,27 @@ final class DataCoordinator {
     
     // MARK: - Data Download
     
-    func getImage(forItem item: Item, completion: @escaping (UIImage?)->()) {
+    func fetchImage(forItem item: Item, completion: ((_ image: UIImage?)->())? = nil) {
         guard item.poster != "N/A" else {
-            completion(nil)
+            completion?(nil)
             return
         }
         
-        getImage(itemID: item.id, urlString: item.poster, completion: completion)
+        fetchImage(itemID: item.id, urlString: item.poster, completion: completion)
     }
     
-    func getImage(forSearchItem item: SearchItem, completion: @escaping (UIImage?)->()) {
-        getImage(itemID: item.id, urlString: item.poster, completion: completion)
+    func fetchImage(forSearchItem item: SearchItem, completion: ((_ image: UIImage?)->())? = nil) {
+        fetchImage(itemID: item.id, urlString: item.poster, completion: completion)
     }
     
-    private func getImage(itemID: String, urlString: String, completion: @escaping (UIImage?)->()) {
+    private func fetchImage(itemID: String, urlString: String, completion: ((_ image: UIImage?)->())? = nil) {
         if let image = LocalStorage.shared.getImage(itemID) {
-            completion(image)
+            completion?(image)
             return
         }
         
         guard let url = URL(string: urlString) else {
-            completion(nil)
+            completion?(nil)
             return
         }
         
@@ -563,7 +565,7 @@ final class DataCoordinator {
             }
             
             DispatchQueue.main.async {
-                completion(image)
+                completion?(image)
             }
         }
     }

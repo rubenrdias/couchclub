@@ -25,6 +25,10 @@ class MainTabBarController: UITabBarController, Storyboarded {
 			guard let navController = $0 as? UINavigationController else { return }
 			navController.popToRootViewController(animated: false)
 		}
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in
+            self.selectedIndex = 0
+        }
 	}
 
 }

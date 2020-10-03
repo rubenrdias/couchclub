@@ -20,7 +20,7 @@ class UserBuilder {
 	var user: User
 	
 	init(_ id: String) {
-		self.user = User(context: context)
+		self.user = User(context: LocalDatabase.shared.context)
 		self.user.id = id
 	}
 	

@@ -28,7 +28,7 @@ class ChatroomBuilder {
     var chatroom: Chatroom
     
     init(_ id: UUID? = nil, _ inviteCode: String? = nil) {
-        self.chatroom = Chatroom(context: context)
+        self.chatroom = Chatroom(context: LocalDatabase.shared.context)
         self.chatroom.id = id == nil ? UUID() : id!
         self.chatroom.inviteCode = inviteCode == nil ? generateInviteCode() : inviteCode!
     }

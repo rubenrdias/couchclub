@@ -61,6 +61,7 @@
 		5390F48B248A679500F6C211 /* WatchlistSelectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F48A248A679500F6C211 /* WatchlistSelectionDataSource.swift */; };
 		5390F48D248A81FB00F6C211 /* WatchlistItemsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F48C248A81FB00F6C211 /* WatchlistItemsDataSource.swift */; };
 		539448BB24640366002A9544 /* NewChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539448BA24640366002A9544 /* NewChatroomVC.swift */; };
+		53A86BB5252899C9006FDC38 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A86BB4252899C9006FDC38 /* UserDefaultsManager.swift */; };
 		53A8BBD624768FC7001B3E6C /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A8BBD524768FC7001B3E6C /* PushNotifications.swift */; };
 		53AE644B2455DE4E00D7F817 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
 		53AEA6CE247F093300308718 /* NewWatchlistCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AEA6CD247F093300308718 /* NewWatchlistCoordinator.swift */; };
@@ -160,6 +161,7 @@
 		5390F48A248A679500F6C211 /* WatchlistSelectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistSelectionDataSource.swift; sourceTree = "<group>"; };
 		5390F48C248A81FB00F6C211 /* WatchlistItemsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistItemsDataSource.swift; sourceTree = "<group>"; };
 		539448BA24640366002A9544 /* NewChatroomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatroomVC.swift; sourceTree = "<group>"; };
+		53A86BB4252899C9006FDC38 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		53A8BBD524768FC7001B3E6C /* PushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotifications.swift; sourceTree = "<group>"; };
 		53AD80572476967900356449 /* CouchClub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CouchClub.entitlements; sourceTree = "<group>"; };
 		53AE644A2455DE4E00D7F817 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				53BEA6932459722500F7D770 /* LocalStorage.swift */,
 				53F6880F2458D4AC00230CE9 /* Converter.swift */,
 				53BEA6952459820100F7D770 /* DataCoordinator.swift */,
+				53A86BB4252899C9006FDC38 /* UserDefaultsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -549,7 +552,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Ruben Dias";
 				TargetAttributes = {
 					538D29D02454978600CDB99F = {
@@ -740,6 +743,7 @@
 				5369E491246DE79C00E9CB91 /* FirebaseService.swift in Sources */,
 				5325106F245AD9FE00DBBA04 /* Extensions.swift in Sources */,
 				53649013246C781D00628A32 /* CreateAccountVC.swift in Sources */,
+				53A86BB5252899C9006FDC38 /* UserDefaultsManager.swift in Sources */,
 				536012FF2464A33000E00C6F /* Protocols.swift in Sources */,
 				536A7ADF247FF7B4004F81B2 /* NewChatroomCoordinator.swift in Sources */,
 				53189FB4247EDE9E002DAEE2 /* MainTabBarController.swift in Sources */,

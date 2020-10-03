@@ -155,7 +155,7 @@ class ItemCell: UICollectionViewCell {
         titleLabel.text = item.title
         subtitleLabel.text = "\(item.year)  \(item.runtime)"
         
-        DataCoordinator.shared.getImage(forItem: item) { image in
+        DataCoordinator.shared.fetchImage(forItem: item) { image in
             DispatchQueue.main.async { [weak self] in
                 if let image = image {
                     self?.imageView.image = image

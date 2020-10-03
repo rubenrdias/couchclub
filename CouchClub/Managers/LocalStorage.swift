@@ -14,12 +14,30 @@ final class LocalStorage {
     
     private init() {}
     
+    private var fileManager: FileManager {
+        return FileManager.default
+    }
+    
     private var documentsDirectory: URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        self.fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
     
     private var imagesDirectory: URL {
         documentsDirectory.appendingPathComponent("images")
+    }
+    
+    func cleanupAfterLogout() {
+        DispatchQueue.global(qos: .background).async { [unowned self] in
+            do {
+                let imageNames = try fileManager.contentsOfDirectory(atPath: imagesDirectory.path)
+                
+                for imageName in imageNames {
+                    try self.fileManager.removeItem(atPath: "\(self.imagesDirectory.path)/\(imageName)")
+                }
+            } catch {
+                print("Local Storage | Error when clearing the images folder: ", error.localizedDescription)
+            }
+        }
     }
     
     func saveImage(_ image: UIImage, named imageName: String) {
@@ -28,11 +46,11 @@ final class LocalStorage {
             let path = self.imagesDirectory.appendingPathComponent(imageName)
             var directoryExists = true
             
-            if !FileManager.default.fileExists(atPath: self.imagesDirectory.path) {
+            if !self.fileManager.fileExists(atPath: self.imagesDirectory.path) {
                 do {
                     try FileManager.default.createDirectory(at: self.imagesDirectory, withIntermediateDirectories: true, attributes: nil)
                 } catch {
-                    print("Error when creating the images directory: ", error.localizedDescription);
+                    print("Local Storage | Error when creating the images directory: ", error.localizedDescription);
                     directoryExists = false
                 }
             }
@@ -41,7 +59,7 @@ final class LocalStorage {
                 do {
                     try jpegData.write(to: path)
                 } catch let error as NSError {
-                    print("Error when storing image: ", error.code)
+                    print("Local Storage | Error when storing image: ", error.localizedDescription)
                 }
             }
         }
@@ -49,13 +67,8 @@ final class LocalStorage {
     
     func getImage(_ imageName: String) -> UIImage? {
         let imagePath = imagesDirectory.appendingPathComponent(imageName)
-        let imageExists = FileManager.default.fileExists(atPath: imagePath.path)
         
-        if imageExists {
-            return UIImage(contentsOfFile: imagePath.path)
-        } else {
-            return nil
-        }
+        return UIImage(contentsOfFile: imagePath.path)
     }
     
 }

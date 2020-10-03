@@ -15,12 +15,16 @@ final class LocalDatabase {
     
     private init() {}
     
-    let coreDataQueue = DispatchQueue(label: "com.couchclub.coreDataQueue")
-    
+    let coreDataQueue = DispatchQueue(label: "com.rubendias.couchclub.coreDataQueue")
+    let contextQueue = DispatchQueue(label: "com.rubendias.couchclub.contextQueue")
     
     // MARK: - Core Data stack
     
-    lazy var persistentContainer: NSPersistentContainer = {
+    var context: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+        
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CouchClub")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -32,8 +36,9 @@ final class LocalDatabase {
     }()
 
     func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
+        guard context.hasChanges else { return }
+        
+        contextQueue.sync { [unowned self] in
             do {
                 try context.save()
             } catch {
@@ -47,6 +52,7 @@ final class LocalDatabase {
 	// MARK: - General
 	
 	func cleanupAfterLogout() {
+        deleteItems()
 		deleteWatchlists()
 		deleteChatrooms()
 		deleteUsers()
@@ -74,7 +80,7 @@ final class LocalDatabase {
     }
     
     func fetchCurrentuser() -> User {
-        guard let currentUser = fetchUser(FirebaseService.currentUserID) else {
+        guard let currentUser = fetchUser(FirebaseService.shared.currentUserID) else {
             fatalError("There should always be a current user.")
         }
         return currentUser
@@ -102,7 +108,7 @@ final class LocalDatabase {
 		NotificationCenter.default.post(name: .userInfoDidChange, object: nil, userInfo: userInfo)
 	}
 	
-	func deleteUsers() {
+    private func deleteUsers() {
 		coreDataQueue.sync {
 			let fetchRequest = User.createFetchRequest()
 			
@@ -162,13 +168,17 @@ final class LocalDatabase {
     }
     
     func deleteWatchlist(_ watchlist: Watchlist) {
+        let watchlistItems = watchlist.items?.allObjects as? [Item]
+        let itemsToDelete = watchlistItems?.filter { $0.watchlists?.count == 1 }
+        deleteItems(itemsToDelete)
+        
         coreDataQueue.sync {
             context.delete(watchlist)
 			saveContext()
         }
     }
 	
-	func deleteWatchlists() {
+    private func deleteWatchlists() {
 		guard let watchlists = fetchWatchlists() else { return }
 		watchlists.forEach { deleteWatchlist($0) }
 	}
@@ -197,6 +207,22 @@ final class LocalDatabase {
     
     // MARK: - Items
     
+    func deleteItem(_ item: Item) {
+        coreDataQueue.sync {
+            context.delete(item)
+            saveContext()
+        }
+    }
+    
+    private func deleteItems(_ items: [Item]? = nil) {
+        let itemsToDelete = (items != nil ? items : fetchItems())
+        
+        coreDataQueue.sync {
+            itemsToDelete?.forEach { context.delete($0) }
+            saveContext()
+        }
+    }
+    
     func fetchItem(_ id: String) -> Item? {
         coreDataQueue.sync {
             let fetchRequest = Item.createFetchRequest()
@@ -213,10 +239,35 @@ final class LocalDatabase {
         }
     }
     
+    func fetchItems() -> [Item]? {
+        coreDataQueue.sync {
+            let fetchRequest = Item.createFetchRequest()
+            
+            do {
+                return try context.fetch(fetchRequest)
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching items: \(error)")
+                return nil
+            }
+        }
+    }
+    
     func toggleWatched(_ item: Item) {
         coreDataQueue.sync {
             item.watched = !item.watched
             saveContext()
+        }
+    }
+    
+    func setWatchedState(_ itemIDs: [String], completion: @escaping ()->()) {
+        guard let unwatchedItems = self.fetchItems() else { completion(); return }
+        
+        coreDataQueue.sync {
+            let watchedItems = unwatchedItems.filter { itemIDs.contains($0.id) }
+            watchedItems.forEach { $0.watched = true }
+            saveContext()
+            completion()
         }
     }
     
@@ -273,7 +324,7 @@ final class LocalDatabase {
         }
     }
 	
-	func deleteChatrooms() {
+	private func deleteChatrooms() {
 		guard let chatrooms = fetchChatrooms() else { return }
 		chatrooms.forEach { deleteChatroom($0) }
 	}

@@ -3,10 +3,45 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "WatchlistItemsDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:):WatchlistItemsDataSource.swift">
+         contextName = "WatchlistsDataSource.collectionView(_:numberOfItemsInSection:):WatchlistsDataSource.swift">
          <PersistentStrings>
             <PersistentString
-               value = "sectionHeaders">
+               value = "watchlists.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SearchCoordinator.start():SearchCoordinator.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.watchlist">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TitleTextView.showPlaceholderText():TitleTextView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "placeholderText">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LocalDatabase.setWatchedState(_:completion:):LocalDatabase.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in ChatroomsVC.refreshChatroom(_:):ChatroomsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self?.chatrooms">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in LocalDatabase.deleteWatchlist(_:):LocalDatabase.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "$0.watchlists?.allObjects">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -30,30 +65,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "SearchCoordinator.start():SearchCoordinator.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.watchlist">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in FirebaseService.fetchChatroomDetails(_:completion:):FirebaseService.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "documents.count">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "TitleTextView.showPlaceholderText():TitleTextView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "placeholderText">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "closure #1 in closure #2 in ItemDetailVC.actionButtonTapped(_:):ItemDetailVC.swift">
          <PersistentStrings>
             <PersistentString
@@ -62,18 +73,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in ChatroomsVC.refreshChatroom(_:):ChatroomsVC.swift">
+         contextName = "WatchlistItemsDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:):WatchlistItemsDataSource.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self?.chatrooms">
+               value = "sectionHeaders">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "WatchlistsDataSource.collectionView(_:numberOfItemsInSection:):WatchlistsDataSource.swift">
+         contextName = "closure #1 in FirebaseService.fetchChatroomDetails(_:completion:):FirebaseService.swift">
          <PersistentStrings>
             <PersistentString
-               value = "watchlists.count">
+               value = "documents.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

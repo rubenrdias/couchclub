@@ -18,8 +18,6 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistDidChange, object: nil)
-        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showSearch)),
             UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped))
@@ -36,7 +34,6 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
         print("-- DEINIT -- Watchlist VC")
     }
     
@@ -72,14 +69,6 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
                 
         ac.popoverPresentationController?.barButtonItem = sender
         present(ac, animated: true, completion: nil)
-    }
-    
-    @objc private func watchlistItemsUpdated(_ notification: Notification) {
-        guard let info = notification.userInfo else { return }
-        
-        if let watchlistID = info["watchlistID"] as? UUID, watchlistID == watchlist.id {
-            dataSource.updateItems(reloadView: true)
-        }
     }
 
 }

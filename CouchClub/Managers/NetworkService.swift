@@ -36,11 +36,12 @@ struct SearchItem: Decodable {
 final class NetworkService {
     
     static let shared = NetworkService()
-    
     private init() {}
     
     private let baseURL = "http://www.omdbapi.com/"
     private let apiKey = "d4d6a41c"
+    
+    private let urlSession = URLSession.shared
     
     // MARK: - Search
     
@@ -55,7 +56,7 @@ final class NetworkService {
         
         url.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
         
-        URLSession.shared.dataTask(with: url.url!) { (data, response, error) in
+        self.urlSession.dataTask(with: url.url!) { (data, response, error) in
             guard let data = data else {
                 if let error = error {
                     print("Failed to fetch search results: \(error.localizedDescription)")
@@ -86,7 +87,7 @@ final class NetworkService {
         
         url.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
         
-        URLSession.shared.dataTask(with: url.url!) { (data, response, error) in
+        self.urlSession.dataTask(with: url.url!) { (data, response, error) in
             guard let data = data else {
                 if let error = error {
                     print("Failed to fetch search result: \(error.localizedDescription)")
@@ -111,22 +112,18 @@ final class NetworkService {
     // MARK: - Download
     
     func downloadImage(_ url: URL, completion: @escaping (_ image: UIImage?)->()) {
-        print("Attempting to download image with url \(url.absoluteString)")
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        self.urlSession.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
                 if let error = error {
-                    print("Failed to fetch search results: \(error.localizedDescription)\n\(url)")
+                    print("Failed to download image: \(error.localizedDescription)\n\(url))")
                 }
                 // TODO: process response
                 completion(nil)
                 return
             }
             
-            if let image = UIImage(data: data) {
-                completion(image)
-            } else {
-                completion(nil)
-            }
+            let image = UIImage(data: data)
+            completion(image)
         }.resume()
     }
 }

@@ -20,10 +20,14 @@ class WatchlistItemsDataSource: NSObject {
     weak var collectionView: UICollectionView!
     
     weak var watchlist: Watchlist!
-    private var items = [Item]()
+    private var items: [Item] {
+        get {
+            let watchlistItems = watchlist.items?.allObjects as? [Item]
+            return watchlistItems?.sorted { $0.title < $1.title } ?? []
+        }
+    }
     
     private var sectionHeaders: [Section] = [.statistics]
-    private weak var highlightCell: HighlightCVCell?
     
     private var itemsPerRow: Int = 1
     private var usableWidth: CGFloat = 0
@@ -36,9 +40,19 @@ class WatchlistItemsDataSource: NSObject {
         self.collectionView = collectionView
         self.delegate = delegate
         
+        setupObservers()
         registerViews()
         setupCollectionViewLayout(collectionView.bounds.size)
-        setupData()
+        setupHeaders()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemWasUpdated), name: .itemWatchedStatusChanged, object: nil)
     }
     
     private func registerViews() {
@@ -49,25 +63,31 @@ class WatchlistItemsDataSource: NSObject {
         collectionView.register(ItemCell.self, forCellWithReuseIdentifier: ItemCell.reuseIdentifier)
     }
     
-    func setupData() {
+    private func setupHeaders() {
         switch watchlist.type {
         case ItemType.series.rawValue:
             sectionHeaders.append(.shows)
         default:
             sectionHeaders.append(.movies)
         }
-        
-        updateItems()
     }
     
-    func updateItems(reloadView: Bool = false) {
-        if let watchlistItems = watchlist.items?.allObjects as? [Item] {
-            items = watchlistItems.sorted { $0.title < $1.title }
-        }
+    @objc private func watchlistItemsUpdated(_ notification: Notification) {
+        guard let info = notification.userInfo else { return }
         
-        if reloadView {
+        if let watchlistID = info["watchlistID"] as? UUID, watchlistID == watchlist.id {
             DispatchQueue.main.async { [weak self] in
                 self?.collectionView.reloadData()
+            }
+        }
+    }
+    
+    @objc private func itemWasUpdated(_ notification: Notification) {
+        guard let item = notification.userInfo?["item"] as? Item else { return }
+        
+        if items.contains(item) {
+            DispatchQueue.main.async { [weak self] in
+                self?.collectionView.reloadItems(at: [.init(item: 0, section: 1)])
             }
         }
     }
@@ -146,7 +166,6 @@ extension WatchlistItemsDataSource: UICollectionViewDataSource, UICollectionView
             } else {
                 cell.highlightRight = (watchlist.averageRatingString(), "Average rating")
             }
-            highlightCell = cell
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
@@ -185,7 +204,6 @@ extension WatchlistItemsDataSource: ItemOperationDelegate {
     
     func didTapSeen(_ item: Item) {
         delegate?.didTapItemSeen(item)
-        highlightCell?.highlightLeft = (watchlist.itemsWatchedString(withDescription: false), "Watched")
     }
     
 }

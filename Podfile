@@ -1,10 +1,8 @@
-# Uncomment the next line to define a global platform for your project
-
-# ignore all warnings from all pods
+# Ignore warnings from all pods
 inhibit_all_warnings!
 
 target 'CouchClub' do
-  # Comment the next line if you don't want to use dynamic frameworks
+  # Enable dynamic frameworks
   use_frameworks!
 
   # Pods for CouchClub

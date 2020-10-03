@@ -8,9 +8,6 @@
 
 import UIKit
 
-// MARK: - Core Data
-let context = LocalDatabase.shared.persistentContainer.viewContext
-
 // MARK: - Enums
 
 enum ButtonStyle {
