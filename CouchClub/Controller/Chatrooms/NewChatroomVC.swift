@@ -21,7 +21,6 @@ class NewChatroomVC: UIViewController, Storyboarded {
     var selectedSubjectID: String?
     
     private let titlePlaceholderText = "Chatroom title..."
-    private var shouldFocusOnTitle = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +35,9 @@ class NewChatroomVC: UIViewController, Storyboarded {
         
         setupButtons()
         setupTextView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        if shouldFocusOnTitle {
-            textView.becomeFirstResponder()
-            shouldFocusOnTitle = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.textView.becomeFirstResponder()
         }
     }
     

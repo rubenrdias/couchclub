@@ -19,7 +19,6 @@ class NewWatchlistVC: UIViewController, Storyboarded {
     var itemType: ItemType! = .movie
     
     private let titlePlaceholderText = "Watchlist title..."
-    private var shouldFocusOnTitle = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +28,9 @@ class NewWatchlistVC: UIViewController, Storyboarded {
         setupView()
         setupButtons()
         setupTextView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        if shouldFocusOnTitle {
-            textView.becomeFirstResponder()
-            shouldFocusOnTitle = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.textView.becomeFirstResponder()
         }
     }
     
