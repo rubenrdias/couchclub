@@ -1,6 +1,0 @@
-framework module Pods_CouchClubTests {
-  umbrella header "Pods-CouchClubTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

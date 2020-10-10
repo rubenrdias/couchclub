@@ -1,2 +1,5 @@
-*.xcuserstate
-*.xcbkptlist
+**/xcuserdata/
+
+Utils/Config
+
+Pods/

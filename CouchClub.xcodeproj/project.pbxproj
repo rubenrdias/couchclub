@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100635340F7F0D291AF8A12B /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		53153CC02456253F0089AEA7 /* SmallHeaderCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CBF2456253F0089AEA7 /* SmallHeaderCVCell.swift */; };
 		53153CC2245625950089AEA7 /* SearchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CC1245625950089AEA7 /* SearchItemCell.swift */; };
 		53189FB2247EDC2C002DAEE2 /* WatchlistsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53189FB1247EDC2C002DAEE2 /* WatchlistsCoordinator.swift */; };
@@ -33,6 +34,7 @@
 		534BFB9D2454DDB500F9F772 /* Watchlists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */; };
 		534BFBA02454DE8800F9F772 /* Chatrooms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */; };
 		534BFBA22454DED600F9F772 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFBA12454DED600F9F772 /* Settings.storyboard */; };
+		5355A0DF252A679800601CA5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53817083246C9093006A4B3B /* GoogleService-Info.plist */; };
 		536012FD246497CC00E00C6F /* ChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536012FC246497CC00E00C6F /* ChatroomVC.swift */; };
 		536012FF2464A33000E00C6F /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536012FE2464A33000E00C6F /* Protocols.swift */; };
 		53645A64245CA382009A4AE6 /* TextCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A63245CA382009A4AE6 /* TextCVCell.swift */; };
@@ -46,7 +48,6 @@
 		536A7ADF247FF7B4004F81B2 /* NewChatroomCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536A7ADE247FF7B4004F81B2 /* NewChatroomCoordinator.swift */; };
 		5376F2B024595EE7007FB93C /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376F2AF24595EE7007FB93C /* LocalDatabase.swift */; };
 		537C14322455CDE7005FC745 /* SearchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537C14312455CDE7005FC745 /* SearchItems.swift */; };
-		53817084246C9094006A4B3B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53817083246C9093006A4B3B /* GoogleService-Info.plist */; };
 		538774402468113A009247CA /* ChatroomTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5387743F2468113A009247CA /* ChatroomTVCell.swift */; };
 		538D29D52454978600CDB99F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D42454978600CDB99F /* AppDelegate.swift */; };
 		538D29D92454978600CDB99F /* WatchlistsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D82454978600CDB99F /* WatchlistsVC.swift */; };
@@ -68,6 +69,84 @@
 		53B04FFD2482C4C5008BDF15 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B04FFC2482C4C5008BDF15 /* SettingsCoordinator.swift */; };
 		53B34E2E245744220076B148 /* ItemDetailHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */; };
 		53B34E3024580D160076B148 /* HighlightTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2F24580D160076B148 /* HighlightTVCell.swift */; };
+		53B53240252CF70D00B94605 /* PushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A8BBD524768FC7001B3E6C /* PushNotifications.swift */; };
+		53B53241252CF70D00B94605 /* ChatroomsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536A7ADC247FDBF4004F81B2 /* ChatroomsCoordinator.swift */; };
+		53B53242252CF70D00B94605 /* ChatroomTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5387743F2468113A009247CA /* ChatroomTVCell.swift */; };
+		53B53243252CF70D00B94605 /* Item+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B71447245B524D00915FF8 /* Item+CoreDataClass.swift */; };
+		53B53244252CF70D00B94605 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B04FFC2482C4C5008BDF15 /* SettingsCoordinator.swift */; };
+		53B53245252CF70D00B94605 /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5376F2AF24595EE7007FB93C /* LocalDatabase.swift */; };
+		53B53246252CF70D00B94605 /* Show+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688052458CFE500230CE9 /* Show+CoreDataClass.swift */; };
+		53B53247252CF70D00B94605 /* Watchlist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532B59DF25052ED2003655EE /* Watchlist+CoreDataProperties.swift */; };
+		53B53248252CF70D00B94605 /* NewWatchlistCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AEA6CD247F093300308718 /* NewWatchlistCoordinator.swift */; };
+		53B53249252CF70D00B94605 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532B59E025052ED2003655EE /* User+CoreDataClass.swift */; };
+		53B5324A252CF70D00B94605 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531FE20A246C2FD400AE0505 /* Buttons.swift */; };
+		53B5324B252CF70D00B94605 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B94C7E2481ACEA00F9F0F1 /* SearchCoordinator.swift */; };
+		53B5324C252CF70D00B94605 /* WatchlistsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D82454978600CDB99F /* WatchlistsVC.swift */; };
+		53B5324D252CF70D00B94605 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F62454AF2B0019640D /* WatchlistCell.swift */; };
+		53B5324E252CF70D00B94605 /* NewWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53251068245ABF4200DBBA04 /* NewWatchlistVC.swift */; };
+		53B5324F252CF70D00B94605 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCD8246F11DE00958A76 /* Message+CoreDataClass.swift */; };
+		53B53250252CF70D00B94605 /* SearchItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537C14312455CDE7005FC745 /* SearchItems.swift */; };
+		53B53251252CF70D00B94605 /* MessageTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53286A122465AF2C00934B4D /* MessageTVCell.swift */; };
+		53B53252252CF70D00B94605 /* TitleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F4862489497500F6C211 /* TitleTextView.swift */; };
+		53B53253252CF70D00B94605 /* ChatroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B7CDE32454A52A007395EE /* ChatroomsVC.swift */; };
+		53B53254252CF70D00B94605 /* SmallHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53264A3524669DD4006C3423 /* SmallHeaderTVCell.swift */; };
+		53B53255252CF70D00B94605 /* SelectWatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321D39E246B0CF500FC7E83 /* SelectWatchlistVC.swift */; };
+		53B53256252CF70D00B94605 /* MessageInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53286A152465D13F00934B4D /* MessageInputAccessoryView.swift */; };
+		53B53257252CF70D00B94605 /* SmallHeaderCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CBF2456253F0089AEA7 /* SmallHeaderCVCell.swift */; };
+		53B53258252CF70D00B94605 /* WatchlistsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F488248A5C4B00F6C211 /* WatchlistsDataSource.swift */; };
+		53B53259252CF70D00B94605 /* TextCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A63245CA382009A4AE6 /* TextCVCell.swift */; };
+		53B5325A252CF70D00B94605 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D91F06245AEF5A00BC9F82 /* Alerts.swift */; };
+		53B5325B252CF70D00B94605 /* MessageInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53286A172465D1DC00934B4D /* MessageInputTextView.swift */; };
+		53B5325C252CF70D00B94605 /* ItemDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532A2F32245730D000AE14B6 /* ItemDetailVC.swift */; };
+		53B5325D252CF70D00B94605 /* WatchlistItemsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F48C248A81FB00F6C211 /* WatchlistItemsDataSource.swift */; };
+		53B5325E252CF70D00B94605 /* HighlightCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A65245DBEB0009A4AE6 /* HighlightCVCell.swift */; };
+		53B5325F252CF70D00B94605 /* Item+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536A3921245F717E00E1FAA0 /* Item+CoreDataProperties.swift */; };
+		53B53260252CF70D00B94605 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532FBF0D247575C000B1E11B /* Views.swift */; };
+		53B53261252CF70D00B94605 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C5ADBA2455D24800873F90 /* SearchVC.swift */; };
+		53B53262252CF70D00B94605 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D16F4D2458D790001DD4FA /* Constants.swift */; };
+		53B53263252CF70D00B94605 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538D29D42454978600CDB99F /* AppDelegate.swift */; };
+		53B53264252CF70D00B94605 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531FE208246C2AB000AE0505 /* LoginVC.swift */; };
+		53B53265252CF70D00B94605 /* NewChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539448BA24640366002A9544 /* NewChatroomVC.swift */; };
+		53B53266252CF70D00B94605 /* CouchClub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 538D29DD2454978600CDB99F /* CouchClub.xcdatamodeld */; };
+		53B53267252CF70D00B94605 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BEA6952459820100F7D770 /* DataCoordinator.swift */; };
+		53B53268252CF70D00B94605 /* SearchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53153CC1245625950089AEA7 /* SearchItemCell.swift */; };
+		53B53269252CF70D00B94605 /* WatchlistSelectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F48A248A679500F6C211 /* WatchlistSelectionDataSource.swift */; };
+		53B5326A252CF70D00B94605 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AE644A2455DE4E00D7F817 /* NetworkService.swift */; };
+		53B5326B252CF70D00B94605 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53645A67245DD8A0009A4AE6 /* ItemCell.swift */; };
+		53B5326C252CF70D00B94605 /* ChatroomMessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F481248939B300F6C211 /* ChatroomMessagesDataSource.swift */; };
+		53B5326D252CF70D00B94605 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F6880F2458D4AC00230CE9 /* Converter.swift */; };
+		53B5326E252CF70D00B94605 /* Chatroom+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532210722473F89200381419 /* Chatroom+CoreDataProperties.swift */; };
+		53B5326F252CF70D00B94605 /* ChatroomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536012FC246497CC00E00C6F /* ChatroomVC.swift */; };
+		53B53270252CF70D00B94605 /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */; };
+		53B53271252CF70D00B94605 /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BEA6932459722500F7D770 /* LocalStorage.swift */; };
+		53B53272252CF70D00B94605 /* ChatroomsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5390F47E248901A600F6C211 /* ChatroomsDataSource.swift */; };
+		53B53273252CF70D00B94605 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EFBCD9246F11DE00958A76 /* Message+CoreDataProperties.swift */; };
+		53B53274252CF70D00B94605 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53298B512483DA5C00883BFB /* LoginCoordinator.swift */; };
+		53B53275252CF70D00B94605 /* ItemDetailHeaderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */; };
+		53B53276252CF70D00B94605 /* WatchlistsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53189FB1247EDC2C002DAEE2 /* WatchlistsCoordinator.swift */; };
+		53B53277252CF70D00B94605 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532B59E125052ED2003655EE /* User+CoreDataProperties.swift */; };
+		53B53278252CF70D00B94605 /* HighlightTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B34E2F24580D160076B148 /* HighlightTVCell.swift */; };
+		53B53279252CF70D00B94605 /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688082458CFE500230CE9 /* Movie+CoreDataProperties.swift */; };
+		53B5327A252CF70D00B94605 /* WatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CC6A3F245ADB2500744012 /* WatchlistVC.swift */; };
+		53B5327B252CF70D00B94605 /* Show+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688062458CFE500230CE9 /* Show+CoreDataProperties.swift */; };
+		53B5327C252CF70D00B94605 /* Watchlist+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532B59DE25052ED2003655EE /* Watchlist+CoreDataClass.swift */; };
+		53B5327D252CF70D00B94605 /* Chatroom+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532210712473F89200381419 /* Chatroom+CoreDataClass.swift */; };
+		53B5327E252CF70D00B94605 /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649010246C3EE400628A32 /* TextFields.swift */; };
+		53B5327F252CF70D00B94605 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5369E490246DE79C00E9CB91 /* FirebaseService.swift */; };
+		53B53280252CF70D00B94605 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5325106E245AD9FE00DBBA04 /* Extensions.swift */; };
+		53B53281252CF70D00B94605 /* CreateAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53649012246C781D00628A32 /* CreateAccountVC.swift */; };
+		53B53282252CF70D00B94605 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A86BB4252899C9006FDC38 /* UserDefaultsManager.swift */; };
+		53B53283252CF70D00B94605 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536012FE2464A33000E00C6F /* Protocols.swift */; };
+		53B53284252CF70D00B94605 /* NewChatroomCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536A7ADE247FF7B4004F81B2 /* NewChatroomCoordinator.swift */; };
+		53B53285252CF70D00B94605 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53189FB3247EDE9E002DAEE2 /* MainTabBarController.swift */; };
+		53B53286252CF70D00B94605 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F42454A8810019640D /* SettingsVC.swift */; };
+		53B5328B252CF70D00B94605 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 531FE205246C29A500AE0505 /* Login.storyboard */; };
+		53B5328D252CF70D00B94605 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E22454978800CDB99F /* LaunchScreen.storyboard */; };
+		53B5328E252CF70D00B94605 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 538D29E02454978800CDB99F /* Assets.xcassets */; };
+		53B5328F252CF70D00B94605 /* Watchlists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */; };
+		53B53290252CF70D00B94605 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFBA12454DED600F9F772 /* Settings.storyboard */; };
+		53B53291252CF70D00B94605 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C5ADB52455D08100873F90 /* Search.storyboard */; };
+		53B53292252CF70D00B94605 /* Chatrooms.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534BFB9E2454DE8800F9F772 /* Chatrooms.storyboard */; };
 		53B7144B245B524D00915FF8 /* Item+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B71447245B524D00915FF8 /* Item+CoreDataClass.swift */; };
 		53B7CDE42454A52A007395EE /* ChatroomsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B7CDE32454A52A007395EE /* ChatroomsVC.swift */; };
 		53B94C7F2481ACEA00F9F0F1 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B94C7E2481ACEA00F9F0F1 /* SearchCoordinator.swift */; };
@@ -75,6 +154,9 @@
 		53BEA6962459820100F7D770 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BEA6952459820100F7D770 /* DataCoordinator.swift */; };
 		53C0B1F52454A8810019640D /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F42454A8810019640D /* SettingsVC.swift */; };
 		53C0B1F72454AF2B0019640D /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C0B1F62454AF2B0019640D /* WatchlistCell.swift */; };
+		53C3AB7C252CFEAC008B41FA /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C3AB7B252CFEAC008B41FA /* Environment.swift */; };
+		53C3AB7D252CFEAC008B41FA /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C3AB7B252CFEAC008B41FA /* Environment.swift */; };
+		53C3AC1225322B39008B41FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53C3AC1125322B39008B41FA /* GoogleService-Info.plist */; };
 		53C5ADB62455D08100873F90 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C5ADB52455D08100873F90 /* Search.storyboard */; };
 		53C5ADBB2455D24800873F90 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C5ADBA2455D24800873F90 /* SearchVC.swift */; };
 		53CC6A40245ADB2500744012 /* WatchlistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CC6A3F245ADB2500744012 /* WatchlistVC.swift */; };
@@ -87,8 +169,10 @@
 		53F6880D2458CFE500230CE9 /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */; };
 		53F6880E2458CFE500230CE9 /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F688082458CFE500230CE9 /* Movie+CoreDataProperties.swift */; };
 		53F688102458D4AC00230CE9 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F6880F2458D4AC00230CE9 /* Converter.swift */; };
-		BEA26136877D54C39C8A6868 /* Pods_CouchClub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D641FCC8549B66DCC34E2448 /* Pods_CouchClub.framework */; };
-		F19FDBDB596D8AA738518030 /* Pods_CouchClubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C10D12256D7B51DFC931508D /* Pods_CouchClubTests.framework */; };
+		66EB76EC394723EEC5DB0AC6 /* Pods_CouchClub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED347EA321D251EA7A1BB4B /* Pods_CouchClub.framework */; };
+		88A1829D056311FF2887F611 /* Pods_CouchClub_Staging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3CF4B38D9916709B35C5F6 /* Pods_CouchClub_Staging.framework */; };
+		8DBD908948D371764F35BC12 /* libPods-CouchClubTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77208D9BAB0CB16A0FDCDED0 /* libPods-CouchClubTests.a */; };
+		BEA26136877D54C39C8A6868 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +186,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3950BC54F639061C280CD2FD /* Pods-CouchClub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub.debug.xcconfig"; path = "Target Support Files/Pods-CouchClub/Pods-CouchClub.debug.xcconfig"; sourceTree = "<group>"; };
+		219F0076A1F9826E81B454AE /* Pods-CouchClub Staging.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub Staging.debug (production).xcconfig"; path = "Target Support Files/Pods-CouchClub Staging/Pods-CouchClub Staging.debug (production).xcconfig"; sourceTree = "<group>"; };
+		3ED347EA321D251EA7A1BB4B /* Pods_CouchClub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CouchClub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		426049B0C9E1FB02BBE8761A /* Pods-CouchClub Staging.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub Staging.debug (staging).xcconfig"; path = "Target Support Files/Pods-CouchClub Staging/Pods-CouchClub Staging.debug (staging).xcconfig"; sourceTree = "<group>"; };
+		4D67032C6080A0EF203CE218 /* Pods-CouchClub.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub.release (staging).xcconfig"; path = "Target Support Files/Pods-CouchClub/Pods-CouchClub.release (staging).xcconfig"; sourceTree = "<group>"; };
+		50A9EF7F12C142B04B8B6965 /* Pods-CouchClubTests.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClubTests.release (staging).xcconfig"; path = "Target Support Files/Pods-CouchClubTests/Pods-CouchClubTests.release (staging).xcconfig"; sourceTree = "<group>"; };
 		53153CBF2456253F0089AEA7 /* SmallHeaderCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallHeaderCVCell.swift; sourceTree = "<group>"; };
 		53153CC1245625950089AEA7 /* SearchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCell.swift; sourceTree = "<group>"; };
 		53189FB1247EDC2C002DAEE2 /* WatchlistsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistsCoordinator.swift; sourceTree = "<group>"; };
@@ -126,6 +214,8 @@
 		532B59E025052ED2003655EE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Users/User+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		532B59E125052ED2003655EE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Users/User+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		532FBF0D247575C000B1E11B /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
+		5349BDBF252CF9E40096B2B9 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
+		5349BDC3252CF9FE0096B2B9 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		534BFB9C2454DDB500F9F772 /* Watchlists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Watchlists.storyboard; sourceTree = "<group>"; };
 		534BFB9F2454DE8800F9F772 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = CouchClub/View/Storyboards/Base.lproj/Chatrooms.storyboard; sourceTree = "<group>"; };
 		534BFBA12454DED600F9F772 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
@@ -169,6 +259,7 @@
 		53B04FFC2482C4C5008BDF15 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		53B34E2D245744220076B148 /* ItemDetailHeaderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailHeaderTVCell.swift; sourceTree = "<group>"; };
 		53B34E2F24580D160076B148 /* HighlightTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTVCell.swift; sourceTree = "<group>"; };
+		53B53299252CF70D00B94605 /* CouchClub Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CouchClub Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53B71447245B524D00915FF8 /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Item+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Item+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		53B7CDE32454A52A007395EE /* ChatroomsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatroomsVC.swift; sourceTree = "<group>"; };
 		53B94C7E2481ACEA00F9F0F1 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
@@ -176,6 +267,8 @@
 		53BEA6952459820100F7D770 /* DataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
 		53C0B1F42454A8810019640D /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		53C0B1F62454AF2B0019640D /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
+		53C3AB7B252CFEAC008B41FA /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		53C3AC1125322B39008B41FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		53C5ADB52455D08100873F90 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		53C5ADBA2455D24800873F90 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		53CC6A3F245ADB2500744012 /* WatchlistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistVC.swift; sourceTree = "<group>"; };
@@ -188,11 +281,16 @@
 		53F688072458CFE500230CE9 /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataClass.swift"; path = "CouchClub/Model/CoreData/Watchlists/Movie+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		53F688082458CFE500230CE9 /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Movie+CoreDataProperties.swift"; path = "CouchClub/Model/CoreData/Watchlists/Movie+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		53F6880F2458D4AC00230CE9 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
-		66146CAEF669EBBF4C95FDB2 /* Pods-CouchClubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClubTests.release.xcconfig"; path = "Target Support Files/Pods-CouchClubTests/Pods-CouchClubTests.release.xcconfig"; sourceTree = "<group>"; };
-		7C224FFD5468964A9A651875 /* Pods-CouchClubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClubTests.debug.xcconfig"; path = "Target Support Files/Pods-CouchClubTests/Pods-CouchClubTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9CB43F872B3E2FDA0802E497 /* Pods-CouchClub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub.release.xcconfig"; path = "Target Support Files/Pods-CouchClub/Pods-CouchClub.release.xcconfig"; sourceTree = "<group>"; };
-		C10D12256D7B51DFC931508D /* Pods_CouchClubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CouchClubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D641FCC8549B66DCC34E2448 /* Pods_CouchClub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CouchClub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CF40A7CF0F157E862DB61FC /* Pods-CouchClub.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub.debug (staging).xcconfig"; path = "Target Support Files/Pods-CouchClub/Pods-CouchClub.debug (staging).xcconfig"; sourceTree = "<group>"; };
+		5E3CF4B38D9916709B35C5F6 /* Pods_CouchClub_Staging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CouchClub_Staging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77208D9BAB0CB16A0FDCDED0 /* libPods-CouchClubTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CouchClubTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87428DB588A4B6E9453AF6BD /* Pods-CouchClub.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub.debug (production).xcconfig"; path = "Target Support Files/Pods-CouchClub/Pods-CouchClub.debug (production).xcconfig"; sourceTree = "<group>"; };
+		8FB1EC2869D08937296882BD /* Pods-CouchClub Staging.release (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub Staging.release (staging).xcconfig"; path = "Target Support Files/Pods-CouchClub Staging/Pods-CouchClub Staging.release (staging).xcconfig"; sourceTree = "<group>"; };
+		AF38991B3CA9460EA7165B50 /* Pods-CouchClubTests.debug (staging).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClubTests.debug (staging).xcconfig"; path = "Target Support Files/Pods-CouchClubTests/Pods-CouchClubTests.debug (staging).xcconfig"; sourceTree = "<group>"; };
+		B00462EE16FB500AA99EB65C /* Pods-CouchClubTests.debug (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClubTests.debug (production).xcconfig"; path = "Target Support Files/Pods-CouchClubTests/Pods-CouchClubTests.debug (production).xcconfig"; sourceTree = "<group>"; };
+		C64582356350D1454DA0C87E /* Pods-CouchClub.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub.release (production).xcconfig"; path = "Target Support Files/Pods-CouchClub/Pods-CouchClub.release (production).xcconfig"; sourceTree = "<group>"; };
+		C75C45FE6FA9A8ACE9D97DA7 /* Pods-CouchClub Staging.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClub Staging.release (production).xcconfig"; path = "Target Support Files/Pods-CouchClub Staging/Pods-CouchClub Staging.release (production).xcconfig"; sourceTree = "<group>"; };
+		F44D812874E0C52AC0CFCA0F /* Pods-CouchClubTests.release (production).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CouchClubTests.release (production).xcconfig"; path = "Target Support Files/Pods-CouchClubTests/Pods-CouchClubTests.release (production).xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,7 +298,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEA26136877D54C39C8A6868 /* Pods_CouchClub.framework in Frameworks */,
+				BEA26136877D54C39C8A6868 /* (null) in Frameworks */,
+				100635340F7F0D291AF8A12B /* (null) in Frameworks */,
+				66EB76EC394723EEC5DB0AC6 /* Pods_CouchClub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +308,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F19FDBDB596D8AA738518030 /* Pods_CouchClubTests.framework in Frameworks */,
+				8DBD908948D371764F35BC12 /* libPods-CouchClubTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B53287252CF70D00B94605 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A1829D056311FF2887F611 /* Pods_CouchClub_Staging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,8 +326,9 @@
 		216C786008B38280B3B16EAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D641FCC8549B66DCC34E2448 /* Pods_CouchClub.framework */,
-				C10D12256D7B51DFC931508D /* Pods_CouchClubTests.framework */,
+				5E3CF4B38D9916709B35C5F6 /* Pods_CouchClub_Staging.framework */,
+				77208D9BAB0CB16A0FDCDED0 /* libPods-CouchClubTests.a */,
+				3ED347EA321D251EA7A1BB4B /* Pods_CouchClub.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +358,22 @@
 			path = "Headers and Footers";
 			sourceTree = "<group>";
 		};
+		5319359F252A64A100DE1CBE /* Staging */ = {
+			isa = PBXGroup;
+			children = (
+				53C3AC1125322B39008B41FA /* GoogleService-Info.plist */,
+			);
+			path = Staging;
+			sourceTree = "<group>";
+		};
+		531935A0252A64A800DE1CBE /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				53817083246C9093006A4B3B /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
 		531FE207246C2AA700AE0505 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,10 +397,23 @@
 			path = "Custom Components";
 			sourceTree = "<group>";
 		};
+		5349BDBE252CF9CB0096B2B9 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				5349BDBF252CF9E40096B2B9 /* Staging.xcconfig */,
+				5349BDC3252CF9FE0096B2B9 /* Production.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		534BFBA32454E48900F9F772 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5349BDBE252CF9CB0096B2B9 /* Config */,
+				5319359F252A64A100DE1CBE /* Staging */,
+				531935A0252A64A800DE1CBE /* Release */,
 				538D29E02454978800CDB99F /* Assets.xcassets */,
+				53C3AB7B252CFEAC008B41FA /* Environment.swift */,
 				5325106E245AD9FE00DBBA04 /* Extensions.swift */,
 				53D16F4D2458D790001DD4FA /* Constants.swift */,
 				536012FE2464A33000E00C6F /* Protocols.swift */,
@@ -338,6 +476,7 @@
 			children = (
 				538D29D12454978600CDB99F /* CouchClub.app */,
 				538D29EA2454978800CDB99F /* CouchClubTests.xctest */,
+				53B53299252CF70D00B94605 /* CouchClub Staging.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -346,7 +485,6 @@
 			isa = PBXGroup;
 			children = (
 				53AD80572476967900356449 /* CouchClub.entitlements */,
-				53817083246C9093006A4B3B /* GoogleService-Info.plist */,
 				538D29E52454978800CDB99F /* Info.plist */,
 				534BFBA32454E48900F9F772 /* Utils */,
 				53AE64472455DE2700D7F817 /* Managers */,
@@ -496,10 +634,18 @@
 		A41F75B1B09C292D9B8FF986 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3950BC54F639061C280CD2FD /* Pods-CouchClub.debug.xcconfig */,
-				9CB43F872B3E2FDA0802E497 /* Pods-CouchClub.release.xcconfig */,
-				7C224FFD5468964A9A651875 /* Pods-CouchClubTests.debug.xcconfig */,
-				66146CAEF669EBBF4C95FDB2 /* Pods-CouchClubTests.release.xcconfig */,
+				5CF40A7CF0F157E862DB61FC /* Pods-CouchClub.debug (staging).xcconfig */,
+				87428DB588A4B6E9453AF6BD /* Pods-CouchClub.debug (production).xcconfig */,
+				4D67032C6080A0EF203CE218 /* Pods-CouchClub.release (staging).xcconfig */,
+				C64582356350D1454DA0C87E /* Pods-CouchClub.release (production).xcconfig */,
+				AF38991B3CA9460EA7165B50 /* Pods-CouchClubTests.debug (staging).xcconfig */,
+				B00462EE16FB500AA99EB65C /* Pods-CouchClubTests.debug (production).xcconfig */,
+				50A9EF7F12C142B04B8B6965 /* Pods-CouchClubTests.release (staging).xcconfig */,
+				F44D812874E0C52AC0CFCA0F /* Pods-CouchClubTests.release (production).xcconfig */,
+				426049B0C9E1FB02BBE8761A /* Pods-CouchClub Staging.debug (staging).xcconfig */,
+				219F0076A1F9826E81B454AE /* Pods-CouchClub Staging.debug (production).xcconfig */,
+				8FB1EC2869D08937296882BD /* Pods-CouchClub Staging.release (staging).xcconfig */,
+				C75C45FE6FA9A8ACE9D97DA7 /* Pods-CouchClub Staging.release (production).xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -545,6 +691,25 @@
 			productReference = 538D29EA2454978800CDB99F /* CouchClubTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		53B5323D252CF70D00B94605 /* CouchClub Staging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B53294252CF70D00B94605 /* Build configuration list for PBXNativeTarget "CouchClub Staging" */;
+			buildPhases = (
+				53B5323E252CF70D00B94605 /* [CP] Check Pods Manifest.lock */,
+				53B5323F252CF70D00B94605 /* Sources */,
+				53B53287252CF70D00B94605 /* Frameworks */,
+				53B5328A252CF70D00B94605 /* Resources */,
+				53B53293252CF70D00B94605 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CouchClub Staging";
+			productName = CouchClub;
+			productReference = 53B53299252CF70D00B94605 /* CouchClub Staging.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -578,6 +743,7 @@
 			projectRoot = "";
 			targets = (
 				538D29D02454978600CDB99F /* CouchClub */,
+				53B5323D252CF70D00B94605 /* CouchClub Staging */,
 				538D29E92454978800CDB99F /* CouchClubTests */,
 			);
 		};
@@ -589,8 +755,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				531FE206246C29A500AE0505 /* Login.storyboard in Resources */,
+				5355A0DF252A679800601CA5 /* GoogleService-Info.plist in Resources */,
 				538D29E42454978800CDB99F /* LaunchScreen.storyboard in Resources */,
-				53817084246C9094006A4B3B /* GoogleService-Info.plist in Resources */,
 				538D29E12454978800CDB99F /* Assets.xcassets in Resources */,
 				534BFB9D2454DDB500F9F772 /* Watchlists.storyboard in Resources */,
 				534BFBA22454DED600F9F772 /* Settings.storyboard in Resources */,
@@ -603,6 +769,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B5328A252CF70D00B94605 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B5328B252CF70D00B94605 /* Login.storyboard in Resources */,
+				53C3AC1225322B39008B41FA /* GoogleService-Info.plist in Resources */,
+				53B5328D252CF70D00B94605 /* LaunchScreen.storyboard in Resources */,
+				53B5328E252CF70D00B94605 /* Assets.xcassets in Resources */,
+				53B5328F252CF70D00B94605 /* Watchlists.storyboard in Resources */,
+				53B53290252CF70D00B94605 /* Settings.storyboard in Resources */,
+				53B53291252CF70D00B94605 /* Search.storyboard in Resources */,
+				53B53292252CF70D00B94605 /* Chatrooms.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,6 +832,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		53B5323E252CF70D00B94605 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CouchClub Staging-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		53B53293252CF70D00B94605 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CouchClub Staging/Pods-CouchClub Staging-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CouchClub Staging/Pods-CouchClub Staging-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CouchClub Staging/Pods-CouchClub Staging-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		545FADDE984140D1F9E0B174 /* [CP] Embed Pods Frameworks */ = {
@@ -726,6 +946,7 @@
 				532210762473F89200381419 /* Chatroom+CoreDataProperties.swift in Sources */,
 				536012FD246497CC00E00C6F /* ChatroomVC.swift in Sources */,
 				53F6880D2458CFE500230CE9 /* Movie+CoreDataClass.swift in Sources */,
+				53C3AB7C252CFEAC008B41FA /* Environment.swift in Sources */,
 				53BEA6942459722500F7D770 /* LocalStorage.swift in Sources */,
 				5390F47F248901A600F6C211 /* ChatroomsDataSource.swift in Sources */,
 				53EFBCDF246F11DE00958A76 /* Message+CoreDataProperties.swift in Sources */,
@@ -759,6 +980,85 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		53B5323F252CF70D00B94605 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B53240252CF70D00B94605 /* PushNotifications.swift in Sources */,
+				53B53241252CF70D00B94605 /* ChatroomsCoordinator.swift in Sources */,
+				53B53242252CF70D00B94605 /* ChatroomTVCell.swift in Sources */,
+				53B53243252CF70D00B94605 /* Item+CoreDataClass.swift in Sources */,
+				53B53244252CF70D00B94605 /* SettingsCoordinator.swift in Sources */,
+				53B53245252CF70D00B94605 /* LocalDatabase.swift in Sources */,
+				53B53246252CF70D00B94605 /* Show+CoreDataClass.swift in Sources */,
+				53B53247252CF70D00B94605 /* Watchlist+CoreDataProperties.swift in Sources */,
+				53B53248252CF70D00B94605 /* NewWatchlistCoordinator.swift in Sources */,
+				53B53249252CF70D00B94605 /* User+CoreDataClass.swift in Sources */,
+				53B5324A252CF70D00B94605 /* Buttons.swift in Sources */,
+				53B5324B252CF70D00B94605 /* SearchCoordinator.swift in Sources */,
+				53B5324C252CF70D00B94605 /* WatchlistsVC.swift in Sources */,
+				53B5324D252CF70D00B94605 /* WatchlistCell.swift in Sources */,
+				53B5324E252CF70D00B94605 /* NewWatchlistVC.swift in Sources */,
+				53B5324F252CF70D00B94605 /* Message+CoreDataClass.swift in Sources */,
+				53B53250252CF70D00B94605 /* SearchItems.swift in Sources */,
+				53B53251252CF70D00B94605 /* MessageTVCell.swift in Sources */,
+				53B53252252CF70D00B94605 /* TitleTextView.swift in Sources */,
+				53B53253252CF70D00B94605 /* ChatroomsVC.swift in Sources */,
+				53B53254252CF70D00B94605 /* SmallHeaderTVCell.swift in Sources */,
+				53B53255252CF70D00B94605 /* SelectWatchlistVC.swift in Sources */,
+				53B53256252CF70D00B94605 /* MessageInputAccessoryView.swift in Sources */,
+				53B53257252CF70D00B94605 /* SmallHeaderCVCell.swift in Sources */,
+				53B53258252CF70D00B94605 /* WatchlistsDataSource.swift in Sources */,
+				53B53259252CF70D00B94605 /* TextCVCell.swift in Sources */,
+				53B5325A252CF70D00B94605 /* Alerts.swift in Sources */,
+				53B5325B252CF70D00B94605 /* MessageInputTextView.swift in Sources */,
+				53B5325C252CF70D00B94605 /* ItemDetailVC.swift in Sources */,
+				53B5325D252CF70D00B94605 /* WatchlistItemsDataSource.swift in Sources */,
+				53B5325E252CF70D00B94605 /* HighlightCVCell.swift in Sources */,
+				53B5325F252CF70D00B94605 /* Item+CoreDataProperties.swift in Sources */,
+				53B53260252CF70D00B94605 /* Views.swift in Sources */,
+				53B53261252CF70D00B94605 /* SearchVC.swift in Sources */,
+				53B53262252CF70D00B94605 /* Constants.swift in Sources */,
+				53B53263252CF70D00B94605 /* AppDelegate.swift in Sources */,
+				53B53264252CF70D00B94605 /* LoginVC.swift in Sources */,
+				53B53265252CF70D00B94605 /* NewChatroomVC.swift in Sources */,
+				53B53266252CF70D00B94605 /* CouchClub.xcdatamodeld in Sources */,
+				53B53267252CF70D00B94605 /* DataCoordinator.swift in Sources */,
+				53B53268252CF70D00B94605 /* SearchItemCell.swift in Sources */,
+				53B53269252CF70D00B94605 /* WatchlistSelectionDataSource.swift in Sources */,
+				53B5326A252CF70D00B94605 /* NetworkService.swift in Sources */,
+				53B5326B252CF70D00B94605 /* ItemCell.swift in Sources */,
+				53B5326C252CF70D00B94605 /* ChatroomMessagesDataSource.swift in Sources */,
+				53B5326D252CF70D00B94605 /* Converter.swift in Sources */,
+				53B5326E252CF70D00B94605 /* Chatroom+CoreDataProperties.swift in Sources */,
+				53B5326F252CF70D00B94605 /* ChatroomVC.swift in Sources */,
+				53B53270252CF70D00B94605 /* Movie+CoreDataClass.swift in Sources */,
+				53C3AB7D252CFEAC008B41FA /* Environment.swift in Sources */,
+				53B53271252CF70D00B94605 /* LocalStorage.swift in Sources */,
+				53B53272252CF70D00B94605 /* ChatroomsDataSource.swift in Sources */,
+				53B53273252CF70D00B94605 /* Message+CoreDataProperties.swift in Sources */,
+				53B53274252CF70D00B94605 /* LoginCoordinator.swift in Sources */,
+				53B53275252CF70D00B94605 /* ItemDetailHeaderTVCell.swift in Sources */,
+				53B53276252CF70D00B94605 /* WatchlistsCoordinator.swift in Sources */,
+				53B53277252CF70D00B94605 /* User+CoreDataProperties.swift in Sources */,
+				53B53278252CF70D00B94605 /* HighlightTVCell.swift in Sources */,
+				53B53279252CF70D00B94605 /* Movie+CoreDataProperties.swift in Sources */,
+				53B5327A252CF70D00B94605 /* WatchlistVC.swift in Sources */,
+				53B5327B252CF70D00B94605 /* Show+CoreDataProperties.swift in Sources */,
+				53B5327C252CF70D00B94605 /* Watchlist+CoreDataClass.swift in Sources */,
+				53B5327D252CF70D00B94605 /* Chatroom+CoreDataClass.swift in Sources */,
+				53B5327E252CF70D00B94605 /* TextFields.swift in Sources */,
+				53B5327F252CF70D00B94605 /* FirebaseService.swift in Sources */,
+				53B53280252CF70D00B94605 /* Extensions.swift in Sources */,
+				53B53281252CF70D00B94605 /* CreateAccountVC.swift in Sources */,
+				53B53282252CF70D00B94605 /* UserDefaultsManager.swift in Sources */,
+				53B53283252CF70D00B94605 /* Protocols.swift in Sources */,
+				53B53284252CF70D00B94605 /* NewChatroomCoordinator.swift in Sources */,
+				53B53285252CF70D00B94605 /* MainTabBarController.swift in Sources */,
+				53B53286252CF70D00B94605 /* SettingsVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -789,10 +1089,12 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		538D29F12454978800CDB99F /* Debug */ = {
+		531934CE252A5A4F00DE1CBE /* Debug (Staging) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5349BDBF252CF9E40096B2B9 /* Staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "${APP_ICON}";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -847,12 +1149,166 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Debug;
+			name = "Debug (Staging)";
 		};
-		538D29F22454978800CDB99F /* Release */ = {
+		531934CF252A5A4F00DE1CBE /* Debug (Staging) */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CF40A7CF0F157E862DB61FC /* Pods-CouchClub.debug (staging).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = CouchClub/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rubendias.CouchClub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug (Staging)";
+		};
+		531934D0252A5A4F00DE1CBE /* Debug (Staging) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF38991B3CA9460EA7165B50 /* Pods-CouchClubTests.debug (staging).xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = CouchClubTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rubendias.CouchClubTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CouchClub.app/CouchClub";
+			};
+			name = "Debug (Staging)";
+		};
+		531934D1252A5B2800DE1CBE /* Debug (Production) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5349BDC3252CF9FE0096B2B9 /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "${APP_ICON}";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = "Debug (Production)";
+		};
+		531934D2252A5B2800DE1CBE /* Debug (Production) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87428DB588A4B6E9453AF6BD /* Pods-CouchClub.debug (production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = CouchClub/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rubendias.CouchClub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug (Production)";
+		};
+		531934D3252A5B2800DE1CBE /* Debug (Production) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B00462EE16FB500AA99EB65C /* Pods-CouchClubTests.debug (production).xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = CouchClubTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rubendias.CouchClubTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CouchClub.app/CouchClub";
+			};
+			name = "Debug (Production)";
+		};
+		531934D4252A5B3100DE1CBE /* Release (Production) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5349BDC3252CF9FE0096B2B9 /* Production.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "${APP_ICON}";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -901,11 +1357,11 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = "Release (Production)";
 		};
-		538D29F42454978800CDB99F /* Debug */ = {
+		531934D5252A5B3100DE1CBE /* Release (Production) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3950BC54F639061C280CD2FD /* Pods-CouchClub.debug.xcconfig */;
+			baseConfigurationReference = C64582356350D1454DA0C87E /* Pods-CouchClub.release (production).xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
@@ -922,32 +1378,11 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Debug;
+			name = "Release (Production)";
 		};
-		538D29F52454978800CDB99F /* Release */ = {
+		531934D6252A5B3100DE1CBE /* Release (Production) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9CB43F872B3E2FDA0802E497 /* Pods-CouchClub.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C62GU5R7P6;
-				INFOPLIST_FILE = CouchClub/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rubendias.CouchClub;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		538D29F72454978800CDB99F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C224FFD5468964A9A651875 /* Pods-CouchClubTests.debug.xcconfig */;
+			baseConfigurationReference = F44D812874E0C52AC0CFCA0F /* Pods-CouchClubTests.release (production).xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -966,11 +1401,88 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CouchClub.app/CouchClub";
 			};
-			name = Debug;
+			name = "Release (Production)";
 		};
-		538D29F82454978800CDB99F /* Release */ = {
+		538D29F22454978800CDB99F /* Release (Staging) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66146CAEF669EBBF4C95FDB2 /* Pods-CouchClubTests.release.xcconfig */;
+			baseConfigurationReference = 5349BDBF252CF9E40096B2B9 /* Staging.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "${APP_ICON}";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release (Staging)";
+		};
+		538D29F52454978800CDB99F /* Release (Staging) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D67032C6080A0EF203CE218 /* Pods-CouchClub.release (staging).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = CouchClub/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.rubendias.CouchClub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release (Staging)";
+		};
+		538D29F82454978800CDB99F /* Release (Staging) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50A9EF7F12C142B04B8B6965 /* Pods-CouchClubTests.release (staging).xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -989,7 +1501,101 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CouchClub.app/CouchClub";
 			};
-			name = Release;
+			name = "Release (Staging)";
+		};
+		53B53295252CF70D00B94605 /* Debug (Staging) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 426049B0C9E1FB02BBE8761A /* Pods-CouchClub Staging.debug (staging).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Staging";
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = "$(SRCROOT)/CouchClub/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rubendias.CouchClub.staging;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug (Staging)";
+		};
+		53B53296252CF70D00B94605 /* Debug (Production) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 219F0076A1F9826E81B454AE /* Pods-CouchClub Staging.debug (production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Staging";
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = "$(SRCROOT)/CouchClub/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rubendias.CouchClub-Staging";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug (Production)";
+		};
+		53B53297252CF70D00B94605 /* Release (Staging) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FB1EC2869D08937296882BD /* Pods-CouchClub Staging.release (staging).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Staging";
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = "$(SRCROOT)/CouchClub/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rubendias.CouchClub-Staging";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release (Staging)";
+		};
+		53B53298252CF70D00B94605 /* Release (Production) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C75C45FE6FA9A8ACE9D97DA7 /* Pods-CouchClub Staging.release (production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Staging";
+				CODE_SIGN_ENTITLEMENTS = CouchClub/CouchClub.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C62GU5R7P6;
+				INFOPLIST_FILE = "$(SRCROOT)/CouchClub/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rubendias.CouchClub-Staging";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release (Production)";
 		};
 /* End XCBuildConfiguration section */
 
@@ -997,29 +1603,46 @@
 		538D29CC2454978600CDB99F /* Build configuration list for PBXProject "CouchClub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				538D29F12454978800CDB99F /* Debug */,
-				538D29F22454978800CDB99F /* Release */,
+				531934CE252A5A4F00DE1CBE /* Debug (Staging) */,
+				531934D1252A5B2800DE1CBE /* Debug (Production) */,
+				538D29F22454978800CDB99F /* Release (Staging) */,
+				531934D4252A5B3100DE1CBE /* Release (Production) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release (Production)";
 		};
 		538D29F32454978800CDB99F /* Build configuration list for PBXNativeTarget "CouchClub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				538D29F42454978800CDB99F /* Debug */,
-				538D29F52454978800CDB99F /* Release */,
+				531934CF252A5A4F00DE1CBE /* Debug (Staging) */,
+				531934D2252A5B2800DE1CBE /* Debug (Production) */,
+				538D29F52454978800CDB99F /* Release (Staging) */,
+				531934D5252A5B3100DE1CBE /* Release (Production) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release (Production)";
 		};
 		538D29F62454978800CDB99F /* Build configuration list for PBXNativeTarget "CouchClubTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				538D29F72454978800CDB99F /* Debug */,
-				538D29F82454978800CDB99F /* Release */,
+				531934D0252A5A4F00DE1CBE /* Debug (Staging) */,
+				531934D3252A5B2800DE1CBE /* Debug (Production) */,
+				538D29F82454978800CDB99F /* Release (Staging) */,
+				531934D6252A5B3100DE1CBE /* Release (Production) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release (Production)";
+		};
+		53B53294252CF70D00B94605 /* Build configuration list for PBXNativeTarget "CouchClub Staging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B53295252CF70D00B94605 /* Debug (Staging) */,
+				53B53296252CF70D00B94605 /* Debug (Production) */,
+				53B53297252CF70D00B94605 /* Release (Staging) */,
+				53B53298252CF70D00B94605 /* Release (Production) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "Release (Production)";
 		};
 /* End XCConfigurationList section */
 
