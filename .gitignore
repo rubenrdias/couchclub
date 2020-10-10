@@ -1,2 +1,8 @@
-*.xcuserstate
-*.xcbkptlist
+# Environment Configuration
+CouchClub/Utils/Config
+
+# Cocoapods
+Pods/
+
+# User preferences
+**/xcuserdata/

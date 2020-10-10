@@ -38,18 +38,15 @@ final class NetworkService {
     static let shared = NetworkService()
     private init() {}
     
-    private let baseURL = "http://www.omdbapi.com/"
-    private let apiKey = "d4d6a41c"
-    
     private let urlSession = URLSession.shared
     
     // MARK: - Search
     
     func searchResults(forType type: ItemType, searchText: String, completion: @escaping (_ results: [Any]?, _ totalResults: Int)->()) {
-        var url = URLComponents(string: baseURL)!
+        var url = URLComponents(string: Environment.OMDB_BASE_URL.absoluteString)!
         
         let params = [
-            "apikey": apiKey,
+            "apikey": Environment.OMDB_API_KEY,
             "s": searchText,
             "type": type.rawValue
         ]
@@ -76,10 +73,10 @@ final class NetworkService {
     }
     
 	func searchResult(forID id: String, ofType type: ItemType, completion: @escaping (_ result: Any?, _ error: Error?)->()) {
-        var url = URLComponents(string: baseURL)!
+        var url = URLComponents(string: Environment.OMDB_BASE_URL.absoluteString)!
         
         let params = [
-            "apikey": apiKey,
+            "apikey": Environment.OMDB_API_KEY,
             "i": id,
             "plot": "full",
             "type": type.rawValue

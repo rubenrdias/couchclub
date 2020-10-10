@@ -4,20 +4,50 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>CouchClub.xcscheme_^#shared#^_</key>
+		<key>Production - Debug.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>24</integer>
+			<integer>2</integer>
+		</dict>
+		<key>Production - Release.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Staging - Debug.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+		<key>Staging - Release.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>531934DE252A605900DE1CBE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>538D29D02454978600CDB99F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>538D29E92454978800CDB99F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>53B5316C252CF61B00B94605</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>53B5323D252CF70D00B94605</key>
 		<dict>
 			<key>primary</key>
 			<true/>
