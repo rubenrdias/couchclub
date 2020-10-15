@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Chatroom" representedClassName="Chatroom" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="inviteCode" attributeType="String"/>
@@ -51,6 +51,7 @@
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sender" inverseEntity="Message"/>
         <relationship name="ownedChatrooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Chatroom" inverseName="owner" inverseEntity="Chatroom"/>
         <relationship name="ownedWatchlists" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Watchlist" inverseName="owner" inverseEntity="Watchlist"/>
+        <relationship name="watchlists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Watchlist" inverseName="users" inverseEntity="Watchlist"/>
     </entity>
     <entity name="Watchlist" representedClassName="Watchlist" syncable="YES">
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
@@ -58,6 +59,7 @@
         <attribute name="type" attributeType="String"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item" inverseName="watchlists" inverseEntity="Item"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ownedWatchlists" inverseEntity="User"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="watchlists" inverseEntity="User"/>
     </entity>
     <elements>
         <element name="Chatroom" positionX="-27" positionY="135" width="128" height="163"/>
@@ -65,7 +67,7 @@
         <element name="Message" positionX="-36" positionY="126" width="128" height="148"/>
         <element name="Movie" positionX="-54" positionY="-9" width="128" height="73"/>
         <element name="Show" positionX="-18" positionY="27" width="128" height="58"/>
-        <element name="User" positionX="-36" positionY="126" width="128" height="133"/>
-        <element name="Watchlist" positionX="-36" positionY="108" width="128" height="118"/>
+        <element name="User" positionX="-36" positionY="126" width="128" height="148"/>
+        <element name="Watchlist" positionX="-36" positionY="108" width="128" height="133"/>
     </elements>
 </model>

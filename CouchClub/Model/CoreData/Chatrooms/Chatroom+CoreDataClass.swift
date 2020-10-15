@@ -25,7 +25,7 @@ public class Chatroom: NSManagedObject {
 
 class ChatroomBuilder {
     
-    var chatroom: Chatroom
+    private var chatroom: Chatroom
     
     init(_ id: UUID? = nil, _ inviteCode: String? = nil) {
         self.chatroom = Chatroom(context: LocalDatabase.shared.context)

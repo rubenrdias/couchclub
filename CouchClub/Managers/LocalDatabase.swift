@@ -63,6 +63,25 @@ final class LocalDatabase {
     
     // MARK: - Users
     
+    func fetchUsers() -> [User] {
+        coreDataQueue.sync {
+            let fetchRequest = User.createFetchRequest()
+            
+            do {
+                return try context.fetch(fetchRequest)
+            } catch {
+                let error = error as NSError
+                print("Core Data: Error fetching Users: \(error)")
+                return []
+            }
+        }
+    }
+    
+    func fetchUsers(_ userIDs: [String]) -> [User] {
+        let users = fetchUsers()
+        return users.filter { userIDs.contains($0.id) }
+    }
+    
     func fetchUser(_ id: String) -> User? {
         coreDataQueue.sync {
             let fetchRequest = User.createFetchRequest()
@@ -141,18 +160,17 @@ final class LocalDatabase {
         }
     }
     
-    func fetchWatchlists() -> [Watchlist]? {
+    func fetchWatchlists() -> [Watchlist] {
         coreDataQueue.sync {
             let fetchRequest = Watchlist.createFetchRequest()
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
             
             do {
-                let watchlists = try context.fetch(fetchRequest)
-                return watchlists
+                return try context.fetch(fetchRequest)
             } catch {
                 let error = error as NSError
                 print("Core Data: Error fetching Watchlists: \(error)")
-                return nil
+                return []
             }
         }
     }
@@ -179,7 +197,7 @@ final class LocalDatabase {
     }
 	
     private func deleteWatchlists() {
-		guard let watchlists = fetchWatchlists() else { return }
+		let watchlists = fetchWatchlists()
 		watchlists.forEach { deleteWatchlist($0) }
 	}
     
@@ -239,7 +257,7 @@ final class LocalDatabase {
         }
     }
     
-    func fetchItems() -> [Item]? {
+    func fetchItems() -> [Item] {
         coreDataQueue.sync {
             let fetchRequest = Item.createFetchRequest()
             
@@ -248,9 +266,14 @@ final class LocalDatabase {
             } catch {
                 let error = error as NSError
                 print("Core Data: Error fetching items: \(error)")
-                return nil
+                return []
             }
         }
+    }
+    
+    func fetchItems(_ itemIDs: [String]) -> [Item] {
+        let items = self.fetchItems()
+        return items.filter { itemIDs.contains($0.id) }
     }
     
     func toggleWatched(_ item: Item) {
@@ -260,14 +283,13 @@ final class LocalDatabase {
         }
     }
     
-    func setWatchedState(_ itemIDs: [String], completion: @escaping ()->()) {
-        guard let unwatchedItems = self.fetchItems() else { completion(); return }
+    func setWatchedState(_ itemIDs: [String]) {
+        let items = self.fetchItems()
         
         coreDataQueue.sync {
-            let watchedItems = unwatchedItems.filter { itemIDs.contains($0.id) }
+            let watchedItems = items.filter { itemIDs.contains($0.id) }
             watchedItems.forEach { $0.watched = true }
             saveContext()
-            completion()
         }
     }
     
@@ -290,18 +312,17 @@ final class LocalDatabase {
         }
     }
     
-    func fetchChatrooms() -> [Chatroom]? {
+    func fetchChatrooms() -> [Chatroom] {
         coreDataQueue.sync {
             let fetchRequest = Chatroom.createFetchRequest()
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
             
             do {
-                let chatrooms = try context.fetch(fetchRequest)
-                return chatrooms
+                return try context.fetch(fetchRequest)
             } catch {
                 let error = error as NSError
                 print("Core Data: Error fetching Chatrooms: \(error)")
-                return nil
+                return []
             }
         }
     }
@@ -317,6 +338,13 @@ final class LocalDatabase {
         }
     }
     
+    func addUsers(_ users: [User], toChatroom chatroom: Chatroom) {
+        coreDataQueue.sync {
+            chatroom.addToUsers(NSSet(array: users))
+            saveContext()
+        }
+    }
+    
     func deleteChatroom(_ chatroom: Chatroom) {
         coreDataQueue.sync {
             context.delete(chatroom)
@@ -325,7 +353,7 @@ final class LocalDatabase {
     }
 	
 	private func deleteChatrooms() {
-		guard let chatrooms = fetchChatrooms() else { return }
+		let chatrooms = fetchChatrooms()
 		chatrooms.forEach { deleteChatroom($0) }
 	}
     

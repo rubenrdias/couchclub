@@ -54,12 +54,7 @@ class WatchlistsDataSource: NSObject {
     
     @objc func refreshWatchlists() {
         DispatchQueue.main.async { [weak self] in
-            if let watchlists = LocalDatabase.shared.fetchWatchlists() {
-                self?.watchlists = watchlists
-            } else {
-                self?.watchlists.removeAll()
-            }
-            
+            self?.watchlists = LocalDatabase.shared.fetchWatchlists()
             self?.collectionView.reloadData()
             self?.delegate?.didRefreshData()
         }

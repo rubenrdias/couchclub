@@ -73,7 +73,7 @@ class NewChatroomVC: UIViewController, Storyboarded {
             chatroomType = .watchlist
             coordinator?.showWatchlistSelector()
         } else {
-            chatroomType = sender.tag == 1 ? .movie : .show
+            chatroomType = sender.tag == 1 ? .movie : .series
             coordinator?.showItemSelector(type: sender.tag == 1 ? .movie : .series)
         }
     }

@@ -2,7 +2,7 @@
 //  User+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 06/09/2020.
+//  Created by Ruben Dias on 15/10/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -23,6 +23,7 @@ extension User {
     @NSManaged public var messages: NSSet?
     @NSManaged public var ownedChatrooms: NSSet?
     @NSManaged public var ownedWatchlists: Watchlist?
+    @NSManaged public var watchlists: NSSet?
 
 }
 
@@ -74,5 +75,22 @@ extension User {
 
     @objc(removeOwnedChatrooms:)
     @NSManaged public func removeFromOwnedChatrooms(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for watchlists
+extension User {
+
+    @objc(addWatchlistsObject:)
+    @NSManaged public func addToWatchlists(_ value: Watchlist)
+
+    @objc(removeWatchlistsObject:)
+    @NSManaged public func removeFromWatchlists(_ value: Watchlist)
+
+    @objc(addWatchlists:)
+    @NSManaged public func addToWatchlists(_ values: NSSet)
+
+    @objc(removeWatchlists:)
+    @NSManaged public func removeFromWatchlists(_ values: NSSet)
 
 }

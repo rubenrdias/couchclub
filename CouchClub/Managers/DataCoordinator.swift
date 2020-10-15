@@ -131,121 +131,187 @@ final class DataCoordinator {
 			}
         }
     }
-	
-	func restoreUserData(completion: @escaping (_ error: Error?)->()) {
-        FirebaseService.shared.fetchWatchedItems { [unowned self] (watchedItemIDs, error) in
-            if error != nil { completion(error); return }
-            
-            self.restoreWatchlists { (error) in
-                if error != nil { completion(error); return }
+    
+    func restoreUserData(completion: @escaping (_ error: Error?)->()) {
+        FirebaseService.shared.fetchUserData { [unowned self] (userData, error) in
+            if let userData = userData {
+                guard let watchedItems = userData["watchedItems"] as? [String],
+                      let items = userData["items"] as? [(String, String)],
+                      let users = userData["users"] as? [String],
+                      let watchlists = userData["watchlists"] as? [[String: Any]],
+                      let chatrooms = userData["chatrooms"] as? [[String: Any]]
+                else { completion(nil); return }
                 
-                LocalDatabase.shared.setWatchedState(watchedItemIDs) {
-                    NotificationCenter.default.post(name: .watchlistsDidChange, object: nil, userInfo: nil)
-                    
-                    self.restoreChatrooms { (error) in
-                        if error != nil { completion(error); return }
+                self.restoreItems(items) { error in
+                    if error == nil {
                         
-                        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
-                        completion(nil)
+                        self.restoreUsers(users) { error in
+                            if error == nil {
+                                self.restoreWatchlists(fromData: watchlists)
+                                self.restoreChatrooms(fromData: chatrooms)
+                                
+                                LocalDatabase.shared.setWatchedState(watchedItems)
+                                
+                                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil, userInfo: nil)
+                                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
+                                completion(nil)
+                            } else { completion(error) }
+                        }
+                    } else { completion(error) }
+                }
+            } else { completion(error) }
+        }
+    }
+    
+    private func restoreItems(_ items: [(String, String)], completion: @escaping (_ error: Error?) -> ()) {
+        let movies = items.filter { $0.0 == ItemType.movie.rawValue }.map { $0.1 }
+        let shows = items.filter { $0.0 == ItemType.series.rawValue }.map { $0.1 }
+        
+        var restorationError: Error?
+        let itemGroup = DispatchGroup()
+        
+        movies.forEach {
+            itemGroup.enter()
+            self.getMovie($0) { (_, error) in
+                restorationError = error
+                itemGroup.leave()
+            }
+        }
+        
+        shows.forEach {
+            itemGroup.enter()
+            self.getShow($0) { (_, error) in
+                restorationError = error
+                itemGroup.leave()
+            }
+        }
+        
+        itemGroup.wait()
+        completion(restorationError)
+    }
+    
+    private func restoreUsers(_ users: [String], completion: @escaping (_ error: Error?) -> ()) {
+        var restorationError: Error?
+        let userGroup = DispatchGroup()
+        
+        users.forEach {
+            userGroup.enter()
+            self.fetchUser(id: $0) { (_, error) in
+                restorationError = error
+                userGroup.leave()
+            }
+        }
+        
+        userGroup.wait()
+        completion(restorationError)
+    }
+    
+    private func restoreWatchlists(fromData: [[String: Any]]) {
+        fromData.forEach {
+            guard let uuidString = $0["id"] as? String, let id = UUID(uuidString: uuidString),
+                  let title = $0["title"] as? String,
+                  let rawType = $0["type"] as? String, let type = ItemType(rawValue: rawType),
+                  let items = $0["items"] as? [String] ?? []
+                  else { return }
+            
+            let watchlistItems = LocalDatabase.shared.fetchItems(items)
+            let watchlist = LocalDatabase.shared.createWatchlist(id: id, title, type)
+            LocalDatabase.shared.addToWatchlist(watchlistItems, watchlist)
+        }
+    }
+    
+    func restoreWatchlist(_ id: String, completion: @escaping (_ watchlist: Watchlist?, _ error: Error?) -> ()) {
+        if let uuid = UUID(uuidString: id), let watchlist = LocalDatabase.shared.fetchWatchlist(uuid) {
+            completion(watchlist, nil)
+            return
+        }
+        
+        FirebaseService.shared.fetchWatchlistDetails(id) { [unowned self] (watchlistData, error) in
+            guard error == nil else { completion(nil, error); return }
+            guard let watchlistData = watchlistData,
+                  let uuidString = watchlistData["id"] as? String, let id = UUID(uuidString: uuidString),
+                  let title = watchlistData["title"] as? String,
+                  let rawType = watchlistData["type"] as? String, let type = ItemType(rawValue: rawType)
+            else { completion(nil, nil);  return }
+            
+            let items = watchlistData["items"] as? [String] ?? []
+        
+            self.fetchWatchlistItems(items, ofType: type) { (itemsToAdd, error) in
+                guard error == nil, let itemsToAdd = itemsToAdd else {
+                    // TODO: mark watchlist error and retry later
+                    print("Firebase Firestore | Error when restoring watchlist \(id)")
+                    completion(nil, error)
+                    return
+                }
+                
+                let watchlist = LocalDatabase.shared.createWatchlist(id: id, title, type)
+                LocalDatabase.shared.addToWatchlist(itemsToAdd, watchlist)
+                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+                
+                completion(watchlist, nil)
+            }
+        }
+    }
+    
+    private func fetchWatchlistItems(_ items: [String], ofType type: ItemType, completion: @escaping(_ items: [Item]?, _ error: Error?)->()) {
+        var globalError: Error?
+        let itemGroup = DispatchGroup()
+        var itemsToAdd = [Item]()
+        
+        items.forEach {
+            itemGroup.enter()
+            
+            switch type {
+            case .movie:
+                self.getMovie($0) { (movie, error) in
+                    if let movie = movie {
+                        itemsToAdd.append(movie)
+                    } else {
+                        globalError = error
                     }
+                    itemGroup.leave()
+                }
+            case .series:
+                self.getShow($0) { (show, error) in
+                    if let show = show {
+                        itemsToAdd.append(show)
+                    } else {
+                        globalError = error
+                    }
+                    itemGroup.leave()
                 }
             }
         }
-	}
+        
+        itemGroup.wait()
+        completion(itemsToAdd, globalError)
+    }
 	
-	func restoreWatchlists(completion: @escaping (_ error: Error?) -> ()) {
-		FirebaseService.shared.fetchWatchlists { [unowned self] (watchlistsData, error) in
-			guard error == nil, let watchlistsData = watchlistsData else { completion(error); return }
-			
-			let watchlistGroup = DispatchGroup()
-			watchlistsData.forEach {
-				guard let uuidString = $0["id"] as? String, let id = UUID(uuidString: uuidString),
-					  let title = $0["title"] as? String,
-					  let rawType = $0["type"] as? String, let type = ItemType(rawValue: rawType)
-					  else { return }
-				
-				let watchlist = LocalDatabase.shared.createWatchlist(id: id, title, type)
-				var watchlistRestorationError: Error?
-				
-				guard let items = $0["items"] as? [String] else { return }
-				watchlistGroup.enter()
-				
-				let itemGroup = DispatchGroup()
-				var itemsToAdd = [Item]()
-                
-				items.forEach {
-					itemGroup.enter()
-					
-					switch type {
-					case .movie:
-						self.getMovie($0) { (movie, error) in
-                            if let movie = movie {
-                                itemsToAdd.append(movie)
-                            } else {
-                                watchlistRestorationError = error
-                            }
-							itemGroup.leave()
-						}
-					case .series:
-						self.getShow($0) { (show, error) in
-                            if let show = show {
-                                itemsToAdd.append(show)
-                            } else {
-                                watchlistRestorationError = error
-                            }
-                            itemGroup.leave()
-						}
-					}
-				}
-				
-				itemGroup.wait()
-				
-				if watchlistRestorationError != nil {
-                    // TODO: mark watchlist error and retry later
-                    print("Firebase Firestore | Error when restoring watchlist \(watchlist.id)")
-				}
-				
-				LocalDatabase.shared.addToWatchlist(itemsToAdd, watchlist)
-				watchlistGroup.leave()
-			}
+	private func restoreChatrooms(fromData: [[String: Any]]) {
+        fromData.forEach {
+            guard let uuidString = $0["id"] as? String, let uuid = UUID(uuidString: uuidString),
+                  let typeString = $0["type"] as? String, let type = ChatroomType(rawValue: typeString),
+                  let inviteCode = $0["inviteCode"] as? String,
+                  let title = $0["title"] as? String,
+                  let subjectID = $0["subjectID"] as? String,
+                  let ownerID = $0["owner"] as? String, let owner = LocalDatabase.shared.fetchUser(ownerID),
+                  let userIDs = $0["users"] as? [String]
+            else {
+                return
+            }
             
-            watchlistGroup.wait()
-			completion(nil)
-		}
-	}
-	
-	func restoreChatrooms(completion: @escaping (_ error: Error?) -> ()) {
-		FirebaseService.shared.fetchChatrooms { [unowned self] (chatroomsData, error) in
-			guard error == nil else { completion(error); return }
-			guard let chatroomsData = chatroomsData else { completion(nil);  return }
-			
-			let chatroomsGroup = DispatchGroup()
-			chatroomsData.forEach {
-				guard let uuidString = $0["id"] as? String else { return }
-				
-				chatroomsGroup.enter()
-				self.createChatroom(uuidString, from: $0) { (chatroom, error) in
-					if error != nil {
-						// TODO: mark chatroom error and retry later
-						chatroomsGroup.leave()
-						return
-					}
-					guard let chatroom = chatroom else {
-						// TODO: mark chatroom error and retry later
-						chatroomsGroup.leave()
-						return
-					}
-					
-					FirebaseService.shared.startChatroomListener(chatroom.id)
-					FirebaseService.shared.startMessageListener(chatroom.id)
-					chatroomsGroup.leave()
-				}
-			}
-			
-			chatroomsGroup.wait()
-			
-			completion(nil)
-		}
+            let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, owner, title, type, subjectID)
+            
+            let users = LocalDatabase.shared.fetchUsers(userIDs)
+            LocalDatabase.shared.addUsers(users, toChatroom: chatroom)
+            
+            if type != .watchlist, let item = LocalDatabase.shared.fetchItem(subjectID) {
+                self.fetchImage(forItem: item)
+            }
+            
+            FirebaseService.shared.startChatroomListener(uuid)
+            FirebaseService.shared.startMessageListener(uuid)
+        }
 	}
     
     // MARK: - Watchlists
@@ -310,12 +376,12 @@ final class DataCoordinator {
     }
     
     private func notifyOfChatroomChanges(_ watchlist: Watchlist) {
-        if let chatrooms = LocalDatabase.shared.fetchChatrooms() {
-            let chatroomsForWatchlist = chatrooms.filter { $0.subjectID == watchlist.id.uuidString }
-            chatroomsForWatchlist.forEach {
-                let info: [AnyHashable: Any] = ["chatroomID": $0.id]
-                NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
-            }
+        let chatrooms = LocalDatabase.shared.fetchChatrooms()
+        let chatroomsForWatchlist = chatrooms.filter { $0.subjectID == watchlist.id.uuidString }
+        
+        chatroomsForWatchlist.forEach {
+            let info: [AnyHashable: Any] = ["chatroomID": $0.id]
+            NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
         }
     }
     
@@ -344,7 +410,7 @@ final class DataCoordinator {
     }
     
     func toggleWatched(_ item: Item, completion: @escaping (_ error: Error?)->()) {
-        FirebaseService.shared.toggleWatched(item, watched: !item.watched) { error in
+        FirebaseService.shared.toggleWatched(item) { error in
             if let error = error {
                 completion(error)
                 return
@@ -374,67 +440,6 @@ final class DataCoordinator {
         }
     }
     
-    func deleteChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
-        FirebaseService.shared.deleteChatroom(chatroom) { (error) in
-            if let error = error {
-                completion(error)
-            } else {
-                LocalDatabase.shared.deleteChatroom(chatroom)
-                
-                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
-                completion(nil)
-            }
-        }
-    }
-    
-    func joinChatroom(_ inviteCode: String, completion: @escaping(_ chatroomID: UUID?, _ error: Error?)->()) {
-        FirebaseService.shared.fetchChatroomDetails(inviteCode) { [unowned self] (chatroomID, chatroomData, error) in
-            if let error = error {
-                completion(nil, error)
-            } else if let chatroomID = chatroomID, let chatroomData = chatroomData {
-                self.createChatroom(chatroomID, from: chatroomData) { (chatroom, error) in
-                    if let error = error {
-                        completion(nil, error)
-                        return
-                    }
-                    guard let chatroom = chatroom else {
-                        // TODO: create error to warn the user
-                        completion(nil, nil)
-                        return
-                    }
-                    
-                    FirebaseService.shared.joinChatroom(chatroom) { (error) in
-                        if let error = error {
-                            LocalDatabase.shared.deleteChatroom(chatroom)
-                            completion(nil, error)
-                        } else {
-                            FirebaseService.shared.startChatroomListener(chatroom.id)
-                            FirebaseService.shared.startMessageListener(chatroom.id)
-                            NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
-                            completion(chatroom.id, nil)
-                        }
-                    }
-                }
-            } else {
-                completion(nil, nil)
-            }
-        }
-    }
-    
-    func leaveChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
-        FirebaseService.shared.leaveChatroom(chatroom) { (error) in
-            if let error = error {
-                completion(error)
-            } else {
-                FirebaseService.shared.removeListener(.chatroom, chatroom.id)
-                LocalDatabase.shared.deleteChatroom(chatroom)
-                
-                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
-                completion(nil)
-            }
-        }
-    }
-    
     func createChatroom(_ id: String, from data: [String: Any], completion: @escaping (_ chatroom: Chatroom?, _ error: Error?) -> ()) {
         guard let uuid = UUID(uuidString: id),
               let inviteCode = data["inviteCode"] as? String,
@@ -456,8 +461,15 @@ final class DataCoordinator {
             
             switch type {
             case .watchlist:
-                // TODO: fetch watchlist and all items
-                break
+                self.restoreWatchlist(subjectID) { (watchlist, error) in
+                    guard let watchlist = watchlist else {
+                        completion(nil, error)
+                        return
+                    }
+                    
+                    let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, watchlist.id.uuidString)
+                    completion(chatroom, nil)
+                }
             case .movie:
                 self.getMovie(subjectID) { (movie, error) in
                     guard let movie = movie else {
@@ -469,7 +481,7 @@ final class DataCoordinator {
                     let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, movie.id)
                     completion(chatroom, nil)
                 }
-            case .show:
+            case .series:
                 self.getShow(subjectID) { (show, error) in
                     guard let show = show else {
                         completion(nil, error)
@@ -480,6 +492,70 @@ final class DataCoordinator {
                     let chatroom = LocalDatabase.shared.createChatroom(uuid, inviteCode, user, title, type, show.id)
                     completion(chatroom, nil)
                 }
+            }
+        }
+    }
+    
+    func deleteChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
+        FirebaseService.shared.deleteChatroom(chatroom) { (error) in
+            if let error = error {
+                completion(error)
+            } else {
+                LocalDatabase.shared.deleteChatroom(chatroom)
+                
+                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                completion(nil)
+            }
+        }
+    }
+    
+    func joinChatroom(_ inviteCode: String, completion: @escaping(_ chatroomID: UUID?, _ error: Error?)->()) {
+        FirebaseService.shared.fetchChatroomDetails(inviteCode) { [unowned self] (chatroomID, chatroomData, error) in
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            guard let chatroomID = chatroomID, let chatroomData = chatroomData else {
+                completion(nil, nil)
+                return
+            }
+            
+            self.createChatroom(chatroomID, from: chatroomData) { (chatroom, error) in
+                guard error == nil else {
+                    completion(nil, error)
+                    return
+                }
+                guard let chatroom = chatroom else {
+                    // TODO: create error to warn the user
+                    completion(nil, nil)
+                    return
+                }
+                
+                FirebaseService.shared.joinChatroom(chatroom) { (error) in
+                    if let error = error {
+                        LocalDatabase.shared.deleteChatroom(chatroom)
+                        completion(nil, error)
+                    } else {
+                        FirebaseService.shared.startChatroomListener(chatroom.id)
+                        FirebaseService.shared.startMessageListener(chatroom.id)
+                        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                        completion(chatroom.id, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    func leaveChatroom(_ chatroom: Chatroom, completion: @escaping(_ error: Error?)->()) {
+        FirebaseService.shared.leaveChatroom(chatroom) { (error) in
+            if let error = error {
+                completion(error)
+            } else {
+                FirebaseService.shared.removeListener(.chatroom, chatroom.id)
+                LocalDatabase.shared.deleteChatroom(chatroom)
+                
+                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                completion(nil)
             }
         }
     }

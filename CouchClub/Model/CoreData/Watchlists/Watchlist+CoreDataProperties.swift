@@ -2,7 +2,7 @@
 //  Watchlist+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 06/09/2020.
+//  Created by Ruben Dias on 15/10/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -22,6 +22,7 @@ extension Watchlist {
     @NSManaged public var type: String
     @NSManaged public var items: NSSet?
     @NSManaged public var owner: User
+    @NSManaged public var users: NSSet
 
 }
 
@@ -39,5 +40,22 @@ extension Watchlist {
 
     @objc(removeItems:)
     @NSManaged public func removeFromItems(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for users
+extension Watchlist {
+
+    @objc(addUsersObject:)
+    @NSManaged public func addToUsers(_ value: User)
+
+    @objc(removeUsersObject:)
+    @NSManaged public func removeFromUsers(_ value: User)
+
+    @objc(addUsers:)
+    @NSManaged public func addToUsers(_ values: NSSet)
+
+    @objc(removeUsers:)
+    @NSManaged public func removeFromUsers(_ values: NSSet)
 
 }

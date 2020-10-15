@@ -17,7 +17,7 @@ public class Show: Item {
 
 class ShowBuilder {
     
-    var show: Show
+    private var show: Show
     
     init() {
         self.show = Show(context: LocalDatabase.shared.context)

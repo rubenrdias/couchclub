@@ -23,7 +23,7 @@ enum ItemType: String {
 enum ChatroomType: String {
     case watchlist
     case movie
-    case show
+    case series
 }
 
 // MARK: - Date Formatters

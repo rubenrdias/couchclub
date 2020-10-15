@@ -26,13 +26,7 @@ class ChatroomsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
     
     @objc func fetchData() {
         DispatchQueue.main.async { [weak self] in
-            let chatrooms = LocalDatabase.shared.fetchChatrooms()
-            if chatrooms != nil {
-                self?.chatrooms = chatrooms!
-            } else {
-                self?.chatrooms.removeAll()
-            }
-
+            self?.chatrooms = LocalDatabase.shared.fetchChatrooms()
             self?.delegate?.didRefreshData()
         }
     }

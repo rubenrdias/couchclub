@@ -23,8 +23,7 @@ class WatchlistSelectionDataSource: NSObject, UITableViewDataSource, UITableView
         
         registerViews()
         
-        guard let watchlists = LocalDatabase.shared.fetchWatchlists() else { return }
-        self.watchlists = watchlists
+        self.watchlists = LocalDatabase.shared.fetchWatchlists()
     }
     
     deinit {

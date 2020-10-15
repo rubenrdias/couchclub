@@ -106,7 +106,7 @@ class ChatroomsVC: UIViewController, Storyboarded {
             guard let inviteCode = alert?.textFields?[0].text else { return }
             
             let chatrooms = LocalDatabase.shared.fetchChatrooms()
-            if chatrooms?.first(where: { $0.inviteCode == inviteCode }) == nil {
+            if chatrooms.first(where: { $0.inviteCode == inviteCode }) == nil {
                 Alerts.shared.presentActivityAlert(title: "Attempting to join chatroom...", subtitle: nil, showSpinner: true, action: nil, completion: {
                     DataCoordinator.shared.joinChatroom(inviteCode) { (_, error) in
                         let message = error == nil ? "Success!" : "Failed. Please try again later."

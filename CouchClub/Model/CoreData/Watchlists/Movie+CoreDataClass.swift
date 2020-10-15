@@ -17,7 +17,7 @@ public class Movie: Item {
 
 class MovieBuilder {
     
-    var movie: Movie
+    private var movie: Movie
     
     init() {
         self.movie = Movie(context: LocalDatabase.shared.context)

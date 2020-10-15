@@ -17,7 +17,7 @@ public class Message: NSManagedObject {
 
 class MessageBuilder {
     
-    var message: Message
+    private var message: Message
     
     init(_ id: UUID? = nil) {
         self.message = Message(context: LocalDatabase.shared.context)
