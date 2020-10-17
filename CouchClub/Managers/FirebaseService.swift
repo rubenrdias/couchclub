@@ -225,7 +225,7 @@ class FirebaseService {
             
             if let watchlistItems = $0["items"] as? [String] {
                 let watchlistItemTupples = watchlistItems.map { (type.rawValue, $0) }
-                items.append(contentsOf: watchlistItemTupples)
+                addItemsToArray(array: &items, items: watchlistItemTupples)
             }
         }
         
@@ -233,11 +233,24 @@ class FirebaseService {
             guard let type = $0["type"] as? String, type != ChatroomType.watchlist.rawValue else { return }
             
             if let item = $0["subjectID"] as? String {
-                items.append((type, item))
+                addItemsToArray(array: &items, items: [(type, item)])
             }
         }
         
-        return items.compactMap { $0 }
+        print("---------- Items ----------")
+        for item in items {
+            print("\(item.0): \(item.1)")
+        }
+        
+        return items
+    }
+    
+    private func addItemsToArray(array: inout [(String, String)], items: [(String, String)]) {
+        for item in items {
+            if !array.contains(where: { $0.1 == item.1 }) {
+                array.append(item)
+            }
+        }
     }
     
     private func extractUsers(_ watchlists: [[String: Any]], _ chatrooms: [[String: Any]]) -> [String] {
@@ -245,15 +258,23 @@ class FirebaseService {
         
         watchlists.forEach {
             guard let watchlistUsers = $0["users"] as? [String] else { return }
-            users.append(contentsOf: watchlistUsers)
+            addUsersToArray(array: &users, users: watchlistUsers)
         }
         
         chatrooms.forEach {
-            guard let watchlistUsers = $0["users"] as? [String] else { return }
-            users.append(contentsOf: watchlistUsers)
+            guard let chatroomUsers = $0["users"] as? [String] else { return }
+            addUsersToArray(array: &users, users: chatroomUsers)
         }
         
-        return users.compactMap { $0 }
+        return users
+    }
+    
+    private func addUsersToArray(array: inout [String], users: [String]) {
+        for user in users {
+            if !array.contains(where: { $0 == user }) {
+                array.append(user)
+            }
+        }
     }
     
 	func addDeviceFCMToken(completion: ((_ error: Error?)->())? = nil) {
