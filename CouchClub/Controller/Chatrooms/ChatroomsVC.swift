@@ -14,16 +14,16 @@ class ChatroomsVC: UIViewController, Storyboarded {
     lazy var dataSource = ChatroomsDataSource(delegate: self)
     
     @IBOutlet weak var tableView: UITableView!
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Chatrooms"
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatrooms), name: .chatroomsDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomDidChange, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(refreshUserMessage), name: .userInfoDidChange, object: nil)
-        
+        setupUI()
+        setupObservers()
         configureTableView()
     }
     
@@ -33,6 +33,16 @@ class ChatroomsVC: UIViewController, Storyboarded {
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectedIndexPath, animated: animated)
         }
+    }
+    
+    private func setupUI() {
+        title = "Chatrooms"
+    }
+    
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatrooms), name: .chatroomsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshChatroom), name: .chatroomChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshUserMessage), name: .userInfoDidChange, object: nil)
     }
     
     private func configureTableView() {

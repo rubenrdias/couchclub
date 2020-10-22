@@ -2,7 +2,7 @@
 //  Item+CoreDataProperties.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 30/04/2020.
+//  Created by Ruben Dias on 17/10/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 //
@@ -32,6 +32,7 @@ extension Item {
     @NSManaged public var watched: Bool
     @NSManaged public var writer: String
     @NSManaged public var year: String
+    @NSManaged public var type: String
     @NSManaged public var watchlists: NSSet?
 
 }

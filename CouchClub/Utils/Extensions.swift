@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Firebase
 
 // MARK: - UIStoryboard
 
@@ -202,15 +201,29 @@ extension Notification.Name {
 	static let userInfoDidChange = Notification.Name("userInfoDidChange")
     
     // watchlists
-    static let watchlistsDidChange = Notification.Name("watchlistsDidChange")
-    static let watchlistDidChange = Notification.Name("watchlistDidChange")
+    static let watchlistsChanged = Notification.Name("watchlistsChanged")
+    static let watchlistChanged = Notification.Name("watchlistChanged")
     
     // items
     static let itemWatchedStatusChanged = Notification.Name("itemWatchedStatusChanged")
     
     // chatrooms
-    static let chatroomsDidChange = Notification.Name("chatroomsDidChange")
-    static let chatroomDidChange = Notification.Name("chatroomDidChange")
+    static let chatroomsChanged = Notification.Name("chatroomsChanged")
+    static let chatroomChanged = Notification.Name("chatroomChanged")
+    
+    // messages
+    static let beganWritingMessage = Notification.Name("beganWritingMessage")
+    
+}
+
+// MARK: - NSLayoutConstraint
+
+extension NSLayoutConstraint {
+    
+    func updated(constant: CGFloat, newMultiplier: CGFloat? = nil) -> NSLayoutConstraint {
+        let newMultiplier = newMultiplier ?? multiplier
+        return NSLayoutConstraint(item: self.firstItem!, attribute: self.firstAttribute, relatedBy: self.relation, toItem: self.secondItem, attribute: self.secondAttribute, multiplier: newMultiplier, constant: constant)
+    }
     
 }
 

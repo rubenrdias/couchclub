@@ -39,8 +39,8 @@ class WatchlistsDataSource: NSObject {
     }
     
     private func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlists), name: .watchlistsDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlist), name: .watchlistDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlists), name: .watchlistsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWatchlist), name: .watchlistChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSeenStatus), name: .itemWatchedStatusChanged, object: nil)
     }
     
@@ -108,6 +108,8 @@ extension WatchlistsDataSource: UICollectionViewDataSource, UICollectionViewDele
         collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         usableWidth = size.width - 2 * 16
         updateItemSize()
+        
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     private func updateItemSize() {

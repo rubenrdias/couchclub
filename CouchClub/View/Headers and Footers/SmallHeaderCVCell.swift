@@ -67,11 +67,10 @@ class SmallHeaderCVCell: UICollectionReusableView {
         NSLayoutConstraint.activate([
             NSLayoutConstraint(item: listButton, attribute: .height, relatedBy: .equal, toItem: listButton, attribute: .width, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: thumbnailsButton, attribute: .height, relatedBy: .equal, toItem: thumbnailsButton, attribute: .width, multiplier: 1, constant: 0),
-            listButton.heightAnchor.constraint(equalTo: heightAnchor),
-            thumbnailsButton.heightAnchor.constraint(equalTo: heightAnchor),
+            listButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
+            thumbnailsButton.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7),
             
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }

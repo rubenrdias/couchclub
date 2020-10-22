@@ -1,14 +1,14 @@
 //
-//  TextFields.swift
+//  BottomBorderTextField.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 13/05/2020.
+//  Created by Ruben Dias on 17/10/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
 import UIKit
 
-class BottomBorderTF: UITextField {
+class BottomBorderTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

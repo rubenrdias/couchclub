@@ -27,26 +27,17 @@ class SearchVC: UICollectionViewController, Storyboarded {
     private var usableWidth: CGFloat = 0
     
     private var shouldCalculateSize = true
+    
+    deinit {
+        print("-- DEINIT -- Search VC")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 13.0, *) { isModalInPresentation = true }
-        
-        let dismissTitle = watchlist != nil ? "Done" : "Cancel"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: dismissTitle, style: .plain, target: self, action: #selector(finishSearch))
-        
-        collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
-        collectionView.register(SmallHeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier)
-        
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.delegate = self
-        let typeString = searchType == .series ? "show" : searchType.rawValue
-        searchController.searchBar.placeholder = "Search for a \(typeString) title"
-        searchController.searchBar.autocapitalizationType = .none
-        
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        setupUI()
+        setupCellIdentifiers()
+        setupSearchController()
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,15 +55,33 @@ class SearchVC: UICollectionViewController, Storyboarded {
         
         let newSize = CGSize(width: size.width + 2 * 16, height: size.height)
         setupCollectionViewLayout(newSize)
-        collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    deinit {
-        print("-- DEINIT -- Search VC")
-    }
-
     @objc private func finishSearch() {
         coordinator?.didFinishSearch()
+    }
+    
+    private func setupUI() {
+        if #available(iOS 13.0, *) { isModalInPresentation = true }
+        
+        let dismissTitle = watchlist != nil ? "Done" : "Cancel"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: dismissTitle, style: .plain, target: self, action: #selector(finishSearch))
+    }
+    
+    private func setupCellIdentifiers() {
+        collectionView.register(SearchItemCell.self, forCellWithReuseIdentifier: SearchItemCell.reuseIdentifier)
+        collectionView.register(SmallHeaderCVCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier)
+    }
+    
+    private func setupSearchController() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        let typeString = searchType == .series ? "show" : searchType.rawValue
+        searchController.searchBar.placeholder = "Search for a \(typeString) title"
+        searchController.searchBar.autocapitalizationType = .none
+        
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setupCollectionViewLayout(_ size: CGSize) {
@@ -90,6 +99,8 @@ class SearchVC: UICollectionViewController, Storyboarded {
         collectionView.contentInset = .init(top: 8, left: 16, bottom: 8, right: 16)
         usableWidth = size.width - 2 * 16
         updateItemSize()
+        
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     private func updateItemSize() {
@@ -101,8 +112,10 @@ class SearchVC: UICollectionViewController, Storyboarded {
         layout.headerReferenceSize = .init(width: usableWidth, height: 44)
     }
     
-    func toggleActivityIndicator() {
-        if navigationItem.rightBarButtonItem == nil {
+    private func toggleActivityIndicator() {
+        let activityIsStarting = navigationItem.rightBarButtonItem == nil
+        
+        if activityIsStarting {
             collectionView.isUserInteractionEnabled = false
             
             let activityIndicator = UIActivityIndicatorView(style: .gray)
@@ -201,8 +214,9 @@ extension SearchVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let userInput = searchBar.text else { return }
-        navigationItem.searchController?.isActive = false
-        navigationItem.searchController?.searchBar.text = userInput
+        let searchController = navigationItem.searchController
+        searchController?.isActive = false
+        searchController?.searchBar.text = userInput
         
         NetworkService.shared.searchResults(forType: searchType, searchText: userInput) { [weak self] results, totalResults in
             if let results = results as? [SearchItem] {

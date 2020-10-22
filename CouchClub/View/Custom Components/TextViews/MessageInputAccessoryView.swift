@@ -2,7 +2,7 @@
 //  MessageInputAccessoryView.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 08/05/2020.
+//  Created by Ruben Dias on 17/10/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ class MessageInputAccessoryView: UIView {
     
     weak var delegate: MessageDelegate?
 
-    private let messageTextView: CommentInputTextView = {
+    private lazy var messageTextView: CommentInputTextView = {
         let tv = CommentInputTextView()
         tv.placeholderText = "Enter message..."
         tv.showPlaceholderText()
@@ -71,8 +71,8 @@ class MessageInputAccessoryView: UIView {
         ])
     }
     
-    func dismissKeyboard() {
-        messageTextView.resignFirstResponder()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     @objc func handleSend() {
@@ -82,8 +82,8 @@ class MessageInputAccessoryView: UIView {
         messageTextView.reset(hardReset: false)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func dismissKeyboard() {
+        messageTextView.resignFirstResponder()
     }
 
 }

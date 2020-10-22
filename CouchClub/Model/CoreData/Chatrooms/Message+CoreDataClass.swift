@@ -12,7 +12,11 @@ import CoreData
 
 @objc(Message)
 public class Message: NSManagedObject {
-
+    
+    var sentBySelf: Bool {
+        return self.sender.id == FirebaseService.shared.currentUserID
+    }
+    
 }
 
 class MessageBuilder {

@@ -21,6 +21,7 @@ class MovieBuilder {
     
     init() {
         self.movie = Movie(context: LocalDatabase.shared.context)
+        self.movie.type = "movie"
     }
     
     func withID(_ id: String) -> MovieBuilder {

@@ -18,15 +18,13 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Watchlists"
-        
+        setupUI()
         configureCollectionView()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         dataSource.setupCollectionViewLayout(size)
-        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,6 +35,10 @@ class WatchlistsVC: UICollectionViewController, Storyboarded {
                 self.coordinator?.showLogin()
             }
         }
+    }
+    
+    private func setupUI() {
+        title = "Watchlists"
     }
     
     private func configureCollectionView() {

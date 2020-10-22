@@ -14,28 +14,21 @@ class ChatroomVC: UITableViewController, Storyboarded {
     weak var coordinator: ChatroomsCoordinator?
     lazy var dataSource = ChatroomMessagesDataSource(chatroom: chatroom, tableView: tableView, delegate: self)
     
-    var chatroom: Chatroom! {
-        didSet {
-            title = chatroom.title
-        }
-    }
-    
+    var chatroom: Chatroom!
     private var leavingChatroom: Bool = false
+    private var accessoryViewHeight: CGFloat = 50
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        print("-- DEINIT -- Chatroom VC")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(chatroomsWereUpdated), name: .chatroomsDidChange, object: nil)
-        
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped)),
-            UIBarButtonItem(image: .iconAsset(.invite), style: .plain, target: self, action: #selector(inviteButtonTapped))
-        ]
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-        
+        setupObservers()
+        setupUI()
+        setupGestures()
         configureTableView()
     }
     
@@ -45,9 +38,26 @@ class ChatroomVC: UITableViewController, Storyboarded {
         scrollToBottom()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-        print("-- DEINIT -- Chatroom VC")
+    private func setupObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(chatroomsWereUpdated), name: .chatroomsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(beganWritingMessage), name: .beganWritingMessage, object: nil)
+    }
+    
+    private func setupUI() {
+        title = chatroom.title
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped)),
+            UIBarButtonItem(image: .iconAsset(.invite), style: .plain, target: self, action: #selector(inviteButtonTapped))
+        ]
+        
+        tableView.tableFooterView = UIView()
+    }
+    
+    private func setupGestures() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editingFinished))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
     
     @objc private func chatroomsWereUpdated() {
@@ -65,12 +75,18 @@ class ChatroomVC: UITableViewController, Storyboarded {
         }
     }
     
+    @objc private func beganWritingMessage() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.scrollToBottom()
+        }
+    }
+    
     @objc private func editingFinished() {
         messageAccessoryView.dismissKeyboard()
     }
     
     lazy var messageAccessoryView: MessageInputAccessoryView = {
-        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: accessoryViewHeight)
         let messageInputAccessoryView = MessageInputAccessoryView(frame: frame)        
         messageInputAccessoryView.delegate = self
         return messageInputAccessoryView
@@ -151,10 +167,7 @@ class ChatroomVC: UITableViewController, Storyboarded {
         tableView.delegate = dataSource
         
         tableView.backgroundColor = .colorAsset(.dynamicBackground)
-        tableView.contentInset = .init(top: 8, left: 0, bottom: 8, right: 0)
-        
-        tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
-        tableView.register(MessageTVCell.self, forCellReuseIdentifier: MessageTVCell.reuseIdentifier)
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
     }
     
     func scrollToBottom() {
@@ -173,6 +186,8 @@ extension ChatroomVC: MessageDelegate {
             if let error = error {
                 let alert = Alerts.simpleAlert(title: "Failed", message: error.localizedDescription)
                 self.present(alert, animated: true)
+            } else {
+                self.scrollToBottom()
             }
         }
     }
@@ -182,6 +197,6 @@ extension ChatroomVC: MessageDelegate {
 extension ChatroomVC: MessagesDataSourceDelegate {
     
     func dataWasUpdated() {
-        scrollToBottom()
+        // TODO: show new messages alert
     }
 }

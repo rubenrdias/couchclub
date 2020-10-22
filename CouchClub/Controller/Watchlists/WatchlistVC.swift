@@ -18,11 +18,7 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showSearch)),
-            UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped))
-        ]
-        
+        setupUI()
         setupCollectionView()
     }
     
@@ -30,11 +26,19 @@ class WatchlistVC: UICollectionViewController, Storyboarded {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         dataSource.setupCollectionViewLayout(size)
-        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     deinit {
         print("-- DEINIT -- Watchlist VC")
+    }
+    
+    private func setupUI() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showSearch)),
+            UIBarButtonItem(image: .iconAsset(.more), style: .plain, target: self, action: #selector(moreButtonTapped))
+        ]
     }
     
     private func setupCollectionView() {

@@ -76,7 +76,7 @@ class FirebaseService {
                 self.removeListener(.messages, id)
                 self.removeListener(.chatroom, id)
                 
-                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
+                NotificationCenter.default.post(name: .chatroomsChanged, object: nil, userInfo: nil)
             }
         }
         chatroomListeners.append((id, listener))

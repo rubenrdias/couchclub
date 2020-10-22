@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,7 +33,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="K47-W4-d6k">
                                 <rect key="frame" x="16" y="249" width="343" height="100"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mB8-EL-cGm" customClass="BottomBorderTF" customModule="CouchClub" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mB8-EL-cGm" customClass="BottomBorderTextField" customModule="CouchClub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="FSx-XP-B3Z"/>
@@ -40,7 +41,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fgy-a0-lvb" customClass="BottomBorderTF" customModule="CouchClub" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fgy-a0-lvb" customClass="BottomBorderTextField" customModule="CouchClub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="OJy-3l-UN1"/>
@@ -48,10 +49,10 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wbs-xN-dVo">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wbs-xN-dVo">
                                         <rect key="frame" x="0.0" y="100" width="343" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                        <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" systemColor="systemOrangeColor"/>
                                         <state key="normal" title="Forgotten Password?"/>
                                         <connections>
                                             <action selector="forgottenPasswordTapped:" destination="hLt-gl-4Gs" eventType="touchUpInside" id="5PQ-pO-hRo"/>
@@ -59,9 +60,9 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ZT-Hd-h9M" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ZT-Hd-h9M" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="16" y="381" width="343" height="56"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="Ptf-O8-2u4"/>
                                 </constraints>
@@ -72,19 +73,19 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="n1V-G1-VUK">
-                                <rect key="frame" x="47.333333333333343" y="445" width="280.33333333333326" height="30"/>
+                                <rect key="frame" x="47" y="445" width="281" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7l-pD-YNZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="160.33333333333334" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="161" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Kx-JA-Tmf">
-                                        <rect key="frame" x="168.33333333333331" y="0.0" width="112" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Kx-JA-Tmf">
+                                        <rect key="frame" x="169" y="0.0" width="112" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Create account">
-                                            <color key="titleColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" systemColor="systemOrangeColor"/>
                                         </state>
                                         <connections>
                                             <action selector="createAccountTapped:" destination="hLt-gl-4Gs" eventType="touchUpInside" id="LKE-Ee-aUx"/>
@@ -92,11 +93,12 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="w4W-E4-qWs">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="w4W-E4-qWs">
                                 <rect key="frame" x="177.66666666666666" y="399" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Y9D-sS-HKj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="n1V-G1-VUK" firstAttribute="centerX" secondItem="Tse-fs-NCQ" secondAttribute="centerX" id="2JP-1f-oyF"/>
                             <constraint firstItem="Y9D-sS-HKj" firstAttribute="trailing" secondItem="K47-W4-d6k" secondAttribute="trailing" constant="16" id="9jf-fo-f50"/>
@@ -115,7 +117,6 @@
                             <constraint firstItem="K47-W4-d6k" firstAttribute="top" secondItem="By7-cg-DE4" secondAttribute="bottom" constant="64" id="o1z-a9-fZ2"/>
                             <constraint firstItem="8ZT-Hd-h9M" firstAttribute="leading" secondItem="Y9D-sS-HKj" secondAttribute="leading" constant="16" id="xLO-sD-xC6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Y9D-sS-HKj"/>
                     </view>
                     <navigationItem key="navigationItem" id="Vv5-4m-k8u"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -158,7 +159,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xCt-0M-JEe">
                                 <rect key="frame" x="16" y="249" width="343" height="173.66666666666663"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M5s-i7-vRm" customClass="BottomBorderTF" customModule="CouchClub" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="M5s-i7-vRm" customClass="BottomBorderTextField" customModule="CouchClub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Y7I-9A-Y5h"/>
@@ -166,7 +167,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZG-fj-ELJ" customClass="BottomBorderTF" customModule="CouchClub" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nZG-fj-ELJ" customClass="BottomBorderTextField" customModule="CouchClub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="vGh-wx-mWF"/>
@@ -174,7 +175,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MiJ-eZ-uRW" customClass="BottomBorderTF" customModule="CouchClub" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="MiJ-eZ-uRW" customClass="BottomBorderTextField" customModule="CouchClub" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="100" width="343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="pcp-WJ-9kg"/>
@@ -184,7 +185,7 @@
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fB-A5-pjn">
                                         <rect key="frame" x="0.0" y="150" width="343" height="8"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="8" id="9fu-jB-isr"/>
                                         </constraints>
@@ -197,9 +198,9 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtV-rb-fem" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtV-rb-fem" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="16" y="454.66666666666669" width="343" height="56"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="bgd-56-vuX"/>
                                 </constraints>
@@ -218,11 +219,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8r4-ca-XOC">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8r4-ca-XOC">
                                         <rect key="frame" x="183.66666666666669" y="0.0" width="50" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Sign In">
-                                            <color key="titleColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" systemColor="systemOrangeColor"/>
                                         </state>
                                         <connections>
                                             <action selector="signInTapped:" destination="n5x-pR-ZBQ" eventType="touchUpInside" id="MTN-SJ-SBX"/>
@@ -230,11 +231,12 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Pfe-4i-h8q">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Pfe-4i-h8q">
                                 <rect key="frame" x="177.66666666666666" y="472.66666666666669" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="trz-pg-d60"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="V7b-HW-9aA" firstAttribute="centerX" secondItem="1ll-dl-4bB" secondAttribute="centerX" id="2DM-fD-zdd"/>
                             <constraint firstItem="xCt-0M-JEe" firstAttribute="leading" secondItem="trz-pg-d60" secondAttribute="leading" constant="16" id="2s3-Rg-Mvv"/>
@@ -253,7 +255,6 @@
                             <constraint firstItem="Pfe-4i-h8q" firstAttribute="centerX" secondItem="dtV-rb-fem" secondAttribute="centerX" id="tsR-dx-pmP"/>
                             <constraint firstItem="trz-pg-d60" firstAttribute="trailing" secondItem="tCG-9R-qD0" secondAttribute="trailing" constant="32" id="usD-4s-vDE"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="trz-pg-d60"/>
                     </view>
                     <navigationItem key="navigationItem" id="ktP-aB-myh"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -275,4 +276,12 @@
             <point key="canvasLocation" x="1686" y="83"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

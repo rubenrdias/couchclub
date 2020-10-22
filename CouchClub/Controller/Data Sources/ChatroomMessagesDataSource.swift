@@ -26,11 +26,16 @@ class ChatroomMessagesDataSource: NSObject, UITableViewDataSource, UITableViewDe
         self.tableView = tableView
         self.delegate = delegate
         
+        registerCells()
         setupFetchedResultsController()
     }
     
     deinit {
         print("-- DEINIT -- Chatroom Messages Data Source")
+    }
+    
+    private func registerCells() {
+        tableView.register(SmallHeaderTVCell.self, forHeaderFooterViewReuseIdentifier: SmallHeaderTVCell.reuseIdentifier)
     }
     
     func bottomIndexPath() -> IndexPath? {
@@ -61,28 +66,31 @@ class ChatroomMessagesDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MessageTVCell.reuseIdentifier, for: indexPath) as! MessageTVCell
-        let message = fetchedResultsController.object(at: indexPath)
         
-        var shouldReduceTopMargin = false
-        var shouldReduceBottomMargin = false
+        let message = fetchedResultsController.object(at: indexPath)
+        var hideSender = false
+        var reduceTopPadding = false
+        var reduceBottomPadding = false
+        
         
         if indexPath.row > 0 {
             let previousMessage = fetchedResultsController.object(at: .init(row: indexPath.row - 1, section: indexPath.section))
-            if previousMessage.sender == message.sender {
-                shouldReduceTopMargin = true
-            }
+            hideSender = (previousMessage.sender == message.sender)
+            reduceTopPadding = (previousMessage.sender == message.sender)
         }
         
         if indexPath.row < tableView.numberOfRows(inSection: indexPath.section) - 1 {
             let nextMessage = fetchedResultsController.object(at: .init(row: indexPath.row + 1, section: indexPath.section))
-            if nextMessage.sender == message.sender {
-                shouldReduceBottomMargin = true
-            }
+            reduceBottomPadding = (nextMessage.sender == message.sender)
         }
-        
-        cell.shouldReduceTopMargin = shouldReduceTopMargin
-        cell.shouldReduceBottomMargin = shouldReduceBottomMargin
-        cell.message = message
+
+        // override hiding sender if message was sentBySelf
+        if message.sentBySelf {
+            hideSender = true
+        }
+
+        cell.configureDetails(message: message, hideSender: hideSender)
+        cell.configurePadding(reduceTopPadding: reduceTopPadding, reduceBottomPadding: reduceBottomPadding)
         return cell
     }
     
@@ -118,10 +126,10 @@ extension ChatroomMessagesDataSource: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             let sectionIndexSet = IndexSet(integer: sectionIndex)
-            tableView!.insertSections(sectionIndexSet, with: .fade)
+            tableView!.insertSections(sectionIndexSet, with: .automatic)
         case .delete:
             let sectionIndexSet = IndexSet(integer: sectionIndex)
-            tableView!.deleteSections(sectionIndexSet, with: .fade)
+            tableView!.deleteSections(sectionIndexSet, with: .automatic)
         default:
             break
         }
@@ -130,9 +138,13 @@ extension ChatroomMessagesDataSource: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+            if newIndexPath!.row > 0 {
+                let previousIndexPath = IndexPath(row: (newIndexPath!.row - 1), section: newIndexPath!.section)
+                tableView.reloadRows(at: [previousIndexPath], with: .none)
+            }
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .none)
         case .move:

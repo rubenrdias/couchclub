@@ -152,8 +152,8 @@ final class DataCoordinator {
                                 
                                 LocalDatabase.shared.setWatchedState(watchedItems)
                                 
-                                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil, userInfo: nil)
-                                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil, userInfo: nil)
+                                NotificationCenter.default.post(name: .watchlistsChanged, object: nil, userInfo: nil)
+                                NotificationCenter.default.post(name: .chatroomsChanged, object: nil, userInfo: nil)
                                 completion(nil)
                             } else { completion(error) }
                         }
@@ -246,7 +246,7 @@ final class DataCoordinator {
                 
                 let watchlist = LocalDatabase.shared.createWatchlist(id: id, title, type)
                 LocalDatabase.shared.addToWatchlist(itemsToAdd, watchlist)
-                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+                NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
                 
                 completion(watchlist, nil)
             }
@@ -324,7 +324,7 @@ final class DataCoordinator {
                 LocalDatabase.shared.deleteWatchlist(watchlist)
                 completion(nil, error)
             } else {
-                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+                NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
                 completion(watchlist.id, nil)
             }
         }
@@ -337,7 +337,7 @@ final class DataCoordinator {
             } else {
                 LocalDatabase.shared.deleteWatchlist(watchlist)
                 
-                NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
+                NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
                 completion(nil)
             }
         }
@@ -351,7 +351,7 @@ final class DataCoordinator {
                 LocalDatabase.shared.addToWatchlist(item, watchlist)
     
                 let info = ["watchlistID": watchlist.id]
-                NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+                NotificationCenter.default.post(name: .watchlistChanged, object: nil, userInfo: info)
                 self.notifyOfChatroomChanges(watchlist)
             
                 completion(nil)
@@ -367,7 +367,7 @@ final class DataCoordinator {
                 LocalDatabase.shared.removeFromWatchlist(item, watchlist)
                 
                 let info = ["watchlistID": watchlist.id]
-                NotificationCenter.default.post(name: .watchlistDidChange, object: nil, userInfo: info)
+                NotificationCenter.default.post(name: .watchlistChanged, object: nil, userInfo: info)
                 self.notifyOfChatroomChanges(watchlist)
                 
                 completion(nil)
@@ -381,7 +381,7 @@ final class DataCoordinator {
         
         chatroomsForWatchlist.forEach {
             let info: [AnyHashable: Any] = ["chatroomID": $0.id]
-            NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
+            NotificationCenter.default.post(name: .chatroomChanged, object: nil, userInfo: info)
         }
     }
     
@@ -434,7 +434,7 @@ final class DataCoordinator {
                 completion(nil, error)
             } else {
                 FirebaseService.shared.startMessageListener(chatroom.id)
-                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                NotificationCenter.default.post(name: .chatroomsChanged, object: nil)
                 completion(chatroom.id, nil)
             }
         }
@@ -503,7 +503,7 @@ final class DataCoordinator {
             } else {
                 LocalDatabase.shared.deleteChatroom(chatroom)
                 
-                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                NotificationCenter.default.post(name: .chatroomsChanged, object: nil)
                 completion(nil)
             }
         }
@@ -538,7 +538,7 @@ final class DataCoordinator {
                     } else {
                         FirebaseService.shared.startChatroomListener(chatroom.id)
                         FirebaseService.shared.startMessageListener(chatroom.id)
-                        NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                        NotificationCenter.default.post(name: .chatroomsChanged, object: nil)
                         completion(chatroom.id, nil)
                     }
                 }
@@ -554,7 +554,7 @@ final class DataCoordinator {
                 FirebaseService.shared.removeListener(.chatroom, chatroom.id)
                 LocalDatabase.shared.deleteChatroom(chatroom)
                 
-                NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+                NotificationCenter.default.post(name: .chatroomsChanged, object: nil)
                 completion(nil)
             }
         }
@@ -578,7 +578,7 @@ final class DataCoordinator {
                 completion(error)
             } else {
                 let info: [AnyHashable: Any] = ["chatroomID": chatroom.id]
-                NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
+                NotificationCenter.default.post(name: .chatroomChanged, object: nil, userInfo: info)
                 completion(nil)
             }
         }
@@ -602,7 +602,7 @@ final class DataCoordinator {
                     let _ = LocalDatabase.shared.createMessage(uuid, text, user, chatroom: chatroom, seen: false, date)
                     
                     let info: [AnyHashable: Any] = ["chatroomID": chatroomUUID]
-                    NotificationCenter.default.post(name: .chatroomDidChange, object: nil, userInfo: info)
+                    NotificationCenter.default.post(name: .chatroomChanged, object: nil, userInfo: info)
                 }
             }
         }

@@ -51,7 +51,7 @@ class WatchlistItemsDataSource: NSObject {
     }
     
     private func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(watchlistItemsUpdated), name: .watchlistChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemWasUpdated), name: .itemWatchedStatusChanged, object: nil)
     }
     
@@ -110,6 +110,8 @@ extension WatchlistItemsDataSource: UICollectionViewDataSource, UICollectionView
 
         collectionView.contentInset = .init(top: 16, left: 16, bottom: 16, right: 16)
         usableWidth = size.width - 2 * 16
+        
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -121,6 +123,7 @@ extension WatchlistItemsDataSource: UICollectionViewDataSource, UICollectionView
             if indexPath.section > 0 {
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SmallHeaderCVCell.reuseIdentifier, for: indexPath) as! SmallHeaderCVCell
                 headerView.text = sectionHeaders[indexPath.section - 1].rawValue
+                headerView.showButtons = (indexPath.section == 2)
                 return headerView
             }
         } else {

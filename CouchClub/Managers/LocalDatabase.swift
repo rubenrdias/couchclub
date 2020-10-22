@@ -7,7 +7,6 @@
 //
 
 import CoreData
-import Firebase
 
 final class LocalDatabase {
     
@@ -57,8 +56,8 @@ final class LocalDatabase {
 		deleteChatrooms()
 		deleteUsers()
 		
-		NotificationCenter.default.post(name: .watchlistsDidChange, object: nil)
-		NotificationCenter.default.post(name: .chatroomsDidChange, object: nil)
+		NotificationCenter.default.post(name: .watchlistsChanged, object: nil)
+		NotificationCenter.default.post(name: .chatroomsChanged, object: nil)
 	}
     
     // MARK: - Users
@@ -257,9 +256,23 @@ final class LocalDatabase {
         }
     }
     
-    func fetchItems() -> [Item] {
+    func fetchItems(ofType type: String? = nil, watched: Bool? = nil) -> [Item] {
         coreDataQueue.sync {
             let fetchRequest = Item.createFetchRequest()
+            
+            var predicates = [NSPredicate]()
+            if let type = type {
+                predicates.append(NSPredicate(format: "type == %@", type))
+            }
+            
+            if let watched = watched {
+                predicates.append(NSPredicate(format: "watched == %d", watched))
+            }
+            
+            if !predicates.isEmpty {
+                fetchRequest.predicate = NSCompoundPredicate(type: .and, subpredicates: predicates)
+            }
+            
             
             do {
                 return try context.fetch(fetchRequest)
@@ -284,10 +297,10 @@ final class LocalDatabase {
     }
     
     func setWatchedState(_ itemIDs: [String]) {
-        let items = self.fetchItems()
+        let items = self.fetchItems(watched: false)
+        let watchedItems = items.filter { itemIDs.contains($0.id) }
         
         coreDataQueue.sync {
-            let watchedItems = items.filter { itemIDs.contains($0.id) }
             watchedItems.forEach { $0.watched = true }
             saveContext()
         }

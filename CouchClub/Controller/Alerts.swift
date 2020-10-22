@@ -103,10 +103,10 @@ class Alerts {
             if action != nil {
                 self.activityIndicatorButtonAction = action
                 
-                self.activityIndicatorButton = UIButton()
+                self.activityIndicatorButton = RoundedButton()
+                self.activityIndicatorButton?.makeCTA(style: .primary)
+                self.activityIndicatorButton?.contentEdgeInsets = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
                 self.activityIndicatorButton?.setTitle("Copy to Clipboard", for: .normal)
-                self.activityIndicatorButton?.titleLabel?.font = .translatedFont(for: .headline, .semibold)
-                self.activityIndicatorButton?.setTitleColor(UIColor.systemOrange, for: .normal)
                 self.activityIndicatorButton?.addTarget(self, action: #selector(self.performButtonAction), for: .touchUpInside)
                 
                 if dismissAction != nil {

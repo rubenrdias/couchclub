@@ -23,6 +23,7 @@
         <attribute name="released" attributeType="String"/>
         <attribute name="runtime" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="watched" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="writer" attributeType="String"/>
         <attribute name="year" attributeType="String"/>
@@ -63,7 +64,7 @@
     </entity>
     <elements>
         <element name="Chatroom" positionX="-27" positionY="135" width="128" height="163"/>
-        <element name="Item" positionX="-36" positionY="9" width="128" height="283"/>
+        <element name="Item" positionX="-36" positionY="9" width="128" height="298"/>
         <element name="Message" positionX="-36" positionY="126" width="128" height="148"/>
         <element name="Movie" positionX="-54" positionY="-9" width="128" height="73"/>
         <element name="Show" positionX="-18" positionY="27" width="128" height="58"/>

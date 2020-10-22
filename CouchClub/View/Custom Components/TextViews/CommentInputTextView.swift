@@ -1,8 +1,8 @@
 //
-//  MessageInputTextView.swift
+//  CommentInputTextView.swift
 //  CouchClub
 //
-//  Created by Ruben Dias on 08/05/2020.
+//  Created by Ruben Dias on 17/10/2020.
 //  Copyright © 2020 Ruben Dias. All rights reserved.
 //
 
@@ -67,6 +67,8 @@ extension CommentInputTextView: UITextViewDelegate {
         if text == placeholderText {
             hidePlaceholderText()
         }
+        
+        NotificationCenter.default.post(name: .beganWritingMessage, object: nil)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

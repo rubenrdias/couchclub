@@ -37,13 +37,24 @@ class ItemDetailVC: UIViewController, Storyboarded {
     
     private let headerCellID = "headerCellID"
     
+    deinit {
+        print("-- DEINIT -- Item Detail VC")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .colorAsset(.dynamicBackground)
-        
+        setupUI()
+        setupAttributes()
+        setupTableView()
+        setupActionButton()
+    }
+    
+    private func setupUI() {
         if #available(iOS 13.0, *) { isModalInPresentation = true }
-        
+    }
+    
+    private func setupAttributes() {
         if item.isKind(of: Movie.self) {
             attributes = [.plot, .actors, .boxOffice, .director, .writers, .producer]
             highlightAttributes = [.releasedOn, .runtime]
@@ -51,17 +62,6 @@ class ItemDetailVC: UIViewController, Storyboarded {
             attributes = [.plot, .actors, .writers, .year]
             highlightAttributes = [.releasedOn, .runtime]
         }
-        
-        setupTableView()
-        setupActionButton()
-    }
-    
-    deinit {
-        print("-- DEINIT -- Item Detail VC")
-    }
-    
-    @IBAction func startChatroomTapped(_ sender: UIBarButtonItem) {
-        // TODO: start chatroom...
     }
     
     @IBAction func actionButtonTapped(_ sender: UIButton) {
@@ -155,12 +155,12 @@ class ItemDetailVC: UIViewController, Storyboarded {
         ]
         let attributedText = NSMutableAttributedString(string: "\(attribute.rawValue.uppercased())\n", attributes: headerAttributes)
         
-        attributedText.append(NSAttributedString(string: text(attribute)))
+        attributedText.append(NSAttributedString(string: textForAttribute(attribute)))
         
         return attributedText
     }
     
-    private func text(_ attribute: Attribute) -> String {
+    private func textForAttribute(_ attribute: Attribute) -> String {
         switch attribute {
             case .actors:
                 return item.actors
@@ -249,8 +249,8 @@ extension ItemDetailVC: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: HighlightTVCell.reuseIdentifier, for: indexPath) as! HighlightTVCell
             let leftAttribute = highlightAttributes[0]
             let rightAttribute = highlightAttributes[1]
-            cell.highlightLeft = (text(leftAttribute), leftAttribute.rawValue)
-            cell.highlightRight = (text(rightAttribute), rightAttribute.rawValue)
+            cell.highlightLeft = (textForAttribute(leftAttribute), leftAttribute.rawValue)
+            cell.highlightRight = (textForAttribute(rightAttribute), rightAttribute.rawValue)
             return cell
         } else {
             let cell = UITableViewCell()

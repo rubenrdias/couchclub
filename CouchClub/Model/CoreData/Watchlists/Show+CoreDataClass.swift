@@ -21,6 +21,7 @@ class ShowBuilder {
     
     init() {
         self.show = Show(context: LocalDatabase.shared.context)
+        self.show.type = "series"
     }
     
     func withID(_ id: String) -> ShowBuilder {

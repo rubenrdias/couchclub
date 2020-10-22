@@ -12,104 +12,90 @@ class MessageTVCell: UITableViewCell {
     
     static let reuseIdentifier = "MessageTVCell"
     
-    var message: Message! {
-        didSet {
-            messageLabel.attributedText = attributtedMessageText()
-            
-            let sentBySelf = message.sender.id == FirebaseService.shared.currentUserID
-            if sentBySelf {
-                bubbleBackgroundView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
-            } else {
-                bubbleBackgroundView.backgroundColor = UIColor.colorAsset(.dynamicChatBubble)
-            }
-            
-            leadingConstraint.isActive = !sentBySelf
-            trailingConstraint.isActive = sentBySelf
-        }
+    private enum Position {
+        case left
+        case right
     }
     
-    var shouldReduceTopMargin: Bool = false {
-        didSet {
-            topConstraintSpaced.isActive = !shouldReduceTopMargin
-            topConstraintTight.isActive = shouldReduceTopMargin
-        }
-    }
-    var shouldReduceBottomMargin: Bool = false {
-        didSet {
-            bottomConstraintSpaced.isActive = !shouldReduceBottomMargin
-            bottomConstraintTight.isActive = shouldReduceBottomMargin
-        }
-    }
+    // MARK: IBOutlets
+    @IBOutlet weak var containerBackgroundView: RoundedView!
+    @IBOutlet weak var containerView: UIStackView!
+    @IBOutlet var senderLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
     
-    var topConstraintSpaced: NSLayoutConstraint!
-    var topConstraintTight: NSLayoutConstraint!
-    var bottomConstraintSpaced: NSLayoutConstraint!
-    var bottomConstraintTight: NSLayoutConstraint!
-    var leadingConstraint: NSLayoutConstraint!
-    var trailingConstraint: NSLayoutConstraint!
+    // MARK: Constraints
+    @IBOutlet var containerViewConstraintLeading: NSLayoutConstraint!
+    @IBOutlet var containerViewConstraintTrailing: NSLayoutConstraint!
+    @IBOutlet weak var containerViewConstraintTop: NSLayoutConstraint!
+    @IBOutlet weak var containerViewConstraintBottom: NSLayoutConstraint!
     
-    private lazy var bubbleBackgroundView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 4
-        return view
-    }()
-
-    private lazy var messageLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.numberOfLines = 0
-        return lbl
-    }()
-
+    private var message: Message!
+    private var hideSender = false
+    private var reduceTopPadding = false
+    private var reduceBottomPadding = false
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        
-        let maxWidth = contentView.bounds.width * 0.8
-        
-        contentView.addSubview(bubbleBackgroundView)
-        contentView.addSubview(messageLabel)
-        NSLayoutConstraint.activate([
-            messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: maxWidth),
-            
-            bubbleBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -12),
-            bubbleBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 12),
-            bubbleBackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -12),
-            bubbleBackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 12)
-        ])
-        
-        topConstraintSpaced = messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20)
-        topConstraintTight = messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12)
-        bottomConstraintSpaced = messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
-        bottomConstraintTight = messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
-        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 28)
-        trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -28)
-    }
-    
-    private func attributtedMessageText() -> NSAttributedString {
-        let messageString = NSMutableAttributedString()
-        
-        if message.sender.id != FirebaseService.shared.currentUserID {
-            let senderAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.translatedFont(for: .footnote, .bold)
-            ]
-            messageString.append(NSAttributedString(string: "\(message.sender.username)\n", attributes: senderAttributes))
-        }
-        
-        let bodyAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.translatedFont(for: .subheadline, .regular)
-        ]
-        
-        messageString.append(NSAttributedString(string: "\(message.text)", attributes: bodyAttributes))
-        
-        return messageString
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+    }
+    
+    func configureDetails(message: Message, hideSender: Bool) {
+        self.message = message
+        self.hideSender = hideSender
+        
+        setupText()
+        setupUI()
+    }
+    
+    func configurePadding(reduceTopPadding: Bool, reduceBottomPadding: Bool) {
+        self.reduceTopPadding = reduceTopPadding
+        self.reduceBottomPadding = reduceBottomPadding
+        
+        setupPadding()
+    }
+    
+    private func setupText() {
+        senderLabel.text = message.sender.username
+        messageLabel.text = message.text
+    }
+    
+    private func setupUI() {
+        setSenderVisibility(visible: !hideSender)
+        
+        if message.sentBySelf {
+            containerBackgroundView.backgroundColor = UIColor.colorAsset(.dynamicChatBubble)
+            adjustPosition(.right)
+        } else {
+            containerBackgroundView.backgroundColor = .colorAsset(.dynamicBackgroundHighlight)
+            adjustPosition(.left)
+        }
+    }
+    
+    private func setupPadding() {
+        containerViewConstraintTop.constant = reduceTopPadding ? 12 : 16
+        containerViewConstraintBottom.constant = reduceBottomPadding ? 8 : 16
+    }
+    
+    private func setSenderVisibility(visible: Bool) {
+        if visible, !containerView.arrangedSubviews.contains(senderLabel) {
+            containerView.insertArrangedSubview(senderLabel, at: 0)
+        } else if !visible, containerView.arrangedSubviews.contains(senderLabel) {
+            senderLabel.removeFromSuperview()
+        }
+    }
+    
+    private func adjustPosition(_ position: Position) {
+        NSLayoutConstraint.deactivate([containerViewConstraintLeading, containerViewConstraintTrailing])
+        
+        switch position {
+        case .left:
+            NSLayoutConstraint.activate([containerViewConstraintLeading])
+        case .right:
+            NSLayoutConstraint.activate([containerViewConstraintTrailing])
+        }
     }
     
 }

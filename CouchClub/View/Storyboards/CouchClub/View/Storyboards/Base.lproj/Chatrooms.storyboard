@@ -1,26 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--ChatroomVC-->
-        <scene sceneID="0bf-0i-yFR">
+        <scene sceneID="1dj-v1-ApY">
             <objects>
-                <tableViewController storyboardIdentifier="ChatroomVC" hidesBottomBarWhenPushed="YES" id="11b-q4-XNZ" customClass="ChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="28" sectionFooterHeight="16" id="ohg-bB-O7C">
+                <tableViewController storyboardIdentifier="ChatroomVC" hidesBottomBarWhenPushed="YES" id="xq0-uh-yb4" customClass="ChatroomVC" customModule="CouchClub" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="28" sectionFooterHeight="4" id="XDo-at-4Ep">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="MessageTVCell" id="9AQ-WP-9EI" customClass="MessageTVCell" customModule="CouchClub" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9AQ-WP-9EI" id="9bu-rJ-2JE">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vpq-z2-ulH" customClass="RoundedView" customModule="CouchClub" customModuleProvider="target">
+                                            <rect key="frame" x="16" y="8" width="280.5" height="52"/>
+                                            <color key="backgroundColor" name="Dynamic.ChatBubble"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="IMc-Wk-iAB">
+                                            <rect key="frame" x="32" y="16" width="248.5" height="36"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7p-VV-fHh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="248.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                    <color key="textColor" name="Dynamic.Label"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3hR-Tc-xHb" customClass="SelectableLabel" customModule="CouchClub" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="18" width="248.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" name="Dynamic.Label"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Vpq-z2-ulH" firstAttribute="trailing" secondItem="IMc-Wk-iAB" secondAttribute="trailing" constant="16" id="6mH-0V-oZr"/>
+                                        <constraint firstAttribute="trailing" secondItem="IMc-Wk-iAB" secondAttribute="trailing" constant="32" id="7Rg-6S-l55"/>
+                                        <constraint firstItem="Vpq-z2-ulH" firstAttribute="bottom" secondItem="IMc-Wk-iAB" secondAttribute="bottom" constant="8" id="F8k-2n-jUK"/>
+                                        <constraint firstItem="Vpq-z2-ulH" firstAttribute="leading" secondItem="IMc-Wk-iAB" secondAttribute="leading" constant="-16" id="GCV-i6-TKo"/>
+                                        <constraint firstItem="IMc-Wk-iAB" firstAttribute="leading" secondItem="9bu-rJ-2JE" secondAttribute="leading" constant="32" id="Iq0-GI-XkQ"/>
+                                        <constraint firstItem="IMc-Wk-iAB" firstAttribute="width" relation="lessThanOrEqual" secondItem="9bu-rJ-2JE" secondAttribute="width" multiplier="0.6" id="Qja-BW-5j4"/>
+                                        <constraint firstItem="IMc-Wk-iAB" firstAttribute="top" secondItem="9bu-rJ-2JE" secondAttribute="top" constant="16" id="anH-sS-jeu"/>
+                                        <constraint firstItem="Vpq-z2-ulH" firstAttribute="top" secondItem="IMc-Wk-iAB" secondAttribute="top" constant="-8" id="l3T-lB-h2n"/>
+                                        <constraint firstAttribute="bottom" secondItem="IMc-Wk-iAB" secondAttribute="bottom" constant="16" id="tSr-Ip-G5T"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="containerBackgroundView" destination="Vpq-z2-ulH" id="gyk-Ln-11r"/>
+                                    <outlet property="containerView" destination="IMc-Wk-iAB" id="rcN-fH-UsG"/>
+                                    <outlet property="containerViewConstraintBottom" destination="tSr-Ip-G5T" id="Q5H-hG-Ndd"/>
+                                    <outlet property="containerViewConstraintLeading" destination="Iq0-GI-XkQ" id="qWY-Mi-k7h"/>
+                                    <outlet property="containerViewConstraintTop" destination="anH-sS-jeu" id="Oqv-4M-R2M"/>
+                                    <outlet property="containerViewConstraintTrailing" destination="7Rg-6S-l55" id="Sn2-rE-Dvg"/>
+                                    <outlet property="messageLabel" destination="3hR-Tc-xHb" id="HIU-3A-2Is"/>
+                                    <outlet property="senderLabel" destination="v7p-VV-fHh" id="sFY-Vc-HxA"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xq0-uh-yb4" id="59N-6S-YRS"/>
+                            <outlet property="delegate" destination="xq0-uh-yb4" id="N55-34-Lyk"/>
+                        </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="mB7-3g-SZz"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="9Uq-cf-c25"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tfn-Qw-mUR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ud5-SP-yUL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5787" y="204"/>
         </scene>
@@ -34,17 +98,17 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="75" sectionHeaderHeight="16" sectionFooterHeight="16" translatesAutoresizingMaskIntoConstraints="NO" id="8Nd-1p-wrm">
                                 <rect key="frame" x="0.0" y="44" width="414" height="852"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Vle-ls-RlB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8Nd-1p-wrm" firstAttribute="top" secondItem="Vle-ls-RlB" secondAttribute="top" id="3st-nL-ATO"/>
                             <constraint firstItem="8Nd-1p-wrm" firstAttribute="leading" secondItem="Vle-ls-RlB" secondAttribute="leading" id="aWh-zY-bGS"/>
                             <constraint firstItem="Vle-ls-RlB" firstAttribute="trailing" secondItem="8Nd-1p-wrm" secondAttribute="trailing" id="ix6-0x-cax"/>
                             <constraint firstAttribute="bottom" secondItem="8Nd-1p-wrm" secondAttribute="bottom" id="wCh-cP-3g8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Vle-ls-RlB"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="8Nd-1p-wrm" id="XLP-li-7Zi"/>
@@ -101,7 +165,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="oAX-Ne-2x2">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJH-Nx-W6q" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJH-Nx-W6q" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="116.5" height="44"/>
                                                 <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                                 <constraints>
@@ -114,7 +178,7 @@
                                                     <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="t2f-eR-ohw"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWF-8i-bXf" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pWF-8i-bXf" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                                 <rect key="frame" x="132.5" y="0.0" width="117" height="44"/>
                                                 <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                                 <constraints>
@@ -127,7 +191,7 @@
                                                     <action selector="buttonTapped:" destination="69O-JY-xoc" eventType="touchUpInside" id="YIs-xp-WNV"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apT-mC-2YN" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apT-mC-2YN" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                                 <rect key="frame" x="265.5" y="0.0" width="116.5" height="44"/>
                                                 <color key="backgroundColor" name="Dynamic.BackgroundHighlight"/>
                                                 <constraints>
@@ -144,9 +208,9 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="087-zn-hul" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="087-zn-hul" customClass="RoundedButton" customModule="CouchClub" customModuleProvider="target">
                                 <rect key="frame" x="16" y="774" width="382" height="56"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="vy6-Fs-d6b"/>
                                 </constraints>
@@ -158,7 +222,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="kN3-mW-rod"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="087-zn-hul" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="9kC-SJ-sDg"/>
                             <constraint firstItem="4Mu-dI-hvc" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="BwE-4B-F27"/>
@@ -176,7 +241,6 @@
                             <constraint firstItem="8hb-yG-Mu4" firstAttribute="top" secondItem="62f-Ul-WsD" secondAttribute="bottom" constant="32" id="vQM-YN-5iS"/>
                             <constraint firstItem="8hb-yG-Mu4" firstAttribute="leading" secondItem="kN3-mW-rod" secondAttribute="leading" constant="16" id="xxX-Et-oIk"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="kN3-mW-rod"/>
                     </view>
                     <navigationItem key="navigationItem" id="rk5-jb-zeK"/>
                     <connections>
@@ -199,7 +263,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="obp-ne-EoP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </tableView>
                     <navigationItem key="navigationItem" id="dmr-eV-OI9"/>
                 </tableViewController>
@@ -212,11 +276,20 @@
         <namedColor name="Dynamic.BackgroundHighlight">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="Dynamic.ChatBubble">
+            <color red="1" green="0.87999999523162842" blue="0.69999998807907104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Dynamic.Label">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Dynamic.LabelSecondary">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
